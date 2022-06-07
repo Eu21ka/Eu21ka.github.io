@@ -328,7 +328,7 @@ theme_config:
     copyright:
 
     # Powered by Hexo & NexT
-    powered: true
+    powered: false
 
     # Beian ICP and gongan information for Chinese users. See: https://beian.miit.gov.cn, http://www.beian.gov.cn
     beian:
@@ -456,7 +456,7 @@ theme_config:
     mobile: justify
 
   # Reduce padding / margin indents on devices with narrow width.
-  mobile_layout_economy: false
+  mobile_layout_economy: true
 
   # Browser header panel color.
   theme_color:
@@ -481,9 +481,9 @@ theme_config:
       dark: prism-dark
     # Add copy button on codeblock
     copy_button:
-      enable: false
+      enable: true
       # Available values: default | flat | mac
-      style:
+      style: mac
 
   back2top:
     enable: true
