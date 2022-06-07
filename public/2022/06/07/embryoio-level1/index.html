@@ -21,25 +21,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="青年们要充分认识自己所负的重任">
-<meta property="og:type" content="website">
-<meta property="og:title" content="230">
-<meta property="og:url" content="http://example.com/tags/pwn/index.html">
+    <meta name="description" content="题目简介会用基本的Linux指令 解题流程运行程序![屏幕截图 2022-06-07 115529](post&#x2F;屏幕截图 2022-06-07 115529.png) 可以看到进入challenge目录后运行题目程序就得到了一个flag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="embryoio level1">
+<meta property="og:url" content="http://example.com/2022/06/07/embryoio-level1/index.html">
 <meta property="og:site_name" content="230">
-<meta property="og:description" content="青年们要充分认识自己所负的重任">
+<meta property="og:description" content="题目简介会用基本的Linux指令 解题流程运行程序![屏幕截图 2022-06-07 115529](post&#x2F;屏幕截图 2022-06-07 115529.png) 可以看到进入challenge目录后运行题目程序就得到了一个flag">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-06-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-06T16:00:00.000Z">
 <meta property="article:author" content="R3ape1">
+<meta property="article:tag" content="pwn">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/tags/pwn/">
+<link rel="canonical" href="http://example.com/2022/06/07/embryoio-level1/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":"","permalink":"","path":"tags/pwn/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/06/07/embryoio-level1/","path":"2022/06/07/embryoio-level1/","title":"embryoio level1"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Tag: pwn | 230</title>
+<title>embryoio level1 | 230</title>
   
 
 
@@ -102,7 +105,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -115,6 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">题目简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">解题流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.1.</span> <span class="nav-text">运行程序</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -168,90 +172,93 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">pwn
-          <small>Tag</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/07/embryoio-level1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="embryoio level1 | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          embryoio level1
         </h1>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-06-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-07T00:00:00+08:00">2022-06-07</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>![屏幕截图 2022-06-07 115529](post&#x2F;屏幕截图 2022-06-07 115529.png)</p>
+<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-06-07T00:00:00+08:00"
-              content="2022-06-07">
-          06-07
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/06/07/embryoio-level1/" itemprop="url">
-            <span itemprop="name">embryoio level1</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pwn/" rel="tag"># pwn</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/07/test/" rel="prev" title="test">
+                  <i class="fa fa-chevron-left"></i> test
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-06-07T00:00:00+08:00"
-              content="2022-06-07">
-          06-07
-        </time>
-      </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/06/07/test/" itemprop="url">
-            <span itemprop="name">test</span>
-          </a>
-      </div>
 
-      
-    </header>
-  </article>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2022-06-07T00:00:00+08:00"
-              content="2022-06-07">
-          06-07
-        </time>
-      </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/06/07/pwn1/" itemprop="url">
-            <span itemprop="name">test</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-    </div>
-  </div>
-  
-  
-  
 
 </div>
   </main>

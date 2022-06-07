@@ -2,8 +2,8 @@
 title: embryoio level1
 date: 2022/6/7
 updated: 2022/6/7
-tags: 
-- pwn
+tags:
+  - pwn
 ---
 
 ## 题目简介
