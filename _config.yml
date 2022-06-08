@@ -8,9 +8,7 @@ subtitle: 'R3ape1团队笔记'
 description: '青年们要充分认识自己所负的重任'
 keywords:
 author: R3ape1
-language: 
-  - zh-CN
-  - en
+language: zh-CN
 timezone: ''
 
 # URL
@@ -314,7 +312,7 @@ theme_config:
   # ---------------------------------------------------------------
 
   # Show multilingual switcher in footer.
-  language_switcher: true
+  language_switcher: false
 
   footer:
     # Specify the year when the site was setup. If not defined, current year will be used.
