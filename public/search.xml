@@ -1,38 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>test3</title>
-    <url>/2022/06/08/test3/</url>
-    <content><![CDATA[<p>ksjd kj</p>
-<p>ksdjfksa</p>
-<p>sdkfjlkasf</p>
-<p>adsfkjklsajf</p>
-<p>ldsfjlksfd</p>
+    <title>embryoio level1</title>
+    <url>/2022/06/08/embryoio-level1/</url>
+    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>![屏幕截图 2022-06-07 115529](&#x2F;屏幕截图 2022-06-07 115529.png)</p>
+<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
 ]]></content>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>picturetest</title>
-    <url>/2022/06/07/picturetest/</url>
-    <content><![CDATA[<h2 id="这是一个图片"><a href="#这是一个图片" class="headerlink" title="这是一个图片"></a>这是一个图片</h2><img src="/2022/06/07/picturetest/image-20220607231621713.png" class="" title="image-20220607231621713">
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.baidu.com/">百度</a></p>
-]]></content>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>test2</title>
-    <url>/2022/06/08/test2/</url>
-    <content><![CDATA[<img src="/2022/06/08/test2/image-20220608000539031.png" class="" title="image-20220608000539031">
-
-<p>123</p>
-]]></content>
+      <categories>
+        <category>pwncollege刷题日记</category>
+      </categories>
       <tags>
         <tag>pwn</tag>
       </tags>

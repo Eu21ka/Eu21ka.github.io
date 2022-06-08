@@ -21,30 +21,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="这是一个图片  1from pwn import *  百度">
+    <meta name="description" content="题目简介会用基本的Linux指令 解题流程运行程序![屏幕截图 2022-06-07 115529](&#x2F;屏幕截图 2022-06-07 115529.png) 可以看到进入challenge目录后运行题目程序就得到了一个flag">
 <meta property="og:type" content="article">
-<meta property="og:title" content="picturetest">
-<meta property="og:url" content="http://example.com/2022/06/07/picturetest/index.html">
+<meta property="og:title" content="embryoio level1">
+<meta property="og:url" content="http://example.com/2022/06/08/embryoio-level1/index.html">
 <meta property="og:site_name" content="230">
-<meta property="og:description" content="这是一个图片  1from pwn import *  百度">
+<meta property="og:description" content="题目简介会用基本的Linux指令 解题流程运行程序![屏幕截图 2022-06-07 115529](&#x2F;屏幕截图 2022-06-07 115529.png) 可以看到进入challenge目录后运行题目程序就得到了一个flag">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/06/07/picturetest/image-20220607231621713.png">
-<meta property="article:published_time" content="2022-06-07T15:25:03.000Z">
-<meta property="article:modified_time" content="2022-06-07T15:25:03.000Z">
+<meta property="article:published_time" content="2022-06-08T07:13:14.000Z">
+<meta property="article:modified_time" content="2022-06-08T07:14:26.416Z">
 <meta property="article:author" content="R3ape1">
 <meta property="article:tag" content="pwn">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/06/07/picturetest/image-20220607231621713.png">
 
 
-<link rel="canonical" href="http://example.com/2022/06/07/picturetest/">
+<link rel="canonical" href="http://example.com/2022/06/08/embryoio-level1/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/06/07/picturetest/","path":"2022/06/07/picturetest/","title":"picturetest"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/06/08/embryoio-level1/","path":"2022/06/08/embryoio-level1/","title":"embryoio level1"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>picturetest | 230</title>
+<title>embryoio level1 | 230</title>
   
 
 
@@ -147,7 +145,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E5%9B%BE%E7%89%87"><span class="nav-number">1.</span> <span class="nav-text">这是一个图片</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">题目简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">解题流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.1.</span> <span class="nav-text">运行程序</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,9 +160,14 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
@@ -212,7 +215,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/07/picturetest/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/08/embryoio-level1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.png">
@@ -225,12 +228,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="picturetest | 230">
+      <meta itemprop="name" content="embryoio level1 | 230">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          picturetest
+          embryoio level1
         </h1>
 
         <div class="post-meta-container">
@@ -240,8 +243,18 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-06-07 23:25:03" itemprop="dateCreated datePublished" datetime="2022-06-07T23:25:03+08:00">2022-06-07</time>
+      <time title="创建时间：2022-06-08 15:13:14 / 修改时间：15:14:26" itemprop="dateCreated datePublished" datetime="2022-06-08T15:13:14+08:00">2022-06-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/pwncollege%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题日记</span></a>
+        </span>
     </span>
 
   
@@ -254,11 +267,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="这是一个图片"><a href="#这是一个图片" class="headerlink" title="这是一个图片"></a>这是一个图片</h2><img src="/2022/06/07/picturetest/image-20220607231621713.png" class="" title="image-20220607231621713">
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">百度</a></p>
+        <h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>![屏幕截图 2022-06-07 115529](&#x2F;屏幕截图 2022-06-07 115529.png)</p>
+<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
 
     </div>
 
@@ -273,15 +284,6 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-            </div>
-            <div class="post-nav-item">
-                <a href="/2022/06/08/test2/" rel="next" title="test2">
-                  test2 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
     </footer>
   </article>
 </div>
