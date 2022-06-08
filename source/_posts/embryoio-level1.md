@@ -2,7 +2,9 @@
 title: embryoio level1
 date: 2022-06-08 15:19:11
 tags:
+- pwn
 categories:
+- pwncollege刷题日记
 ---
 
 ## 题目简介
