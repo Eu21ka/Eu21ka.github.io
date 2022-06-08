@@ -8,7 +8,9 @@ subtitle: 'R3ape1团队笔记'
 description: '青年们要充分认识自己所负的重任'
 keywords:
 author: R3ape1
-language: en
+language: 
+  - zh-CN
+  - en
 timezone: ''
 
 # URL
@@ -312,7 +314,7 @@ theme_config:
   # ---------------------------------------------------------------
 
   # Show multilingual switcher in footer.
-  language_switcher: false
+  language_switcher: true
 
   footer:
     # Specify the year when the site was setup. If not defined, current year will be used.
@@ -373,7 +375,7 @@ theme_config:
     item_text_total: false
 
   # Use icon instead of the symbol # to indicate the tag at the bottom of the post
-  tag_icon: false
+  tag_icon: true
 
   # Donate (Sponsor) settings
   # Front-matter variable (nonsupport animation).
@@ -854,7 +856,7 @@ theme_config:
   # Local Search
   # Dependencies: https://github.com/next-theme/hexo-generator-searchdb
   local_search:
-    enable: false
+    enable: true
     # If auto, trigger search by changing input.
     # If manual, trigger search by pressing enter key or search button.
     trigger: auto
