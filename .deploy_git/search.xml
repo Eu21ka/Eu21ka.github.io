@@ -4,7 +4,7 @@
     <title>embryoio level1</title>
     <url>/2022/06/08/embryoio-level1/</url>
     <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>![屏幕截图 2022-06-07 115529](&#x2F;屏幕截图 2022-06-07 115529.png)</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>![屏幕截图 2022-06-07 115529](embryoio-level1&#x2F;屏幕截图 2022-06-07 115529.png)</p>
 <p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
 ]]></content>
       <categories>
