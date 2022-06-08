@@ -15,7 +15,7 @@ categories:
 
 ### 运行程序
 
-![level](level.png)
+![level1](level1.png)
 
 可以看到进入challenge目录后运行题目程序就得到了一个flag
 
