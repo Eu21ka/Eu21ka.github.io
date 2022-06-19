@@ -234,7 +234,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:25:34" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:26:38" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -243,6 +243,10 @@
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E6%AF%94%E8%B5%9B%EF%BC%8C2022ISCC/" itemprop="url" rel="index"><span itemprop="name">比赛，2022ISCC</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98%EF%BC%8Cpwncollege%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">刷题，pwncollege刷题日记</span></a>
         </span>
     </span>
 
@@ -292,7 +296,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.png">
@@ -310,7 +314,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC3/" class="post-title-link" itemprop="url">ISCC 2022 MISC3</a>
+          <a href="/2022/06/19/ISCC%202022%20MISC1/" class="post-title-link" itemprop="url">ISCC 2022 MISC1</a>
         </h2>
 
         <div class="post-meta-container">
@@ -322,7 +326,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:13:08" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:12:47" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -344,18 +348,27 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>下载附件，根据题目要求用winrar打开</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
+          <p>首先下载附件解压缩</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps1.jpg" class="" title="img"> 
 
-<p>poem.txt中的内容是五行星星</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
+<p>发现是苏翊鸣的照片，这里看到了照片的一部分，可以猜到是照片的长度被修改了，拖入winhex</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps2.jpg" class="" title="img"> 
 
-<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
-<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
+<p>将长度这的16进制数值修改为4，得到如下图片</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps3.jpg" class="" title="img"> 
 
-<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
-<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
+<p>扫描二维码</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps4.jpg" class="" title="img"> 
+
+<p>得到了一串unicode编码，进行在线解码</p>
+<p><a target="_blank" rel="noopener" href="https://c.runoob.com/front-end/3602/">https://c.runoob.com/front-end/3602/</a></p>
+<p>点击unicode转中文</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps5.jpg" class="" title="img"> 
+
+<p>由于附件中另一个压缩包需要密码，那就猜测这里的描述很可能是压缩包密码，查阅资料应该是15 9 4 2，作为压缩包的密码，可以解得答案</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps6.jpg" class="" title="img"> 
+
+<p>ISCC{beij-dbxj-2013}</p>
 
       
     </div>
@@ -478,6 +491,96 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/ISCC%202022%20MISC3/" class="post-title-link" itemprop="url">ISCC 2022 MISC3</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:13:08" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B%EF%BC%8C2022ISCC/" itemprop="url" rel="index"><span itemprop="name">比赛，2022ISCC</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>下载附件，根据题目要求用winrar打开</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
+
+<p>poem.txt中的内容是五行星星</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
+
+<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
+<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
+
+<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
+<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -540,105 +643,6 @@
 
 <p>接下来对应着知道该文本的星星解出来的unicode码，再进行在线unicode解码就可以了</p>
 <p>本题没有考察新知识点，一道脑洞题。要找到规律。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC1/" class="post-title-link" itemprop="url">ISCC 2022 MISC1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:12:47" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B%EF%BC%8C2022ISCC/" itemprop="url" rel="index"><span itemprop="name">比赛，2022ISCC</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>首先下载附件解压缩</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps1.jpg" class="" title="img"> 
-
-<p>发现是苏翊鸣的照片，这里看到了照片的一部分，可以猜到是照片的长度被修改了，拖入winhex</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps2.jpg" class="" title="img"> 
-
-<p>将长度这的16进制数值修改为4，得到如下图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps3.jpg" class="" title="img"> 
-
-<p>扫描二维码</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps4.jpg" class="" title="img"> 
-
-<p>得到了一串unicode编码，进行在线解码</p>
-<p><a target="_blank" rel="noopener" href="https://c.runoob.com/front-end/3602/">https://c.runoob.com/front-end/3602/</a></p>
-<p>点击unicode转中文</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps5.jpg" class="" title="img"> 
-
-<p>由于附件中另一个压缩包需要密码，那就猜测这里的描述很可能是压缩包密码，查阅资料应该是15 9 4 2，作为压缩包的密码，可以解得答案</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps6.jpg" class="" title="img"> 
-
-<p>ISCC{beij-dbxj-2013}</p>
 
       
     </div>
@@ -844,7 +848,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#x77;&#97;&#x6e;&#103;&#x79;&#x69;&#x68;&#x61;&#x6e;&#103;&#x65;&#114;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x77;&#97;&#x6e;&#103;&#x79;&#x69;&#x68;&#x61;&#x6e;&#103;&#x65;&#114;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#119;&#x61;&#110;&#x67;&#121;&#105;&#x68;&#97;&#110;&#x67;&#x65;&#114;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#119;&#x61;&#110;&#x67;&#121;&#105;&#x68;&#97;&#110;&#x67;&#x65;&#114;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
