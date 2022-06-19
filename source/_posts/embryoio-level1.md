@@ -4,8 +4,7 @@ date: 2022-06-08 15:19:11
 tags:
 - pwn
 categories:
-- [比赛，2022ISCC]
-- [刷题，pwncollege刷题日记]
+- [刷题, pwncollege刷题日记]
 ---
 
 ## 题目简介
