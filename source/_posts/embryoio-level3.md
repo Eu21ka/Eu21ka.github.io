@@ -4,7 +4,7 @@ date: 2022-06-08 15:27:59
 tags:
 - pwn
 categories:
-- pwncollege刷题日记
+- [刷题，pwncollege刷题日记]
 ---
 
 ## 题目简介
