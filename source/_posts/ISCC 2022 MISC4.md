@@ -1,11 +1,11 @@
-```
+---
 title: ISCC 2022 MISC4
 date: 2022-06-019 22:19:11
 tags:
 - misc
 categories:
 - [比赛, 2022ISCC]
-```
+---
 
 下载附件打开压缩包
 
