@@ -204,6 +204,290 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E5%85%B3%E4%BA%8ETCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/%E5%85%B3%E4%BA%8ETCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">关于TCP与UDP协议的学习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:37:36" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/%E5%85%B6%E5%AE%83%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">其它笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>TCP协议的**<em>*<em>三次握手，传输确认，四次挥手*</em>*</em>*</p>
+<p>一.TCP三次握手</p>
+<p>客户端                 服务端</p>
+<p>  1.lnit                     2.Listen</p>
+<p>3.SYN-SEN                 4.SYN-RCVD</p>
+<p>5.ESTABLISHED              6.ESTABLISHED</p>
+<p>刚开始由客户端1发送给服务端2 SYN包，询问服务端是否能与其建立练接。服务端同意后回了 SYN+ACK包给客户端3，客户端3再回ACK包给服务端4，三次握手建立，连接成功。</p>
+<p>二.传输确认</p>
+<p>   个人理解认为，传输确认这一步骤很大原因是为了防止丢包，保证TCP协议的稳定可靠性。</p>
+<p>发送缓冲区：0 1 2 3 4 5 6 7 8 9 10 11 12</p>
+<p>发送报文：序列号+长度+发送缓冲区中的数据内容</p>
+<p>回复确认：ACK&#x3D;序列号+长度&#x3D;下一包的起始序列号</p>
+<p>​    由三次握手可以确认客户端与服务端传输的是同一次的包，防止丢包现象的发生，同时也因为拥有数据内容，客户端也可以传输数据片段给服务端，服务端再根据数据片段重新拼装成完整的数据内容。（同时这也可以让服务端确认缺失了哪一段数据，要求客户端重新发送）</p>
+<p>三.四次挥手  ps：客户端与服务端都可以发起关闭请求</p>
+<p>​                                </p>
+<p>​      客户端  &lt;——————关闭连接——————&gt;  服务端</p>
+<p>——1.ESTABLISHED                          2.ESTABLISHED—</p>
+<p>|  第一次挥手                                                     第二次挥手|</p>
+<p>——3.FIN-WAIT-1                            4.CLOSE-WAIT—</p>
+<p>​                                                              第三次挥手|</p>
+<p>——5.FIN-WAIT-2                            6.LAST-ACK   —</p>
+<p>|</p>
+<p>|    7.TIME-WAIT                            8.CLOSED</p>
+<p>|第四次挥手</p>
+<p>——9.CLOSED</p>
+<p>四次挥手流程：</p>
+<p>1-&gt;2：客户端向服务端发送了FIN包然后进入了3（终止等待1状态）</p>
+<p>2-&gt;3：服务端回了ACK包给3后进入了4（关闭等待状态），而3收到了ACK包以后进入了5（终止等待2状态）</p>
+<p>（此时服务端还能发送数据，客户端还能接收数据，待数据传输完成后开始下一步。）</p>
+<p>4-&gt;5：确认传输完成后4会向5发送FIN包，然后进入6（最后的确认状态）</p>
+<p>5-&gt;6：5收到来自4的FIN包以后会向6发送ACK包，然后进入超时等待状态</p>
+<p>6-&gt;8：当6收到来自5的ACK包后会立马进入8（也就是立马关闭）</p>
+<p>7-&gt;9：经过超时时间后会自动关闭也就是7-&gt;9</p>
+<p>ps：为什么要有超时等待状态：</p>
+<p>（一句话概括就是为了确保服务端关闭）</p>
+<p>详：是为了确认服务端收到ACK包（如不等待且服务端没有收到ACK包，那么服务端就会停留在最后的确认状态）。等待时，如服务端未收到ACK包，那么就会重复4-&gt;5，服务端重新发送FIN包，而客户端收到后也就会重新发送ACK包（超时等待时间也会被重新刷新）。</p>
+<p>UDP协议（非连接）</p>
+<p>简单封装数据包并从网卡发出，数据包间无状态上的联系</p>
+<p>因此推出UDP的特征：1.性能损耗少 2.资源占用少 3.稳定性弱</p>
+<p>TCP与UDP差异：</p>
+<p>1.TCP面向连接，UDP面向报文</p>
+<p>2.TCP对系统资源要求较多，UDP结构相对简单</p>
+<p>3.TCP稳定可靠，UDP传输数据快</p>
+<p>TCP 用于传输文件，发送邮件，浏览网页等</p>
+<p>（用于对传输质量要求较高的地方）</p>
+<p>UDP 用于域名查询，语音通话，视频直播等</p>
+<p> 还可以用于隧道网络：VPN，VXLAN</p>
+<p>（用于对速度要求高，但是对少量丢包没有太大要求的场景）</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/" class="post-title-link" itemprop="url">国赛 misc ez_usb</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:34:00" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/2022%E5%9B%BD%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">2022国赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>下载附件，发现是usb的流量分析</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps1.jpg" class="" title="img"> 
+
+<p>直接拖进kali中使用keyboard脚本，发现跑不出东西，想到应该需要过滤</p>
+<p>尝试尝试，在过滤usb.src &#x3D;&#x3D;”2.8.1”的时候发现了线索，以该过滤导出压缩包</p>
+<p>左上角，导出特定分组</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps2.jpg" class="" title="img"> 
+
+<p>用usbkeyboard脚本跑</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps3.jpg" class="" title="img"> 
+
+<p>看到了rar，用winhex打开数据（这里要清除不相关数据后放入）</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps4.jpg" class="" title="img"> 
+
+<p>转化成rar压缩包，发现了加密的txt文件，需要寻找密码，一开始没什么头绪，就想着继续过滤一下，没想到在usb.src &#x3D;&#x3D;”2.10.1”时发现了东西，一样的方法导出另一个流量包并且用脚本跑</p>
+<p>（本题所用的keyboard脚本均为github拉下来的）</p>
+<p>脚本：</p>
+<p>#!&#x2F;usr&#x2F;bin&#x2F;env python</p>
+<p>import sys</p>
+<p>import os</p>
+<p>DataFileName &#x3D; “usb.dat”</p>
+<p>presses &#x3D; []</p>
+<p>normalKeys &#x3D; {“04”:”a”, “05”:”b”, “06”:”c”, “07”:”d”, “08”:”e”, “09”:”f”, “0a”:”g”, “0b”:”h”, “0c”:”i”, “0d”:”j”, “0e”:”k”, “0f”:”l”, “10”:”m”, “11”:”n”, “12”:”o”, “13”:”p”, “14”:”q”, “15”:”r”, “16”:”s”, “17”:”t”, “18”:”u”, “19”:”v”, “1a”:”w”, “1b”:”x”, “1c”:”y”, “1d”:”z”,”1e”:”1”, “1f”:”2”, “20”:”3”, “21”:”4”, “22”:”5”, “23”:”6”,”24”:”7”,”25”:”8”,”26”:”9”,”27”:”0”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”-“,”2e”:”&#x3D;”,”2f”:”[“,”30”:”]”,”31”:”\“,”32”:”<NON>“,”33”:”;”,”34”:”‘“,”35”:”<GA>“,”36”:”,”,”37”:”.”,”38”:”&#x2F;“,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
+<p>shiftKeys &#x3D; {“04”:”A”, “05”:”B”, “06”:”C”, “07”:”D”, “08”:”E”, “09”:”F”, “0a”:”G”, “0b”:”H”, “0c”:”I”, “0d”:”J”, “0e”:”K”, “0f”:”L”, “10”:”M”, “11”:”N”, “12”:”O”, “13”:”P”, “14”:”Q”, “15”:”R”, “16”:”S”, “17”:”T”, “18”:”U”, “19”:”V”, “1a”:”W”, “1b”:”X”, “1c”:”Y”, “1d”:”Z”,”1e”:”!”, “1f”:”@”, “20”:”#”, “21”:”$”, “22”:”%”, “23”:”^”,”24”:”&amp;”,”25”:”*”,”26”:”(“,”27”:”)”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”_”,”2e”:”+”,”2f”:”{“,”30”:”}”,”31”:”|”,”32”:”<NON>“,”33”:”&quot;“,”34”:”:”,”35”:”<GA>“,”36”:”&lt;”,”37”:”&gt;”,”38”:”?”,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
+<p>def main():</p>
+<p>  # check argv</p>
+<p>  if len(sys.argv) !&#x3D; 2:</p>
+<p>​    print(“Usage : “)</p>
+<p>​    print(“     python UsbKeyboardHacker.py data.pcap”)</p>
+<p>​    print(“Tips : “)</p>
+<p>​    print(“     To use this python script , you must install the tshark first.”)</p>
+<p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
+<p>​    print(“Author : “)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#x77;&#97;&#110;&#x67;&#x79;&#105;&#104;&#97;&#x6e;&#x67;&#x65;&#114;&#x40;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#x77;&#97;&#110;&#x67;&#x79;&#105;&#104;&#97;&#x6e;&#x67;&#x65;&#114;&#x40;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a>“)</p>
+<p>​    print(“     If you have any questions , please contact me by email.”)</p>
+<p>​    print(“     Thank you for using.”)</p>
+<p>​    exit(1)</p>
+<p>  # get argv</p>
+<p>  pcapFilePath &#x3D; sys.argv[1]</p>
+<p>  # get data of pcap</p>
+<p>  os.system(“tshark -r %s -T fields -e usb.capdata ‘usb.data_len &#x3D;&#x3D; 8’ &gt; %s” % (pcapFilePath, DataFileName))</p>
+<p>  # read data</p>
+<p>  with open(DataFileName, “r”) as f:</p>
+<p>​    for line in f:</p>
+<p>​      presses.append(line[0:-1])</p>
+<p>  # handle</p>
+<p>  result &#x3D; “”</p>
+<p>  for press in presses:</p>
+<p>​    if press &#x3D;&#x3D; ‘’:</p>
+<p>​      continue</p>
+<p>​    if ‘:’ in press:</p>
+<p>​      Bytes &#x3D; press.split(“:”)</p>
+<p>​    else:</p>
+<p>​      Bytes &#x3D; [press[i:i+2] for i in range(0, len(press), 2)]</p>
+<p>​    if Bytes[0] &#x3D;&#x3D; “00”:</p>
+<p>​      if Bytes[2] !&#x3D; “00” and normalKeys.get(Bytes[2]):</p>
+<p>​        result +&#x3D; normalKeys[Bytes[2]]</p>
+<p>​    elif int(Bytes[0],16) &amp; 0b10 or int(Bytes[0],16) &amp; 0b100000: # shift key is pressed.</p>
+<p>​      if Bytes[2] !&#x3D; “00” and normalKeys.get(Bytes[2]):</p>
+<p>​        result +&#x3D; shiftKeys[Bytes[2]]</p>
+<p>​    else:</p>
+<p>​      print(“[-] Unknow Key : %s” % (Bytes[0]))</p>
+<p>  print(“[+] Found : %s” % (result))</p>
+<p>  # clean the temp data</p>
+<p>  os.system(“rm .&#x2F;%s” % (DataFileName))</p>
+<p>if <strong>name</strong> &#x3D;&#x3D; “<strong>main</strong>“:</p>
+<p>  main()</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps5.jpg" class="" title="img"> 
+
+<p>发现了这一串，作为密码，解出！</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps6.jpg" class="" title="img"> 
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
