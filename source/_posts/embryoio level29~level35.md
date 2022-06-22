@@ -1,6 +1,6 @@
 ---
 title: embryoio level29~level35
-date: 2022-06-22 21:31:11
+date: 2022-06-22 21:33:11
 tags:
 - pwn
 categories:

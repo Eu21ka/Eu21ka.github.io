@@ -204,6 +204,103 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/22/embryoio%20level29~level35/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/22/embryoio%20level29~level35/" class="post-title-link" itemprop="url">embryoio level29~level35</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-22 21:33:11 / 修改时间：21:33:25" itemprop="dateCreated datePublished" datetime="2022-06-22T21:33:11+08:00">2022-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题日记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="embryoio-level29"><a href="#embryoio-level29" class="headerlink" title="embryoio level29"></a>embryoio level29</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>主要掌握c语言系统调用的使用</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/06/22/embryoio%20level29~level35/image-20220622191010760.png" class="" title="image-20220622191010760">
+
+<p>上面大致意思就是需要我们在用户目录下写个<code>.c</code>文件，并编译生成一个二进制文件，这个二进制程序里面需要有一个名叫<code>pwncollege</code>的方法，我们需要在父进程运行二进制文件，在子进程里执行题目程序。</p>
+<h3 id="编写c程序"><a href="#编写c程序" class="headerlink" title="编写c程序"></a>编写c程序</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line"> execve(<span class="string">&quot;/challenge/embryoio_level29&quot;</span>,argv,env);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[],<span class="type">char</span>* env[])</span>&#123;</span><br><span class="line">    <span class="type">pid_t</span> fpid;</span><br><span class="line">    fpid=fork();</span><br><span class="line">    <span class="keyword">if</span>(fpid&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;error in fork!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;我是子进程\n&quot;</span>);</span><br><span class="line">            pwncollege(argv,env);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;我是父进程\n&quot;</span>);</span><br><span class="line">            wait(<span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上代码主要实现的是，利用<code>fork()</code>创建一个子进程，用<code>fpid</code>的值来标识程序目前是在执行哪个进程，如果是子进程，则执行<code>execve()</code>系统调用。如果是父进程则等待子进程结束。程序写好后使用以下shell指令编译c文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc run.c -o run		#我这里的文件名是“run.c”，“-o”表示自己定义生成的二进制文件文件名，默认是“a.out”。</span><br></pre></td></tr></table></figure>
+
+<p>编译成功后<code>./run</code>运行后即可获得flag。</p>
+<h1 id="embryoio-level30-level35"><a href="#embryoio-level30-level35" class="headerlink" title="embryoio level30~level35"></a>embryoio level30~level35</h1><p>后面的题目解题方法也是和之前的一样，所以还是老样子就放个exp，不讲太多，需要注意的是，每次修改c文件后都要重新编译。</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//================level30================</span></span><br><span class="line"><span class="comment">//c程序和level29一样，只不过是运行后还需要输入password（程序会给）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level31================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newargv[]=&#123;<span class="string">&quot;embryoio_level31&quot;</span>,<span class="string">&quot;password&quot;</span>,<span class="literal">NULL</span>&#125;; <span class="comment">//这题需要一个外部参数作为密码，其它代码不变，将password替换为程序给出的密码</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level31&quot;</span>,newargv,env);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//================level32================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newenv[] = &#123;<span class="string">&quot;environment=value&quot;</span>,<span class="literal">NULL</span>&#125;;	<span class="comment">//这题和上一题差不多，替换为对应的环境变量即可</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level32&quot;</span>,argv,newenv); </span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//================level33================</span></span><br><span class="line"><span class="comment">//c程序和level29一样，只不过是需要在执行的时候有个重定向操作</span></span><br><span class="line"><span class="comment">//使用“./run &lt; /tmp/filename”执行（filename替换为程序给出的文件名），会给出需要的密码提示，将密码写进去再次运行则可以拿到flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level34================</span></span><br><span class="line"><span class="comment">//具体操作和上一题差不多</span></span><br><span class="line"><span class="comment">//使用“./run &gt; /tmp/filename”执行，flag就被输出到目标文件下，cat以下即可获得flag。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level35================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newenv[] = &#123;<span class="literal">NULL</span>&#125;;		<span class="comment">//这题需要一个空环境变量，那么就将newenv设为NULL即可，其它代码保持不变，运行即可获得flag。</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level35&quot;</span>,argv,newenv);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/22/embryoio%20level15~level28/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -301,103 +398,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/22/embryoio%20level29~level35/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/22/embryoio%20level29~level35/" class="post-title-link" itemprop="url">embryoio level29~level35</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-22 21:31:11 / 修改时间：21:32:03" itemprop="dateCreated datePublished" datetime="2022-06-22T21:31:11+08:00">2022-06-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题日记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="embryoio-level29"><a href="#embryoio-level29" class="headerlink" title="embryoio level29"></a>embryoio level29</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>主要掌握c语言系统调用的使用</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/06/22/embryoio%20level29~level35/image-20220622191010760.png" class="" title="image-20220622191010760">
-
-<p>上面大致意思就是需要我们在用户目录下写个<code>.c</code>文件，并编译生成一个二进制文件，这个二进制程序里面需要有一个名叫<code>pwncollege</code>的方法，我们需要在父进程运行二进制文件，在子进程里执行题目程序。</p>
-<h3 id="编写c程序"><a href="#编写c程序" class="headerlink" title="编写c程序"></a>编写c程序</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line"> execve(<span class="string">&quot;/challenge/embryoio_level29&quot;</span>,argv,env);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[],<span class="type">char</span>* env[])</span>&#123;</span><br><span class="line">    <span class="type">pid_t</span> fpid;</span><br><span class="line">    fpid=fork();</span><br><span class="line">    <span class="keyword">if</span>(fpid&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;error in fork!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;我是子进程\n&quot;</span>);</span><br><span class="line">            pwncollege(argv,env);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;我是父进程\n&quot;</span>);</span><br><span class="line">            wait(<span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以上代码主要实现的是，利用<code>fork()</code>创建一个子进程，用<code>fpid</code>的值来标识程序目前是在执行哪个进程，如果是子进程，则执行<code>execve()</code>系统调用。如果是父进程则等待子进程结束。程序写好后使用以下shell指令编译c文件。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc run.c -o run		#我这里的文件名是“run.c”，“-o”表示自己定义生成的二进制文件文件名，默认是“a.out”。</span><br></pre></td></tr></table></figure>
-
-<p>编译成功后<code>./run</code>运行后即可获得flag。</p>
-<h1 id="embryoio-level30-level35"><a href="#embryoio-level30-level35" class="headerlink" title="embryoio level30~level35"></a>embryoio level30~level35</h1><p>后面的题目解题方法也是和之前的一样，所以还是老样子就放个exp，不讲太多，需要注意的是，每次修改c文件后都要重新编译。</p>
-<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//================level30================</span></span><br><span class="line"><span class="comment">//c程序和level29一样，只不过是运行后还需要输入password（程序会给）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level31================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newargv[]=&#123;<span class="string">&quot;embryoio_level31&quot;</span>,<span class="string">&quot;password&quot;</span>,<span class="literal">NULL</span>&#125;; <span class="comment">//这题需要一个外部参数作为密码，其它代码不变，将password替换为程序给出的密码</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level31&quot;</span>,newargv,env);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//================level32================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newenv[] = &#123;<span class="string">&quot;environment=value&quot;</span>,<span class="literal">NULL</span>&#125;;	<span class="comment">//这题和上一题差不多，替换为对应的环境变量即可</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level32&quot;</span>,argv,newenv); </span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//================level33================</span></span><br><span class="line"><span class="comment">//c程序和level29一样，只不过是需要在执行的时候有个重定向操作</span></span><br><span class="line"><span class="comment">//使用“./run &lt; /tmp/filename”执行（filename替换为程序给出的文件名），会给出需要的密码提示，将密码写进去再次运行则可以拿到flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level34================</span></span><br><span class="line"><span class="comment">//具体操作和上一题差不多</span></span><br><span class="line"><span class="comment">//使用“./run &gt; /tmp/filename”执行，flag就被输出到目标文件下，cat以下即可获得flag。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level35================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newenv[] = &#123;<span class="literal">NULL</span>&#125;;		<span class="comment">//这题需要一个空环境变量，那么就将newenv设为NULL即可，其它代码保持不变，运行即可获得flag。</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level35&quot;</span>,argv,newenv);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%202022%E5%86%AC%E5%A5%A5%E4%BC%9A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -464,6 +464,204 @@
 <p>将flag.jpg放入winhex中得到flag</p>
 <img src="/2022/06/19/ISCC%202022%202022%E5%86%AC%E5%A5%A5%E4%BC%9A/wps3.jpg" class="" title="img"> 
 
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Sleuth Kit、Autopsy 的使用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:33:38" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/misc%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">misc笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题</p>
+<p>这是教程网站：</p>
+<p><a target="_blank" rel="noopener" href="https://linux.cn/article-5541-1.html">https://linux.cn/article-5541-1.html</a></p>
+<p>因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址：</p>
+<p><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/autopsy/files/autopsy/2.24/">https://sourceforge.net/projects/autopsy/files/autopsy/2.24/</a></p>
+<p>也可以跟着官网去配置最新版本（<a target="_blank" rel="noopener" href="http://www.sleuthkit.org/sleuthkit/">http://www.sleuthkit.org/sleuthkit/</a> 这是官网，Autopsy 也可以在里面找到），那个稍微有些麻烦，可能会有不断地报错，但如果对linux命令熟悉且精通的话，那大可以忽略我的话。</p>
+<p>这里就说说2.24版本，首先我们需要用root权限保持Autopsy 的后台开启着，不然他就会报错（记住要用root权限）</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg" class="" title="img"> 
+
+<p>这是报错情况</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg" class="" title="img"> 
+
+<p>这样就可以了，根据链接打开工具</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
+
+<p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/ISCC%202022%20MISC2/" class="post-title-link" itemprop="url">ISCC 2022 MISC2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:33:03" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/2022ISCC/" itemprop="url" rel="index"><span itemprop="name">2022ISCC</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>打开压缩包，里面有一张图片</p>
+<img src="/2022/06/19/ISCC%202022%20MISC2/wps7.jpg" class="" title="img"> 
+
+<p>是一张魔女的图片，放入kali中foremost分离，分离出了另一张图片</p>
+<img src="/2022/06/19/ISCC%202022%20MISC2/wps8.jpg" class="" title="img"> 
+
+<p>对这张图片进行zsteg的操作，首先zsteg -a查看lsb的各项数据</p>
+<img src="/2022/06/19/ISCC%202022%20MISC2/wps9.jpg" class="" title="img"> 
+
+<p>在这里发现了点东西，接着就是使用zsteg -E了</p>
+<p>zsteg -E b1,r,lsb,yx 该图片名称.png &gt; out.png</p>
+<p>得到out.png</p>
+<p>根据刚下载下来的时候的魔女图片想到这应该是魔女之旅的字体</p>
+<img src="/2022/06/19/ISCC%202022%20MISC2/wps10.jpg" class="" title="img"> 
+
+<img src="/2022/06/19/ISCC%202022%20MISC2/wps11.jpg" class="" title="img"> 
+
+<p>根据out.png上面的字对应上方两张图片的字体，按照题目的要求变成ISCC{xxxx-xxxx-xxxx}的格式（需要全部大写）就是答案了</p>
 
       
     </div>
@@ -593,106 +791,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC2/" class="post-title-link" itemprop="url">ISCC 2022 MISC2</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:33:03" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022ISCC/" itemprop="url" rel="index"><span itemprop="name">2022ISCC</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>打开压缩包，里面有一张图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps7.jpg" class="" title="img"> 
-
-<p>是一张魔女的图片，放入kali中foremost分离，分离出了另一张图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps8.jpg" class="" title="img"> 
-
-<p>对这张图片进行zsteg的操作，首先zsteg -a查看lsb的各项数据</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps9.jpg" class="" title="img"> 
-
-<p>在这里发现了点东西，接着就是使用zsteg -E了</p>
-<p>zsteg -E b1,r,lsb,yx 该图片名称.png &gt; out.png</p>
-<p>得到out.png</p>
-<p>根据刚下载下来的时候的魔女图片想到这应该是魔女之旅的字体</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps10.jpg" class="" title="img"> 
-
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps11.jpg" class="" title="img"> 
-
-<p>根据out.png上面的字对应上方两张图片的字体，按照题目的要求变成ISCC{xxxx-xxxx-xxxx}的格式（需要全部大写）就是答案了</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -761,98 +859,6 @@
 
 <p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
 <p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/" class="post-title-link" itemprop="url">ISCC 2022 藏在星空中的诗-2</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:33:28" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022ISCC/" itemprop="url" rel="index"><span itemprop="name">2022ISCC</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>下载附件，打开是poem.txt</p>
-<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps4.jpg" class="" title="img"> 
-
-<p>初次看到，就觉得很像unicode编码毕竟划分开来五位还有反斜杠。前面第一个星星一样，肯定都是\u了接下来开始猜测后面的四位。前面四组就很像ISCC了，于是可以先借用之前的第一题的表格。查询了ISCC 的unicode编码，对应星星写到表格中，再把文本中出现的星星都用黄底标起来。（这里也可以猜到第五组星星和最后一组应该是“{”“}”）</p>
-<p>发现了表格中星星的unicode码的最后一位和本题的对应字母有关，重复的字母用之前的ISCC已经去掉了，试一试。</p>
-<p>下图是我对应出来的表格，可以作为参考</p>
-<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps5.jpg" class="" title="img"> 
-
-<p>接下来对应着知道该文本的星星解出来的unicode码，再进行在线unicode解码就可以了</p>
-<p>本题没有考察新知识点，一道脑洞题。要找到规律。</p>
 
       
     </div>
@@ -991,7 +997,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.png">
@@ -1009,7 +1015,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Sleuth Kit、Autopsy 的使用</a>
+          <a href="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/" class="post-title-link" itemprop="url">ISCC 2022 藏在星空中的诗-2</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1021,7 +1027,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:33:38" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:33:28" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1029,11 +1035,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/misc%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">misc笔记</span></a>
+          <a href="/categories/%E6%AF%94%E8%B5%9B/2022ISCC/" itemprop="url" rel="index"><span itemprop="name">2022ISCC</span></a>
         </span>
     </span>
 
@@ -1047,22 +1053,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题</p>
-<p>这是教程网站：</p>
-<p><a target="_blank" rel="noopener" href="https://linux.cn/article-5541-1.html">https://linux.cn/article-5541-1.html</a></p>
-<p>因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址：</p>
-<p><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/autopsy/files/autopsy/2.24/">https://sourceforge.net/projects/autopsy/files/autopsy/2.24/</a></p>
-<p>也可以跟着官网去配置最新版本（<a target="_blank" rel="noopener" href="http://www.sleuthkit.org/sleuthkit/">http://www.sleuthkit.org/sleuthkit/</a> 这是官网，Autopsy 也可以在里面找到），那个稍微有些麻烦，可能会有不断地报错，但如果对linux命令熟悉且精通的话，那大可以忽略我的话。</p>
-<p>这里就说说2.24版本，首先我们需要用root权限保持Autopsy 的后台开启着，不然他就会报错（记住要用root权限）</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg" class="" title="img"> 
+          <p>下载附件，打开是poem.txt</p>
+<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps4.jpg" class="" title="img"> 
 
-<p>这是报错情况</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg" class="" title="img"> 
+<p>初次看到，就觉得很像unicode编码毕竟划分开来五位还有反斜杠。前面第一个星星一样，肯定都是\u了接下来开始猜测后面的四位。前面四组就很像ISCC了，于是可以先借用之前的第一题的表格。查询了ISCC 的unicode编码，对应星星写到表格中，再把文本中出现的星星都用黄底标起来。（这里也可以猜到第五组星星和最后一组应该是“{”“}”）</p>
+<p>发现了表格中星星的unicode码的最后一位和本题的对应字母有关，重复的字母用之前的ISCC已经去掉了，试一试。</p>
+<p>下图是我对应出来的表格，可以作为参考</p>
+<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps5.jpg" class="" title="img"> 
 
-<p>这样就可以了，根据链接打开工具</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
-
-<p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
+<p>接下来对应着知道该文本的星星解出来的unicode码，再进行在线unicode解码就可以了</p>
+<p>本题没有考察新知识点，一道脑洞题。要找到规律。</p>
 
       
     </div>

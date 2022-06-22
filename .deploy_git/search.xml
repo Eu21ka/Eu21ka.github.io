@@ -23,33 +23,28 @@
       </tags>
   </entry>
   <entry>
-    <title>ISCC 2022 MISC1</title>
-    <url>/2022/06/19/ISCC%202022%20MISC1/</url>
-    <content><![CDATA[<p>首先下载附件解压缩</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps1.jpg" class="" title="img"> 
+    <title>Sleuth Kit、Autopsy 的使用</title>
+    <url>/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题</p>
+<p>这是教程网站：</p>
+<p><a href="https://linux.cn/article-5541-1.html">https://linux.cn/article-5541-1.html</a></p>
+<p>因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址：</p>
+<p><a href="https://sourceforge.net/projects/autopsy/files/autopsy/2.24/">https://sourceforge.net/projects/autopsy/files/autopsy/2.24/</a></p>
+<p>也可以跟着官网去配置最新版本（<a href="http://www.sleuthkit.org/sleuthkit/">http://www.sleuthkit.org/sleuthkit/</a> 这是官网，Autopsy 也可以在里面找到），那个稍微有些麻烦，可能会有不断地报错，但如果对linux命令熟悉且精通的话，那大可以忽略我的话。</p>
+<p>这里就说说2.24版本，首先我们需要用root权限保持Autopsy 的后台开启着，不然他就会报错（记住要用root权限）</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg" class="" title="img"> 
 
-<p>发现是苏翊鸣的照片，这里看到了照片的一部分，可以猜到是照片的长度被修改了，拖入winhex</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps2.jpg" class="" title="img"> 
+<p>这是报错情况</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg" class="" title="img"> 
 
-<p>将长度这的16进制数值修改为4，得到如下图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps3.jpg" class="" title="img"> 
+<p>这样就可以了，根据链接打开工具</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
 
-<p>扫描二维码</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps4.jpg" class="" title="img"> 
-
-<p>得到了一串unicode编码，进行在线解码</p>
-<p><a href="https://c.runoob.com/front-end/3602/">https://c.runoob.com/front-end/3602/</a></p>
-<p>点击unicode转中文</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps5.jpg" class="" title="img"> 
-
-<p>由于附件中另一个压缩包需要密码，那就猜测这里的描述很可能是压缩包密码，查阅资料应该是15 9 4 2，作为压缩包的密码，可以解得答案</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps6.jpg" class="" title="img"> 
-
-<p>ISCC{beij-dbxj-2013}</p>
+<p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
 ]]></content>
       <categories>
-        <category>比赛</category>
-        <category>2022ISCC</category>
+        <category>笔记</category>
+        <category>misc笔记</category>
       </categories>
       <tags>
         <tag>misc</tag>
@@ -86,6 +81,39 @@
       </tags>
   </entry>
   <entry>
+    <title>ISCC 2022 MISC1</title>
+    <url>/2022/06/19/ISCC%202022%20MISC1/</url>
+    <content><![CDATA[<p>首先下载附件解压缩</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps1.jpg" class="" title="img"> 
+
+<p>发现是苏翊鸣的照片，这里看到了照片的一部分，可以猜到是照片的长度被修改了，拖入winhex</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps2.jpg" class="" title="img"> 
+
+<p>将长度这的16进制数值修改为4，得到如下图片</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps3.jpg" class="" title="img"> 
+
+<p>扫描二维码</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps4.jpg" class="" title="img"> 
+
+<p>得到了一串unicode编码，进行在线解码</p>
+<p><a href="https://c.runoob.com/front-end/3602/">https://c.runoob.com/front-end/3602/</a></p>
+<p>点击unicode转中文</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps5.jpg" class="" title="img"> 
+
+<p>由于附件中另一个压缩包需要密码，那就猜测这里的描述很可能是压缩包密码，查阅资料应该是15 9 4 2，作为压缩包的密码，可以解得答案</p>
+<img src="/2022/06/19/ISCC%202022%20MISC1/wps6.jpg" class="" title="img"> 
+
+<p>ISCC{beij-dbxj-2013}</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+        <category>2022ISCC</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ISCC 2022 MISC3</title>
     <url>/2022/06/19/ISCC%202022%20MISC3/</url>
     <content><![CDATA[<p>下载附件，根据题目要求用winrar打开</p>
@@ -100,28 +128,6 @@
 
 <p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
 <p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-        <category>2022ISCC</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ISCC 2022 藏在星空中的诗-2</title>
-    <url>/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/</url>
-    <content><![CDATA[<p>下载附件，打开是poem.txt</p>
-<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps4.jpg" class="" title="img"> 
-
-<p>初次看到，就觉得很像unicode编码毕竟划分开来五位还有反斜杠。前面第一个星星一样，肯定都是\u了接下来开始猜测后面的四位。前面四组就很像ISCC了，于是可以先借用之前的第一题的表格。查询了ISCC 的unicode编码，对应星星写到表格中，再把文本中出现的星星都用黄底标起来。（这里也可以猜到第五组星星和最后一组应该是“{”“}”）</p>
-<p>发现了表格中星星的unicode码的最后一位和本题的对应字母有关，重复的字母用之前的ISCC已经去掉了，试一试。</p>
-<p>下图是我对应出来的表格，可以作为参考</p>
-<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps5.jpg" class="" title="img"> 
-
-<p>接下来对应着知道该文本的星星解出来的unicode码，再进行在线unicode解码就可以了</p>
-<p>本题没有考察新知识点，一道脑洞题。要找到规律。</p>
 ]]></content>
       <categories>
         <category>比赛</category>
@@ -174,34 +180,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Sleuth Kit、Autopsy 的使用</title>
-    <url>/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<p>这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题</p>
-<p>这是教程网站：</p>
-<p><a href="https://linux.cn/article-5541-1.html">https://linux.cn/article-5541-1.html</a></p>
-<p>因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址：</p>
-<p><a href="https://sourceforge.net/projects/autopsy/files/autopsy/2.24/">https://sourceforge.net/projects/autopsy/files/autopsy/2.24/</a></p>
-<p>也可以跟着官网去配置最新版本（<a href="http://www.sleuthkit.org/sleuthkit/">http://www.sleuthkit.org/sleuthkit/</a> 这是官网，Autopsy 也可以在里面找到），那个稍微有些麻烦，可能会有不断地报错，但如果对linux命令熟悉且精通的话，那大可以忽略我的话。</p>
-<p>这里就说说2.24版本，首先我们需要用root权限保持Autopsy 的后台开启着，不然他就会报错（记住要用root权限）</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg" class="" title="img"> 
-
-<p>这是报错情况</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg" class="" title="img"> 
-
-<p>这样就可以了，根据链接打开工具</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
-
-<p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>misc笔记</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>embryoio level15~level28</title>
     <url>/2022/06/22/embryoio%20level15~level28/</url>
     <content><![CDATA[<h1 id="embryoio-level15-level21"><a href="#embryoio-level15-level21" class="headerlink" title="embryoio level15~level21"></a>embryoio level15~level21</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>学会编写python脚本运行程序</p>
@@ -229,6 +207,28 @@
       </tags>
   </entry>
   <entry>
+    <title>ISCC 2022 藏在星空中的诗-2</title>
+    <url>/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/</url>
+    <content><![CDATA[<p>下载附件，打开是poem.txt</p>
+<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps4.jpg" class="" title="img"> 
+
+<p>初次看到，就觉得很像unicode编码毕竟划分开来五位还有反斜杠。前面第一个星星一样，肯定都是\u了接下来开始猜测后面的四位。前面四组就很像ISCC了，于是可以先借用之前的第一题的表格。查询了ISCC 的unicode编码，对应星星写到表格中，再把文本中出现的星星都用黄底标起来。（这里也可以猜到第五组星星和最后一组应该是“{”“}”）</p>
+<p>发现了表格中星星的unicode码的最后一位和本题的对应字母有关，重复的字母用之前的ISCC已经去掉了，试一试。</p>
+<p>下图是我对应出来的表格，可以作为参考</p>
+<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps5.jpg" class="" title="img"> 
+
+<p>接下来对应着知道该文本的星星解出来的unicode码，再进行在线unicode解码就可以了</p>
+<p>本题没有考察新知识点，一道脑洞题。要找到规律。</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+        <category>2022ISCC</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>embryoio level29~level35</title>
     <url>/2022/06/22/embryoio%20level29~level35/</url>
     <content><![CDATA[<h1 id="embryoio-level29"><a href="#embryoio-level29" class="headerlink" title="embryoio level29"></a>embryoio level29</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>主要掌握c语言系统调用的使用</p>
@@ -246,21 +246,6 @@
 
 
 
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwncollege刷题日记</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>embryoio level1</title>
-    <url>/2022/06/08/embryoio-level1/</url>
-    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
-<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -293,6 +278,21 @@
 <h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level3/level3-1.png" alt="屏幕截图 2022-06-07 122020"></p>
 <p>还是老样子，上来先运行题目程序，根据输出语句，大概可以知道这个程序需要一个外部输入参数，而且第一个外部输入参数的值也告诉了我们，所以我们在执行程序运行的时候，从外部传一个正确的值进去，就可以拿到flag了，具体操作如下图所示。</p>
 <p><img src="/2022/06/08/embryoio-level3/level3-2.png" alt="屏幕截图 2022-06-07 123654"></p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwncollege刷题日记</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>embryoio level1</title>
+    <url>/2022/06/08/embryoio-level1/</url>
+    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
+<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -503,7 +503,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#x77;&#97;&#110;&#x67;&#x79;&#105;&#104;&#97;&#x6e;&#x67;&#x65;&#114;&#x40;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#x77;&#97;&#110;&#x67;&#x79;&#105;&#104;&#97;&#x6e;&#x67;&#x65;&#114;&#x40;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#119;&#97;&#110;&#x67;&#x79;&#105;&#104;&#x61;&#x6e;&#x67;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;">&#119;&#97;&#110;&#x67;&#x79;&#105;&#104;&#x61;&#x6e;&#x67;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
