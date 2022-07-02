@@ -771,7 +771,7 @@
       </tags>
   </entry>
   <entry>
-    <title>BJDCTF2020Mark loves cat</title>
+    <title>(BJDCTF2020)Mark loves cat</title>
     <url>/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/</url>
     <content><![CDATA[<p>打开后发现是一个网页，这时候想到可能是某些文件泄露（常见的什么www文件或者git文件泄露），所以使用dirsearch扫描发现是git文件泄露，所以可以使用工具githack将泄露的git文件进行获取</p>
 <p><strong>由于是题目复现所以在做题过程中并未找到文件，参考了其他师傅们的文件特此说明</strong></p>
