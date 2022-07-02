@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="打开后发现是一个网页，这时候想到可能是某些文件泄露（常见的什么www文件或者git文件泄露），所以使用dirsearch扫描发现是git文件泄露，所以可以使用工具githack将泄露的git文件进行获取 由于是题目复现所以在做题过程中并未找到文件，参考了其他师傅们的文件特此说明 将获得的两个关键文件打开index.php和flag.php   开始审计index.php 我们知道flag被包含在其">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BJDCTF2020Mark loves cat">
+<meta property="og:url" content="http://example.com/2022/07/02/[BJDCTF2020]Mark%20loves%20cat/index.html">
+<meta property="og:site_name" content="230">
+<meta property="og:description" content="打开后发现是一个网页，这时候想到可能是某些文件泄露（常见的什么www文件或者git文件泄露），所以使用dirsearch扫描发现是git文件泄露，所以可以使用工具githack将泄露的git文件进行获取 由于是题目复现所以在做题过程中并未找到文件，参考了其他师傅们的文件特此说明 将获得的两个关键文件打开index.php和flag.php   开始审计index.php 我们知道flag被包含在其">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702115819334.png">
+<meta property="og:image" content="http://example.com/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702154016839.png">
+<meta property="og:image" content="http://example.com/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702154203645.png">
+<meta property="og:image" content="http://example.com/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702163133258.png">
+<meta property="og:image" content="http://example.com/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702162319293.png">
+<meta property="article:published_time" content="2022-07-02T14:23:00.000Z">
+<meta property="article:modified_time" content="2022-07-02T14:30:51.126Z">
+<meta property="article:author" content="R3ape1">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702115819334.png">
+
+
+<link rel="canonical" href="http://example.com/2022/07/02/[BJDCTF2020]Mark%20loves%20cat/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/07/02/[BJDCTF2020]Mark%20loves%20cat/","path":"2022/07/02/[BJDCTF2020]Mark loves cat/","title":"BJDCTF2020Mark loves cat"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>BJDCTF2020Mark loves cat | 230</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">230</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">R3ape1团队笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E5%87%A0%E4%B8%AA%E5%87%BD%E6%95%B0%E8%A7%A3%E9%87%8A"><span class="nav-number">1.</span> <span class="nav-text">关于代码中的几个函数解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E8%AF%A6%E6%83%85%E5%8F%8A%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">利用详情及原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81exit%EF%BC%88-handsomne%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">1、exit（$handsomne）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81exit-yds"><span class="nav-number">2.2.</span> <span class="nav-text">2、exit($yds)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81exit-is"><span class="nav-number">2.3.</span> <span class="nav-text">4、exit($is)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81echo-%E2%80%9Cthe-flag-is%EF%BC%9A%E2%80%9D-flag"><span class="nav-number">2.4.</span> <span class="nav-text">5、echo “the flag is：”.$flag</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Get%E6%96%B0%E7%9F%A5%E8%AF%86"><span class="nav-number">3.</span> <span class="nav-text">Get新知识</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="R3ape1"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">R3ape1</p>
+  <div class="site-description" itemprop="description">青年们要充分认识自己所负的重任</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/02/[BJDCTF2020]Mark%20loves%20cat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="BJDCTF2020Mark loves cat | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BJDCTF2020Mark loves cat
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-02 22:23:00 / 修改时间：22:30:51" itemprop="dateCreated datePublished" datetime="2022-07-02T22:23:00+08:00">2022-07-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/web%E9%A2%98%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">web题集</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>打开后发现是一个网页，这时候想到可能是某些文件泄露（常见的什么www文件或者git文件泄露），所以使用dirsearch扫描发现是git文件泄露，所以可以使用工具githack将泄露的git文件进行获取</p>
+<p><strong>由于是题目复现所以在做题过程中并未找到文件，参考了其他师傅们的文件特此说明</strong></p>
+<p>将获得的两个关键文件打开index.php和flag.php</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702115819334.png" class="" title="image-20220702115819334">
+
+<p>开始审计index.php</p>
+<p>我们知道flag被包含在其中了所以只要想办法将其输出就好（<strong>变量的覆盖利用</strong>）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="string">&#x27;flag.php&#x27;</span>;</span><br><span class="line"><span class="variable">$yds</span> = <span class="string">&quot;dog&quot;</span>;</span><br><span class="line"><span class="variable">$is</span> = <span class="string">&quot;cat&quot;</span>;</span><br><span class="line"><span class="variable">$handsome</span> = <span class="string">&#x27;yds&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_POST</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$y</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$$y</span>;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="variable">$x</span> &amp;&amp; <span class="variable">$x</span> !== <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET方式传flag只能传一个flag=flag</span></span><br><span class="line">        <span class="keyword">exit</span>(<span class="variable">$handsome</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>]) &amp;&amp; !<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>]))&#123;	<span class="comment">//GET和POST其中之一必须传flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$yds</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>  || <span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET和POST传flag,必须不能是flag=flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$is</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;the flag is：&quot;</span>.<span class="variable">$flag</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="关于代码中的几个函数解释"><a href="#关于代码中的几个函数解释" class="headerlink" title="关于代码中的几个函数解释"></a>关于代码中的几个函数解释</h2><p>exit（）：函数输出一条消息，并退出当前脚本。<strong>也是本题的利用点</strong></p>
+<p>isset（）：函数用于检测变量是否已设置并且非 NULL。</p>
+<h2 id="利用详情及原理"><a href="#利用详情及原理" class="headerlink" title="利用详情及原理"></a>利用详情及原理</h2><h3 id="1、exit（-handsomne）"><a href="#1、exit（-handsomne）" class="headerlink" title="1、exit（$handsomne）"></a>1、exit（$handsomne）</h3><p>关键代码部分：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$$y</span>;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="variable">$x</span> &amp;&amp; <span class="variable">$x</span> !== <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET方式传flag只能传一个flag=flag</span></span><br><span class="line">        <span class="keyword">exit</span>(<span class="variable">$handsome</span>);<span class="comment">//输出的地方最终将flag从此处输出</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一个foreach因为使用了”$$”存在变量覆盖漏洞因此可以将flag值传递给handsome</p>
+<p>即$handsome&#x3D;$flag</p>
+<p>所以要传入handsome&#x3D;flag</p>
+<p>第二个foreach要让输入的flag值强类型等于$x并且$x的值不等于flag</p>
+<p>所以我们可以输入a&#x3D;flag&amp;flag&#x3D;a</p>
+<p>这样$x&#x3D;a且flag传入的值也是a既可以绕过if判断将flag输出；</p>
+<p>payload：</p>
+<p>？handsome&#x3D;flag&amp;a&#x3D;flag&amp;flag&#x3D;a</p>
+<p>？handsome&#x3D;flag&amp;flag&#x3D;handsome</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702154016839.png" class="" title="image-20220702154016839">
+
+<h3 id="2、exit-yds"><a href="#2、exit-yds" class="headerlink" title="2、exit($yds)"></a>2、exit($yds)</h3><p>利用核心代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_POST</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$y</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>]) &amp;&amp; !<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>]))&#123;	<span class="comment">//GET和POST其中之一必须传flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$yds</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基于对get传参的理解（变量覆盖漏洞）</p>
+<p>第二个判断我们仅需通过传入get方式传入yds&#x3D;flag即可将flag值赋在yds上并且输出：</p>
+<p>payload：</p>
+<p>yds&#x3D;flag</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702154203645.png" class="" title="image-20220702154203645">
+
+
+
+<h3 id="4、exit-is"><a href="#4、exit-is" class="headerlink" title="4、exit($is)"></a>4、exit($is)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>  || <span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET和POST传flag,必须不能是flag=flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$is</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原理与之前的类似所以直接给payload了</p>
+<p>payload：is&#x3D;flag&amp;flag&#x3D;flag</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702163133258.png" class="" title="image-20220702163133258">
+
+
+
+<h3 id="5、echo-“the-flag-is：”-flag"><a href="#5、echo-“the-flag-is：”-flag" class="headerlink" title="5、echo “the flag is：”.$flag"></a>5、echo “the flag is：”.$flag</h3><p>我们看到在最后一段有这么一条语句，如果前面我们不将flag值进行改边那可以直接进行flag的输出</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;the flag is：&quot;</span>.<span class="variable">$flag</span>;</span><br></pre></td></tr></table></figure>
+
+<p>回想之前的代码在所有代码中的判断过程都是需要进行强类型判断所以当输入1时在解析过程中一个为字符型一个为整型所以就会跳过所有的if判断直到执行输出flag；</p>
+<p>payload：</p>
+<p>1&#x3D;flag&amp;flag&#x3D;1</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702162319293.png" class="" title="image-20220702162319293">
+
+<h2 id="Get新知识"><a href="#Get新知识" class="headerlink" title="Get新知识"></a>Get新知识</h2><p>当php语法中存在”$$x&#x3D;$$y”的情况下可能会存在变量覆盖漏洞所以只要通过合理的构造我们就可以从中获取flag；</p>
+<p>经常导致变量覆盖漏洞场景有：**$$** 使用不当，<strong>extract()</strong> 函数使用不当，<strong>parse_str()</strong> 函数使用不当，<strong>import_request_variables()</strong> 使用不当，开启了<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F&spm=1001.2101.3001.7020">全局变量</a>注册等。</p>
+<p>特别鸣谢：</p>
+<p>[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sanqiushu/p/15922456.html">BJDCTF2020]Mark loves cat | 四种解法 (新解法：强类型比较绕过) - Nestar - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45521281/article/details/105849770">(19条消息) 变量覆盖漏洞总结_WHOAMIAnony的博客-CSDN博客_变量覆盖漏洞</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/22/embryoio%20level29~level35/" rel="prev" title="embryoio level29~level35">
+                  <i class="fa fa-chevron-left"></i> embryoio level29~level35
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R3ape1</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

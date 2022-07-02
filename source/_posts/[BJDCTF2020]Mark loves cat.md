@@ -1,5 +1,5 @@
 ---
-title: [BJDCTF2020]Mark loves cat
+title: BJDCTF2020Mark loves cat
 date: 2022-07-02 22:23:00
 tags:
 - web

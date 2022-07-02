@@ -770,4 +770,73 @@
         <tag>Crypto</tag>
       </tags>
   </entry>
+  <entry>
+    <title>BJDCTF2020Mark loves cat</title>
+    <url>/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/</url>
+    <content><![CDATA[<p>打开后发现是一个网页，这时候想到可能是某些文件泄露（常见的什么www文件或者git文件泄露），所以使用dirsearch扫描发现是git文件泄露，所以可以使用工具githack将泄露的git文件进行获取</p>
+<p><strong>由于是题目复现所以在做题过程中并未找到文件，参考了其他师傅们的文件特此说明</strong></p>
+<p>将获得的两个关键文件打开index.php和flag.php</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702115819334.png" class="" title="image-20220702115819334">
+
+<p>开始审计index.php</p>
+<p>我们知道flag被包含在其中了所以只要想办法将其输出就好（<strong>变量的覆盖利用</strong>）</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="string">&#x27;flag.php&#x27;</span>;</span><br><span class="line"><span class="variable">$yds</span> = <span class="string">&quot;dog&quot;</span>;</span><br><span class="line"><span class="variable">$is</span> = <span class="string">&quot;cat&quot;</span>;</span><br><span class="line"><span class="variable">$handsome</span> = <span class="string">&#x27;yds&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_POST</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$y</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$$y</span>;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="variable">$x</span> &amp;&amp; <span class="variable">$x</span> !== <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET方式传flag只能传一个flag=flag</span></span><br><span class="line">        <span class="keyword">exit</span>(<span class="variable">$handsome</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>]) &amp;&amp; !<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>]))&#123;	<span class="comment">//GET和POST其中之一必须传flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$yds</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>  || <span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET和POST传flag,必须不能是flag=flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$is</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;the flag is：&quot;</span>.<span class="variable">$flag</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="关于代码中的几个函数解释"><a href="#关于代码中的几个函数解释" class="headerlink" title="关于代码中的几个函数解释"></a>关于代码中的几个函数解释</h2><p>exit（）：函数输出一条消息，并退出当前脚本。<strong>也是本题的利用点</strong></p>
+<p>isset（）：函数用于检测变量是否已设置并且非 NULL。</p>
+<h2 id="利用详情及原理"><a href="#利用详情及原理" class="headerlink" title="利用详情及原理"></a>利用详情及原理</h2><h3 id="1、exit（-handsomne）"><a href="#1、exit（-handsomne）" class="headerlink" title="1、exit（$handsomne）"></a>1、exit（$handsomne）</h3><p>关键代码部分：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$$y</span>;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="variable">$x</span> &amp;&amp; <span class="variable">$x</span> !== <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET方式传flag只能传一个flag=flag</span></span><br><span class="line">        <span class="keyword">exit</span>(<span class="variable">$handsome</span>);<span class="comment">//输出的地方最终将flag从此处输出</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一个foreach因为使用了”$$”存在变量覆盖漏洞因此可以将flag值传递给handsome</p>
+<p>即$handsome&#x3D;$flag</p>
+<p>所以要传入handsome&#x3D;flag</p>
+<p>第二个foreach要让输入的flag值强类型等于$x并且$x的值不等于flag</p>
+<p>所以我们可以输入a&#x3D;flag&amp;flag&#x3D;a</p>
+<p>这样$x&#x3D;a且flag传入的值也是a既可以绕过if判断将flag输出；</p>
+<p>payload：</p>
+<p>？handsome&#x3D;flag&amp;a&#x3D;flag&amp;flag&#x3D;a</p>
+<p>？handsome&#x3D;flag&amp;flag&#x3D;handsome</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702154016839.png" class="" title="image-20220702154016839">
+
+<h3 id="2、exit-yds"><a href="#2、exit-yds" class="headerlink" title="2、exit($yds)"></a>2、exit($yds)</h3><p>利用核心代码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_POST</span> <span class="keyword">as</span> <span class="variable">$x</span> =&gt; <span class="variable">$y</span>)&#123;</span><br><span class="line">    <span class="variable">$$x</span> = <span class="variable">$y</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>]) &amp;&amp; !<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>]))&#123;	<span class="comment">//GET和POST其中之一必须传flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$yds</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基于对get传参的理解（变量覆盖漏洞）</p>
+<p>第二个判断我们仅需通过传入get方式传入yds&#x3D;flag即可将flag值赋在yds上并且输出：</p>
+<p>payload：</p>
+<p>yds&#x3D;flag</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702154203645.png" class="" title="image-20220702154203645">
+
+
+
+<h3 id="4、exit-is"><a href="#4、exit-is" class="headerlink" title="4、exit($is)"></a>4、exit($is)</h3><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>  || <span class="variable">$_GET</span>[<span class="string">&#x27;flag&#x27;</span>] === <span class="string">&#x27;flag&#x27;</span>)&#123;	<span class="comment">//GET和POST传flag,必须不能是flag=flag</span></span><br><span class="line">    <span class="keyword">exit</span>(<span class="variable">$is</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原理与之前的类似所以直接给payload了</p>
+<p>payload：is&#x3D;flag&amp;flag&#x3D;flag</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702163133258.png" class="" title="image-20220702163133258">
+
+
+
+<h3 id="5、echo-“the-flag-is：”-flag"><a href="#5、echo-“the-flag-is：”-flag" class="headerlink" title="5、echo “the flag is：”.$flag"></a>5、echo “the flag is：”.$flag</h3><p>我们看到在最后一段有这么一条语句，如果前面我们不将flag值进行改边那可以直接进行flag的输出</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;the flag is：&quot;</span>.<span class="variable">$flag</span>;</span><br></pre></td></tr></table></figure>
+
+<p>回想之前的代码在所有代码中的判断过程都是需要进行强类型判断所以当输入1时在解析过程中一个为字符型一个为整型所以就会跳过所有的if判断直到执行输出flag；</p>
+<p>payload：</p>
+<p>1&#x3D;flag&amp;flag&#x3D;1</p>
+<img src="/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/image-20220702162319293.png" class="" title="image-20220702162319293">
+
+<h2 id="Get新知识"><a href="#Get新知识" class="headerlink" title="Get新知识"></a>Get新知识</h2><p>当php语法中存在”$$x&#x3D;$$y”的情况下可能会存在变量覆盖漏洞所以只要通过合理的构造我们就可以从中获取flag；</p>
+<p>经常导致变量覆盖漏洞场景有：**$$** 使用不当，<strong>extract()</strong> 函数使用不当，<strong>parse_str()</strong> 函数使用不当，<strong>import_request_variables()</strong> 使用不当，开启了<a href="https://so.csdn.net/so/search?q=%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F&spm=1001.2101.3001.7020">全局变量</a>注册等。</p>
+<p>特别鸣谢：</p>
+<p>[<a href="https://www.cnblogs.com/sanqiushu/p/15922456.html">BJDCTF2020]Mark loves cat | 四种解法 (新解法：强类型比较绕过) - Nestar - 博客园 (cnblogs.com)</a></p>
+<p><a href="https://blog.csdn.net/qq_45521281/article/details/105849770">(19条消息) 变量覆盖漏洞总结_WHOAMIAnony的博客-CSDN博客_变量覆盖漏洞</a></p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
 </search>
