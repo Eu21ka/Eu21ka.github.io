@@ -922,4 +922,63 @@
         <tag>web</tag>
       </tags>
   </entry>
+  <entry>
+    <title>变量1（BUGKU）</title>
+    <url>/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/</url>
+    <content><![CDATA[<p>前言：php是一门非常好的语言^o^</p>
+<p>打开题目是一段代码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;flag1.php&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(__file__);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;args&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$args</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;args&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/^\w+$/&quot;</span>,<span class="variable">$args</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;args error!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">eval</span>(<span class="string">&quot;var_dump($<span class="subst">$args</span>);&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>关注到三个点</p>
+<p>1、存在eval（<strong>eval类型函数是代码执行</strong>）</p>
+<p>2、存在”$$”即存在变量覆盖漏洞（猜测）</p>
+<p>3、var_dump()：这个函数可以输出数组（我认为这也可以算一个小小的提示）</p>
+<p>4、最后就是要理解这个正则表达式的意思了</p>
+<p>&#x2F;^\w+$&#x2F;：匹配所有非字母数字，即符号&#x3D;&#x3D;&#x3D;》将他带入条件中就是输入中不允许存在除数字字母外的东西</p>
+<p>一篇文章速成正则：<a href="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md#21-%E7%82%B9%E8%BF%90%E7%AE%97%E7%AC%A6-">learn-regex&#x2F;README-cn.md at master · ziishaned&#x2F;learn-regex · GitHub</a></p>
+<p>纯字母+$$所以可以使用$GLOBALS 来输出flag</p>
+<p>payload：?args&#x3D;GLOBALS</p>
+<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195653905.png" class="" title="image-20220704195653905">
+
+<h2 id="GET新知识点-php九大全局变量"><a href="#GET新知识点-php九大全局变量" class="headerlink" title="GET新知识点  php九大全局变量"></a>GET新知识点  php九大全局变量</h2><p>（借用此题顺便展示一下效果，方便理解）</p>
+<ul>
+<li><p>$_POST [用于接收post提交的数据]</p>
+</li>
+<li><p>$_GET [用于获取url地址栏的参数数据]</p>
+<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195403598.png" class="" title="image-20220704195403598">
+
+
+</li>
+<li><p>$_FILES [用于文件就收的处理img 最常见]</p>
+</li>
+<li><p>$_COOKIE [用于获取与setCookie()中的name 值]</p>
+<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195528785.png" class="" title="image-20220704195528785">
+
+
+</li>
+<li><p>$_SESSION [用于存储session的值或获取session中的值]</p>
+</li>
+<li><p>$_REQUEST [具有get,post的功能，但比较慢]</p>
+</li>
+<li><p>SERVER[是预定义服务器变量的一种，所有SERVER[是预定义服务器变量的一种，所有_SERVER [是预定义服务器变量的一种，所有_SERVER开头的都</p>
+</li>
+<li><p>$GLOBALS [一个包含了全部变量的全局组合数组]</p>
+<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195847966.png" class="" title="image-20220704195847966">
+
+<p>效果如上</p>
+</li>
+<li><p>$_ENV [ 是一个包含服务器端环境变量的数组。它是PHP中一个超级全局变量，我们可以在PHP 程序的任何地方直接访问它]</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>刷题</category>
+        <category>web题集</category>
+        <category>web笔记</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
 </search>

@@ -1,6 +1,6 @@
 ---
 title: Sleuth Kit、Autopsy 的使用
-date: 2022-06-019 22:19:11
+date: 2022-06-19 22:19:11
 tags:
 - misc
 categories:
