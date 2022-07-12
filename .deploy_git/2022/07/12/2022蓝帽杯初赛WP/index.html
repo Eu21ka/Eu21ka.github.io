@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="misc_domainhacker下载附件，发现是流量分析题，用wireshark打开   在这里找到了rar文件，导出后发现需要密码，于是继续探索 在tcp追踪流13发现了有用信息   阅读拼接进行base64解密试试   发现了密码，解压压缩包   发现是mimikatz工具的界面，于是在NTLM这里找到了hash值     手机取证_1用盘古石阅读器打开，搜索题目给出的图片的名字   导出该">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蓝帽杯初赛WP">
+<meta property="og:url" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/index.html">
+<meta property="og:site_name" content="230">
+<meta property="og:description" content="misc_domainhacker下载附件，发现是流量分析题，用wireshark打开   在这里找到了rar文件，导出后发现需要密码，于是继续探索 在tcp追踪流13发现了有用信息   阅读拼接进行base64解密试试   发现了密码，解压压缩包   发现是mimikatz工具的界面，于是在NTLM这里找到了hash值     手机取证_1用盘古石阅读器打开，搜索题目给出的图片的名字   导出该">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png">
+<meta property="og:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png">
+<meta property="article:published_time" content="2022-07-12T11:49:00.000Z">
+<meta property="article:modified_time" content="2022-07-12T11:51:42.208Z">
+<meta property="article:author" content="R3ape1">
+<meta property="article:tag" content="misc">
+<meta property="article:tag" content="取证">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif">
+
+
+<link rel="canonical" href="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/","path":"2022/07/12/2022蓝帽杯初赛WP/","title":"蓝帽杯初赛WP"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>蓝帽杯初赛WP | 230</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">230</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">R3ape1团队笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#misc-domainhacker"><span class="nav-number">1.</span> <span class="nav-text">misc_domainhacker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%8B%E6%9C%BA%E5%8F%96%E8%AF%81-1"><span class="nav-number">2.</span> <span class="nav-text">手机取证_1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%8B%E6%9C%BA%E5%8F%96%E8%AF%81-2"><span class="nav-number">3.</span> <span class="nav-text">手机取证_2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%96%E8%AF%81-1"><span class="nav-number">4.</span> <span class="nav-text">计算机取证_1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%96%E8%AF%81-2"><span class="nav-number">5.</span> <span class="nav-text">计算机取证_2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%96%E8%AF%81-3"><span class="nav-number">6.</span> <span class="nav-text">计算机取证_3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%96%E8%AF%81-4"><span class="nav-number">7.</span> <span class="nav-text">计算机取证_4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-1"><span class="nav-number">8.</span> <span class="nav-text">程序分析_1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-2"><span class="nav-number">9.</span> <span class="nav-text">程序分析_2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-3"><span class="nav-number">10.</span> <span class="nav-text">程序分析_3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90-4"><span class="nav-number">11.</span> <span class="nav-text">程序分析_4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E5%8F%96%E8%AF%81-1"><span class="nav-number">12.</span> <span class="nav-text">网站取证_1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E5%8F%96%E8%AF%81-2"><span class="nav-number">13.</span> <span class="nav-text">网站取证_2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E5%8F%96%E8%AF%81-3"><span class="nav-number">14.</span> <span class="nav-text">网站取证_3</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="R3ape1"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">R3ape1</p>
+  <div class="site-description" itemprop="description">青年们要充分认识自己所负的重任</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="蓝帽杯初赛WP | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          蓝帽杯初赛WP
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-12 19:49:00 / 修改时间：19:51:42" itemprop="dateCreated datePublished" datetime="2022-07-12T19:49:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">蓝帽杯初赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif" class="" title="图片">
+
+<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
+<p>在tcp追踪流13发现了有用信息</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif" class="" title="图片">
+
+<p>阅读拼接进行base64解密试试</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif" class="" title="图片">
+
+<p>发现了密码，解压压缩包</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif" class="" title="图片">
+
+<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif" class="" title="图片">
+
+<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif" class="" title="图片">
+
+<p>果然，在群组聊天中找到了快递单号</p>
+<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif" class="" title="图片">
+
+<p>找到了，发现是md5加密过的，md5解密</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif" class="" title="图片">得到开机密码anxinqi
+
+<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif" class="" title="图片">
+
+<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif" class="" title="图片">
+
+<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
+<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg" class="" title="图片">
+
+<p>导出了三个文件，其中就有ppt</p>
+<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif" class="" title="图片">
+
+<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif" class="" title="图片">
+
+<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif" class="" title="图片">
+
+
+
+<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
+<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif" class="" title="图片">
+
+<p>导出keyfile</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif" class="" title="图片">
+
+<p>新建案例，开始取证</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif" class="" title="图片">
+
+<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif" class="" title="图片">
+
+<p>打开压缩包，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif" class="" title="图片">
+
+<p>flag{1349934913913991394cacacacacacc}</p>
+<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
+<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png" class="" title="image-20220709190538890">
+
+<p>所以flag为“exec.azj.kny.d.c”。</p>
+<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png" class="" title="image-20220709190735776">
+
+<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
+<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
+<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png" class="" title="image-20220709191141536">
+
+<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
+<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
+<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
+<p>根据关键词查找发现如下内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png" class="" title="image-20220709191504565">
+
+<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png" class="" title="image-20220709191701294">
+
+<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
+<p>所以flag为“a”</p>
+<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif" class="" title="图片">
+
+<p>d盾扫描获得flag</p>
+<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png" class="" title="image-20220709202049506">
+
+
+
+<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/misc/" rel="tag"><i class="fa fa-tag"></i> misc</a>
+              <a href="/tags/%E5%8F%96%E8%AF%81/" rel="tag"><i class="fa fa-tag"></i> 取证</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/12/bof(wp)/" rel="prev" title="bof">
+                  <i class="fa fa-chevron-left"></i> bof
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R3ape1</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

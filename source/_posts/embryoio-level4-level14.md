@@ -4,7 +4,7 @@ date: 2022-06-11 13:13:46
 tags:
 - pwn
 categories:
-- [刷题, pwncollege刷题日记]
+- [刷题, pwncollege刷题]
 ---
 
 # embryoio level4

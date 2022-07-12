@@ -4,7 +4,7 @@ date: 2022-06-019 22:19:11
 tags:
 - misc
 categories:
-- [比赛, 2022ISCC]
+- [比赛, 2022, ISCC]
 ---
 
 下载附件，根据题目要求用winrar打开
