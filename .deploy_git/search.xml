@@ -1432,14 +1432,5 @@
 <h1 id="最后对文件进行读取："><a href="#最后对文件进行读取：" class="headerlink" title="最后对文件进行读取："></a>最后对文件进行读取：</h1><p>array_reverse() 以相反的元素顺序返回数组；</p>
 <p>我们可以使用array_rand(array_flip())，array_flip()是交换数组的键和值，array_rand()是随机返回一个数组。配合next，current等控制指针的函数调用我们所需要查看的文件即可；</p>
 ]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>刷题</category>
-        <category>web题集</category>
-        <category>web笔记</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-      </tags>
   </entry>
 </search>
