@@ -26,7 +26,7 @@ categories:
 2. var_dump():
 3. echo():
 
-3、常见正则匹配
+3、无参数rce常见正则匹配
 
 1、'/[^\W]+\((?R)?\)/'
 
@@ -46,7 +46,7 @@ if(';' === preg_replace('/[^\W]+\((?R)?\)/', '', $_GET['code'])) {
 }
 ```
 
-![img](/clip_image002.png)
+![img](/02.png)
  那么我们就无法使用参数，也就无法通过正则的校验
 
 在此过滤条件下我们只能执行如下格式的函数
@@ -73,13 +73,13 @@ a('abc');
 \3.    
 
 1. localtime(time())==>数组第一个值每秒+1，所以最多60秒就一定能得到46，用current(pos)就能获得"."                                                                                                   (可能是我的食用方式不大对，在使用2、3两个方法测试时并没有得到预期值T。T)             
-2. phpversion返回计算![img](/clip_image003.png)![img](/clip_image002.png)编辑
+2. phpversion返回计算![img](/03.png)![img](/02.png)编辑
 
 payload：chr(ceil(sinh(cosh(tan(floor(sqrt(floor(phpversion())))))))) 
 
 测试（题目，buu禁止套娃）：
 
-​     ![img](/clip_image004.png)![img](/clip_image002.png)编辑
+​     ![img](/04.png)![img](/02.png)编辑
 
 5.crypt()配合ord()
 
@@ -93,7 +93,7 @@ payload:chr(ord(hebrevc(crypt(time()))))
 
 测试（题目，buu禁止套娃）：
 
- ![img](/clip_image006.png)![img](/clip_image002.png)编辑
+ ![img](/06.png)![img](/02.png)编辑
 
  
 
@@ -101,7 +101,7 @@ payload:chr(ord(hebrevc(crypt(time()))))
 
 1. payload:var_dump(scandir(current(localeconv())));就可以遍历当前目录所有文件。
 
-​    ![img](/clip_image008.png)![img](/clip_image002.png)编辑
+​    ![img](/08.png)![img](/02.png)编辑
 
 current():它还有别名pos()，其实都是一样的。
 
@@ -109,11 +109,11 @@ current():它还有别名pos()，其实都是一样的。
 
 ### tips:如果在写题过程中这两个函数都被禁用了还可以使用reset（）函数；
 
-![img](/clip_image010.png)![img](/clip_image002.png)编辑![img](/clip_image012.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/clip_image002.png)编辑
+![img](/10.png)![img](/02.png)编辑![img](/12.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
 
 测试（题目，buu禁止套娃）：
 
-![img](/clip_image014.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/clip_image002.png)编辑
+![img](/14.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
 
  
 
@@ -121,11 +121,11 @@ current():它还有别名pos()，其实都是一样的。
 
 phpversion():
 
- ![img](/clip_image016.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/clip_image002.png)编辑
+ ![img](/16.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
 
 zend_version():
 
-![img](/clip_image017.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/clip_image002.png)编辑
+![img](/17.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
 
  因为是返回版本有关参数（eg：2.4.0）所以我们可以配合str_split()函数，next（），prev（）等函数获取'.';
 
@@ -133,7 +133,7 @@ payload:scandir(next(str_split(zend_version())));
 
 测试（题目，buu禁止套娃）：
 
-![img](/clip_image019.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/clip_image002.png)编辑
+![img](/19.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
 
  
 
@@ -141,7 +141,7 @@ payload:scandir(next(str_split(phpversion())));
 
 测试（题目，buu禁止套娃）：
 
-![img](/clip_image021.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/clip_image002.png)编辑
+![img](/21.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
 
 我们还可以用print_r(scandir('绝对路径'));来查看当前目录文件名；
 
