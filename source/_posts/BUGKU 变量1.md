@@ -4,8 +4,8 @@ date: 2022-07-06 21:12:00
 tags:
 - web
 categories:
-- [笔记, web笔记]
 - [刷题, web题集]
+- [笔记, web笔记]
 ---
 
 前言：php是一门非常好的语言^o^

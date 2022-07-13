@@ -6,7 +6,7 @@ tags:
 - web
 - Crypto
 categories:
-- [比赛, 2022, 宁波市赛初赛]
+- [比赛, 2022]
 ---
 
 ## WEB
