@@ -109,11 +109,11 @@ current():它还有别名pos()，其实都是一样的。
 
 ### tips:如果在写题过程中这两个函数都被禁用了还可以使用reset（）函数；
 
-![img](/10.png)![img](/02.png)编辑![img](/12.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
+![img](/10.png)![img](/02.png)编辑![img](/12.png)![img](/02.png)编辑
 
 测试（题目，buu禁止套娃）：
 
-![img](/14.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
+![img](/14.png)![img](/02.png)编辑
 
  
 
@@ -121,11 +121,11 @@ current():它还有别名pos()，其实都是一样的。
 
 phpversion():
 
- ![img](/16.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
+ ![img](/16.png)![img](/02.png)编辑
 
 zend_version():
 
-![img](/17.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
+![img](/17.png)![img](/02.png)编辑
 
  因为是返回版本有关参数（eg：2.4.0）所以我们可以配合str_split()函数，next（），prev（）等函数获取'.';
 
@@ -133,7 +133,7 @@ payload:scandir(next(str_split(zend_version())));
 
 测试（题目，buu禁止套娃）：
 
-![img](/19.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
+![img](/19.png)![img](/02.png)编辑
 
  
 
@@ -141,7 +141,7 @@ payload:scandir(next(str_split(phpversion())));
 
 测试（题目，buu禁止套娃）：
 
-![img](/21.png)![img](C:/Users/16956/Desktop/msohtmlclip1/01/02.png)编辑
+![img](/21.png)![img](/02.png)编辑
 
 我们还可以用print_r(scandir('绝对路径'));来查看当前目录文件名；
 
