@@ -375,9 +375,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-07-25 23:39:00 / 修改时间：23:48:28" itemprop="dateCreated datePublished" datetime="2022-07-25T23:39:00+08:00">2022-07-25</time>
+      <time title="创建时间：2022-07-25 23:39:00" itemprop="dateCreated datePublished" datetime="2022-07-25T23:39:00+08:00">2022-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-26 11:22:24" itemprop="dateModified" datetime="2022-07-26T11:22:24+08:00">2022-07-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -485,46 +491,6 @@
 
 <p>接下来就是进行aes解密了</p>
 <img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image022.gif" class="" title="图片">
-
-<p>DASCTF{2df05d6846ea7a0ba948da44daa7dc88}</p>
-<h2 id="ez-forenisc"><a href="#ez-forenisc" class="headerlink" title="ez_forenisc"></a>ez_forenisc</h2><p>下载附件</p>
-<p>得到pc.raw和pc.wmdk，，放入取证大师中发现是个bitlocker加密的磁盘</p>
-<p>立马转移注意到pc.raw上，是个内存镜像。直接用EFDD梭出恢复密钥</p>
-<p>060841-363737-551397-247489-310134-034430-598312-215853</p>
-<p>用取证大师进行解密</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002-165876275018120.gif" class="" title="图片">
-
-<p>发现有个压缩包，导出，发现是张png图片，用stegsolve发现了rgb的0通道藏了压缩包</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image004-165876275018121.gif" class="" title="图片">
-
-<p>保存下来，发现压缩包损坏，直接使用winrar自带的修复功能修复，发现是个加密压缩包</p>
-<p>看到了压缩包还有提示</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image006-165876275018222.gif" class="" title="图片">
-
-<p>看来要找账户密码，用passwarekit也能梭出来</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image008-165876275018223.gif" class="" title="图片">
-
-<p>550f37c7748e</p>
-<p>解压得到八进制的数</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image010-165876275018224.gif" class="" title="图片">
-
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image012-165876275018225.gif" class="" title="图片">
-
-<p>转为16进制是得到key是358daebef0b7d，貌似是什么的一个密钥，继续看看pc.raw</p>
-<p>用volatility分析一下，发现screenshot的截图有信息</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image014-165876275018226.gif" class="" title="图片">
-
-<p>提示了thes3cret，filescan查找该关键字</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image016-165876275018227.jpg" class="" title="图片">
-
-<p>发现了个文件，给它dump下来</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image018-165876275018228.gif" class="" title="图片">
-
-<p>记事本打开发现密文</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image020-165876275018229.gif" class="" title="图片">
-
-<p>接下来就是进行aes解密了</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image022-165876275018230.gif" class="" title="图片">
 
 <p>DASCTF{2df05d6846ea7a0ba948da44daa7dc88}</p>
 <h2 id="哆来咪发唆拉西哆"><a href="#哆来咪发唆拉西哆" class="headerlink" title="哆来咪发唆拉西哆"></a>哆来咪发唆拉西哆</h2><p>首先得到一个pdf，binwalk后有个zip，解压后有个txt</p>
