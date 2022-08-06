@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="bugku 秋名山车神get新知识：一些有关python爬虫的基本知识 解题部分​			 题目中都是这样的大数字进行计算，并且需要短时间内计算，所以这不得不使用脚本进行解题，脚本如下 123456789101112131415161718192021#bugku 秋名山车神 --爬虫练习import requestsimport res&#x3D;requests.Session()url&#x3D;&amp;#x27;ht">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bugku 秋名山车神">
+<meta property="og:url" content="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/index.html">
+<meta property="og:site_name" content="230">
+<meta property="og:description" content="bugku 秋名山车神get新知识：一些有关python爬虫的基本知识 解题部分​			 题目中都是这样的大数字进行计算，并且需要短时间内计算，所以这不得不使用脚本进行解题，脚本如下 123456789101112131415161718192021#bugku 秋名山车神 --爬虫练习import requestsimport res&#x3D;requests.Session()url&#x3D;&amp;#x27;ht">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231551976.png">
+<meta property="og:image" content="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231808660.png">
+<meta property="og:image" content="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231827926.png">
+<meta property="og:image" content="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231838154.png">
+<meta property="og:image" content="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231848266.png">
+<meta property="article:published_time" content="2022-08-06T13:23:00.000Z">
+<meta property="article:modified_time" content="2022-08-06T13:23:42.442Z">
+<meta property="article:author" content="R3ape1">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231551976.png">
+
+
+<link rel="canonical" href="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/","path":"2022/08/06/bugku_秋名山车神/","title":"bugku 秋名山车神"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>bugku 秋名山车神 | 230</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">230</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">R3ape1团队笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#bugku-%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E"><span class="nav-number">1.</span> <span class="nav-text">bugku 秋名山车神</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E9%83%A8%E5%88%86"><span class="nav-number">1.1.</span> <span class="nav-text">解题部分</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="R3ape1"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">R3ape1</p>
+  <div class="site-description" itemprop="description">青年们要充分认识自己所负的重任</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="bugku 秋名山车神 | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          bugku 秋名山车神
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-06 21:23:00 / 修改时间：21:23:42" itemprop="dateCreated datePublished" datetime="2022-08-06T21:23:00+08:00">2022-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/web%E9%A2%98%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">web题集</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="bugku-秋名山车神"><a href="#bugku-秋名山车神" class="headerlink" title="bugku 秋名山车神"></a>bugku 秋名山车神</h1><p><em><strong>get新知识：一些有关python爬虫的基本知识</strong></em></p>
+<h2 id="解题部分"><a href="#解题部分" class="headerlink" title="解题部分"></a>解题部分</h2><p>​			<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231551976.png" class="" title="image-20220805231551976"></p>
+<p>题目中都是这样的大数字进行计算，并且需要短时间内计算，所以这不得不使用脚本进行解题，脚本如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bugku 秋名山车神 --爬虫练习</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">s=requests.Session()</span><br><span class="line">url=<span class="string">&#x27;http://114.67.175.224:18569/&#x27;</span>                              <span class="comment">#网页的url</span></span><br><span class="line">r=s.get(url)                                                    <span class="comment">#以get的方式访问网站</span></span><br><span class="line">r.encoding = <span class="string">&#x27;utf-8&#x27;</span>                                            <span class="comment">#设置编码格式</span></span><br><span class="line">a=r.text                                                        <span class="comment">#将页面定义给a</span></span><br><span class="line"><span class="comment">#print(a)</span></span><br><span class="line"></span><br><span class="line">n = re.findall(<span class="string">r&#x27;\d.*?=&#x27;</span>,a)[<span class="number">0</span>]                                  <span class="comment">#通过re正则匹配出a中的数字</span></span><br><span class="line"><span class="comment">#print(n)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c=re.sub(<span class="string">&quot;[=]&quot;</span>,<span class="string">&#x27;&#x27;</span>,<span class="built_in">str</span>(n))                                       <span class="comment">#去掉那个多余的&#x27;=&#x27;</span></span><br><span class="line"><span class="comment">#print(c)</span></span><br><span class="line">c=<span class="built_in">eval</span>(c)                                                         <span class="comment">#执行代码==》计算</span></span><br><span class="line"></span><br><span class="line">o = s.post(url,data=&#123;<span class="string">&#x27;value&#x27;</span>:c&#125;)  <span class="comment">#提交结果</span></span><br><span class="line"><span class="built_in">print</span> (o.text)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231808660.png" class="" title="image-20220805231808660">
+
+<pre><code> ## 	脚本分析
+</code></pre>
+<p>个人理解脚本分为三部分：1、获取数据    2、正则读取数据并处理   3、传输数据</p>
+<p>1、获取数据</p>
+<p>这部分利用了requests类的内置的方法，其中值得一提的是s&#x3D;requests.Session()这部分，必须有目的是保持会话</p>
+<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231827926.png" class="" title="image-20220805231827926">
+
+<p>2、正则读取数据并处理</p>
+<p>这里用了两个re库中的两个内置函数</p>
+<p>​	1、在import re中，(re.findall(pattern, string, flags&#x3D;0))：返回string中所有与pattern相匹配的全部<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%AD%97%E7%AC%A6%E4%B8%B2&spm=1001.2101.3001.7020">字符串</a>，得到数组</p>
+<p>​	2、re.sub是个正则表达式方面的函数，用来实现通过正则表达式，实现比普通字符串的replace更加强大的替换功能；</p>
+<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231838154.png" class="" title="image-20220805231838154">
+
+
+
+<p>3、传输数据</p>
+<p>题目中提示用post传输所以</p>
+<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231848266.png" class="" title="image-20220805231848266">
+
+
+
+<p>特别感谢：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_64815693/article/details/125539527?spm=1001.2014.3001.5502">(27条消息) Bugku 秋名山车神_没有名字了。。的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43088815/article/details/90214217">(27条消息) python re模块(正则表达式) sub()函数详解_leo的学习之旅的博客-CSDN博客_python sub函数</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jly164260234/article/details/83215924">(27条消息) Python—re.findall的用法_扫地di的博客-CSDN博客_python re.findall()用法</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/25/ctfshow_web78~web81/" rel="prev" title="文件包含入门（web78~web81）">
+                  <i class="fa fa-chevron-left"></i> 文件包含入门（web78~web81）
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R3ape1</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
