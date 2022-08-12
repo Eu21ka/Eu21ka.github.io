@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式 第一个a.zip   看了下有三个文件，1.txt，2.txt 按照套路应该是CRC32爆破没错了，试试看   看到了两串很明显的字符，pass_和_word 所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续 第二个f.zip 根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字">
+<meta property="og:type" content="article">
+<meta property="og:title" content="各种压缩包的加密">
+<meta property="og:url" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/index.html">
+<meta property="og:site_name" content="230">
+<meta property="og:description" content="拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式 第一个a.zip   看了下有三个文件，1.txt，2.txt 按照套路应该是CRC32爆破没错了，试试看   看到了两串很明显的字符，pass_和_word 所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续 第二个f.zip 根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif">
+<meta property="og:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif">
+<meta property="og:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif">
+<meta property="og:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif">
+<meta property="og:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif">
+<meta property="og:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif">
+<meta property="og:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif">
+<meta property="og:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif">
+<meta property="og:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif">
+<meta property="article:published_time" content="2022-08-12T14:59:00.000Z">
+<meta property="article:modified_time" content="2022-08-12T14:59:23.992Z">
+<meta property="article:author" content="R3ape1">
+<meta property="article:tag" content="misc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif">
+
+
+<link rel="canonical" href="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/","path":"2022/08/12/misc笔记_各种压缩包的加密/","title":"各种压缩包的加密"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>各种压缩包的加密 | 230</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">230</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">R3ape1团队笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="R3ape1"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">R3ape1</p>
+  <div class="site-description" itemprop="description">青年们要充分认识自己所负的重任</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="各种压缩包的加密 | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          各种压缩包的加密
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-12 22:59:00 / 修改时间：22:59:23" itemprop="dateCreated datePublished" datetime="2022-08-12T22:59:00+08:00">2022-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/misc%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">misc笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
+<p>第一个a.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
+
+<p>看了下有三个文件，1.txt，2.txt</p>
+<p>按照套路应该是CRC32爆破没错了，试试看</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
+
+<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
+<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
+<p>第二个f.zip</p>
+<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
+
+<p>五位数字爆破成功密码是61825</p>
+<p>第三个g.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
+
+<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
+<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
+
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
+
+<p>进行明文爆破，成功</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
+
+<p>第四个压缩包l.zip</p>
+<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
+
+<p>能够解压</p>
+<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
+
+<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/misc/" rel="tag"><i class="fa fa-tag"></i> misc</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/" rel="prev" title="BUUCTF [BJDCTF2020]Cookie is so stable">
+                  <i class="fa fa-chevron-left"></i> BUUCTF [BJDCTF2020]Cookie is so stable
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R3ape1</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

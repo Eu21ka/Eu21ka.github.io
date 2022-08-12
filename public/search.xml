@@ -1787,4 +1787,107 @@
         <tag>misc</tag>
       </tags>
   </entry>
+  <entry>
+    <title>BUUCTF [BJDCTF2020]Cookie is so stable</title>
+    <url>/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/</url>
+    <content><![CDATA[<h1 id="BUUCTF-BJDCTF2020-Cookie-is-so-stable"><a href="#BUUCTF-BJDCTF2020-Cookie-is-so-stable" class="headerlink" title="BUUCTF [BJDCTF2020]Cookie is so stable"></a>BUUCTF [BJDCTF2020]Cookie is so stable</h1><p><strong>这是一道关于php的SSTI注入</strong></p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175404154.png" class="" title="image-20220811175404154">
+
+<p>这是检测ssti的一张思路图看不懂的小伙伴后面会有详解不要慌张；</p>
+<h2 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h2><p>从题目看出这题应该解题的关键在于cookie</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175546406.png" class="" title="image-20220811175546406">
+
+<p>查看提示（hint下f12）</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175641303.png" class="" title="image-20220811175641303">
+
+<p>用bp抓包查看，发现在输入id登陆后cookie中出现了一个可控变量user</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175951417.png" class="" title="image-20220811175951417">
+
+<p>所以猜想后端接受到user输入后在进行输出类似一个模板所以想到了ssti注入（非官方思路猜想）</p>
+<p>之后根据测试图测试发现是Twig模板</p>
+<p>payload：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&#123;&#123;_self.env.<span class="title function_ invoke__">registerUndefinedFilterCallback</span>(<span class="string">&quot;exec&quot;</span>)&#125;&#125;&#123;&#123;_self.env.<span class="title function_ invoke__">getFilter</span>(<span class="string">&quot;cat /flag&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180220745.png" class="" title="image-20220811180220745">
+
+
+
+
+
+
+
+
+
+<h1 id="关于模板判断的方法及回显"><a href="#关于模板判断的方法及回显" class="headerlink" title="关于模板判断的方法及回显"></a>关于模板判断的方法及回显</h1><p>首先利用${7*7}进行测试，我们发现在页面上未进行一个算数运算，所以往下走</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180358818.png" class="" title="image-20220811180358818">
+
+<p>利用49测试</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180633572.png" class="" title="image-20220811180633572">
+
+<p>发现这里发生了运算，也就是图中下路中间部分的情况，这时候就要判断它是twig，还是jinja2</p>
+<p>也就是利用49</p>
+<p>如果是twig则返回结果应该是计算后的结果，反之亦然；</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180341890.png" class="" title="image-20220811180341890">
+
+<p>jinja2下测试49回显如下</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811181059123.png" class="" title="image-20220811181059123">
+
+<p>（场景来源bugku-Simple_SSTI_1）</p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>各种压缩包的加密</title>
+    <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
+    <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
+<p>第一个a.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
+
+<p>看了下有三个文件，1.txt，2.txt</p>
+<p>按照套路应该是CRC32爆破没错了，试试看</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
+
+<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
+<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
+<p>第二个f.zip</p>
+<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
+
+<p>五位数字爆破成功密码是61825</p>
+<p>第三个g.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
+
+<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
+<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
+
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
+
+<p>进行明文爆破，成功</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
+
+<p>第四个压缩包l.zip</p>
+<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
+
+<p>能够解压</p>
+<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
+
+<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>misc笔记</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
 </search>
