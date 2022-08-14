@@ -1890,4 +1890,60 @@
         <tag>misc</tag>
       </tags>
   </entry>
+  <entry>
+    <title>BUUCTF [WUSTCTF2020]朴实无华</title>
+    <url>/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/</url>
+    <content><![CDATA[<p>进入题目，发现有乱码问题</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223043353.png" class="" title="image-20220812223043353">
+
+<p>解决后发现这串字符的中文是“人间极乐bot”</p>
+<p>（一开始以为是.git泄露扫了半天啥也不是555）</p>
+<p>bot想到了robots.txt所以进行了尝试</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223221029.png" class="" title="image-20220812223221029">
+
+<p>根据提示继续访问，可却得到的是flag{this_is_not_flag}</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223408944.png" class="" title="image-20220812223408944">
+
+<p>回想刚才的robots.txt页面显示是一个header果断（大佬提示）bp抓包观察</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223544964.png" class="" title="image-20220812223544964">
+
+<p>果然有所收获访问一下看看</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223925726.png" class="" title="image-20220812223925726">
+
+<p>又有乱码问题不过不重要，关键的代码没乱就行，大体可以看出有三关，接下来进入主菜我们一步一步分析</p>
+<h2 id="level-1"><a href="#level-1" class="headerlink" title="level 1"></a>level 1</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//level 1</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>) &lt; <span class="number">2020</span> &amp;&amp; <span class="title function_ invoke__">intval</span>(<span class="variable">$num</span> + <span class="number">1</span>) &gt; <span class="number">2021</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;我不经意间看了看我的劳力士, 不是想看时间, 只是想不经意间, 让你知道我过得比你好.&lt;/br&gt;&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;金钱解决不了穷人的本质问题&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;去非洲吧&quot;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>payload：?num&#x3D;11e3</p>
+<p>第一关的考点是强制类型转换的利用（个人认为）</p>
+<p><strong>intval()</strong> 函数通过使用指定的进制 base 转换（默认是十进制），返回变量 var 的 integer 数值</p>
+<p>​           在这里存在一个问题即利用科学记数法时如果没有计算则进行强制类型转换否则先计算在提取；</p>
+<p>eg：intval(11e3)输出&#x3D;&#x3D;》11 </p>
+<p>​		intval(11e3+1)输出&#x3D;&#x3D;》11001</p>
+<p>这样就能绕过intval($num) &lt; 2020 &amp;&amp; intval($num + 1) &gt; 2021</p>
+<h2 id="level-2"><a href="#level-2" class="headerlink" title="level 2"></a>level 2</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//level 2</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;md5&#x27;</span>]))&#123;</span><br><span class="line">   <span class="variable">$md5</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;md5&#x27;</span>];</span><br><span class="line">   <span class="keyword">if</span> (<span class="variable">$md5</span>==<span class="title function_ invoke__">md5</span>(<span class="variable">$md5</span>))</span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;想到这个CTFer拿到flag后, 感激涕零, 跑去东澜岸, 找一家餐厅, 把厨师轰出去, 自己炒两个拿手小菜, 倒一杯散装白酒, 致富有道, 别学小暴.&lt;/br&gt;&quot;</span>;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">       <span class="keyword">die</span>(<span class="string">&quot;我赶紧喊来我的酒肉朋友, 他打了个电话, 把他一家安排到了非洲&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;去非洲吧&quot;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>payload：md5&#x3D;0e215962017</p>
+<p>第二部分考md5目的是加密前后的值“&#x3D;&#x3D;”相等</p>
+<p>一开始以为是数组绕过尝试后发现不行，所以使用经过查找发现md5值为0e215962017时加密前后值相等（都是0）</p>
+<h2 id="level-3"><a href="#level-3" class="headerlink" title="level 3"></a>level 3</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//get flag</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;get_flag&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$get_flag</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;get_flag&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">strstr</span>(<span class="variable">$get_flag</span>,<span class="string">&quot; &quot;</span>))&#123;</span><br><span class="line">        <span class="variable">$get_flag</span> = <span class="title function_ invoke__">str_ireplace</span>(<span class="string">&quot;cat&quot;</span>, <span class="string">&quot;wctf2020&quot;</span>, <span class="variable">$get_flag</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;想到这里, 我充实而欣慰, 有钱人的快乐往往就是这么的朴实无华, 且枯燥.&lt;/br&gt;&quot;</span>;</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="variable">$get_flag</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;快到非洲了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;去非洲吧&quot;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>payload: get_flag&#x3D;tac${IFS}fllllllllllllllllllllllllllllllllllllllllaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag</p>
+<p>最后一步命令执行；但是不能使用cat和空格，</p>
+<p>当然能查看的命令有很多eg：tac，more，less，nl，vi，vim等这里就不一一列举</p>
+<p>空格可以用${IFS}绕过</p>
+<p>先利用ls指令查出flag所在的位置</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812230018477.png" class="" title="image-20220812230018477">
+
+<p>之后便可查到flag了</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812230059556.png" class="" title="image-20220812230059556">
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
 </search>
