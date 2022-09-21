@@ -1,10 +1,10 @@
 ---
-title: 国赛 misc2 everlasting_night
+title: 2022国赛初赛 misc2 everlasting_night
 date: 2022-06-019 22:19:11
 tags:
 - misc
 categories:
-- [比赛, 2022]
+- [比赛]
 ---
 
 下载附件，是一张图片，拖入winhex并没有太大的发现，后来得到提示以后，仔细看了一下stegsolve中图片的内容。

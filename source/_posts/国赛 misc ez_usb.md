@@ -1,10 +1,10 @@
 ---
-title: 国赛 misc ez_usb
+title: 2022国赛初赛 misc ez_usb
 date: 2022-06-019 22:19:11
 tags:
 - misc
 categories:
-- [比赛, 2022]
+- [比赛]
 ---
 
 下载附件，发现是usb的流量分析

@@ -1,10 +1,10 @@
 ---
-title: 暴龙杯wp(misc)
+title: 2022暴龙杯wp(misc)
 date: 2022-08-07 15:07:00
 tags:
 - misc
 categories:
-- [比赛, 2022]
+- [比赛]
 ---
 
 签到

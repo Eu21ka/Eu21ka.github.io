@@ -1,12 +1,12 @@
 ---
-title: 宁波市赛wp
+title: 2022宁波市赛wp
 date: 2022-06-019 22:19:11
 tags:
 - misc
 - web
 - Crypto
 categories:
-- [比赛, 2022]
+- [比赛]
 ---
 
 ## WEB
