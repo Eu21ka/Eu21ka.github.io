@@ -1,5 +1,5 @@
 ---
-title: 2022DASCTF赋能赛
+title: 2022DASCTF七月赋能赛
 date: 2022-07-25 23:39:00
 tags:
 - pwn
@@ -7,7 +7,7 @@ tags:
 - web
 - Crypto
 categories:
-- [比赛, 2022]
+- [比赛]
 ---
 
 # WEB

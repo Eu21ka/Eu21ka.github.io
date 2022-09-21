@@ -156,12 +156,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -195,6 +195,137 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/" class="post-title-link" itemprop="url">(catf1agCTF)我幽默吗?</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-01 22:07:11" itemprop="dateCreated datePublished" datetime="2022-07-01T22:07:11+08:00">2022-07-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-02 22:32:15" itemprop="dateModified" datetime="2022-07-02T22:32:15+08:00">2022-07-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/web%E9%A2%98%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">web题集</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>进入题目：</p>
+<p>发现是空白页面，点击万能的f12发现注释中果然藏了东西</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701205934697.png" class="" title="image-20220701205934697">
+
+<p>仔细观察发现是一个密码本，进行对照翻译</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210012170.png" class="" title="image-20220701210012170">
+
+<p>发现提示了一个source，在url中传入source&#x3D;xxxx（任意值进行尝试）获得以下代码：</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210259854.png" class="" title="image-20220701210259854">
+
+<p>仔细阅读后发现总共要传入三个值a，b，c</p>
+<p>之后对flag文件位置进行查询：</p>
+<p>payload：a&#x3D;DirectoryIterator&amp;b&#x3D;glob:&#x2F;&#x2F;flag[a-z0-9]*.php&amp;c&#x3D;9223372036854775806</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214011951.png" class="" title="image-20220701214011951">
+
+
+
+<p>获取flag</p>
+<p>payload：a&#x3D;SplFileObject&amp;b&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag56ea8b83122449e814e0fd7bfb5f220a.php&amp;c&#x3D;9223372036854775806</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214053812.png" class="" title="image-20220701214053812">
+
+
+
+<p>解密获得最终结果：</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210702783.png" class="" title="image-20220701210702783">
+
+
+
+<h2 id="get新知识"><a href="#get新知识" class="headerlink" title="get新知识"></a>get新知识</h2><p>当出现类似如下代码时可以利用原生类配合php伪协议使用获取flag</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210422844.png" class="" title="image-20220701210422844">
+
+<h3 id="glob协议"><a href="#glob协议" class="headerlink" title="glob协议"></a>glob协议</h3><p>   glob:&#x2F;&#x2F;协议是php5.3.0以后一种<strong>查找匹配的文件路径模式</strong>。（后面可以使用正则表达式匹配）</p>
+<h3 id="遍历目录类（DirectoryIterator）"><a href="#遍历目录类（DirectoryIterator）" class="headerlink" title="遍历目录类（DirectoryIterator）"></a>遍历目录类（DirectoryIterator）</h3><p>​    DirectoryIterator类的<code>__construct</code>方法会构造一个迭代器，如果使用echo输出该迭代器，将会返回迭代器的第一项</p>
+<p>与之类似的还有FilesystemIterator和GlobIterator（自带glob头在使用时不需要在使用glob协议直接正则即可）在DirectoryIterator被禁用的情况下可以使用；</p>
+<p><em><strong>所以我们可以将glob协议和DirectoryIterator类配合使用达到查询的效果</strong></em></p>
+<h2 id="读取文件类（SplFileObject）"><a href="#读取文件类（SplFileObject）" class="headerlink" title="读取文件类（SplFileObject）"></a>读取文件类（SplFileObject）</h2><p>SplFileObject类为文件提供了一个面向对象接口</p>
+<p>在读取过程中不一定会成功所以可以配合filter协议使用；</p>
+<h2 id="绕过-count-x3D-1（不理解记住即可）"><a href="#绕过-count-x3D-1（不理解记住即可）" class="headerlink" title="绕过$count[]&#x3D;1（不理解记住即可）"></a>绕过$count[]&#x3D;1（不理解记住即可）</h2><p>重点在于$count[] &#x3D; 1此语句正常赋值的时候返回结果为1</p>
+<p>可以通过溢出来跳出此语句的判断</p>
+<p>作为PHP最重要的数据类型HashTable其key值是有一定的范围的，如果设置的key值过大就会出现溢出的问题而这个数字就是临界点9223372036854775807</p>
+<p>特别鸣谢大佬博客：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cng_Sinner/article/details/123345424">(19条消息) 我幽默吗？_king_Sinner的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38154820/article/details/121112935">(19条消息) 记一道2021浙江省赛的Web题_合天网安实验室的博客-CSDN博客</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -446,7 +577,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 15:08:57" itemprop="dateModified" datetime="2022-08-07T15:08:57+08:00">2022-08-07</time>
+      <time title="修改时间：2022-09-20 21:18:34" itemprop="dateModified" datetime="2022-09-20T21:18:34+08:00">2022-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -455,10 +586,6 @@
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
         </span>
     </span>
 
@@ -544,7 +671,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 15:08:42" itemprop="dateModified" datetime="2022-08-07T15:08:42+08:00">2022-08-07</time>
+      <time title="修改时间：2022-09-20 21:17:48" itemprop="dateModified" datetime="2022-09-20T21:17:48+08:00">2022-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -553,10 +680,6 @@
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
         </span>
     </span>
 
@@ -653,7 +776,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 15:08:46" itemprop="dateModified" datetime="2022-08-07T15:08:46+08:00">2022-08-07</time>
+      <time title="修改时间：2022-09-20 21:18:12" itemprop="dateModified" datetime="2022-09-20T21:18:12+08:00">2022-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -662,10 +785,6 @@
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
         </span>
     </span>
 
@@ -759,7 +878,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 15:08:49" itemprop="dateModified" datetime="2022-08-07T15:08:49+08:00">2022-08-07</time>
+      <time title="修改时间：2022-09-20 21:18:22" itemprop="dateModified" datetime="2022-09-20T21:18:22+08:00">2022-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -768,10 +887,6 @@
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
         </span>
     </span>
 
@@ -859,7 +974,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 15:08:52" itemprop="dateModified" datetime="2022-08-07T15:08:52+08:00">2022-08-07</time>
+      <time title="修改时间：2022-09-20 21:18:27" itemprop="dateModified" datetime="2022-09-20T21:18:27+08:00">2022-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -868,10 +983,6 @@
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
         </span>
     </span>
 
@@ -977,7 +1088,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-07 15:08:37" itemprop="dateModified" datetime="2022-08-07T15:08:37+08:00">2022-08-07</time>
+      <time title="修改时间：2022-09-20 21:17:54" itemprop="dateModified" datetime="2022-09-20T21:17:54+08:00">2022-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -986,10 +1097,6 @@
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
         </span>
     </span>
 
@@ -1117,136 +1224,6 @@
 <img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
 
 <p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E5%85%B3%E4%BA%8ETCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/%E5%85%B3%E4%BA%8ETCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">关于TCP与UDP协议的学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:37:36" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/%E5%85%B6%E5%AE%83%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">其它笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>TCP协议的**<em>*<em>三次握手，传输确认，四次挥手*</em>*</em>*</p>
-<p>一.TCP三次握手</p>
-<p>客户端                 服务端</p>
-<p>  1.lnit                     2.Listen</p>
-<p>3.SYN-SEN                 4.SYN-RCVD</p>
-<p>5.ESTABLISHED              6.ESTABLISHED</p>
-<p>刚开始由客户端1发送给服务端2 SYN包，询问服务端是否能与其建立练接。服务端同意后回了 SYN+ACK包给客户端3，客户端3再回ACK包给服务端4，三次握手建立，连接成功。</p>
-<p>二.传输确认</p>
-<p>   个人理解认为，传输确认这一步骤很大原因是为了防止丢包，保证TCP协议的稳定可靠性。</p>
-<p>发送缓冲区：0 1 2 3 4 5 6 7 8 9 10 11 12</p>
-<p>发送报文：序列号+长度+发送缓冲区中的数据内容</p>
-<p>回复确认：ACK&#x3D;序列号+长度&#x3D;下一包的起始序列号</p>
-<p>​    由三次握手可以确认客户端与服务端传输的是同一次的包，防止丢包现象的发生，同时也因为拥有数据内容，客户端也可以传输数据片段给服务端，服务端再根据数据片段重新拼装成完整的数据内容。（同时这也可以让服务端确认缺失了哪一段数据，要求客户端重新发送）</p>
-<p>三.四次挥手  ps：客户端与服务端都可以发起关闭请求</p>
-<p>​                                </p>
-<p>​      客户端  &lt;——————关闭连接——————&gt;  服务端</p>
-<p>——1.ESTABLISHED                          2.ESTABLISHED—</p>
-<p>|  第一次挥手                                                     第二次挥手|</p>
-<p>——3.FIN-WAIT-1                            4.CLOSE-WAIT—</p>
-<p>​                                                              第三次挥手|</p>
-<p>——5.FIN-WAIT-2                            6.LAST-ACK   —</p>
-<p>|</p>
-<p>|    7.TIME-WAIT                            8.CLOSED</p>
-<p>|第四次挥手</p>
-<p>——9.CLOSED</p>
-<p>四次挥手流程：</p>
-<p>1-&gt;2：客户端向服务端发送了FIN包然后进入了3（终止等待1状态）</p>
-<p>2-&gt;3：服务端回了ACK包给3后进入了4（关闭等待状态），而3收到了ACK包以后进入了5（终止等待2状态）</p>
-<p>（此时服务端还能发送数据，客户端还能接收数据，待数据传输完成后开始下一步。）</p>
-<p>4-&gt;5：确认传输完成后4会向5发送FIN包，然后进入6（最后的确认状态）</p>
-<p>5-&gt;6：5收到来自4的FIN包以后会向6发送ACK包，然后进入超时等待状态</p>
-<p>6-&gt;8：当6收到来自5的ACK包后会立马进入8（也就是立马关闭）</p>
-<p>7-&gt;9：经过超时时间后会自动关闭也就是7-&gt;9</p>
-<p>ps：为什么要有超时等待状态：</p>
-<p>（一句话概括就是为了确保服务端关闭）</p>
-<p>详：是为了确认服务端收到ACK包（如不等待且服务端没有收到ACK包，那么服务端就会停留在最后的确认状态）。等待时，如服务端未收到ACK包，那么就会重复4-&gt;5，服务端重新发送FIN包，而客户端收到后也就会重新发送ACK包（超时等待时间也会被重新刷新）。</p>
-<p>UDP协议（非连接）</p>
-<p>简单封装数据包并从网卡发出，数据包间无状态上的联系</p>
-<p>因此推出UDP的特征：1.性能损耗少 2.资源占用少 3.稳定性弱</p>
-<p>TCP与UDP差异：</p>
-<p>1.TCP面向连接，UDP面向报文</p>
-<p>2.TCP对系统资源要求较多，UDP结构相对简单</p>
-<p>3.TCP稳定可靠，UDP传输数据快</p>
-<p>TCP 用于传输文件，发送邮件，浏览网页等</p>
-<p>（用于对传输质量要求较高的地方）</p>
-<p>UDP 用于域名查询，语音通话，视频直播等</p>
-<p> 还可以用于隧道网络：VPN，VXLAN</p>
-<p>（用于对速度要求高，但是对少量丢包没有太大要求的场景）</p>
 
       
     </div>
