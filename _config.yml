@@ -599,7 +599,7 @@ theme_config:
 
   # Bing Webmaster tools verification.
   # See: https://www.bing.com/webmasters
-  bing_site_verification: <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12" />
+  bing_site_verification: <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
 
   # Yandex Webmaster tools verification.
   # See: https://webmaster.yandex.ru
@@ -607,7 +607,7 @@ theme_config:
 
   # Baidu Webmaster tools verification.
   # See: https://ziyuan.baidu.com/site
-  baidu_site_verification: <meta name="baidu-site-verification" content="code-LhZrqnckkC" />
+  baidu_site_verification: <meta name="baidu-site-verification" content="code-LhZrqnckkC">
 
 
   # ---------------------------------------------------------------
