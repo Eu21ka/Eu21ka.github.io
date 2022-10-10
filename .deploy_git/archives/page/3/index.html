@@ -11,6 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="baidu-site-verification" content="<meta name="baidu-site-verification" content="code-LhZrqnckkC" />">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -39,7 +40,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/page/3/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>230</title>
+<title>230 - R3ape1团队笔记</title>
   
 
 
@@ -1219,7 +1220,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.png">
@@ -1237,7 +1238,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC2/" class="post-title-link" itemprop="url">ISCC 2022 MISC2</a>
+          <a href="/2022/06/19/ISCC%202022%20MISC3/" class="post-title-link" itemprop="url">ISCC 2022 MISC3</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1255,7 +1256,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-20 21:18:12" itemprop="dateModified" datetime="2022-09-20T21:18:12+08:00">2022-09-20</time>
+      <time title="修改时间：2022-09-20 21:18:22" itemprop="dateModified" datetime="2022-09-20T21:18:22+08:00">2022-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1277,24 +1278,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>打开压缩包，里面有一张图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps7.jpg" class="" title="img"> 
+          <p>下载附件，根据题目要求用winrar打开</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
 
-<p>是一张魔女的图片，放入kali中foremost分离，分离出了另一张图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps8.jpg" class="" title="img"> 
+<p>poem.txt中的内容是五行星星</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
 
-<p>对这张图片进行zsteg的操作，首先zsteg -a查看lsb的各项数据</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps9.jpg" class="" title="img"> 
+<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
+<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
 
-<p>在这里发现了点东西，接着就是使用zsteg -E了</p>
-<p>zsteg -E b1,r,lsb,yx 该图片名称.png &gt; out.png</p>
-<p>得到out.png</p>
-<p>根据刚下载下来的时候的魔女图片想到这应该是魔女之旅的字体</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps10.jpg" class="" title="img"> 
-
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps11.jpg" class="" title="img"> 
-
-<p>根据out.png上面的字对应上方两张图片的字体，按照题目的要求变成ISCC{xxxx-xxxx-xxxx}的格式（需要全部大写）就是答案了</p>
+<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
+<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
 
       
     </div>
