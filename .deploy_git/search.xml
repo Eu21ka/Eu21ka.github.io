@@ -1432,21 +1432,6 @@
       </tags>
   </entry>
   <entry>
-    <title>embryoio level1</title>
-    <url>/2022/06/08/embryoio-level1/</url>
-    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
-<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwncollege刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>embryoio level36~level59</title>
     <url>/2022/07/12/embryoio%20level36~level59/</url>
     <content><![CDATA[<h1 id="embryoio-level36-level47"><a href="#embryoio-level36-level47" class="headerlink" title="embryoio level36~level47"></a>embryoio level36~level47</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>Linux终端和shell脚本的管道符使用</p>
@@ -1466,6 +1451,21 @@
 <p>编写python脚本运行后又出现需要管道接收输出的提示。</p>
 <h3 id="python脚本"><a href="#python脚本" class="headerlink" title="python脚本"></a>python脚本</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#===============================level48===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;/challenge/embryoio_level48&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level49===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level49&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;grep&#x27;</span>, <span class="string">&#x27;pwn&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level50===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level50&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;sed&#x27;</span>, <span class="string">&#x27;1d&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level51===============================</span></span><br><span class="line"><span class="comment">#将逆序的flag复制到文本里，再rev输出</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level51&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level52===============================</span></span><br><span class="line"><span class="comment">#运行后输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level52&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level53===============================</span></span><br><span class="line"><span class="comment">#运行后逆序输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level53&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level54~level59===============================</span></span><br><span class="line"><span class="comment">#又是一遍“十万年轮回”，题目和上诉题目差不多，题解参考上诉脚本。</span></span><br></pre></td></tr></table></figure>
 
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwncollege刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>embryoio level1</title>
+    <url>/2022/06/08/embryoio-level1/</url>
+    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
+<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -1628,54 +1628,6 @@
       </tags>
   </entry>
   <entry>
-    <title>关于Oracle VM VirtualBox如何使用软驱的问题</title>
-    <url>/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
-<p>首先打开虚拟机，选择新建</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps7.jpg" class="" title="img"> 
-
-<p>在这里经过一些尝试，发现必须指定好系统的类型和版本，点击下一步，内存大小自定义，再下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps8.jpg" class="" title="img"> 
-
-<p>在这里需要创建虚拟硬盘，下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps9.jpg" class="" title="img"> 
-
-<p>直接下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps10.jpg" class="" title="img"> 
-
-<p>给固定大小就行，下一步的文件位置和大小自定义，这样就创建好了</p>
-<p>再点击刚刚创建的虚拟机的设置</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps11.jpg" class="" title="img"> 
-
-<p>点击储存</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps12.jpg" class="" title="img"> 
-
-<p>点击左下方的加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps13.jpg" class="" title="img"> 
-
-<p>点击软盘，它就会多出了一个控制器</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps14.jpg" class="" title="img"> 
-
-<p>点击右方加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps15.jpg" class="" title="img"> 
-
-<p>点击注册</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps16.jpg" class="" title="img"> 
-
-<p>将自己的软盘放进去，点击ok保存就好</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps17.jpg" class="" title="img"> 
-
-<p>最后将虚拟机启动就可以了</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>其它笔记</category>
-      </categories>
-      <tags>
-        <tag>其它</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>各种压缩包的加密</title>
     <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
     <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
@@ -1721,6 +1673,54 @@
       </categories>
       <tags>
         <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于Oracle VM VirtualBox如何使用软驱的问题</title>
+    <url>/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
+<p>首先打开虚拟机，选择新建</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps7.jpg" class="" title="img"> 
+
+<p>在这里经过一些尝试，发现必须指定好系统的类型和版本，点击下一步，内存大小自定义，再下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps8.jpg" class="" title="img"> 
+
+<p>在这里需要创建虚拟硬盘，下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps9.jpg" class="" title="img"> 
+
+<p>直接下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps10.jpg" class="" title="img"> 
+
+<p>给固定大小就行，下一步的文件位置和大小自定义，这样就创建好了</p>
+<p>再点击刚刚创建的虚拟机的设置</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps11.jpg" class="" title="img"> 
+
+<p>点击储存</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps12.jpg" class="" title="img"> 
+
+<p>点击左下方的加号</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps13.jpg" class="" title="img"> 
+
+<p>点击软盘，它就会多出了一个控制器</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps14.jpg" class="" title="img"> 
+
+<p>点击右方加号</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps15.jpg" class="" title="img"> 
+
+<p>点击注册</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps16.jpg" class="" title="img"> 
+
+<p>将自己的软盘放进去，点击ok保存就好</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps17.jpg" class="" title="img"> 
+
+<p>最后将虚拟机启动就可以了</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>其它笔记</category>
+      </categories>
+      <tags>
+        <tag>其它</tag>
       </tags>
   </entry>
   <entry>
@@ -1819,7 +1819,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#119;&#97;&#110;&#103;&#x79;&#105;&#104;&#x61;&#x6e;&#x67;&#101;&#x72;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#x6d;">&#119;&#97;&#110;&#103;&#x79;&#105;&#104;&#x61;&#x6e;&#x67;&#101;&#x72;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#x6d;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#x77;&#x61;&#x6e;&#103;&#x79;&#105;&#104;&#x61;&#x6e;&#103;&#x65;&#114;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x77;&#x61;&#x6e;&#103;&#x79;&#105;&#104;&#x61;&#x6e;&#103;&#x65;&#114;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
