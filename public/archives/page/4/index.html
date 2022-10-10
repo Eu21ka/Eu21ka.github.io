@@ -11,6 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="<meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12" />">
   <meta name="baidu-site-verification" content="<meta name="baidu-site-verification" content="code-LhZrqnckkC" />">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -205,7 +206,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20MISC3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.png">
@@ -223,7 +224,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC2/" class="post-title-link" itemprop="url">ISCC 2022 MISC2</a>
+          <a href="/2022/06/19/ISCC%202022%20MISC3/" class="post-title-link" itemprop="url">ISCC 2022 MISC3</a>
         </h2>
 
         <div class="post-meta-container">
@@ -241,7 +242,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-20 21:18:12" itemprop="dateModified" datetime="2022-09-20T21:18:12+08:00">2022-09-20</time>
+      <time title="修改时间：2022-09-20 21:18:22" itemprop="dateModified" datetime="2022-09-20T21:18:22+08:00">2022-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -263,24 +264,112 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>打开压缩包，里面有一张图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps7.jpg" class="" title="img"> 
+          <p>下载附件，根据题目要求用winrar打开</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
 
-<p>是一张魔女的图片，放入kali中foremost分离，分离出了另一张图片</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps8.jpg" class="" title="img"> 
+<p>poem.txt中的内容是五行星星</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
 
-<p>对这张图片进行zsteg的操作，首先zsteg -a查看lsb的各项数据</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps9.jpg" class="" title="img"> 
+<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
+<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
 
-<p>在这里发现了点东西，接着就是使用zsteg -E了</p>
-<p>zsteg -E b1,r,lsb,yx 该图片名称.png &gt; out.png</p>
-<p>得到out.png</p>
-<p>根据刚下载下来的时候的魔女图片想到这应该是魔女之旅的字体</p>
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps10.jpg" class="" title="img"> 
+<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
+<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
 
-<img src="/2022/06/19/ISCC%202022%20MISC2/wps11.jpg" class="" title="img"> 
+      
+    </div>
 
-<p>根据out.png上面的字对应上方两张图片的字体，按照题目的要求变成ISCC{xxxx-xxxx-xxxx}的格式（需要全部大写）就是答案了</p>
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/" class="post-title-link" itemprop="url">ISCC 2022 藏在星空中的诗-2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-20 21:17:54" itemprop="dateModified" datetime="2022-09-20T21:17:54+08:00">2022-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>下载附件，打开是poem.txt</p>
+<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps4.jpg" class="" title="img"> 
+
+<p>初次看到，就觉得很像unicode编码毕竟划分开来五位还有反斜杠。前面第一个星星一样，肯定都是\u了接下来开始猜测后面的四位。前面四组就很像ISCC了，于是可以先借用之前的第一题的表格。查询了ISCC 的unicode编码，对应星星写到表格中，再把文本中出现的星星都用黄底标起来。（这里也可以猜到第五组星星和最后一组应该是“{”“}”）</p>
+<p>发现了表格中星星的unicode码的最后一位和本题的对应字母有关，重复的字母用之前的ISCC已经去掉了，试一试。</p>
+<p>下图是我对应出来的表格，可以作为参考</p>
+<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps5.jpg" class="" title="img"> 
+
+<p>接下来对应着知道该文本的星星解出来的unicode码，再进行在线unicode解码就可以了</p>
+<p>本题没有考察新知识点，一道脑洞题。要找到规律。</p>
 
       
     </div>
@@ -395,100 +484,6 @@
 <p>在整个音频后端发现了摩斯密码，进行解密：ISCCMISC感觉不像最后答案，提交了发现错误。回到flag.txt，这时候能确定ISCCMISC是有用的，那就试试snow来解密文档</p>
 <p>.&#x2F;snow.exe -p isccmisc -C flag.txt</p>
 <p>这里的isccmisc需要小写，最后解出来的也就是答案</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/" class="post-title-link" itemprop="url">ISCC 2022 藏在星空中的诗-2</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-20 21:17:54" itemprop="dateModified" datetime="2022-09-20T21:17:54+08:00">2022-09-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>下载附件，打开是poem.txt</p>
-<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps4.jpg" class="" title="img"> 
-
-<p>初次看到，就觉得很像unicode编码毕竟划分开来五位还有反斜杠。前面第一个星星一样，肯定都是\u了接下来开始猜测后面的四位。前面四组就很像ISCC了，于是可以先借用之前的第一题的表格。查询了ISCC 的unicode编码，对应星星写到表格中，再把文本中出现的星星都用黄底标起来。（这里也可以猜到第五组星星和最后一组应该是“{”“}”）</p>
-<p>发现了表格中星星的unicode码的最后一位和本题的对应字母有关，重复的字母用之前的ISCC已经去掉了，试一试。</p>
-<p>下图是我对应出来的表格，可以作为参考</p>
-<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps5.jpg" class="" title="img"> 
-
-<p>接下来对应着知道该文本的星星解出来的unicode码，再进行在线unicode解码就可以了</p>
-<p>本题没有考察新知识点，一道脑洞题。要找到规律。</p>
 
       
     </div>
@@ -737,162 +732,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="R3ape1">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="230">
-      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 230">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/" class="post-title-link" itemprop="url">2022国赛初赛 misc ez_usb</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-21 11:24:20" itemprop="dateModified" datetime="2022-09-21T11:24:20+08:00">2022-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>下载附件，发现是usb的流量分析</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps1.jpg" class="" title="img"> 
-
-<p>直接拖进kali中使用keyboard脚本，发现跑不出东西，想到应该需要过滤</p>
-<p>尝试尝试，在过滤usb.src &#x3D;&#x3D;”2.8.1”的时候发现了线索，以该过滤导出压缩包</p>
-<p>左上角，导出特定分组</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps2.jpg" class="" title="img"> 
-
-<p>用usbkeyboard脚本跑</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps3.jpg" class="" title="img"> 
-
-<p>看到了rar，用winhex打开数据（这里要清除不相关数据后放入）</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps4.jpg" class="" title="img"> 
-
-<p>转化成rar压缩包，发现了加密的txt文件，需要寻找密码，一开始没什么头绪，就想着继续过滤一下，没想到在usb.src &#x3D;&#x3D;”2.10.1”时发现了东西，一样的方法导出另一个流量包并且用脚本跑</p>
-<p>（本题所用的keyboard脚本均为github拉下来的）</p>
-<p>脚本：</p>
-<p>#!&#x2F;usr&#x2F;bin&#x2F;env python</p>
-<p>import sys</p>
-<p>import os</p>
-<p>DataFileName &#x3D; “usb.dat”</p>
-<p>presses &#x3D; []</p>
-<p>normalKeys &#x3D; {“04”:”a”, “05”:”b”, “06”:”c”, “07”:”d”, “08”:”e”, “09”:”f”, “0a”:”g”, “0b”:”h”, “0c”:”i”, “0d”:”j”, “0e”:”k”, “0f”:”l”, “10”:”m”, “11”:”n”, “12”:”o”, “13”:”p”, “14”:”q”, “15”:”r”, “16”:”s”, “17”:”t”, “18”:”u”, “19”:”v”, “1a”:”w”, “1b”:”x”, “1c”:”y”, “1d”:”z”,”1e”:”1”, “1f”:”2”, “20”:”3”, “21”:”4”, “22”:”5”, “23”:”6”,”24”:”7”,”25”:”8”,”26”:”9”,”27”:”0”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”-“,”2e”:”&#x3D;”,”2f”:”[“,”30”:”]”,”31”:”\“,”32”:”<NON>“,”33”:”;”,”34”:”‘“,”35”:”<GA>“,”36”:”,”,”37”:”.”,”38”:”&#x2F;“,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
-<p>shiftKeys &#x3D; {“04”:”A”, “05”:”B”, “06”:”C”, “07”:”D”, “08”:”E”, “09”:”F”, “0a”:”G”, “0b”:”H”, “0c”:”I”, “0d”:”J”, “0e”:”K”, “0f”:”L”, “10”:”M”, “11”:”N”, “12”:”O”, “13”:”P”, “14”:”Q”, “15”:”R”, “16”:”S”, “17”:”T”, “18”:”U”, “19”:”V”, “1a”:”W”, “1b”:”X”, “1c”:”Y”, “1d”:”Z”,”1e”:”!”, “1f”:”@”, “20”:”#”, “21”:”$”, “22”:”%”, “23”:”^”,”24”:”&amp;”,”25”:”*”,”26”:”(“,”27”:”)”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”_”,”2e”:”+”,”2f”:”{“,”30”:”}”,”31”:”|”,”32”:”<NON>“,”33”:”&quot;“,”34”:”:”,”35”:”<GA>“,”36”:”&lt;”,”37”:”&gt;”,”38”:”?”,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
-<p>def main():</p>
-<p>  # check argv</p>
-<p>  if len(sys.argv) !&#x3D; 2:</p>
-<p>​    print(“Usage : “)</p>
-<p>​    print(“     python UsbKeyboardHacker.py data.pcap”)</p>
-<p>​    print(“Tips : “)</p>
-<p>​    print(“     To use this python script , you must install the tshark first.”)</p>
-<p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
-<p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#119;&#97;&#x6e;&#103;&#121;&#105;&#104;&#97;&#110;&#103;&#101;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#x6d;">&#119;&#97;&#x6e;&#103;&#121;&#105;&#104;&#97;&#110;&#103;&#101;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#x6d;</a>“)</p>
-<p>​    print(“     If you have any questions , please contact me by email.”)</p>
-<p>​    print(“     Thank you for using.”)</p>
-<p>​    exit(1)</p>
-<p>  # get argv</p>
-<p>  pcapFilePath &#x3D; sys.argv[1]</p>
-<p>  # get data of pcap</p>
-<p>  os.system(“tshark -r %s -T fields -e usb.capdata ‘usb.data_len &#x3D;&#x3D; 8’ &gt; %s” % (pcapFilePath, DataFileName))</p>
-<p>  # read data</p>
-<p>  with open(DataFileName, “r”) as f:</p>
-<p>​    for line in f:</p>
-<p>​      presses.append(line[0:-1])</p>
-<p>  # handle</p>
-<p>  result &#x3D; “”</p>
-<p>  for press in presses:</p>
-<p>​    if press &#x3D;&#x3D; ‘’:</p>
-<p>​      continue</p>
-<p>​    if ‘:’ in press:</p>
-<p>​      Bytes &#x3D; press.split(“:”)</p>
-<p>​    else:</p>
-<p>​      Bytes &#x3D; [press[i:i+2] for i in range(0, len(press), 2)]</p>
-<p>​    if Bytes[0] &#x3D;&#x3D; “00”:</p>
-<p>​      if Bytes[2] !&#x3D; “00” and normalKeys.get(Bytes[2]):</p>
-<p>​        result +&#x3D; normalKeys[Bytes[2]]</p>
-<p>​    elif int(Bytes[0],16) &amp; 0b10 or int(Bytes[0],16) &amp; 0b100000: # shift key is pressed.</p>
-<p>​      if Bytes[2] !&#x3D; “00” and normalKeys.get(Bytes[2]):</p>
-<p>​        result +&#x3D; shiftKeys[Bytes[2]]</p>
-<p>​    else:</p>
-<p>​      print(“[-] Unknow Key : %s” % (Bytes[0]))</p>
-<p>  print(“[+] Found : %s” % (result))</p>
-<p>  # clean the temp data</p>
-<p>  os.system(“rm .&#x2F;%s” % (DataFileName))</p>
-<p>if <strong>name</strong> &#x3D;&#x3D; “<strong>main</strong>“:</p>
-<p>  main()</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps5.jpg" class="" title="img"> 
-
-<p>发现了这一串，作为密码，解出！</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps6.jpg" class="" title="img"> 
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E5%85%B3%E4%BA%8ETCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -997,6 +836,162 @@
 <p>UDP 用于域名查询，语音通话，视频直播等</p>
 <p> 还可以用于隧道网络：VPN，VXLAN</p>
 <p>（用于对速度要求高，但是对少量丢包没有太大要求的场景）</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="R3ape1">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="230">
+      <meta itemprop="description" content="青年们要充分认识自己所负的重任">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 230">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/" class="post-title-link" itemprop="url">2022国赛初赛 misc ez_usb</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-21 11:24:20" itemprop="dateModified" datetime="2022-09-21T11:24:20+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>下载附件，发现是usb的流量分析</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps1.jpg" class="" title="img"> 
+
+<p>直接拖进kali中使用keyboard脚本，发现跑不出东西，想到应该需要过滤</p>
+<p>尝试尝试，在过滤usb.src &#x3D;&#x3D;”2.8.1”的时候发现了线索，以该过滤导出压缩包</p>
+<p>左上角，导出特定分组</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps2.jpg" class="" title="img"> 
+
+<p>用usbkeyboard脚本跑</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps3.jpg" class="" title="img"> 
+
+<p>看到了rar，用winhex打开数据（这里要清除不相关数据后放入）</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps4.jpg" class="" title="img"> 
+
+<p>转化成rar压缩包，发现了加密的txt文件，需要寻找密码，一开始没什么头绪，就想着继续过滤一下，没想到在usb.src &#x3D;&#x3D;”2.10.1”时发现了东西，一样的方法导出另一个流量包并且用脚本跑</p>
+<p>（本题所用的keyboard脚本均为github拉下来的）</p>
+<p>脚本：</p>
+<p>#!&#x2F;usr&#x2F;bin&#x2F;env python</p>
+<p>import sys</p>
+<p>import os</p>
+<p>DataFileName &#x3D; “usb.dat”</p>
+<p>presses &#x3D; []</p>
+<p>normalKeys &#x3D; {“04”:”a”, “05”:”b”, “06”:”c”, “07”:”d”, “08”:”e”, “09”:”f”, “0a”:”g”, “0b”:”h”, “0c”:”i”, “0d”:”j”, “0e”:”k”, “0f”:”l”, “10”:”m”, “11”:”n”, “12”:”o”, “13”:”p”, “14”:”q”, “15”:”r”, “16”:”s”, “17”:”t”, “18”:”u”, “19”:”v”, “1a”:”w”, “1b”:”x”, “1c”:”y”, “1d”:”z”,”1e”:”1”, “1f”:”2”, “20”:”3”, “21”:”4”, “22”:”5”, “23”:”6”,”24”:”7”,”25”:”8”,”26”:”9”,”27”:”0”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”-“,”2e”:”&#x3D;”,”2f”:”[“,”30”:”]”,”31”:”\“,”32”:”<NON>“,”33”:”;”,”34”:”‘“,”35”:”<GA>“,”36”:”,”,”37”:”.”,”38”:”&#x2F;“,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
+<p>shiftKeys &#x3D; {“04”:”A”, “05”:”B”, “06”:”C”, “07”:”D”, “08”:”E”, “09”:”F”, “0a”:”G”, “0b”:”H”, “0c”:”I”, “0d”:”J”, “0e”:”K”, “0f”:”L”, “10”:”M”, “11”:”N”, “12”:”O”, “13”:”P”, “14”:”Q”, “15”:”R”, “16”:”S”, “17”:”T”, “18”:”U”, “19”:”V”, “1a”:”W”, “1b”:”X”, “1c”:”Y”, “1d”:”Z”,”1e”:”!”, “1f”:”@”, “20”:”#”, “21”:”$”, “22”:”%”, “23”:”^”,”24”:”&amp;”,”25”:”*”,”26”:”(“,”27”:”)”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”_”,”2e”:”+”,”2f”:”{“,”30”:”}”,”31”:”|”,”32”:”<NON>“,”33”:”&quot;“,”34”:”:”,”35”:”<GA>“,”36”:”&lt;”,”37”:”&gt;”,”38”:”?”,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
+<p>def main():</p>
+<p>  # check argv</p>
+<p>  if len(sys.argv) !&#x3D; 2:</p>
+<p>​    print(“Usage : “)</p>
+<p>​    print(“     python UsbKeyboardHacker.py data.pcap”)</p>
+<p>​    print(“Tips : “)</p>
+<p>​    print(“     To use this python script , you must install the tshark first.”)</p>
+<p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
+<p>​    print(“Author : “)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#x77;&#x61;&#110;&#103;&#x79;&#105;&#x68;&#x61;&#110;&#x67;&#x65;&#114;&#64;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x77;&#x61;&#110;&#103;&#x79;&#105;&#x68;&#x61;&#110;&#x67;&#x65;&#114;&#64;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>“)</p>
+<p>​    print(“     If you have any questions , please contact me by email.”)</p>
+<p>​    print(“     Thank you for using.”)</p>
+<p>​    exit(1)</p>
+<p>  # get argv</p>
+<p>  pcapFilePath &#x3D; sys.argv[1]</p>
+<p>  # get data of pcap</p>
+<p>  os.system(“tshark -r %s -T fields -e usb.capdata ‘usb.data_len &#x3D;&#x3D; 8’ &gt; %s” % (pcapFilePath, DataFileName))</p>
+<p>  # read data</p>
+<p>  with open(DataFileName, “r”) as f:</p>
+<p>​    for line in f:</p>
+<p>​      presses.append(line[0:-1])</p>
+<p>  # handle</p>
+<p>  result &#x3D; “”</p>
+<p>  for press in presses:</p>
+<p>​    if press &#x3D;&#x3D; ‘’:</p>
+<p>​      continue</p>
+<p>​    if ‘:’ in press:</p>
+<p>​      Bytes &#x3D; press.split(“:”)</p>
+<p>​    else:</p>
+<p>​      Bytes &#x3D; [press[i:i+2] for i in range(0, len(press), 2)]</p>
+<p>​    if Bytes[0] &#x3D;&#x3D; “00”:</p>
+<p>​      if Bytes[2] !&#x3D; “00” and normalKeys.get(Bytes[2]):</p>
+<p>​        result +&#x3D; normalKeys[Bytes[2]]</p>
+<p>​    elif int(Bytes[0],16) &amp; 0b10 or int(Bytes[0],16) &amp; 0b100000: # shift key is pressed.</p>
+<p>​      if Bytes[2] !&#x3D; “00” and normalKeys.get(Bytes[2]):</p>
+<p>​        result +&#x3D; shiftKeys[Bytes[2]]</p>
+<p>​    else:</p>
+<p>​      print(“[-] Unknow Key : %s” % (Bytes[0]))</p>
+<p>  print(“[+] Found : %s” % (result))</p>
+<p>  # clean the temp data</p>
+<p>  os.system(“rm .&#x2F;%s” % (DataFileName))</p>
+<p>if <strong>name</strong> &#x3D;&#x3D; “<strong>main</strong>“:</p>
+<p>  main()</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps5.jpg" class="" title="img"> 
+
+<p>发现了这一串，作为密码，解出！</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps6.jpg" class="" title="img"> 
+
 
       
     </div>

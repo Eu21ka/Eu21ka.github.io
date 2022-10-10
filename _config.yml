@@ -599,7 +599,7 @@ theme_config:
 
   # Bing Webmaster tools verification.
   # See: https://www.bing.com/webmasters
-  bing_site_verification:
+  bing_site_verification: <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12" />
 
   # Yandex Webmaster tools verification.
   # See: https://webmaster.yandex.ru
