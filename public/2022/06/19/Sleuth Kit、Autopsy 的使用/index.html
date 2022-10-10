@@ -21,31 +21,31 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"r30blogs.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题 这是教程网站： https:&#x2F;&#x2F;linux.cn&#x2F;article-5541-1.html 因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址： https:&#x2F;&#x2F;sourceforge.net&#x2F;projec">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sleuth Kit、Autopsy 的使用">
-<meta property="og:url" content="http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:url" content="https://r30blogs.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="R3ape1团队笔记">
 <meta property="og:description" content="这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题 这是教程网站： https:&#x2F;&#x2F;linux.cn&#x2F;article-5541-1.html 因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址： https:&#x2F;&#x2F;sourceforge.net&#x2F;projec">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg">
-<meta property="og:image" content="http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg">
-<meta property="og:image" content="http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg">
+<meta property="og:image" content="https://r30blogs.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg">
+<meta property="og:image" content="https://r30blogs.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg">
+<meta property="og:image" content="https://r30blogs.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg">
 <meta property="article:published_time" content="2022-06-19T14:19:11.000Z">
 <meta property="article:modified_time" content="2022-07-06T13:12:06.185Z">
 <meta property="article:author" content="R3ape1">
 <meta property="article:tag" content="misc">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg">
+<meta name="twitter:image" content="https://r30blogs.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg">
 
 
-<link rel="canonical" href="http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/">
+<link rel="canonical" href="https://r30blogs.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/","path":"2022/06/19/Sleuth Kit、Autopsy 的使用/","title":"Sleuth Kit、Autopsy 的使用"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://r30blogs.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/","path":"2022/06/19/Sleuth Kit、Autopsy 的使用/","title":"Sleuth Kit、Autopsy 的使用"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Sleuth Kit、Autopsy 的使用 | R3ape1团队笔记</title>
@@ -214,7 +214,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.png">
