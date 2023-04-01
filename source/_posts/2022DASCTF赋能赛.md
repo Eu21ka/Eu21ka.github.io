@@ -5,7 +5,7 @@ tags:
 - pwn
 - misc
 - web
-- Crypto
+- crypto
 categories:
 - [比赛]
 ---

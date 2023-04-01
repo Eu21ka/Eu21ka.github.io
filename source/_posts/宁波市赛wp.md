@@ -4,7 +4,7 @@ date: 2022-06-19 22:19:11
 tags:
 - misc
 - web
-- Crypto
+- crypto
 categories:
 - [比赛]
 ---

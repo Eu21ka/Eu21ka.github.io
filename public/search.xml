@@ -125,7 +125,7 @@
         <tag>pwn</tag>
         <tag>misc</tag>
         <tag>web</tag>
-        <tag>Crypto</tag>
+        <tag>crypto</tag>
       </tags>
   </entry>
   <entry>
@@ -256,6 +256,128 @@
         <tag>misc</tag>
         <tag>web</tag>
         <tag>re</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022蓝帽杯初赛WP</title>
+    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/</url>
+    <content><![CDATA[<h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif" class="" title="图片">
+
+<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
+<p>在tcp追踪流13发现了有用信息</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif" class="" title="图片">
+
+<p>阅读拼接进行base64解密试试</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif" class="" title="图片">
+
+<p>发现了密码，解压压缩包</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif" class="" title="图片">
+
+<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif" class="" title="图片">
+
+<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif" class="" title="图片">
+
+<p>果然，在群组聊天中找到了快递单号</p>
+<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif" class="" title="图片">
+
+<p>找到了，发现是md5加密过的，md5解密</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif" class="" title="图片">得到开机密码anxinqi
+
+<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif" class="" title="图片">
+
+<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif" class="" title="图片">
+
+<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
+<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg" class="" title="图片">
+
+<p>导出了三个文件，其中就有ppt</p>
+<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif" class="" title="图片">
+
+<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif" class="" title="图片">
+
+<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif" class="" title="图片">
+
+
+
+<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
+<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif" class="" title="图片">
+
+<p>导出keyfile</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif" class="" title="图片">
+
+<p>新建案例，开始取证</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif" class="" title="图片">
+
+<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif" class="" title="图片">
+
+<p>打开压缩包，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif" class="" title="图片">
+
+<p>flag{1349934913913991394cacacacacacc}</p>
+<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
+<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png" class="" title="image-20220709190538890">
+
+<p>所以flag为“exec.azj.kny.d.c”。</p>
+<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png" class="" title="image-20220709190735776">
+
+<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
+<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
+<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png" class="" title="image-20220709191141536">
+
+<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
+<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
+<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
+<p>根据关键词查找发现如下内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png" class="" title="image-20220709191504565">
+
+<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png" class="" title="image-20220709191701294">
+
+<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
+<p>所以flag为“a”</p>
+<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif" class="" title="图片">
+
+<p>d盾扫描获得flag</p>
+<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png" class="" title="image-20220709202049506">
+
+
+
+<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+        <tag>取证</tag>
       </tags>
   </entry>
   <entry>
@@ -414,128 +536,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2022蓝帽杯初赛WP</title>
-    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/</url>
-    <content><![CDATA[<h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif" class="" title="图片">
-
-<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
-<p>在tcp追踪流13发现了有用信息</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif" class="" title="图片">
-
-<p>阅读拼接进行base64解密试试</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif" class="" title="图片">
-
-<p>发现了密码，解压压缩包</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif" class="" title="图片">
-
-<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif" class="" title="图片">
-
-
-
-<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif" class="" title="图片">
-
-<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif" class="" title="图片">
-
-
-
-<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif" class="" title="图片">
-
-<p>果然，在群组聊天中找到了快递单号</p>
-<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif" class="" title="图片">
-
-<p>找到了，发现是md5加密过的，md5解密</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif" class="" title="图片">得到开机密码anxinqi
-
-<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif" class="" title="图片">
-
-<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif" class="" title="图片">
-
-<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
-<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg" class="" title="图片">
-
-<p>导出了三个文件，其中就有ppt</p>
-<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif" class="" title="图片">
-
-<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif" class="" title="图片">
-
-<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif" class="" title="图片">
-
-
-
-<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
-<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif" class="" title="图片">
-
-<p>导出keyfile</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif" class="" title="图片">
-
-<p>新建案例，开始取证</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif" class="" title="图片">
-
-<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif" class="" title="图片">
-
-<p>打开压缩包，得到flag</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif" class="" title="图片">
-
-<p>flag{1349934913913991394cacacacacacc}</p>
-<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
-<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png" class="" title="image-20220709190538890">
-
-<p>所以flag为“exec.azj.kny.d.c”。</p>
-<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png" class="" title="image-20220709190735776">
-
-<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
-<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
-<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png" class="" title="image-20220709191141536">
-
-<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
-<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
-<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
-<p>根据关键词查找发现如下内容</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png" class="" title="image-20220709191504565">
-
-<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png" class="" title="image-20220709191701294">
-
-<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
-<p>所以flag为“a”</p>
-<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif" class="" title="图片">
-
-<p>d盾扫描获得flag</p>
-<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png" class="" title="image-20220709202049506">
-
-
-
-<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-        <tag>取证</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>蓝帽杯初赛pwn1复现</title>
     <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/</url>
     <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道升级版的ret2shellcode</p>
@@ -665,8 +665,8 @@
       </categories>
       <tags>
         <tag>misc</tag>
-        <tag>re</tag>
         <tag>crypto</tag>
+        <tag>re</tag>
       </tags>
   </entry>
   <entry>
@@ -1174,61 +1174,6 @@
       </tags>
   </entry>
   <entry>
-    <title>(catf1agCTF)我幽默吗?</title>
-    <url>/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/</url>
-    <content><![CDATA[<p>进入题目：</p>
-<p>发现是空白页面，点击万能的f12发现注释中果然藏了东西</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701205934697.png" class="" title="image-20220701205934697">
-
-<p>仔细观察发现是一个密码本，进行对照翻译</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210012170.png" class="" title="image-20220701210012170">
-
-<p>发现提示了一个source，在url中传入source&#x3D;xxxx（任意值进行尝试）获得以下代码：</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210259854.png" class="" title="image-20220701210259854">
-
-<p>仔细阅读后发现总共要传入三个值a，b，c</p>
-<p>之后对flag文件位置进行查询：</p>
-<p>payload：a&#x3D;DirectoryIterator&amp;b&#x3D;glob:&#x2F;&#x2F;flag[a-z0-9]*.php&amp;c&#x3D;9223372036854775806</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214011951.png" class="" title="image-20220701214011951">
-
-
-
-<p>获取flag</p>
-<p>payload：a&#x3D;SplFileObject&amp;b&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag56ea8b83122449e814e0fd7bfb5f220a.php&amp;c&#x3D;9223372036854775806</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214053812.png" class="" title="image-20220701214053812">
-
-
-
-<p>解密获得最终结果：</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210702783.png" class="" title="image-20220701210702783">
-
-
-
-<h2 id="get新知识"><a href="#get新知识" class="headerlink" title="get新知识"></a>get新知识</h2><p>当出现类似如下代码时可以利用原生类配合php伪协议使用获取flag</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210422844.png" class="" title="image-20220701210422844">
-
-<h3 id="glob协议"><a href="#glob协议" class="headerlink" title="glob协议"></a>glob协议</h3><p>   glob:&#x2F;&#x2F;协议是php5.3.0以后一种<strong>查找匹配的文件路径模式</strong>。（后面可以使用正则表达式匹配）</p>
-<h3 id="遍历目录类（DirectoryIterator）"><a href="#遍历目录类（DirectoryIterator）" class="headerlink" title="遍历目录类（DirectoryIterator）"></a>遍历目录类（DirectoryIterator）</h3><p>​    DirectoryIterator类的<code>__construct</code>方法会构造一个迭代器，如果使用echo输出该迭代器，将会返回迭代器的第一项</p>
-<p>与之类似的还有FilesystemIterator和GlobIterator（自带glob头在使用时不需要在使用glob协议直接正则即可）在DirectoryIterator被禁用的情况下可以使用；</p>
-<p><em><strong>所以我们可以将glob协议和DirectoryIterator类配合使用达到查询的效果</strong></em></p>
-<h2 id="读取文件类（SplFileObject）"><a href="#读取文件类（SplFileObject）" class="headerlink" title="读取文件类（SplFileObject）"></a>读取文件类（SplFileObject）</h2><p>SplFileObject类为文件提供了一个面向对象接口</p>
-<p>在读取过程中不一定会成功所以可以配合filter协议使用；</p>
-<h2 id="绕过-count-x3D-1（不理解记住即可）"><a href="#绕过-count-x3D-1（不理解记住即可）" class="headerlink" title="绕过$count[]&#x3D;1（不理解记住即可）"></a>绕过$count[]&#x3D;1（不理解记住即可）</h2><p>重点在于$count[] &#x3D; 1此语句正常赋值的时候返回结果为1</p>
-<p>可以通过溢出来跳出此语句的判断</p>
-<p>作为PHP最重要的数据类型HashTable其key值是有一定的范围的，如果设置的key值过大就会出现溢出的问题而这个数字就是临界点9223372036854775807</p>
-<p>特别鸣谢大佬博客：</p>
-<p><a href="https://blog.csdn.net/cng_Sinner/article/details/123345424">(19条消息) 我幽默吗？_king_Sinner的博客-CSDN博客</a></p>
-<p><a href="https://blog.csdn.net/qq_38154820/article/details/121112935">(19条消息) 记一道2021浙江省赛的Web题_合天网安实验室的博客-CSDN博客</a></p>
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>web题集</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BUUCTF [BJDCTF2020]Cookie is so stable</title>
     <url>/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/</url>
     <content><![CDATA[<h1 id="BUUCTF-BJDCTF2020-Cookie-is-so-stable"><a href="#BUUCTF-BJDCTF2020-Cookie-is-so-stable" class="headerlink" title="BUUCTF [BJDCTF2020]Cookie is so stable"></a>BUUCTF [BJDCTF2020]Cookie is so stable</h1><p><strong>这是一道关于php的SSTI注入</strong></p>
@@ -1274,6 +1219,61 @@
 <img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811181059123.png" class="" title="image-20220811181059123">
 
 <p>（场景来源bugku-Simple_SSTI_1）</p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>(catf1agCTF)我幽默吗?</title>
+    <url>/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/</url>
+    <content><![CDATA[<p>进入题目：</p>
+<p>发现是空白页面，点击万能的f12发现注释中果然藏了东西</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701205934697.png" class="" title="image-20220701205934697">
+
+<p>仔细观察发现是一个密码本，进行对照翻译</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210012170.png" class="" title="image-20220701210012170">
+
+<p>发现提示了一个source，在url中传入source&#x3D;xxxx（任意值进行尝试）获得以下代码：</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210259854.png" class="" title="image-20220701210259854">
+
+<p>仔细阅读后发现总共要传入三个值a，b，c</p>
+<p>之后对flag文件位置进行查询：</p>
+<p>payload：a&#x3D;DirectoryIterator&amp;b&#x3D;glob:&#x2F;&#x2F;flag[a-z0-9]*.php&amp;c&#x3D;9223372036854775806</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214011951.png" class="" title="image-20220701214011951">
+
+
+
+<p>获取flag</p>
+<p>payload：a&#x3D;SplFileObject&amp;b&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag56ea8b83122449e814e0fd7bfb5f220a.php&amp;c&#x3D;9223372036854775806</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214053812.png" class="" title="image-20220701214053812">
+
+
+
+<p>解密获得最终结果：</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210702783.png" class="" title="image-20220701210702783">
+
+
+
+<h2 id="get新知识"><a href="#get新知识" class="headerlink" title="get新知识"></a>get新知识</h2><p>当出现类似如下代码时可以利用原生类配合php伪协议使用获取flag</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210422844.png" class="" title="image-20220701210422844">
+
+<h3 id="glob协议"><a href="#glob协议" class="headerlink" title="glob协议"></a>glob协议</h3><p>   glob:&#x2F;&#x2F;协议是php5.3.0以后一种<strong>查找匹配的文件路径模式</strong>。（后面可以使用正则表达式匹配）</p>
+<h3 id="遍历目录类（DirectoryIterator）"><a href="#遍历目录类（DirectoryIterator）" class="headerlink" title="遍历目录类（DirectoryIterator）"></a>遍历目录类（DirectoryIterator）</h3><p>​    DirectoryIterator类的<code>__construct</code>方法会构造一个迭代器，如果使用echo输出该迭代器，将会返回迭代器的第一项</p>
+<p>与之类似的还有FilesystemIterator和GlobIterator（自带glob头在使用时不需要在使用glob协议直接正则即可）在DirectoryIterator被禁用的情况下可以使用；</p>
+<p><em><strong>所以我们可以将glob协议和DirectoryIterator类配合使用达到查询的效果</strong></em></p>
+<h2 id="读取文件类（SplFileObject）"><a href="#读取文件类（SplFileObject）" class="headerlink" title="读取文件类（SplFileObject）"></a>读取文件类（SplFileObject）</h2><p>SplFileObject类为文件提供了一个面向对象接口</p>
+<p>在读取过程中不一定会成功所以可以配合filter协议使用；</p>
+<h2 id="绕过-count-x3D-1（不理解记住即可）"><a href="#绕过-count-x3D-1（不理解记住即可）" class="headerlink" title="绕过$count[]&#x3D;1（不理解记住即可）"></a>绕过$count[]&#x3D;1（不理解记住即可）</h2><p>重点在于$count[] &#x3D; 1此语句正常赋值的时候返回结果为1</p>
+<p>可以通过溢出来跳出此语句的判断</p>
+<p>作为PHP最重要的数据类型HashTable其key值是有一定的范围的，如果设置的key值过大就会出现溢出的问题而这个数字就是临界点9223372036854775807</p>
+<p>特别鸣谢大佬博客：</p>
+<p><a href="https://blog.csdn.net/cng_Sinner/article/details/123345424">(19条消息) 我幽默吗？_king_Sinner的博客-CSDN博客</a></p>
+<p><a href="https://blog.csdn.net/qq_38154820/article/details/121112935">(19条消息) 记一道2021浙江省赛的Web题_合天网安实验室的博客-CSDN博客</a></p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -1573,22 +1573,6 @@
       </tags>
   </entry>
   <entry>
-    <title>embryoio level3</title>
-    <url>/2022/06/08/embryoio-level3/</url>
-    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level3/level3-1.png" alt="屏幕截图 2022-06-07 122020"></p>
-<p>还是老样子，上来先运行题目程序，根据输出语句，大概可以知道这个程序需要一个外部输入参数，而且第一个外部输入参数的值也告诉了我们，所以我们在执行程序运行的时候，从外部传一个正确的值进去，就可以拿到flag了，具体操作如下图所示。</p>
-<p><img src="/2022/06/08/embryoio-level3/level3-2.png" alt="屏幕截图 2022-06-07 123654"></p>
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwncollege刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>embryoio level4~level14</title>
     <url>/2022/06/11/embryoio-level4-level14/</url>
     <content><![CDATA[<h1 id="embryoio-level4"><a href="#embryoio-level4" class="headerlink" title="embryoio level4"></a>embryoio level4</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>学会环境变量配置</p>
@@ -1646,6 +1630,22 @@
       </tags>
   </entry>
   <entry>
+    <title>embryoio level3</title>
+    <url>/2022/06/08/embryoio-level3/</url>
+    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level3/level3-1.png" alt="屏幕截图 2022-06-07 122020"></p>
+<p>还是老样子，上来先运行题目程序，根据输出语句，大概可以知道这个程序需要一个外部输入参数，而且第一个外部输入参数的值也告诉了我们，所以我们在执行程序运行的时候，从外部传一个正确的值进去，就可以拿到flag了，具体操作如下图所示。</p>
+<p><img src="/2022/06/08/embryoio-level3/level3-2.png" alt="屏幕截图 2022-06-07 123654"></p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwncollege刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>fd</title>
     <url>/2022/07/12/fd(wp)/</url>
     <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于read函数的一道程序题</p>
@@ -1668,6 +1668,38 @@
 
 <img src="/2022/07/12/fd(wp)/2.png" class="" title="屏幕截图 2022-05-09 214126">
 ]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwnable刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>flag</title>
+    <url>/2022/07/12/flag(wp)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>这是一道需要逆向脱壳的题</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>将下载下来的二进制文件拖入ida查看</p>
+<img src="/2022/07/12/flag(wp)/image-20220712192048750.png" class="" title="image-20220712192048750">
+
+<p>看到只有三个函数，很明显是被加壳了。</p>
+<p>在hex视图中进入一个函数，可以看到下图所示的字段</p>
+<img src="/2022/07/12/flag(wp)/image-20220712192148939.png" class="" title="image-20220712192148939">
+
+<p>现在可以确定这个二进制程序是被UPX加壳了，接下来只是需要将这个二进制文件脱壳，再用ida查看。</p>
+<h2 id="脱壳分析"><a href="#脱壳分析" class="headerlink" title="脱壳分析"></a>脱壳分析</h2><p>upx的安装这里不多赘述，主要是两个指令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">upx -d filename #脱壳</span><br><span class="line">upx filename #加壳</span><br></pre></td></tr></table></figure>
+
+
+
+<p>脱壳后再拖入ida就可以看到很多函数，进入main函数查看，如下图所示</p>
+<img src="/2022/07/12/flag(wp)/image-20220712193403427.png" class="" title="image-20220712193403427">
+
+
+
+<p>跟进到data段就可以看到flag的值</p>
+<img src="/2022/07/12/flag(wp)/image-20220712193553553.png" class="" title="image-20220712193553553">]]></content>
       <categories>
         <category>刷题</category>
         <category>pwnable刷题</category>
@@ -1807,38 +1839,6 @@
       </categories>
       <tags>
         <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>flag</title>
-    <url>/2022/07/12/flag(wp)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>这是一道需要逆向脱壳的题</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>将下载下来的二进制文件拖入ida查看</p>
-<img src="/2022/07/12/flag(wp)/image-20220712192048750.png" class="" title="image-20220712192048750">
-
-<p>看到只有三个函数，很明显是被加壳了。</p>
-<p>在hex视图中进入一个函数，可以看到下图所示的字段</p>
-<img src="/2022/07/12/flag(wp)/image-20220712192148939.png" class="" title="image-20220712192148939">
-
-<p>现在可以确定这个二进制程序是被UPX加壳了，接下来只是需要将这个二进制文件脱壳，再用ida查看。</p>
-<h2 id="脱壳分析"><a href="#脱壳分析" class="headerlink" title="脱壳分析"></a>脱壳分析</h2><p>upx的安装这里不多赘述，主要是两个指令</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">upx -d filename #脱壳</span><br><span class="line">upx filename #加壳</span><br></pre></td></tr></table></figure>
-
-
-
-<p>脱壳后再拖入ida就可以看到很多函数，进入main函数查看，如下图所示</p>
-<img src="/2022/07/12/flag(wp)/image-20220712193403427.png" class="" title="image-20220712193403427">
-
-
-
-<p>跟进到data段就可以看到flag的值</p>
-<img src="/2022/07/12/flag(wp)/image-20220712193553553.png" class="" title="image-20220712193553553">]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwnable刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
       </tags>
   </entry>
   <entry>
@@ -2117,7 +2117,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#119;&#97;&#x6e;&#x67;&#121;&#105;&#104;&#97;&#110;&#103;&#x65;&#x72;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#119;&#97;&#x6e;&#x67;&#121;&#105;&#104;&#97;&#110;&#103;&#x65;&#x72;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#x77;&#x61;&#110;&#103;&#121;&#x69;&#x68;&#97;&#110;&#103;&#x65;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;">&#x77;&#x61;&#110;&#103;&#121;&#x69;&#x68;&#97;&#110;&#103;&#x65;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
@@ -2378,7 +2378,7 @@
       <tags>
         <tag>misc</tag>
         <tag>web</tag>
-        <tag>Crypto</tag>
+        <tag>crypto</tag>
       </tags>
   </entry>
   <entry>
