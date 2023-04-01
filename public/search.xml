@@ -2601,4 +2601,85 @@
         <tag>misc</tag>
       </tags>
   </entry>
+  <entry>
+    <title>2023楚慧杯初赛</title>
+    <url>/2023/04/01/2023%E6%A5%9A%E6%85%A7%E6%9D%AFWP/</url>
+    <content><![CDATA[<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="crypt"><a href="#crypt" class="headerlink" title="crypt"></a>crypt</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif" alt="图片"></p>
+<p>下载附件拿到一张黑猫警长的图片，放入010</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image004.gif" alt="图片"></p>
+<p>发现文件末尾有一段很长的数据，单独提取出来</p>
+<p>查看图片属性，发现备注</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image006.gif" alt="图片"></p>
+<p>应该是要让我们用VeraCrypt挂载，猜测提取出来的多余数据就是镜像文件，需要寻找到密码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image008.gif" alt="图片"></p>
+<p>在文件中间位置找到了VCpwd为a$%lSU，把分离出来的文件用vc进行挂载</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image010.gif" alt="图片"></p>
+<p>挂载成功，但是发现flag文件夹并没有东西</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image012.gif" alt="图片"></p>
+<p>猜测是写在文件簇里了，用winhex打开磁盘，搜索flag得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image014.gif" alt="图片"></p>
+<p><strong>flag{4ba7689c6dee7749403380b11c416de6}</strong></p>
+<h2 id="secret"><a href="#secret" class="headerlink" title="secret"></a>secret</h2><p>解压下一个e01文件，放入取证大师进行取证</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image016.gif" alt="图片"></p>
+<p>发现有分区存在bitlocker加密，现看看另一个分区的文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image018.gif" alt="图片"></p>
+<p>得到一张png</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image020.gif" alt="图片"></p>
+<p>zsteg -a发现了pass2：ChaiYan</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image022.gif" alt="图片"></p>
+<p>图片的宽高明显有问题，根据CRC脚本爆破得到</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image024.jpg" alt="图片"></p>
+<p>修改高度为正确高度</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image026.jpg" alt="图片"></p>
+<p>得到图片</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image028.gif" alt="图片"></p>
+<p>pass1为OXi，拼接得到密码OXiChaiYan，用该密码bitlocker解密分区1</p>
+<p>得到flag.zip</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image030.gif" alt="图片"></p>
+<p>里面是加密的flag.txt和001.png文件，同样的密码解密压缩包得到flag</p>
+<p><strong>flag{b6aa5b40559fc9762918cd32f5f6bd0f}</strong></p>
+<h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image032.gif" alt="图片"></p>
+<p>加密文本文件，放入winhex发现是伪加密</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image034.jpg" alt="图片"></p>
+<p>将9改为0成功解压，缩小文本得到flag</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image036.gif" alt="图片"></p>
+<p><strong>flag{b3b2cc1ffcaa12f61c6e61c519d1db2f}</strong></p>
+<h1 id="Mobile"><a href="#Mobile" class="headerlink" title="Mobile"></a>Mobile</h1><h2 id="Level-One"><a href="#Level-One" class="headerlink" title="Level_One"></a>Level_One</h2><p>找到<img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image038.jpg" alt="图片"></p>
+<p>换表base</p>
+<p>在strings.xml资源里找到enc和table</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">base64_decode</span>(<span class="params">ciphertext, table</span>):</span><br><span class="line"></span><br><span class="line">  padding_char = table[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">  table = table[:-<span class="number">1</span>] + <span class="string">&#x27;=&#x27;</span></span><br><span class="line"></span><br><span class="line">  table_dict = &#123;table[i]: i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(table))&#125;</span><br><span class="line"></span><br><span class="line">  table_dict[padding_char] = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  result = []</span><br><span class="line"></span><br><span class="line">  buffer = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> char <span class="keyword">in</span> ciphertext:</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> char <span class="keyword">not</span> <span class="keyword">in</span> table_dict:</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">​    val = table_dict[char]</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> val <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">​    buffer &lt;&lt;= <span class="number">6</span></span><br><span class="line"></span><br><span class="line">​    buffer |= val</span><br><span class="line"></span><br><span class="line">​    count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> count == <span class="number">4</span>:</span><br><span class="line"></span><br><span class="line">​      result.append((buffer &amp; <span class="number">0xFF0000</span>) &gt;&gt; <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">​      result.append((buffer &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">​      result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line">​      buffer = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">​      count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> count == <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">​    buffer &gt;&gt;= <span class="number">4</span></span><br><span class="line"></span><br><span class="line">​    result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">elif</span> count == <span class="number">3</span>:</span><br><span class="line"></span><br><span class="line">​    buffer &gt;&gt;= <span class="number">2</span></span><br><span class="line"></span><br><span class="line">​    result.append((buffer &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">​    result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">bytes</span>(result).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">ciphertext = <span class="string">&#x27;UsPYUFORMXnHSXIe6xpFSilR2iKs6RvtjeVFSfpHSX9zM0Sp6XVFjeK5&#x27;</span></span><br><span class="line"></span><br><span class="line">table = <span class="string">&#x27;n4/Xv90ElB32S6MmyK+iVIgkjU17CDGaLYxeuzsc8TqNOtrJWPfRp=HFhAwdb5oZQ&lt;&#x27;</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">plaintext = base64_decode(ciphertext, table)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(plaintext)</span><br><span class="line"></span><br><span class="line">得到flag</span><br></pre></td></tr></table></figure>
+
+<p><strong>flag{380605c6-7123-4f71-b573-601e8c4457b4}</strong></p>
+<h2 id="Level-Up"><a href="#Level-Up" class="headerlink" title="Level_Up"></a>Level_Up</h2><p>把so提出来放ida</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image040.gif" alt="图片"></p>
+<p>加密方式为：AES128+base</p>
+<p>利用findcrypt插件找base64密文</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image042.gif" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image044.gif" alt="图片"></p>
+<p>在这里看到了这一串，跟进去</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image046.jpg" alt="图片"></p>
+<p>key为followyourheart!</p>
+<p>密文为：</p>
+<p>“gOuWlCTi+hhzCn6rWxDm8IuuBwiOtM+V&#x2F;m39bthXTeT3E6WYrLU0CDqG76Kvpkmc”</p>
+<p>解密脚本：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt_data</span>(<span class="params">ciphertext, key</span>):</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 将Base64编码的数据解码为字节串</span></span><br><span class="line"></span><br><span class="line">  ciphertext = base64.b64decode(ciphertext)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 创建一个AES密码对象</span></span><br><span class="line"></span><br><span class="line">  cipher = AES.new(key.encode(), AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 解密数据并去除填充部分</span></span><br><span class="line"></span><br><span class="line">  plaintext = cipher.decrypt(ciphertext).rstrip(<span class="string">b&#x27;\0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 返回解密后的数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> plaintext.decode()</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">ciphertext = <span class="string">&quot;gOuWlCTi+hhzCn6rWxDm8IuuBwiOtM+V/m39bthXTeT3E6WYrLU0CDqG76Kvpkmc&quot;</span></span><br><span class="line"></span><br><span class="line">key = <span class="string">&quot;followyourheart!&quot;</span></span><br><span class="line"></span><br><span class="line">plaintext = decrypt_data(ciphertext, key)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(plaintext)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>得到flag，<strong>flag{6b1df900-1284-11ed-9fa7-5405dbe5e745}</strong></p>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="RollingBase"><a href="#RollingBase" class="headerlink" title="RollingBase"></a>RollingBase</h2><p>换表base</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image048.gif" alt="图片"></p>
+<p><strong>flag{416d3b4a10a9925363a44275d8655c5d}</strong></p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+        <tag>re</tag>
+        <tag>crypto</tag>
+      </tags>
+  </entry>
 </search>
