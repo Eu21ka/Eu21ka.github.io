@@ -206,6 +206,200 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/" class="post-title-link" itemprop="url">2022蓝帽杯初赛WP</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-12 19:49:00" itemprop="dateCreated datePublished" datetime="2022-07-12T19:49:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-21 11:25:01" itemprop="dateModified" datetime="2022-09-21T11:25:01+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700049682.gif" class="" title="图片">
+
+<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
+<p>在tcp追踪流13发现了有用信息</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004.gif" class="" title="图片">
+
+<p>阅读拼接进行base64解密试试</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006.gif" class="" title="图片">
+
+<p>发现了密码，解压压缩包</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008.gif" class="" title="图片">
+
+<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-16573700345378.gif" class="" title="图片">
+
+<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-16573700345389.gif" class="" title="图片">
+
+
+
+<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737006076812.gif" class="" title="图片">
+
+<p>果然，在群组聊天中找到了快递单号</p>
+<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737008500914.gif" class="" title="图片">
+
+<p>找到了，发现是md5加密过的，md5解密</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737008501015.gif" class="" title="图片">得到开机密码anxinqi
+
+<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737010442218.gif" class="" title="图片">
+
+<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737010442219.gif" class="" title="图片">
+
+<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
+<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.jpg" class="" title="图片">
+
+<p>导出了三个文件，其中就有ppt</p>
+<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737014552022.gif" class="" title="图片">
+
+<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737014552023.gif" class="" title="图片">
+
+<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737014552024.gif" class="" title="图片">
+
+
+
+<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
+<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002-165737018007529.gif" class="" title="图片">
+
+<p>导出keyfile</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image004-165737018007531.gif" class="" title="图片">
+
+<p>新建案例，开始取证</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image006-165737018007530.gif" class="" title="图片">
+
+<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image008-165737018007532.gif" class="" title="图片">
+
+<p>打开压缩包，得到flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image010-165737018007533.gif" class="" title="图片">
+
+<p>flag{1349934913913991394cacacacacacc}</p>
+<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
+<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190538890.png" class="" title="image-20220709190538890">
+
+<p>所以flag为“exec.azj.kny.d.c”。</p>
+<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709190735776.png" class="" title="image-20220709190735776">
+
+<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
+<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
+<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191141536.png" class="" title="image-20220709191141536">
+
+<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
+<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
+<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
+<p>根据关键词查找发现如下内容</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191504565.png" class="" title="image-20220709191504565">
+
+<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709191701294.png" class="" title="image-20220709191701294">
+
+<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
+<p>所以flag为“a”</p>
+<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/clip_image002.gif" class="" title="图片">
+
+<p>d盾扫描获得flag</p>
+<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202049506.png" class="" title="image-20220709202049506">
+
+
+
+<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/image-20220709202224818.png" class="" title="image-20220709202224818">
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/07/12/bof(wp)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1186,109 +1380,6 @@
 
 
 
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/22/embryoio%20level15~level28/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/22/embryoio%20level15~level28/" class="post-title-link" itemprop="url">embryoio level15~level28</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-22 21:31:11" itemprop="dateCreated datePublished" datetime="2022-06-22T21:31:11+08:00">2022-06-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-12 19:41:06" itemprop="dateModified" datetime="2022-07-12T19:41:06+08:00">2022-07-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="embryoio-level15-level21"><a href="#embryoio-level15-level21" class="headerlink" title="embryoio level15~level21"></a>embryoio level15~level21</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>学会编写python脚本运行程序</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/06/22/embryoio%20level15~level28/image-20220622150316738.png" class="" title="image-20220622150316738">
-
-<p>根据上图可以知道程序需要一个名叫<code>ipython</code>的python脚本来运行程序，我尝试过在<code>challenge目录</code>下编写脚本但是权限不允许，所以就在用户根目录下创建<code>ipython.py</code>文件。</p>
-<h3 id="编写python脚本"><a href="#编写python脚本" class="headerlink" title="编写python脚本"></a>编写python脚本</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#=====================level15=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level15&quot;</span>])</span><br></pre></td></tr></table></figure>
-
-<p>运行后得到flag</p>
-<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><p>其它题目的解题方法与之前的题目都大致一样，无非就是让python脚本来完成之前的操作，所以在此不过多赘述，直接放python代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#=====================level16=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>])		<span class="comment">#运行脚本后输入密码即可获得flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level17=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>， <span class="string">&quot;password&quot;</span>])		<span class="comment">#在password替换为需要外部输入的密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level18=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level18&quot;</span>],env=&#123;<span class="string">&#x27;environment&#x27;</span>:<span class="string">&#x27;value&#x27;</span>&#125;)		<span class="comment">#替换未对应的环境变量即可</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level19=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">file.write(<span class="string">&#x27;password&#x27;</span>)					<span class="comment">#password替换为题目对应需要的密码</span></span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level19&#x27;</span>], stdin=file)</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level20=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level20&#x27;</span>], stdout=file)</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(file.read())</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level21=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level21&quot;</span>],env=&#123;&#125;)		<span class="comment">#设置一个空环境变量</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="embryoio-level22-level28"><a href="#embryoio-level22-level28" class="headerlink" title="embryoio level22~level28"></a>embryoio level22~level28</h1><p>这些题与上面一样，基本没什么区别，所以在此也不多赘述，可以参考以上的脚本。</p>
 
       
     </div>

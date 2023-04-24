@@ -206,6 +206,109 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/22/embryoio%20level15~level28/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/22/embryoio%20level15~level28/" class="post-title-link" itemprop="url">embryoio level15~level28</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-22 21:31:11" itemprop="dateCreated datePublished" datetime="2022-06-22T21:31:11+08:00">2022-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-12 19:41:06" itemprop="dateModified" datetime="2022-07-12T19:41:06+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="embryoio-level15-level21"><a href="#embryoio-level15-level21" class="headerlink" title="embryoio level15~level21"></a>embryoio level15~level21</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>学会编写python脚本运行程序</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/06/22/embryoio%20level15~level28/image-20220622150316738.png" class="" title="image-20220622150316738">
+
+<p>根据上图可以知道程序需要一个名叫<code>ipython</code>的python脚本来运行程序，我尝试过在<code>challenge目录</code>下编写脚本但是权限不允许，所以就在用户根目录下创建<code>ipython.py</code>文件。</p>
+<h3 id="编写python脚本"><a href="#编写python脚本" class="headerlink" title="编写python脚本"></a>编写python脚本</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#=====================level15=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level15&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>运行后得到flag</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><p>其它题目的解题方法与之前的题目都大致一样，无非就是让python脚本来完成之前的操作，所以在此不过多赘述，直接放python代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#=====================level16=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>])		<span class="comment">#运行脚本后输入密码即可获得flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level17=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>， <span class="string">&quot;password&quot;</span>])		<span class="comment">#在password替换为需要外部输入的密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level18=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level18&quot;</span>],env=&#123;<span class="string">&#x27;environment&#x27;</span>:<span class="string">&#x27;value&#x27;</span>&#125;)		<span class="comment">#替换未对应的环境变量即可</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level19=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">file.write(<span class="string">&#x27;password&#x27;</span>)					<span class="comment">#password替换为题目对应需要的密码</span></span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level19&#x27;</span>], stdin=file)</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level20=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level20&#x27;</span>], stdout=file)</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(file.read())</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level21=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level21&quot;</span>],env=&#123;&#125;)		<span class="comment">#设置一个空环境变量</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="embryoio-level22-level28"><a href="#embryoio-level22-level28" class="headerlink" title="embryoio level22~level28"></a>embryoio level22~level28</h1><p>这些题与上面一样，基本没什么区别，所以在此也不多赘述，可以参考以上的脚本。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/ISCC%202022%202022%E5%86%AC%E5%A5%A5%E4%BC%9A/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -405,102 +508,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/ISCC%202022%20MISC3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC3/" class="post-title-link" itemprop="url">ISCC 2022 MISC3</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-20 21:18:22" itemprop="dateModified" datetime="2022-09-20T21:18:22+08:00">2022-09-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>下载附件，根据题目要求用winrar打开</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
-
-<p>poem.txt中的内容是五行星星</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
-
-<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
-<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
-
-<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
-<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/ISCC%202022%20MISC2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -577,6 +584,102 @@
 <img src="/2022/06/19/ISCC%202022%20MISC2/wps11.jpg" class="" title="img"> 
 
 <p>根据out.png上面的字对应上方两张图片的字体，按照题目的要求变成ISCC{xxxx-xxxx-xxxx}的格式（需要全部大写）就是答案了</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/ISCC%202022%20MISC3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/ISCC%202022%20MISC3/" class="post-title-link" itemprop="url">ISCC 2022 MISC3</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-20 21:18:22" itemprop="dateModified" datetime="2022-09-20T21:18:22+08:00">2022-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>下载附件，根据题目要求用winrar打开</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
+
+<p>poem.txt中的内容是五行星星</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
+
+<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
+<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
+
+<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
+<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
 
       
     </div>
@@ -1137,162 +1240,6 @@
 <p>UDP 用于域名查询，语音通话，视频直播等</p>
 <p> 还可以用于隧道网络：VPN，VXLAN</p>
 <p>（用于对速度要求高，但是对少量丢包没有太大要求的场景）</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/" class="post-title-link" itemprop="url">2022国赛初赛 misc ez_usb</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-21 11:24:20" itemprop="dateModified" datetime="2022-09-21T11:24:20+08:00">2022-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>下载附件，发现是usb的流量分析</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps1.jpg" class="" title="img"> 
-
-<p>直接拖进kali中使用keyboard脚本，发现跑不出东西，想到应该需要过滤</p>
-<p>尝试尝试，在过滤usb.src &#x3D;&#x3D;”2.8.1”的时候发现了线索，以该过滤导出压缩包</p>
-<p>左上角，导出特定分组</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps2.jpg" class="" title="img"> 
-
-<p>用usbkeyboard脚本跑</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps3.jpg" class="" title="img"> 
-
-<p>看到了rar，用winhex打开数据（这里要清除不相关数据后放入）</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps4.jpg" class="" title="img"> 
-
-<p>转化成rar压缩包，发现了加密的txt文件，需要寻找密码，一开始没什么头绪，就想着继续过滤一下，没想到在usb.src &#x3D;&#x3D;”2.10.1”时发现了东西，一样的方法导出另一个流量包并且用脚本跑</p>
-<p>（本题所用的keyboard脚本均为github拉下来的）</p>
-<p>脚本：</p>
-<p>#!&#x2F;usr&#x2F;bin&#x2F;env python</p>
-<p>import sys</p>
-<p>import os</p>
-<p>DataFileName &#x3D; “usb.dat”</p>
-<p>presses &#x3D; []</p>
-<p>normalKeys &#x3D; {“04”:”a”, “05”:”b”, “06”:”c”, “07”:”d”, “08”:”e”, “09”:”f”, “0a”:”g”, “0b”:”h”, “0c”:”i”, “0d”:”j”, “0e”:”k”, “0f”:”l”, “10”:”m”, “11”:”n”, “12”:”o”, “13”:”p”, “14”:”q”, “15”:”r”, “16”:”s”, “17”:”t”, “18”:”u”, “19”:”v”, “1a”:”w”, “1b”:”x”, “1c”:”y”, “1d”:”z”,”1e”:”1”, “1f”:”2”, “20”:”3”, “21”:”4”, “22”:”5”, “23”:”6”,”24”:”7”,”25”:”8”,”26”:”9”,”27”:”0”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”-“,”2e”:”&#x3D;”,”2f”:”[“,”30”:”]”,”31”:”\“,”32”:”<NON>“,”33”:”;”,”34”:”‘“,”35”:”<GA>“,”36”:”,”,”37”:”.”,”38”:”&#x2F;“,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
-<p>shiftKeys &#x3D; {“04”:”A”, “05”:”B”, “06”:”C”, “07”:”D”, “08”:”E”, “09”:”F”, “0a”:”G”, “0b”:”H”, “0c”:”I”, “0d”:”J”, “0e”:”K”, “0f”:”L”, “10”:”M”, “11”:”N”, “12”:”O”, “13”:”P”, “14”:”Q”, “15”:”R”, “16”:”S”, “17”:”T”, “18”:”U”, “19”:”V”, “1a”:”W”, “1b”:”X”, “1c”:”Y”, “1d”:”Z”,”1e”:”!”, “1f”:”@”, “20”:”#”, “21”:”$”, “22”:”%”, “23”:”^”,”24”:”&amp;”,”25”:”*”,”26”:”(“,”27”:”)”,”28”:”<RET>“,”29”:”<ESC>“,”2a”:”<DEL>“, “2b”:”\t”,”2c”:”<SPACE>“,”2d”:”_”,”2e”:”+”,”2f”:”{“,”30”:”}”,”31”:”|”,”32”:”<NON>“,”33”:”&quot;“,”34”:”:”,”35”:”<GA>“,”36”:”&lt;”,”37”:”&gt;”,”38”:”?”,”39”:”<CAP>“,”3a”:”<F1>“,”3b”:”<F2>“, “3c”:”<F3>“,”3d”:”<F4>“,”3e”:”<F5>“,”3f”:”<F6>“,”40”:”<F7>“,”41”:”<F8>“,”42”:”<F9>“,”43”:”<F10>“,”44”:”<F11>“,”45”:”<F12>“}</p>
-<p>def main():</p>
-<p>  # check argv</p>
-<p>  if len(sys.argv) !&#x3D; 2:</p>
-<p>​    print(“Usage : “)</p>
-<p>​    print(“     python UsbKeyboardHacker.py data.pcap”)</p>
-<p>​    print(“Tips : “)</p>
-<p>​    print(“     To use this python script , you must install the tshark first.”)</p>
-<p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
-<p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#119;&#97;&#110;&#103;&#121;&#x69;&#x68;&#97;&#x6e;&#103;&#101;&#x72;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#x6d;">&#119;&#97;&#110;&#103;&#121;&#x69;&#x68;&#97;&#x6e;&#103;&#101;&#x72;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#x6d;</a>“)</p>
-<p>​    print(“     If you have any questions , please contact me by email.”)</p>
-<p>​    print(“     Thank you for using.”)</p>
-<p>​    exit(1)</p>
-<p>  # get argv</p>
-<p>  pcapFilePath &#x3D; sys.argv[1]</p>
-<p>  # get data of pcap</p>
-<p>  os.system(“tshark -r %s -T fields -e usb.capdata ‘usb.data_len &#x3D;&#x3D; 8’ &gt; %s” % (pcapFilePath, DataFileName))</p>
-<p>  # read data</p>
-<p>  with open(DataFileName, “r”) as f:</p>
-<p>​    for line in f:</p>
-<p>​      presses.append(line[0:-1])</p>
-<p>  # handle</p>
-<p>  result &#x3D; “”</p>
-<p>  for press in presses:</p>
-<p>​    if press &#x3D;&#x3D; ‘’:</p>
-<p>​      continue</p>
-<p>​    if ‘:’ in press:</p>
-<p>​      Bytes &#x3D; press.split(“:”)</p>
-<p>​    else:</p>
-<p>​      Bytes &#x3D; [press[i:i+2] for i in range(0, len(press), 2)]</p>
-<p>​    if Bytes[0] &#x3D;&#x3D; “00”:</p>
-<p>​      if Bytes[2] !&#x3D; “00” and normalKeys.get(Bytes[2]):</p>
-<p>​        result +&#x3D; normalKeys[Bytes[2]]</p>
-<p>​    elif int(Bytes[0],16) &amp; 0b10 or int(Bytes[0],16) &amp; 0b100000: # shift key is pressed.</p>
-<p>​      if Bytes[2] !&#x3D; “00” and normalKeys.get(Bytes[2]):</p>
-<p>​        result +&#x3D; shiftKeys[Bytes[2]]</p>
-<p>​    else:</p>
-<p>​      print(“[-] Unknow Key : %s” % (Bytes[0]))</p>
-<p>  print(“[+] Found : %s” % (result))</p>
-<p>  # clean the temp data</p>
-<p>  os.system(“rm .&#x2F;%s” % (DataFileName))</p>
-<p>if <strong>name</strong> &#x3D;&#x3D; “<strong>main</strong>“:</p>
-<p>  main()</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps5.jpg" class="" title="img"> 
-
-<p>发现了这一串，作为密码，解出！</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps6.jpg" class="" title="img"> 
-
 
       
     </div>
