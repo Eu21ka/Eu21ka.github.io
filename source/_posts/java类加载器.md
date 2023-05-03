@@ -4,7 +4,7 @@ date: 2023-03-27 20:05:00
 tags:
 - web
 categories:
-- [web笔记]
+- [笔记, web笔记]
 ---
 
 # java基础学习
