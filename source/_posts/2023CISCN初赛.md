@@ -19,7 +19,7 @@ categories:
 
 # 二、解题情况
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif)
+![image-20230605212532028](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052125141.png)
 
 # 三、解题过程
 
@@ -29,7 +29,7 @@ categories:
 
 ### 签到卡
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image004.gif)
+![image-20230605212550137](C:\Users\16956\AppData\Roaming\Typora\typora-user-images\image-20230605212550137.png)
 
 根据提示可以知道穿孔卡片机里面执行的是python脚本，那就直接用python语句来读取flag就行
 
@@ -41,15 +41,15 @@ print(open('/flag').read())
 
  
 
-被加密的生产流量
+### 被加密的生产流量
 
 打开流量包发现是modbus协议，还查找了许多资料，但其实flag直接追踪tcp流就可
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image008.gif)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052128383.gif)
 
 在0流获取base32编码拼接，解码得到flag
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image010.gif)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052128388.gif)
 
 **flag{c1f_fi1g_1000}**
 
@@ -61,13 +61,13 @@ print(open('/flag').read())
 
 其中题目.png作为每一块麻将所代表的数字，按顺序标记一下
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image012.gif)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052129430.gif)
 
 a.png和k.png分别作为横纵坐标，用python脚本打点画一个坐标图
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image014.gif)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052129432.gif)
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image016.gif)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052129439.gif)
 
 ```python
 from matplotlib import pyplot as plt
@@ -93,11 +93,11 @@ plt.show()
 
 这题思路比较简单，只是读取文件，但是一开始尝试的时候发现os，commands，subprocess，shlex和popen这些模块直接import的时候全部都被禁用了
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image020.gif)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052129226.gif)
 
 这题需要用拼接字符的方法去形成python语句来进行命令执行，而且一行有七个字符的限制
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image022.gif)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052129231.gif)
 
 拼接语句并执行
 
@@ -105,7 +105,7 @@ plt.show()
 
  
 
-问卷
+### 问卷
 
 填写问卷得到flag
 
@@ -113,11 +113,9 @@ plt.show()
 
  
 
-## Crypto
+## Crypto 
 
- 
-
-基于国密SM2算法的密钥密文分发
+### 基于国密SM2算法的密钥密文分发
 
 跟着题目给的文档进行复现
 
@@ -125,31 +123,31 @@ plt.show()
 
 https://const.net.cn/tool/sm2/genkey/
 
-![图片](C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image026.gif)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052130855.gif)
 
 再将个人信息发送到/api/login获取选手id（汉字需要进行url编码）
 
-![图片](C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image028.jpg)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052130860.jpg)
 
 再用获取到的id和刚才生成的public_keyA发送到/api/allkey获取public_keyB和private_keyB
 
-![图片](C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image030.jpg)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052130868.jpg)
 
 在/api/quantum获取quantumString
 
-![图片](C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image032.jpg)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052130859.jpg)
 
 接着以为就是要进行sm2和sm4解密了，但可以直接/api/search获取解密之后的quantumString
 
-![图片](C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image034.jpg)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052130867.jpg)
 
 再用该string进行check
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image036.jpg)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052130869.jpg)
 
 接着再次search就可以获得flag了
 
-![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image038.jpg)
+![图片](https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052130210.jpg)
 
 **flag{3e619f88-5b3c-4be2-8c9a-94067afa2a5e}**
 
@@ -186,8 +184,6 @@ grep -ra "flag{" / 2>/dev/null
  
 
 ## Reverse
-
- 
 
 ### ezbyte
 
