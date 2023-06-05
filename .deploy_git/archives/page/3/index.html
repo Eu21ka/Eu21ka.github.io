@@ -163,7 +163,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -197,6 +197,105 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/07/12/embryoio%20level36~level59/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/embryoio%20level36~level59/" class="post-title-link" itemprop="url">embryoio level36~level59</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-12 20:07:00 / 修改时间：20:09:09" itemprop="dateCreated datePublished" datetime="2022-07-12T20:07:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="embryoio-level36-level47"><a href="#embryoio-level36-level47" class="headerlink" title="embryoio level36~level47"></a>embryoio level36~level47</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>Linux终端和shell脚本的管道符使用</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/07/12/embryoio%20level36~level59/image-20220712132719498.png" class="" title="image-20220712132719498">
+
+<p>它显示需要我们去接收程序的输出流，而且下面有说需要用管道，所以指令后面加上管道接其它指令即可。</p>
+<h3 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/challenge/embryoio36 | cat</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level37 | grep &#x27;pwn&#x27; #取关键字</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level38 | sed &#x27;1d&#x27;	#删除第一行</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level39 | rev | rev	#两次取反就正常输出了</span><br><span class="line"></span><br><span class="line">cat | /challenge/embryoio_level40	#再输入密码获得flag</span><br><span class="line"></span><br><span class="line">rev | rev | /challenge/embryoio_level41	#两次取反后直接输入密码获得flag（可能输入密码后需要按ctrl+d flag才会出现）</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以下指令要写入shell脚本中，再bash运行shell脚本</span></span><br><span class="line">/challenge/embryoio_level42 | cat</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level43 | grep &#x27;pwn&#x27;</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level44 | sed &#x27;1d&#x27;</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level45 | rev | rev</span><br><span class="line"></span><br><span class="line">cat | /challenge/embryoio_level46</span><br><span class="line"></span><br><span class="line">rev | rev | /challenge/embryoio_level47	#直接输入密码获得flag（可能输入密码后需要按ctrl+d flag才会出现）</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="embryoio-level48-level59"><a href="#embryoio-level48-level59" class="headerlink" title="embryoio level48~level59"></a>embryoio level48~level59</h1><h2 id="题目简介-1"><a href="#题目简介-1" class="headerlink" title="题目简介"></a>题目简介</h2><p>python脚本中的管道使用</p>
+<h2 id="解题流程-1"><a href="#解题流程-1" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-1"><a href="#运行程序-1" class="headerlink" title="运行程序"></a>运行程序</h3><img src="/2022/07/12/embryoio%20level36~level59/image-20220712135029230.png" class="" title="image-20220712135029230">
+
+<p>可以看到需要让我们用python运行</p>
+<img src="/2022/07/12/embryoio%20level36~level59/image-20220712135209976.png" class="" title="image-20220712135209976">
+
+<p>编写python脚本运行后又出现需要管道接收输出的提示。</p>
+<h3 id="python脚本"><a href="#python脚本" class="headerlink" title="python脚本"></a>python脚本</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#===============================level48===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;/challenge/embryoio_level48&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level49===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level49&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;grep&#x27;</span>, <span class="string">&#x27;pwn&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level50===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level50&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;sed&#x27;</span>, <span class="string">&#x27;1d&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level51===============================</span></span><br><span class="line"><span class="comment">#将逆序的flag复制到文本里，再rev输出</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level51&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level52===============================</span></span><br><span class="line"><span class="comment">#运行后输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level52&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level53===============================</span></span><br><span class="line"><span class="comment">#运行后逆序输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level53&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level54~level59===============================</span></span><br><span class="line"><span class="comment">#又是一遍“十万年轮回”，题目和上诉题目差不多，题解参考上诉脚本。</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1272,137 +1371,6 @@
 <p>特别鸣谢：</p>
 <p>[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sanqiushu/p/15922456.html">BJDCTF2020]Mark loves cat | 四种解法 (新解法：强类型比较绕过) - Nestar - 博客园 (cnblogs.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45521281/article/details/105849770">(19条消息) 变量覆盖漏洞总结_WHOAMIAnony的博客-CSDN博客_变量覆盖漏洞</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/" class="post-title-link" itemprop="url">(catf1agCTF)我幽默吗?</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-07-01 22:07:11" itemprop="dateCreated datePublished" datetime="2022-07-01T22:07:11+08:00">2022-07-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-02 22:32:15" itemprop="dateModified" datetime="2022-07-02T22:32:15+08:00">2022-07-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%88%B7%E9%A2%98/web%E9%A2%98%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">web题集</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>进入题目：</p>
-<p>发现是空白页面，点击万能的f12发现注释中果然藏了东西</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701205934697.png" class="" title="image-20220701205934697">
-
-<p>仔细观察发现是一个密码本，进行对照翻译</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210012170.png" class="" title="image-20220701210012170">
-
-<p>发现提示了一个source，在url中传入source&#x3D;xxxx（任意值进行尝试）获得以下代码：</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210259854.png" class="" title="image-20220701210259854">
-
-<p>仔细阅读后发现总共要传入三个值a，b，c</p>
-<p>之后对flag文件位置进行查询：</p>
-<p>payload：a&#x3D;DirectoryIterator&amp;b&#x3D;glob:&#x2F;&#x2F;flag[a-z0-9]*.php&amp;c&#x3D;9223372036854775806</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214011951.png" class="" title="image-20220701214011951">
-
-
-
-<p>获取flag</p>
-<p>payload：a&#x3D;SplFileObject&amp;b&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag56ea8b83122449e814e0fd7bfb5f220a.php&amp;c&#x3D;9223372036854775806</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701214053812.png" class="" title="image-20220701214053812">
-
-
-
-<p>解密获得最终结果：</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210702783.png" class="" title="image-20220701210702783">
-
-
-
-<h2 id="get新知识"><a href="#get新知识" class="headerlink" title="get新知识"></a>get新知识</h2><p>当出现类似如下代码时可以利用原生类配合php伪协议使用获取flag</p>
-<img src="/2022/07/01/catf1agCTF%E6%88%91%E5%B9%BD%E9%BB%98%E5%90%97/image-20220701210422844.png" class="" title="image-20220701210422844">
-
-<h3 id="glob协议"><a href="#glob协议" class="headerlink" title="glob协议"></a>glob协议</h3><p>   glob:&#x2F;&#x2F;协议是php5.3.0以后一种<strong>查找匹配的文件路径模式</strong>。（后面可以使用正则表达式匹配）</p>
-<h3 id="遍历目录类（DirectoryIterator）"><a href="#遍历目录类（DirectoryIterator）" class="headerlink" title="遍历目录类（DirectoryIterator）"></a>遍历目录类（DirectoryIterator）</h3><p>​    DirectoryIterator类的<code>__construct</code>方法会构造一个迭代器，如果使用echo输出该迭代器，将会返回迭代器的第一项</p>
-<p>与之类似的还有FilesystemIterator和GlobIterator（自带glob头在使用时不需要在使用glob协议直接正则即可）在DirectoryIterator被禁用的情况下可以使用；</p>
-<p><em><strong>所以我们可以将glob协议和DirectoryIterator类配合使用达到查询的效果</strong></em></p>
-<h2 id="读取文件类（SplFileObject）"><a href="#读取文件类（SplFileObject）" class="headerlink" title="读取文件类（SplFileObject）"></a>读取文件类（SplFileObject）</h2><p>SplFileObject类为文件提供了一个面向对象接口</p>
-<p>在读取过程中不一定会成功所以可以配合filter协议使用；</p>
-<h2 id="绕过-count-x3D-1（不理解记住即可）"><a href="#绕过-count-x3D-1（不理解记住即可）" class="headerlink" title="绕过$count[]&#x3D;1（不理解记住即可）"></a>绕过$count[]&#x3D;1（不理解记住即可）</h2><p>重点在于$count[] &#x3D; 1此语句正常赋值的时候返回结果为1</p>
-<p>可以通过溢出来跳出此语句的判断</p>
-<p>作为PHP最重要的数据类型HashTable其key值是有一定的范围的，如果设置的key值过大就会出现溢出的问题而这个数字就是临界点9223372036854775807</p>
-<p>特别鸣谢大佬博客：</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cng_Sinner/article/details/123345424">(19条消息) 我幽默吗？_king_Sinner的博客-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38154820/article/details/121112935">(19条消息) 记一道2021浙江省赛的Web题_合天网安实验室的博客-CSDN博客</a></p>
 
       
     </div>
