@@ -206,6 +206,139 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/11/embryoio-level4-level14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/11/embryoio-level4-level14/" class="post-title-link" itemprop="url">embryoio level4~level14</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-11 13:13:46" itemprop="dateCreated datePublished" datetime="2022-06-11T13:13:46+08:00">2022-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-12 19:40:41" itemprop="dateModified" datetime="2022-07-12T19:40:41+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="embryoio-level4"><a href="#embryoio-level4" class="headerlink" title="embryoio level4"></a>embryoio level4</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>学会环境变量配置</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/11/embryoio-level4-level14/image-20220608195228374.png" alt="image-20220608195228374"></p>
+<p>根据题目要求可以知道检查机制是需要一个名叫<code>dgixih</code>的环境变量，而且这个环境变量的值必须等于<code>itrtudurhb</code>。</p>
+<h3 id="编辑环境变量并运行"><a href="#编辑环境变量并运行" class="headerlink" title="编辑环境变量并运行"></a>编辑环境变量并运行</h3><p>可以去配置文件里用export写入或者直接用<code>evn</code>指令，不会的可以去搜一下，所以使用以下指令可以直接获得flag。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">env</span> -i /challenge/embryoio_level4</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="embryoio-level5"><a href="#embryoio-level5" class="headerlink" title="embryoio level5"></a>embryoio level5</h1><h2 id="题目简介-1"><a href="#题目简介-1" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于Linux重定向</p>
+<h2 id="解题流程-1"><a href="#解题流程-1" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-1"><a href="#运行程序-1" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/11/embryoio-level4-level14/image-20220608200419783.png" alt="image-20220608200419783"></p>
+<p>由上图可知检查机制是需要一个外部文件作为外部输入，但这个文件的内容是什么我们还不知道。</p>
+<h3 id="创建外部文件并重定向"><a href="#创建外部文件并重定向" class="headerlink" title="创建外部文件并重定向"></a>创建外部文件并重定向</h3><p>既然不知道文件的内容，就按照提示在对应目录下创建个空文件。</p>
+<p><img src="/2022/06/11/embryoio-level4-level14/image-20220608200921015.png" alt="image-20220608200921015"></p>
+<p>然后使用以下指令重定向运行程序：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">/challenge/embryoio_level5 &lt; /tmp/myjker</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="填写密码并再次运行"><a href="#填写密码并再次运行" class="headerlink" title="填写密码并再次运行"></a>填写密码并再次运行</h3><p><img src="/2022/06/11/embryoio-level4-level14/image-20220608201105657.png" alt="image-20220608201105657"></p>
+<p>可以看到输出了新提示，他说需要一个简单密码，并且密码也给了我们，所以就按照提示使用<code>vi或者vim指令</code>将密码写入刚刚创建的外部文件里，保存后再次使用之前的指令运行就得到了flag。</p>
+<h1 id="embryoio-level6"><a href="#embryoio-level6" class="headerlink" title="embryoio level6"></a>embryoio level6</h1><h2 id="题目简介-2"><a href="#题目简介-2" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于Linux重定向</p>
+<h2 id="解题流程-2"><a href="#解题流程-2" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-2"><a href="#运行程序-2" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/11/embryoio-level4-level14/image-20220608201808574.png" alt="image-20220608201808574"></p>
+<p>这里告诉我们需要一个外部文件来接受他的输出，所以我们按照要求创建文件。</p>
+<h3 id="执行程序并查看文件"><a href="#执行程序并查看文件" class="headerlink" title="执行程序并查看文件"></a>执行程序并查看文件</h3><p><img src="/2022/06/11/embryoio-level4-level14/image-20220608202102202.png" alt="image-20220608202102202"></p>
+<p>我们可以看到利用指令运行后并没有出现新的提示和flag，所以猜测flag就输出在我之前创建的文件中，使用<code>cat</code>指令查看一下刚才创建的文件。</p>
+<p><img src="/2022/06/11/embryoio-level4-level14/image-20220608202251079.png" alt="image-20220608202251079"></p>
+<p>发现输出了一推，并且flag就在里面。</p>
+<h1 id="embryoio-level7"><a href="#embryoio-level7" class="headerlink" title="embryoio level7"></a>embryoio level7</h1><h2 id="题目简介-3"><a href="#题目简介-3" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于Linux环境变量</p>
+<h2 id="解题流程-3"><a href="#解题流程-3" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-3"><a href="#运行程序-3" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/11/embryoio-level4-level14/image-20220608202512164.png" alt="image-20220608202512164"></p>
+<p>可以看到条件里需要一个空的环境变量，但是我们现在有13个。</p>
+<h3 id="设置新的空环境变量并运行"><a href="#设置新的空环境变量并运行" class="headerlink" title="设置新的空环境变量并运行"></a>设置新的空环境变量并运行</h3><p>13个环境变量一个个删肯定不是个好方法，这里就需要<code>env</code>指令和<code>-i</code>参数，不清楚的可以百度去了。当然，程序得在新的空环境变量当中运行，所以使用以下指令就能获得flag</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">env</span> -i /challenge/embryoio_level7</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="embryoio-level8"><a href="#embryoio-level8" class="headerlink" title="embryoio level8"></a>embryoio level8</h1><h2 id="题目简介-4"><a href="#题目简介-4" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于shell脚本</p>
+<h2 id="解题流程-4"><a href="#解题流程-4" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-4"><a href="#运行程序-4" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/11/embryoio-level4-level14/image-20220608203332533.png" alt="image-20220608203332533"></p>
+<p>可以看到程序必须是被一个shell脚本运行的，所以将执行语句<code>/challenge/embryoio_level8</code>写入<code>my_script.sh</code>脚本文件即可。</p>
+<h3 id="编写脚本并运行"><a href="#编写脚本并运行" class="headerlink" title="编写脚本并运行"></a>编写脚本并运行</h3><p>使用<code>touch my_script</code>指令创建该名字的脚本文件，再将执行语句写入到脚本文件中，保存后并用<code>bash my_script.sh</code>指令执行，便得到了flag。</p>
+<h1 id="embryoio-level9-level14"><a href="#embryoio-level9-level14" class="headerlink" title="embryoio level9~level14"></a>embryoio level9~level14</h1><h2 id="题目简介-5"><a href="#题目简介-5" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于shell脚本</p>
+<h2 id="解题流程-5"><a href="#解题流程-5" class="headerlink" title="解题流程"></a>解题流程</h2><p>后面的题其实和之前的题差不多，无非就是将shell指令写入脚本文件中，然后<code>bash</code>执行。只是后面的题目不同的是<code>my_script.sh</code>文件中并不单单只是一个运行指令，还需要加上一些题目条件。至于如何得到题目条件，只需要先用脚本运行一次程序，然后程序就会输出缺少的条件。这里就不一一赘述，下面是各题的脚本。</p>
+<h3 id="my-script-sh"><a href="#my-script-sh" class="headerlink" title="my_script.sh"></a>my_script.sh</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/challenge/embryoio_level9		<span class="comment">#运行后需要输入密码，直接从shell指令中输入就行</span></span><br><span class="line">/challenge/embryoio_level10 lswcraneju		</span><br><span class="line"><span class="built_in">env</span> ugdygr=ybezdhyzoq /challenge/embryoio_level11</span><br><span class="line">/challenge/embryoio_level12 &lt; /tmp/vkkrve		<span class="comment">#首先创建外部文件，但是里面需要有个密码，程序提示会给出</span></span><br><span class="line">/challenge/embryoio_level13 &gt; /tmp/lxhgyi		<span class="comment">#flag会输出在该外部文件中</span></span><br><span class="line"><span class="built_in">env</span> -i /challenge/embryoio_level14		</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/06/08/embryoio-level3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
