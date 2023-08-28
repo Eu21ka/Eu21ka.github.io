@@ -206,6 +206,216 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2023/03/27/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R3ape1团队笔记">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | R3ape1团队笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/03/27/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">java反射机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-27 20:06:00" itemprop="dateCreated datePublished" datetime="2023-03-27T20:06:00+08:00">2023-03-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-05-03 21:29:27" itemprop="dateModified" datetime="2023-05-03T21:29:27+08:00">2023-05-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/web%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">web笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="java反射机制"><a href="#java反射机制" class="headerlink" title="java反射机制"></a>java反射机制</h1><p><strong>tips:学习过程中一定要注意一个关键词动态，这是其存在的重要原因，即通过反射我们可以将java这种静态语言附加上动态特性</strong></p>
+<h3 id="引"><a href="#引" class="headerlink" title="引"></a>引</h3><p>之前再看类加载器的时候直接从概念入手实在是看的云里雾里的以至于整篇笔记写完后有种似懂非懂的感觉所以这一次我们先看一些具象化的东西在引入概念；</p>
+<p>这里以一个商店为例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我们由一个货物仓库作为接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">warehouse</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">goods</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//仓库中现在有三件物品分别是笔、纸和零食</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">pen</span> <span class="keyword">implements</span> <span class="title class_">warehouse</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">goods</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;In store we have pen&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">paper</span> <span class="keyword">implements</span> <span class="title class_">warehouse</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">goods</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;In store we have paper&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">eat</span> <span class="keyword">implements</span> <span class="title class_">warehouse</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">goods</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;In store we have some foods&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//商店中售卖的产品和仓库中存储的产品是一致的</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">store</span> &#123;</span><br><span class="line">    <span class="comment">//商店展示柜</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> warehouse <span class="title function_">getInstance</span><span class="params">(String Name)</span>&#123;</span><br><span class="line">        <span class="type">warehouse</span> <span class="variable">m</span> <span class="operator">=</span><span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;pen&quot;</span>.equals(Name))&#123;</span><br><span class="line">            m = <span class="keyword">new</span> <span class="title class_">pen</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;paper&quot;</span>.equals(Name)) &#123;</span><br><span class="line">            m = <span class="keyword">new</span> <span class="title class_">paper</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;eat&quot;</span>.equals(Name)) &#123;</span><br><span class="line">            m = <span class="keyword">new</span> <span class="title class_">eat</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> m;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//模拟顾客购买物品</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">warehouse</span> <span class="variable">shop</span> <span class="operator">=</span> store.getInstance(<span class="string">&quot;pen&quot;</span>);</span><br><span class="line">        shop.goods();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ok上述代码模拟了一个简陋的商店当然没有一个人是不喜欢小钱钱的，所以此时商店的管理员决定要引入一个新的产品fruit水果，如果按照传统模式我们就有大麻烦了水果的加入将打破我们已有的平衡，及我们将修改所有的代码（添加水果类，修改store类中的代码）之后顾客才能够去购买我们的水果，这在一个真实环境中几乎是不可能的，所以我们这里引入了反射如下是利用反射升级的商店</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">store</span> &#123;</span><br><span class="line">    <span class="comment">//商店展示柜</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> warehouse <span class="title function_">getInstance</span><span class="params">(String ClassName)</span>&#123;</span><br><span class="line">        <span class="type">warehouse</span> <span class="variable">m</span> <span class="operator">=</span><span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            m=(warehouse)Class.forName(ClassName).newInstance();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> m;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//模拟顾客购买物品</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">warehouse</span> <span class="variable">shop</span> <span class="operator">=</span> store.getInstance(<span class="string">&quot;org.fruit.pen&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(shop!=<span class="literal">null</span>)&#123;</span><br><span class="line">            shop.goods();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样搞我们就方便了许多当水果加入货柜时我们只需要创建一个说过类实现warehouse接口即可，与上面的填货方式比较确实是简化了许多；</p>
+<p>这也让我们初步了解了反射机制的厉害之处，当然如果你还有些疑惑不妨继续看一下之后的概念；</p>
+<p><strong>因为反射机制的存在我们可以通过修改外部的配置文件，在不修改源码的情况下，来控制程序符合ocp原则（ocp原则：在不修改源码的情况下开扩功能）</strong></p>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>反射是java的特征之一，是一种间接操作目标对象的机制，核心是JVM在运行状态的时候才动态加载类，对于任意一个类都能够知道这个类所有的属性和方法，并且对于任意一个对象，都能够调用它的方法&#x2F;访问属性。这种动态获取信息以及动态调用对象方法的功能成为Java语言的反射机制。通过使用反射我们不仅可以获取到任何类的成员方法(Methods)、成员变量(Fields)、构造方法(Constructors)等信息，还可以动态创建Java类实例、调用任意的类方法、修改任意的类成员变量值等。</p>
+<p>我们先编写一个简单的java文件，经过javac编译后产生了.class文件最后，同时jvm内存会查找生成的class文件读入内存和经过类加载器，同时自动创建一个生成一个Class对象，里面拥有其回去的成员变量，成员方法和构造方法等。最后就是我们平时new创建对象；</p>
+<p>如图所示：</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230323010652256.png" alt="image-20230323010652256"></p>
+<h3 id="编译机制"><a href="#编译机制" class="headerlink" title="编译机制"></a>编译机制</h3><p>静态编译：在编译时确定好类型，绑定对象。</p>
+<p>动态编译：在运行时确定类型，绑定对象。</p>
+<h3 id="反射机制相关的主要类"><a href="#反射机制相关的主要类" class="headerlink" title="反射机制相关的主要类"></a>反射机制相关的主要类</h3><p>这些类在java.lang.reflect中</p>
+<p>java.lang.Class:代表一个类，Class对象表示某个类加载后在堆中的对象；</p>
+<p>java.lang.reflect.Method:代表类的方法，Method对象表示某个类的方法；</p>
+<p>java.lang.reflect.Field:代表类的成员变量，Field对象表示某个类的成员变量；</p>
+<p>java.lang.reflect.Constructor:代表构造方法，Constructor对象表示一个类的构造方法；</p>
+<h3 id="反射机制中常用的方法"><a href="#反射机制中常用的方法" class="headerlink" title="反射机制中常用的方法"></a>反射机制中常用的方法</h3><p>获取类的方法：forname</p>
+<p>实例化类对象的方法：newInstance</p>
+<p>获取函数的方法：getMethod</p>
+<p>执行函数的方法：invoke</p>
+<h4 id="class对象获取方法"><a href="#class对象获取方法" class="headerlink" title="class对象获取方法"></a>class对象获取方法</h4><p>对于一个普通的类来说我们可以使用如下方法来创建实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Commit</span> <span class="variable">commit</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Commit</span>();</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230320154955448.png" alt="image-20230320154955448"></p>
+<p>但是再我们创建Class对象时，确无法使用该方法</p>
+<p>我们尝试像普通的类一样去实例化Class类</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230320155308015.png" alt="image-20230320155308015"></p>
+<p>可以发现他报错了，我们查看其报错原因</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230320155336540.png" alt="image-20230320155336540"></p>
+<p>我们进入Class文件查看</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230320155717995.png" alt="image-20230320155717995"></p>
+<p>发现其是私有的，只有JVM能够创建Class对象。</p>
+<h5 id="classs获取类"><a href="#classs获取类" class="headerlink" title=".classs获取类"></a>.classs获取类</h5><p>如果你已经加载某个类，知识想获取到他的java.lang.Class对象，那么直接拿他的class属性即可（这个方法不属于反射）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Class</span> <span class="variable">a</span> <span class="operator">=</span> Commit.class;</span><br><span class="line">System.out.println(a.getName());</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="通过getclass-获取类"><a href="#通过getclass-获取类" class="headerlink" title="通过getclass()获取类"></a>通过getclass()获取类</h5><p>如果上下文中存在某个实际例obj，那么我们可以直接通过obj.getclass方法来获取他的类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Commit</span> <span class="variable">commit</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Commit</span>();</span><br><span class="line">System.out.println(commit.getClass());</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="利用forname-方法获取类"><a href="#利用forname-方法获取类" class="headerlink" title="利用forname()方法获取类"></a>利用forname()方法获取类</h5><p>如果你知道某个类的名字，想获取到这个类，就可以使用forname来获取；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;org.fruit.Commit&quot;</span>);</span><br><span class="line">System.out.println(c.getName());</span><br></pre></td></tr></table></figure>
+
+<p>运行效果如下：</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230321170837608.png" alt="image-20230321170837608">                 </p>
+<p>在实际中常用forname的原因：</p>
+<p>由上述的实验中我们可以看出使用类.class属性，需要导入类的包，依赖性太强，在大型项目中容易抛出编译错误；</p>
+<p>而使用实例化对象的getClass()方法，需要本身创建一个对象，故失去了反射的意义（通俗来讲就是不方便不动态了）。</p>
+<p>所以我们在获取class对象中，一般使用Class.forName方法去获取。</p>
+<h4 id="通过对象获取类中的参数"><a href="#通过对象获取类中的参数" class="headerlink" title="通过对象获取类中的参数"></a>通过对象获取类中的参数</h4><p>这是之后使用的两个类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fruit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">number</span> &#123;</span><br><span class="line">    <span class="keyword">public</span>  <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;zero&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">String</span> <span class="variable">name1</span> <span class="operator">=</span> <span class="string">&quot;one&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//无参构造</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">number</span><span class="params">()</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//有参构造</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">number</span><span class="params">(String num)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = num;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">how</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;I am number:&quot;</span> + name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">hello</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;have a good day!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">classfullpath</span>=<span class="string">org.fruit.number</span></span><br><span class="line"><span class="attr">method</span>=<span class="string">how</span></span><br></pre></td></tr></table></figure>
+
+<p>目录结构如下：</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230322213806554.png" alt="image-20230322213806554"></p>
+<h5 id="获取成员变量（java-lang-reflect-Field）"><a href="#获取成员变量（java-lang-reflect-Field）" class="headerlink" title="获取成员变量（java.lang.reflect.Field）"></a>获取成员变量（java.lang.reflect.Field）</h5><p><strong>tips：再利用Filed类的时候无法读取类中的private属性的变量</strong></p>
+<p>这里还有一个有意思的事情我们在传统的获取变量时的语法是<code>对象.成员变量</code>而在反射中则是<code>成员变量.get(对象)</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fruit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">filed</span> &#123;</span><br><span class="line">    <span class="comment">//通过Class类获取number类中的成员方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="comment">//使用properties类，读写配置文件</span></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">properties</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">        properties.load(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;D:\\Javaeeworkspce\\javasecurity\\src\\main\\java\\org\\test.properties&quot;</span>));</span><br><span class="line">        <span class="type">String</span> <span class="variable">classfullpath</span> <span class="operator">=</span> properties.get(<span class="string">&quot;classfullpath&quot;</span>).toString();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//通过class创建对象，并利用Filed对象获取成员函数</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">cls</span> <span class="operator">=</span> Class.forName(classfullpath);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> cls.newInstance();</span><br><span class="line">        <span class="type">Field</span> <span class="variable">name</span> <span class="operator">=</span> cls.getField(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        System.out.println(name.getName() + <span class="string">&quot;:&quot;</span> + name.get(o));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230322213848446.png" alt="image-20230322213848446"></p>
+<p>zero对应的是变量name其属性是公开的，我们在做一个测试去调用私有的name1看是否能够调用成功</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230322213957241.png" alt="image-20230322213957241"></p>
+<p>我们看到其报错了；</p>
+<h5 id="获取构造方法（java-lang-reflect-Constructor"><a href="#获取构造方法（java-lang-reflect-Constructor" class="headerlink" title="获取构造方法（java.lang.reflect.Constructor)"></a>获取构造方法（java.lang.reflect.Constructor)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fruit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">constructor</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="comment">//通过Properties获取配置文件类容</span></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">properties</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">        properties.load(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;D:\\Javaeeworkspce\\javasecurity\\src\\main\\java\\org\\test.properties&quot;</span>));</span><br><span class="line">        <span class="type">String</span> <span class="variable">classfullpath</span> <span class="operator">=</span> properties.get(<span class="string">&quot;classfullpath&quot;</span>).toString();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="type">Class</span> <span class="variable">cls</span> <span class="operator">=</span> Class.forName(classfullpath);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> cls.newInstance();</span><br><span class="line">        <span class="type">Constructor</span> <span class="variable">constructor</span> <span class="operator">=</span> cls.getConstructor();</span><br><span class="line">        System.out.println(constructor);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>获取到了无参构造</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230322234406678.png" alt="image-20230322234406678"></p>
+<p>如果需要获取有参构造我们需要在方法中传入一个形参类的class对象eg:String.class;</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230322235121862.png" alt="image-20230322235121862"></p>
+<p>输出了有参构造器</p>
+<h5 id="获取成员函数（java-lang-reflect-Method）"><a href="#获取成员函数（java-lang-reflect-Method）" class="headerlink" title="获取成员函数（java.lang.reflect.Method）"></a>获取成员函数（java.lang.reflect.Method）</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fruit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">func</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="comment">//通过properties获取配置文件</span></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">properties</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">        properties.load(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(<span class="string">&quot;D:\\Javaeeworkspce\\javasecurity\\src\\main\\java\\org\\test.properties&quot;</span>));</span><br><span class="line">        <span class="type">String</span> <span class="variable">classfullpath</span> <span class="operator">=</span> properties.get(<span class="string">&quot;classfullpath&quot;</span>).toString();</span><br><span class="line">        <span class="type">String</span> <span class="variable">method</span> <span class="operator">=</span> properties.get(<span class="string">&quot;method&quot;</span>).toString();</span><br><span class="line"></span><br><span class="line">        <span class="type">Class</span> <span class="variable">cls</span> <span class="operator">=</span> Class.forName(classfullpath);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> cls.newInstance();</span><br><span class="line">        <span class="type">Method</span> <span class="variable">func</span> <span class="operator">=</span> cls.getMethod(method);</span><br><span class="line">        <span class="comment">//输出函数名字</span></span><br><span class="line">        System.out.println(<span class="string">&quot;成员方法：&quot;</span>+func.getName());</span><br><span class="line">        <span class="comment">//执行成员函数</span></span><br><span class="line">        func.invoke(o);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们看到调用了成员函数how</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230323001204161.png" alt="image-20230323001204161"></p>
+<p>这里我们体现一下反射的便捷性，在传统的创建对象过程中如果我们不想使用其中的how方法而是需要使用hello方法，我们需要更改源代码加入一句number.hello(),再将之前的number.how()方法删除，然后将编辑好的代码编译运行然后再一次经过一大串复杂的过程才能实现我们的需求，很显然在一个已经运行的项目中要完成这要的操作是不切实际的这并不满足我们的ocp原则，这也是为什么java的反射机制存在的原因，我们利用反射仅仅需要更改配置即可实现该目的</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230323001947665.png" alt="image-20230323001947665"></p>
+<p>我们可以看到我们仅是将配置文件中的method值由how改为hello，我们的func类输出的结果就与之前大不相同，通过这个例子其实我们就能更深一层的了解，何为“动态”及反射的好处；</p>
+<h4 id="反射创建类对象弹计算器"><a href="#反射创建类对象弹计算器" class="headerlink" title="反射创建类对象弹计算器"></a>反射创建类对象弹计算器</h4><p>我们可以利用forname配合.newInstance()方法来创建对象</p>
+<p>在此之前我们需要了解一下forname函数，forName共有两个重载函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Class&lt;?&gt; forName(String className)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230321230643494.png" alt="image-20230321230643494"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Class&lt;?&gt; forName(String name, <span class="type">boolean</span> initialize,ClassLoader loader)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230321230820417.png" alt="image-20230321230820417"></p>
+<p>默认情况下，forName的第一个参数是类名；第二个参数表示是否初始化；第三个参数就是类加载器（ClassLoader）；</p>
+<p>我们需要重点关注中间的第二个参数<code>boolean initialize</code>在一些文章中说到，将其设置为true时间，构造函数并不会执行，但根据我们的认知来说构造函数应该是初始化时的首要任务，所以这里我们看一看该参数的存在意义是初始化什么</p>
+<p>这里我们先看一些别的东西</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fruit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">test3_shunxu</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.printf(<span class="string">&quot;Empty Block initial %s\n&quot;</span>,<span class="built_in">this</span>.getClass());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.printf(<span class="string">&quot;Static initial %s\n&quot;</span>, test3_shunxu.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">test3_shunxu</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.printf(<span class="string">&quot;Initial %s\n&quot;</span>, <span class="built_in">this</span>.getClass());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230321232810840.png" alt="image-20230321232810840"></p>
+<p>经过上述的实验显而易见调用顺序是static、{}、构造方法；其中static就是再类初始化的时候调用的，而{}中的代码会放在构造函数的super()后面，但是再当前构造函数内容的前面。</p>
+<p>我们可以将该参数理解为类的初始化；</p>
+<p>说实话搁着写了半天，其实我还是一脸懵到底都是些啥，所以这里我们写一个简短的利用反射谈计算器的案例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fruit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">calc</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException &#123;</span><br><span class="line">        <span class="type">Class</span> <span class="variable">a</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;java.lang.Runtime&quot;</span>);</span><br><span class="line">        <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> a.getMethod(<span class="string">&quot;exec&quot;</span>, String.class);</span><br><span class="line">        <span class="type">Method</span> <span class="variable">Runtimemethod</span> <span class="operator">=</span> a.getMethod(<span class="string">&quot;getRuntime&quot;</span>);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">m</span> <span class="operator">=</span> Runtimemethod.invoke(a);</span><br><span class="line"></span><br><span class="line">        method.invoke(m,<span class="string">&quot;calc&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如图我们成功的弹出了计算器：</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230321234456117.png" alt="image-20230321234456117"></p>
+<p>再参照大佬的博客学习时我们同时也学到了关于.newInstance()函数的一些东西</p>
+<p>最开始参照大佬的博客源代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.fruit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">calc</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException &#123;</span><br><span class="line">        <span class="type">Class</span> <span class="variable">a</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;java.lang.Runtime&quot;</span>);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">m</span> <span class="operator">=</span> a.newInstance();</span><br><span class="line">        <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> a.getMethod(<span class="string">&quot;exec&quot;</span>, String.class);</span><br><span class="line"></span><br><span class="line">        method.invoke(m,<span class="string">&quot;calc&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是他在创建对象的时候报错了</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230322000314984.png" alt="image-20230322000314984"></p>
+<p>经过查询报错的原因可能是：</p>
+<p>1、使用的类没有无参构造函数   2、使用的类构造函数是私有的</p>
+<p>根据报错提示我们也确实看到这里是因为后者报错，使用的类构造函数是私有的所以不能使用，然后我们就换了一个方式去执行获取Rumtime类的方法去弹计算器；</p>
+<p>参考文章</p>
+<p>P牛的文章</p>
+<p>B站韩顺平老师的课</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9117#toc-14">JAVA安全基础（二）– 反射机制 - 先知社区 (aliyun.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7029#toc-0">JAVA反序列化 - 反射机制 - 先知社区 (aliyun.com)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2023/03/27/java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1499,192 +1709,6 @@
 <img src="/2022/08/12/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811181059123.png" class="" title="image-20220811181059123">
 
 <p>（场景来源bugku-Simple_SSTI_1）</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://r30blogs.com/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="nnnpc、commit、Eureka">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R3ape1团队笔记">
-      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | R3ape1团队笔记">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/" class="post-title-link" itemprop="url">2022暴龙杯wp(misc)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-08-07 15:07:00" itemprop="dateCreated datePublished" datetime="2022-08-07T15:07:00+08:00">2022-08-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-21 11:25:57" itemprop="dateModified" datetime="2022-09-21T11:25:57+08:00">2022-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>签到</p>
-<p>下下来一个压缩包，一张png图片，拖到浏览器中发现是apng，用工具分离出来就好</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image002.gif" class="" title="图片">
-
-<p>得到flag，BLCTF{Y0u_Kn0w_Apng!!!!!}</p>
-<p>Ez_zip</p>
-<p>打开发现是一个无限套娃的压缩包，直接用脚本跑</p>
-<p>from zipfile import *</p>
-<p>from os import *</p>
-<p>init_name &#x3D; ‘98895’</p>
-<p>name_list &#x3D; []</p>
-<p>path &#x3D; getcwd()</p>
-<p>zip_name &#x3D; init_name</p>
-<p>while True:</p>
-<p>  try:</p>
-<p>   name_list.append(zip_name)</p>
-<p>   file &#x3D; ZipFile(zip_name+’.zip’, ‘r’)</p>
-<p>   if(file):</p>
-<p>​     file.extractall(path, pwd&#x3D;zip_name.encode(‘utf-8’))</p>
-<p>​     zip_name &#x3D; file.namelist()[0][:-4]</p>
-<p>   else:</p>
-<p>​     continue</p>
-<p>  except:</p>
-<p>   break</p>
-<p>print(name_list)</p>
-<p>跑出来最后一个flag.zip,发现是加密文件，调整长度进行爆破</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image004.gif" class="" title="图片">
-
-<p>发现密码是999999，解压出来一个flag.png拖入浏览器发现还是apng，分离</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image006.gif" class="" title="图片">
-
-<p>得flag，BLCTF{731b9cdf-6022-4429-8949-b1e4a757db30}</p>
-<p>嫌疑人X</p>
-<p>首先打开压缩包，会发现info文件夹下有个隐藏文件，把隐藏按钮打开就好</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image008.gif" class="" title="图片">
-
-<p>发现这个诺基亚.rar和上一级文件夹中pcap.rar都是加密文件</p>
-<p>看了看发现只有一张证件照是有相关信息的</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image010.gif" class="" title="图片">
-
-<p>根据一般的密码的设置套路，名字+生日，试了好久还是试不出，根据提示知道了诺基亚的密码是Lx1x9x0x0x</p>
-<p>立马想到密码是Lw19970608</p>
-<p>解开诺基亚.rar</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image012.gif" class="" title="图片">
-
-<p>是一张诺基亚的照片，拖进winhex看看</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image014.gif" class="" title="图片">
-
-<p>发现有个压缩包，foremost分离出来，发现要密码</p>
-<p>winhex修改伪加密</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image016.gif" class="" title="图片">
-
-<p>打开秘密.txt发现是九键键盘解密</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image018.gif" class="" title="图片">
-
-<p>对照着那张诺基亚三个五代表l，四个七代表s，以此类推，出来的结果是</p>
-<p>lsjddwyyyyy，这一看就是另一个rar的密码了</p>
-<p>wireshark分析pcapng文件</p>
-<p>在udp追踪流0的时候发现flag</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image020.gif" class="" title="图片">
-
-<p>最终答案是BLCTF{YOU_ARE_A_GREAT_ASSISTANT}</p>
-<p>BitMask</p>
-<p>压缩包直接是加密的，根据注释提示是六位密码</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image022.gif" class="" title="图片">
-
-<p>直接先六位纯数字爆破</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image024.gif" class="" title="图片">
-
-<p>密码是21964</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image026.gif" class="" title="图片">
-
-<p>发现了被污染的二维码，用网站手拼二维码进行扫描</p>
-<p><a target="_blank" rel="noopener" href="https://merricx.github.io/qrazybox/">https://merricx.github.io/qrazybox/</a></p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image028.gif" class="" title="图片">
-
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image030.gif" class="" title="图片">
-
-<p>解出457c，把原图zsteg的时候发现应该里面还有一张图片，但是分离不出来</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image032.gif" class="" title="图片">
-
-<p>猜测是有损坏，放入winhex搜索IEND</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image034.gif" class="" title="图片">
-
-<p>第一个IEND处发现png的文件头没有补齐，将它分离出来并且用8950补齐头部</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image036.gif" class="" title="图片">
-
-<p>保存下来一张新的二维码，发现扫不了，应该是对掩码进行了调整</p>
-<p>还是用之前的那个网站对新保存下来的这张二维码进行掩码修复，顺序是076</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image038.gif" class="" title="图片">
-
-<p>扫出来的结果是前半截的flag，在原图binwalk的时候发现1675这个文件用记事本打开的时候是一串编码</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image040.gif" class="" title="图片">
-
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image042.gif" class="" title="图片">
-
-<p>对编码进行解码，将该二进制从头部一位一位剔除进行二进制转换</p>
-<img src="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image044.gif" class="" title="图片">
-
-<p>得到flag后半部分，拼接起来BLCTF{675af7c9-fb5b-xxxx-9fde-415a5253db08}</p>
-<p>想到之前有个手拼扫描出来的四位数457c，应该就是这四个xxxx了，拼接起来得flag</p>
-<p>BLCTF{675af7c9-fb5b-457c-9fde-415a5253db08}</p>
 
       
     </div>
