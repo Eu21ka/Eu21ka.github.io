@@ -111,7 +111,7 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:Eu21ka/eur1ka.github.io.gi
+  repo: git@github.com:Eu21ka/eur1ka.github.io.git
 branch: master
 
 theme_config:
