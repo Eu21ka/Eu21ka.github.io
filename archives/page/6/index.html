@@ -1,23 +1,880 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
 
-{% block title %}{{ config.title }}{% if theme.index_with_subtitle and config.subtitle %} - {{config.subtitle }}{% endif %}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
 
-{% block page_class %}
-  {% if is_home() %}page-home{% endif -%}
-{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eur1ka.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="网络信息安全，责任重大，使命光荣。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Eureka&#39;s Blog">
+<meta property="og:url" content="https://eur1ka.github.io/archives/page/6/index.html">
+<meta property="og:site_name" content="Eureka&#39;s Blog">
+<meta property="og:description" content="网络信息安全，责任重大，使命光荣。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://eur1ka.github.io/archives/page/6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/page/6/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Eureka's Blog - 默安科技逐日实验室</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Eureka's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">默安科技逐日实验室</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/06/19/%E5%AE%81%E6%B3%A2%E5%B8%82%E8%B5%9Bwp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/19/%E5%AE%81%E6%B3%A2%E5%B8%82%E8%B5%9Bwp/" class="post-title-link" itemprop="url">2022宁波市赛wp</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-19 22:19:11" itemprop="dateCreated datePublished" datetime="2022-06-19T22:19:11+08:00">2022-06-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-04-01 17:18:56" itemprop="dateModified" datetime="2023-04-01T17:18:56+08:00">2023-04-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="Web1-writeup"><a href="#Web1-writeup" class="headerlink" title="Web1 writeup"></a>Web1 writeup</h3><p><img src="/wps6.jpg" alt="img"> </p>
+<p>发现include（）和file_get_contents()这两明示，想到使用php伪协议，data和filter，获得一串base64编码（从等号判断出）解码获得flag；</p>
+<h3 id="Web2-writeup"><a href="#Web2-writeup" class="headerlink" title="Web2 writeup"></a>Web2 writeup</h3><p>题目</p>
+<p><img src="/wps7.jpg" alt="img"> </p>
+<p>利用include（）函数读取flag.php&#x3D;&#x3D;&gt;伪协议读取</p>
+<p>但是在第一个if中对flag进行了排查，所以利用</p>
+<p>Payload：?from&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;behind.php</p>
+<p>进行绕过；</p>
+<p>获得一串base64编码，进行解码获得：</p>
+<p><img src="/wps8.jpg" alt="img"> </p>
+<p>这样我们就可以利用下面的php序列化进行读取flag处理；</p>
+<p>解析一下这段代码：</p>
+<p>我们最终需要的是file_get_contents()函数，所以要调用__toString（）方法即转换为字符串，而在test类中在print函数输出需要一段字符串，所以会被调用，在看test类__call()方法当调用不存在的函数时调用，题目中确实调用了不存在的函数</p>
+<p><img src="/wps9.jpg" alt="img">所以思路就很清晰了，开始构造</p>
+<p>脚本如下</p>
+<p><img src="/wps10.jpg" alt="img"> </p>
+<p>输出：</p>
+<p><img src="/wps11.jpg" alt="img"> </p>
+<p>之后在页面中输入?to&#x3D;O:4:”Test”:2:{s:7:”notthis”;O:5:”NoUse”:2:{s:7:”notthis”;s:57:”php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;flag.php”;s:5:”class”;N;}s:8:”variable”;N;}O%3A4%3A%22Test%22%3A2%3A%7Bs%3A7%3A%22notthis%22%3BO%3A5%3A%22NoUse%22%3A2%3A%7Bs%3A7%3A%22notthis%22%3Bs%3A57%3A%22php%3A%2F%2Ffilter%2Fread%3Dconvert.base64-encode%2Fresource%3Dflag.php%22%3Bs%3A5%3A%22class%22%3BN%3B%7Ds%3A8%3A%22variable%22%3BN%3B%7D</p>
+<p>之后在进行一次base64解码就可以获得flag了；</p>
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="Misc1-writeup"><a href="#Misc1-writeup" class="headerlink" title="Misc1 writeup"></a>Misc1 writeup</h3><p>打开附件，发现是336张黑白图片</p>
+<p>﻿</p>
+<p><img src="/wps12.jpg" alt="img"> </p>
+<p>刚开始以为是拼图题，用montage和gaps拼了半天没什么发现，突然发现并不是二维码一类的，及时回头想到了转换为二进制，三百多张貌似手动也很快</p>
+<p>﻿</p>
+<p><img src="/wps13.jpg" alt="img"> </p>
+<p>于是手动敲出来</p>
+<p>﻿</p>
+<p><img src="/wps14.jpg" alt="img"> </p>
+<p>二进制转换出flag，flag{baaf013d-f3fa-bcbe-00fb-1e1a34bb2af1}</p>
+<h3 id="Misc2-writeup"><a href="#Misc2-writeup" class="headerlink" title="Misc2 writeup"></a>Misc2 writeup</h3><p>下载后解压，是个pdf文件，打开以后是base64码</p>
+<p><img src="/wps15.jpg" alt="img"> </p>
+<p>解码</p>
+<p>The password is not just about decoding, but also hacking the ZIP!</p>
+<p>密码并不只是解码，还要破解压缩包</p>
+<p>于是拖入winhex看看，发现了压缩包</p>
+<p><img src="/wps16.jpg" alt="img"> </p>
+<p>放入kali中binwalk</p>
+<p><img src="/wps17.jpg" alt="img"> </p>
+<p>分离出了压缩包，首先看了一下不是伪加密，爆破了很长时间也没有什么发现，于是就想到打过一次比赛的题目中对爆破用数学方法进行一些了过滤，然后再次爆破，运气还不错，本次花了十分钟爆破了出来，但前后用了将近两小时，也算是艰辛。</p>
+<p><img src="/wps18.jpg" alt="img"> </p>
+<p>赶快解密压缩包，得到一张图片，另一个文本和pdf内容一样，先不看</p>
+<p><img src="/wps19.jpg" alt="img"> </p>
+<p>png文件而且提示了steg，于是在kali中用zsteg跑，得到flag</p>
+<p><img src="/wps20.jpg" alt="img"> </p>
+<p>flag{abae93fb-c31f-aeaf-91fc-0f1d42ba26e4}</p>
+<h3 id="Misc3-writeup"><a href="#Misc3-writeup" class="headerlink" title="Misc3 writeup"></a>Misc3 writeup</h3><p>下载附件打开解压，发现有个doc文件</p>
+<p><img src="/wps21.jpg" alt="img"> </p>
+<p>打开后没发现什么东西，把文件拖入winhex中看看</p>
+<p><img src="/wps22.jpg" alt="img"> </p>
+<p>发现是个压缩包，修改后缀名</p>
+<p><img src="/wps23.jpg" alt="img"> </p>
+<p>打开发现两张图片，都放入010中发现image1_preview.png crc报错，于是修改高度看看</p>
+<p><img src="/wps24.jpg" alt="img"> </p>
+<p>发现接近答案了，但还是没出flag，看着像凯撒，在线凯撒</p>
+<p>位移十的时候得到flag</p>
+<p>flag{ebf281c-c2fa-acbe-81fb-2e2c08c0fca1}</p>
+<h2 id="Crypto1-3-writeup"><a href="#Crypto1-3-writeup" class="headerlink" title="Crypto1-3 writeup"></a>Crypto1-3 writeup</h2><ol>
+<li></li>
+</ol>
+<p>题目给n1,n2,且不互素，于是先求最大公因素，再求p，q</p>
+<p>import gmpy2</p>
+<p>from Crypto.Util.number import long_to_bytes</p>
+<p>n1&#x3D;11176298870415783282835275600061588657241463221871815491519552463408222565848079182034726185553217300689834006691472991129441397322597826835250447941841691221722446721416543093739804095340289908080867514473017079450311811803390124042848711639790285918640813661662931152276554784900720865966499111108283873361431767904939435365613871971085278398890357112336497323679975134482016115656435362909033743450396163540000606741105863043851991894541522258647025814542415404601472738921699995816713634130792482175987161484763035331960944948454215703767860312632963837039408460375085094414827681771078520774697140944693853984807</p>
+<p>n2&#x3D;14628452939723832473083511588210968910703852366589447308951932044211910559763838916687688620001947054794920424786224454850360778661660629608440528771433740169617993746720487612895876527947146072847716801945896849734515808742075452921890154367709390274374214553338701757577794537605478287979768372097249554390580052172699840182271033424438872211305351156295892595685726305130041874916916020353812984449226411372273954813167019471238042495646276279660976339456926385932462006559332070335515545249174455248514776056358317967032302203257464029754343434591788379595459973195410239904214340484044230212500028487107907195511</p>
+<p>c1&#x3D;2049142135212658273552941633440876974261753950640752177129652784905850352983432165679473874335026848351759145400964320244625330038089105524551008485108728021427824946995632603255126856753379578506783543964229942691440283255564049755866340136558644811545593331062075012791047810799296947253097390153311675026488654024461487543916802274460814350607787642849014894123082002047937769332643099034647856519147303533346991657725362212257992947710783698461322996483407717614984051267795550326657436918537790720050369514765616726515746420611017668922783549766178919288340405167353735762652502730158055821103551775066192064940</p>
+<p>c2&#x3D;11943205429311148875261223425325670018169389197701624890446423663741223099186719632396529960156133015204496469625640992919935968122637192599196371711838810220085238215262686806595336187870118202291530645896788972981251362909696182206907049609819898202930423639770839482639933302200456662731930250303528462910052641021629680394116429930827997772982263970377753077015400323639702289539464290789532346689721249411805236223494026306249551854876805588677162485280664852101462907768951836328019109252702022466487857197139878204830652768250506210934257536926923356529983555063859891380882309438020999240607414375022018574614</p>
+<p>e1&#x3D; 65537</p>
+<p>e2&#x3D; 257</p>
+<p>p &#x3D; gmpy2.gcd(n1, n2)</p>
+<p>q1 &#x3D; n1 &#x2F;&#x2F; p</p>
+<p>q2 &#x3D; n2 &#x2F;&#x2F; p</p>
+<p>s1&#x3D;(p-1)*(q1-1)</p>
+<p>s2&#x3D;(p-1)*(q2-1)</p>
+<p>d1&#x3D;gmpy2.invert(e1,s1)</p>
+<p>d2&#x3D;gmpy2.invert(e2,s2)</p>
+<p>m1&#x3D;gmpy2.powmod(c1,d1,n1)</p>
+<p>m2&#x3D;gmpy2.powmod(c2,d2,n2)</p>
+<p>string1 &#x3D; long_to_bytes(m1)</p>
+<p>string2 &#x3D; long_to_bytes(m2)</p>
+<p>print(string1)</p>
+<p>print(string2)</p>
+<ol start="2">
+<li></li>
+</ol>
+<p>题目给出n,e1,e2,c1,c2，使用共模攻击</p>
+<p>import gmpy2 </p>
+<p>from Crypto.Util.number import long_to_bytes</p>
+<p>n &#x3D; 14571489544273684681632745165173941757355029852967262639728000988042839386897493030097099884895386115482493694058873038502860513888769546717076461092157274631880422404640774568976816310850151976919429837061384758878560393916832880369835035094654445542998583110983141044252629041042005200028747437532412882541760701913277010315019696176276304794162940731256361777150089869864848752521412637555443729084762017260965056626550279092491606837302796652497491465469860146607791410672793656097187677222298486237121302232907875363012059539134811841994652897489100941594071086553725267695160318463265760189436211892048571831049</p>
+<p>c1 &#x3D; 14086932244393217502907224674408736488830849146214227184918262698062675736724337554446711585503734671616977407523947180439538475650652413419679106435434870038055027980301567294772290568083578726775663339768961737480740922223388718943787094330870471886171540256870630059797491648906275021947443613254535459415614412289718705188895798826235866579862681303315446414825328707142227744471707921742768342732559562524019443552187374960675403256064296192626351031408014769594350992074453942709110651276633951009115468620886310509692671361261934324842739148921650085982490562922669906835464674323688759465709626540284576889210</p>
+<p>c2 &#x3D; 9788755099571270122752620318833990768386552453915390611782202313009843880011885989102462216813557305415919308702993594866012255516635580308442538867800280824955615413443022611149710694144180395588528536827198061901961298781041399064307258829088210698947995786806886824892341393690873854230422832064661235313593912677068722144241580197984421905987499008664508485233509643273752098892825326153287135195132848517181638343515469682704077797334084053581822968060796475866168907228760199308163970477417979781603099935953389513751241815586854968725454388470460653618696872424888914546835979441528674579794525553550639554293</p>
+<p>e1 &#x3D; 18181</p>
+<p>e2 &#x3D; 19937</p>
+<p>s &#x3D; gmpy2.gcdext(e1, e2) </p>
+<p>s1 &#x3D; s[1] </p>
+<p>s2 &#x3D; -s[2] </p>
+<p>c2 &#x3D; gmpy2.invert(c2, n) </p>
+<p>m &#x3D; (pow(c1,s1,n) * pow(c2 , s2 , n)) % n </p>
+<p>flag&#x3D;long_to_bytes(m)</p>
+<p>print(flag)</p>
+<ol start="3">
+<li></li>
+</ol>
+<p>给出e，d，c和两个p，q的逆元，于是先爆破phi，再求p、q</p>
+<p>from Crypto.Util.number import long_to_bytes</p>
+<p>import gmpy2</p>
+<p>e &#x3D; 19986419</p>
+<p>d &#x3D; 3246030980112569716252525489178402976566547966168594693884910274513154299462041341004375201921016318938426026345098668299377474330375073434720935772407207944175167323817898036516011079576927822972280584550642421759163857196487310343842151887753901290056007928776238985151298531470667875043069631236869106891057021962478109360022955201129953336276429238305672598460147562806963064866859947227329083491706302615233310732434276569920504055705370558759864687603230396302816302264528911561986103345422868194300484993924394687653074699941027740263298870609889050004072341364150017277319759241334188164360195703910784166355</p>
+<p>x &#x3D; 23389236347134283235213306702183810016424721867486963556461081084876520502820941836694411695676757754191365637169094291954507615676165999068189562213594619012687252636744435260033076208286475321060918985189871377901228212667433573382718485160649112811594950994116619369682212010587535385364596418447338709974</p>
+<p>y &#x3D; 102920556609507191536438498232122774923059359709189772008951429751731499708926283579532737890030392620334257693429608011647339365489651578950937878926965514185822024062626226427621775843089345409431424163821245825850075741313035783453477904427927137045546100973267423868918950101645341426259141920145517101346</p>
+<p>ct &#x3D; 1553892238198363827492950017785469649883078335860404183601470514633985702148771439291915519584864956768837128975747502834867950051639396112333353729920983641277214334076161962538797900388907160490701194265684200572530520821773449401826082542234651817152190240489004982304794568360099499384170323027423530546020874791949260720440971235829841009999271630682762487975448340845503303511707467319967171026472363519627299488034799105120005884793797012235913877429590605758066993126024240880065915024533204819606519268788794771634158963247834960191894770256479582799808670787421459015846778168822826961225790849202125973374</p>
+<p>kn &#x3D; e * d - 1</p>
+<p>count &#x3D; 0</p>
+<p>def solve(a, b, c):</p>
+<p> D &#x3D; b ** 2 - 4 * a * c</p>
+<p> assert gmpy2.is_square(D)</p>
+<p> x1 &#x3D; (-b + gmpy2.isqrt(D)) &#x2F;&#x2F; (2 * a)</p>
+<p> x2 &#x3D; (-b - gmpy2.isqrt(D)) &#x2F;&#x2F; (2 * a)</p>
+<p> return x1, x2</p>
+<p>for k in range(3, e):</p>
+<p> if kn % k &#x3D;&#x3D; 0:</p>
+<p>  count +&#x3D; 1</p>
+<p>  phi_n &#x3D; kn &#x2F;&#x2F; k</p>
+<p>  a &#x3D; x - 1</p>
+<p>  b &#x3D; x * y - 1 + (x - 1) * (y - 1) - phi_n</p>
+<p>  c &#x3D; (y - 1) * (x * y - 1)</p>
+<p>  try:</p>
+<p>   k1, k2 &#x3D; solve(a, b, c)</p>
+<p>   if (x * y - 1) % k1 &#x3D;&#x3D; 0:</p>
+<p>​    k2 &#x3D; (x * y - 1) &#x2F;&#x2F; k1</p>
+<p>   elif (x * y - 1) % k2 &#x3D;&#x3D; 0:</p>
+<p>​    k1, k2 &#x3D; k2, (x * y - 1) &#x2F;&#x2F; k2</p>
+<p>   else:</p>
+<p>​    assert False</p>
+<p>   p, q &#x3D; x + k2, y + k1</p>
+<p>   N &#x3D; p * q</p>
+<p>   flag &#x3D; long_to_bytes(pow(ct, d, N)).strip()</p>
+<p>   print(flag)</p>
+<p>   break</p>
+<p>  except AssertionError:</p>
+<p>   pass</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/06/11/embryoio-level4-level14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/11/embryoio-level4-level14/" class="post-title-link" itemprop="url">embryoio level4~level14</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-11 13:13:46" itemprop="dateCreated datePublished" datetime="2022-06-11T13:13:46+08:00">2022-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-12 19:40:41" itemprop="dateModified" datetime="2022-07-12T19:40:41+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="embryoio-level4"><a href="#embryoio-level4" class="headerlink" title="embryoio level4"></a>embryoio level4</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>学会环境变量配置</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/image-20220608195228374.png" alt="image-20220608195228374"></p>
+<p>根据题目要求可以知道检查机制是需要一个名叫<code>dgixih</code>的环境变量，而且这个环境变量的值必须等于<code>itrtudurhb</code>。</p>
+<h3 id="编辑环境变量并运行"><a href="#编辑环境变量并运行" class="headerlink" title="编辑环境变量并运行"></a>编辑环境变量并运行</h3><p>可以去配置文件里用export写入或者直接用<code>evn</code>指令，不会的可以去搜一下，所以使用以下指令可以直接获得flag。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">env</span> -i /challenge/embryoio_level4</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="embryoio-level5"><a href="#embryoio-level5" class="headerlink" title="embryoio level5"></a>embryoio level5</h1><h2 id="题目简介-1"><a href="#题目简介-1" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于Linux重定向</p>
+<h2 id="解题流程-1"><a href="#解题流程-1" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-1"><a href="#运行程序-1" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/image-20220608200419783.png" alt="image-20220608200419783"></p>
+<p>由上图可知检查机制是需要一个外部文件作为外部输入，但这个文件的内容是什么我们还不知道。</p>
+<h3 id="创建外部文件并重定向"><a href="#创建外部文件并重定向" class="headerlink" title="创建外部文件并重定向"></a>创建外部文件并重定向</h3><p>既然不知道文件的内容，就按照提示在对应目录下创建个空文件。</p>
+<p><img src="/image-20220608200921015.png" alt="image-20220608200921015"></p>
+<p>然后使用以下指令重定向运行程序：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">/challenge/embryoio_level5 &lt; /tmp/myjker</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="填写密码并再次运行"><a href="#填写密码并再次运行" class="headerlink" title="填写密码并再次运行"></a>填写密码并再次运行</h3><p><img src="/image-20220608201105657.png" alt="image-20220608201105657"></p>
+<p>可以看到输出了新提示，他说需要一个简单密码，并且密码也给了我们，所以就按照提示使用<code>vi或者vim指令</code>将密码写入刚刚创建的外部文件里，保存后再次使用之前的指令运行就得到了flag。</p>
+<h1 id="embryoio-level6"><a href="#embryoio-level6" class="headerlink" title="embryoio level6"></a>embryoio level6</h1><h2 id="题目简介-2"><a href="#题目简介-2" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于Linux重定向</p>
+<h2 id="解题流程-2"><a href="#解题流程-2" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-2"><a href="#运行程序-2" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/image-20220608201808574.png" alt="image-20220608201808574"></p>
+<p>这里告诉我们需要一个外部文件来接受他的输出，所以我们按照要求创建文件。</p>
+<h3 id="执行程序并查看文件"><a href="#执行程序并查看文件" class="headerlink" title="执行程序并查看文件"></a>执行程序并查看文件</h3><p><img src="/image-20220608202102202.png" alt="image-20220608202102202"></p>
+<p>我们可以看到利用指令运行后并没有出现新的提示和flag，所以猜测flag就输出在我之前创建的文件中，使用<code>cat</code>指令查看一下刚才创建的文件。</p>
+<p><img src="/image-20220608202251079.png" alt="image-20220608202251079"></p>
+<p>发现输出了一推，并且flag就在里面。</p>
+<h1 id="embryoio-level7"><a href="#embryoio-level7" class="headerlink" title="embryoio level7"></a>embryoio level7</h1><h2 id="题目简介-3"><a href="#题目简介-3" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于Linux环境变量</p>
+<h2 id="解题流程-3"><a href="#解题流程-3" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-3"><a href="#运行程序-3" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/image-20220608202512164.png" alt="image-20220608202512164"></p>
+<p>可以看到条件里需要一个空的环境变量，但是我们现在有13个。</p>
+<h3 id="设置新的空环境变量并运行"><a href="#设置新的空环境变量并运行" class="headerlink" title="设置新的空环境变量并运行"></a>设置新的空环境变量并运行</h3><p>13个环境变量一个个删肯定不是个好方法，这里就需要<code>env</code>指令和<code>-i</code>参数，不清楚的可以百度去了。当然，程序得在新的空环境变量当中运行，所以使用以下指令就能获得flag</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">env</span> -i /challenge/embryoio_level7</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="embryoio-level8"><a href="#embryoio-level8" class="headerlink" title="embryoio level8"></a>embryoio level8</h1><h2 id="题目简介-4"><a href="#题目简介-4" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于shell脚本</p>
+<h2 id="解题流程-4"><a href="#解题流程-4" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-4"><a href="#运行程序-4" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/image-20220608203332533.png" alt="image-20220608203332533"></p>
+<p>可以看到程序必须是被一个shell脚本运行的，所以将执行语句<code>/challenge/embryoio_level8</code>写入<code>my_script.sh</code>脚本文件即可。</p>
+<h3 id="编写脚本并运行"><a href="#编写脚本并运行" class="headerlink" title="编写脚本并运行"></a>编写脚本并运行</h3><p>使用<code>touch my_script</code>指令创建该名字的脚本文件，再将执行语句写入到脚本文件中，保存后并用<code>bash my_script.sh</code>指令执行，便得到了flag。</p>
+<h1 id="embryoio-level9-level14"><a href="#embryoio-level9-level14" class="headerlink" title="embryoio level9~level14"></a>embryoio level9~level14</h1><h2 id="题目简介-5"><a href="#题目简介-5" class="headerlink" title="题目简介"></a>题目简介</h2><p>关于shell脚本</p>
+<h2 id="解题流程-5"><a href="#解题流程-5" class="headerlink" title="解题流程"></a>解题流程</h2><p>后面的题其实和之前的题差不多，无非就是将shell指令写入脚本文件中，然后<code>bash</code>执行。只是后面的题目不同的是<code>my_script.sh</code>文件中并不单单只是一个运行指令，还需要加上一些题目条件。至于如何得到题目条件，只需要先用脚本运行一次程序，然后程序就会输出缺少的条件。这里就不一一赘述，下面是各题的脚本。</p>
+<h3 id="my-script-sh"><a href="#my-script-sh" class="headerlink" title="my_script.sh"></a>my_script.sh</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/challenge/embryoio_level9		<span class="comment">#运行后需要输入密码，直接从shell指令中输入就行</span></span><br><span class="line">/challenge/embryoio_level10 lswcraneju		</span><br><span class="line"><span class="built_in">env</span> ugdygr=ybezdhyzoq /challenge/embryoio_level11</span><br><span class="line">/challenge/embryoio_level12 &lt; /tmp/vkkrve		<span class="comment">#首先创建外部文件，但是里面需要有个密码，程序提示会给出</span></span><br><span class="line">/challenge/embryoio_level13 &gt; /tmp/lxhgyi		<span class="comment">#flag会输出在该外部文件中</span></span><br><span class="line"><span class="built_in">env</span> -i /challenge/embryoio_level14		</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/06/08/embryoio-level3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/08/embryoio-level3/" class="post-title-link" itemprop="url">embryoio level3</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-08 15:27:59" itemprop="dateCreated datePublished" datetime="2022-06-08T15:27:59+08:00">2022-06-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-12 19:40:46" itemprop="dateModified" datetime="2022-07-12T19:40:46+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/level3-1.png" alt="屏幕截图 2022-06-07 122020"></p>
+<p>还是老样子，上来先运行题目程序，根据输出语句，大概可以知道这个程序需要一个外部输入参数，而且第一个外部输入参数的值也告诉了我们，所以我们在执行程序运行的时候，从外部传一个正确的值进去，就可以拿到flag了，具体操作如下图所示。</p>
+<p><img src="/level3-2.png" alt="屏幕截图 2022-06-07 123654"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/06/08/embryoio-level2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/08/embryoio-level2/" class="post-title-link" itemprop="url">embryoio level2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-08 15:26:00" itemprop="dateCreated datePublished" datetime="2022-06-08T15:26:00+08:00">2022-06-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-12 19:40:55" itemprop="dateModified" datetime="2022-07-12T19:40:55+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/level2-1.png" alt="屏幕截图 2022-06-07 120319"></p>
+<p>可以看到程序让我们输入一个简单的密码，我们先随便输入个数据，然后看到程序说我们的密码是错的，正确的密码就在括号里。所以我们再次运行程序，输入正确的密码，就得到了flag，具体操作如下图所示。</p>
+<p><img src="/level2-2.png" alt="屏幕截图 2022-06-07 121423"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/06/08/embryoio-level1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/08/embryoio-level1/" class="post-title-link" itemprop="url">embryoio level1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-08 15:19:11" itemprop="dateCreated datePublished" datetime="2022-06-08T15:19:11+08:00">2022-06-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-12 19:40:59" itemprop="dateModified" datetime="2022-07-12T19:40:59+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>会用基本的Linux指令</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/level1.png" alt="level1"></p>
+<p>可以看到进入challenge目录后运行题目程序就得到了一个flag</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/archives/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><span class="page-number current">6</span>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

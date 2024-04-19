@@ -1,37 +1,418 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eur1ka.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="web 89123456789101112include(&quot;flag.php&quot;);highlight_file(__FILE__);if(isset($_GET[&#x27;num&#x27;]))&#123;    $num &#x3D; $_GET[&#x27;num&#x27;];    if(preg_match(&quot;&#x2F;[0-9]&#x2F;&quot;, $num))&#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP特性(web89~web97)">
+<meta property="og:url" content="https://eur1ka.github.io/2022/07/14/ctfshow_web89~web97/index.html">
+<meta property="og:site_name" content="Eureka&#39;s Blog">
+<meta property="og:description" content="web 89123456789101112include(&quot;flag.php&quot;);highlight_file(__FILE__);if(isset($_GET[&#x27;num&#x27;]))&#123;    $num &#x3D; $_GET[&#x27;num&#x27;];    if(preg_match(&quot;&#x2F;[0-9]&#x2F;&quot;, $num))&#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220713153459536.png">
+<meta property="og:image" content="https://eur1ka.github.io/image-20220713160253070.png">
+<meta property="article:published_time" content="2022-07-14T12:18:00.000Z">
+<meta property="article:modified_time" content="2022-07-14T12:23:10.834Z">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eur1ka.github.io/image-20220713153459536.png">
 
 
-{% block content %}
+<link rel="canonical" href="https://eur1ka.github.io/2022/07/14/ctfshow_web89~web97/">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eur1ka.github.io/2022/07/14/ctfshow_web89~web97/","path":"2022/07/14/ctfshow_web89~web97/","title":"PHP特性(web89~web97)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PHP特性(web89~web97) | Eureka's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eureka's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">默安科技逐日实验室</p>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#web-89"><span class="nav-number">1.</span> <span class="nav-text">web 89</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-90"><span class="nav-number">2.</span> <span class="nav-text">web 90</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-91-0a%E6%88%AA%E6%96%AD"><span class="nav-number">3.</span> <span class="nav-text">web 91(%0a截断)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-92"><span class="nav-number">4.</span> <span class="nav-text">web 92</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-93%EF%BC%88%E8%BF%9B%E5%88%B6%E7%BB%95%E8%BF%87%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">web 93（进制绕过）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-94"><span class="nav-number">6.</span> <span class="nav-text">web 94</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-95"><span class="nav-number">7.</span> <span class="nav-text">web 95</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-96"><span class="nav-number">8.</span> <span class="nav-text">web 96</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-97-md5%E7%BB%95%E8%BF%87"><span class="nav-number">9.</span> <span class="nav-text">web 97 (md5绕过)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/14/ctfshow_web89~web97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="PHP特性(web89~web97) | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PHP特性(web89~web97)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-14 20:18:00 / 修改时间：20:23:10" itemprop="dateCreated datePublished" datetime="2022-07-14T20:18:00+08:00">2022-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/web%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">web笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/ctfshow%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">ctfshow刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="web-89"><a href="#web-89" class="headerlink" title="web 89"></a>web 89</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[0-9]/&quot;</span>, <span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>阅读代码发现满足条件的要求是自相矛盾的，$num既要是数字又不能是数字，所以此处我们使用<strong>数组绕过</strong></p>
+<p>payload：?num[]&#x3D;1</p>
+<h2 id="web-90"><a href="#web-90" class="headerlink" title="web 90"></a>web 90</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>===<span class="string">&quot;4476&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)===<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p><strong>知识点：弱类型（&#x3D;&#x3D;）与强类型（&#x3D;&#x3D;&#x3D;）比较</strong></p>
+<p><strong>1、弱类型（&#x3D;&#x3D;）</strong>：值相等，故在此比较过程中会出现问题；</p>
+<p>eg：若将‘0e’和0进行比较返回值为true原因是在比较时php将（字符串）0e转换为了（int）0在与0进行比较，故返回值为true；</p>
+<p><strong>2、强类型（&#x3D;&#x3D;&#x3D;）</strong>：值与类型均相等返回为真；</p>
+<p>eg：‘0’&#x3D;&#x3D;&#x3D;0   返回值为false，因为类型不已；</p>
+<p>payload：?num&#x3D;4476e</p>
+<h2 id="web-91-0a截断"><a href="#web-91-0a截断" class="headerlink" title="web 91(%0a截断)"></a>web 91(%0a截断)</h2><p>相关链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45551083/article/details/110494387">https://blog.csdn.net/weixin_45551083/article/details/110494387</a></p>
+<p>考察PHP模式修饰符m (PCRE_MULTILINE)<br>默认情况下，PCRE 认为目标字符串是由单行字符组成的(然而实际上它可能会包含多行)， “行首”元字符 (^) 仅匹配字符串的开始位置， 而”行末”元字符 ($) 仅匹配字符串末尾，或者最后的换行符(除非设置了 D 修饰符)。</p>
+<p>当这个修饰符设置之后，”行首”和”行末”就会匹配目标字符串中任意换行符之前或之后</p>
+<p>当目标字符串中有换行符或者匹配中出现^或者$会受到影响</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">show_source</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">&#x27;flag.php&#x27;</span>);</span><br><span class="line"><span class="variable">$a</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^php$/im&#x27;</span>, <span class="variable">$a</span>))&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^php$/i&#x27;</span>, <span class="variable">$a</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;hacker&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;nonononono&#x27;</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>payload:1%0aphp</p>
+<h2 id="web-92"><a href="#web-92" class="headerlink" title="web 92"></a>web 92</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>知识点</strong></p>
+<p><strong>intval()函数：如果$base为0则$var中存在字母的话遇到字母就停止读取</strong></p>
+<p><img src="/image-20220713153459536.png" alt="image-20220713153459536"></p>
+<p><em><strong>payload1</strong></em>：?num&#x3D;4476e123</p>
+<p>在php中有着科学计数的作用所以在进行弱类型比较时不会发生类型转换而是进行了计算，之后又因为intval()函数的特性获取flag</p>
+<p>进制绕过：</p>
+<p><em><strong>payload2</strong></em>：?num&#x3D;0x117c</p>
+<h2 id="web-93（进制绕过）"><a href="#web-93（进制绕过）" class="headerlink" title="web 93（进制绕过）"></a>web 93（进制绕过）</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[a-z]/i&quot;</span>, <span class="variable">$num</span>))&#123;<span class="comment">//检测num中是否存在字母</span></span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以0开头将以八进制读取</p>
+<p>paylaod:?num&#x3D;010574</p>
+<h2 id="web-94"><a href="#web-94" class="headerlink" title="web 94"></a>web 94</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>===<span class="string">&quot;4476&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[a-z]/i&quot;</span>, <span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">strpos</span>(<span class="variable">$num</span>, <span class="string">&quot;0&quot;</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)===<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>在web93的基础上禁用了以0开头的数据，但是由于使用&#x3D;&#x3D;&#x3D;所以我们输入小数，通过类型不一绕过，在使用intval将其转换为int型；</p>
+<p>payload：?num&#x3D;4476.0</p>
+<p>payload：?num&#x3D;%20010574</p>
+<p>payload：?num&#x3D;%2b010574</p>
+<h2 id="web-95"><a href="#web-95" class="headerlink" title="web 95"></a>web 95</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[a-z]|\./i&quot;</span>, <span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">strpos</span>(<span class="variable">$num</span>, <span class="string">&quot;0&quot;</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)===<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>知识点</strong></p>
+<p>strpos() :函数查找字符串在另一字符串中第一次出现的位置。</p>
+<p>故此题strpos()返回不为0即可，所以可以用空格（%20）和加号（%2b）进行干扰</p>
+<p>payload：?num&#x3D;%20010574</p>
+<p>payload：?num&#x3D;%2b010574</p>
+<h2 id="web-96"><a href="#web-96" class="headerlink" title="web 96"></a>web 96</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;u&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;u&#x27;</span>]==<span class="string">&#x27;flag.php&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">highlight_file</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;u&#x27;</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一开始以为考点是通配符所以经过了*，？的一番尝试之后发现不对一直报错</p>
+<p><img src="/image-20220713160253070.png" alt="image-20220713160253070"></p>
+<p>仔细观察报错路径，凭借极少且不风骚的经验猜测是linux下，所以一般flag存放在根目录下经过尝试获得flag</p>
+<p>payload：?u&#x3D;.&#x2F;flag</p>
+<p>一些其他的payload：</p>
+<p>?u&#x3D;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php </p>
+<p>?u&#x3D;php:&#x2F;&#x2F;filter&#x2F;resource&#x3D;flag.php</p>
+<p>对伪协议的理解不透彻只有在使用file_get_content()时候才想的起来使用，所以 卡了很久；</p>
+<h2 id="web-97-md5绕过"><a href="#web-97-md5绕过" class="headerlink" title="web 97 (md5绕过)"></a>web 97 (md5绕过)</h2><p>相关文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/CSDNiamcoming/article/details/108837347">(19条消息) 总结ctf中 MD5 绕过的一些思路_yจุ๊บng的博客-CSDN博客_ctf md5绕过</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]) <span class="keyword">and</span> <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;b&#x27;</span>])) &#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>] != <span class="variable">$_POST</span>[<span class="string">&#x27;b&#x27;</span>])</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]) === <span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;b&#x27;</span>]))</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">&#x27;Wrong.&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<p>此题我使用的是数组绕过，MD5碰撞也可以绕过有兴趣的小伙伴们也可以试一试;</p>
+<p>payload:a[]&#x3D;1&amp;b[]&#x3D;2 </p>
+<p>注意此图需要使用post传值</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/13/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C_welpwn/" rel="prev" title="welpwn">
+                  <i class="fa fa-angle-left"></i> welpwn
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/" rel="next" title="2022DASCTF七月赋能赛">
+                  2022DASCTF七月赋能赛 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

