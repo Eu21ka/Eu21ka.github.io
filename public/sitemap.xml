@@ -14,7 +14,7 @@
     <loc>http://localhost:1313/tags/markdown/</loc>
     <lastmod>2018-08-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/2018-08-30-markdown-guide/</loc>
+    <loc>http://localhost:1313/post/2018/08/30/markdown-guide-modified/</loc>
     <lastmod>2018-08-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/</loc>
@@ -26,13 +26,13 @@
     <loc>http://localhost:1313/categories/bullhorn/</loc>
     <lastmod>2012-04-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/hacker-with-horn/</loc>
+    <loc>http://localhost:1313/post/2012/04/23/hacker-with-horn/</loc>
     <lastmod>2012-04-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/blog/</loc>
     <lastmod>2012-03-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/2015-07-23-command-line-awesomeness/</loc>
+    <loc>http://localhost:1313/post/2012/03/12/command-line-awesomeness/</loc>
     <lastmod>2012-03-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/html/</loc>
@@ -44,7 +44,7 @@
     <loc>http://localhost:1313/tags/juicy/</loc>
     <lastmod>2012-01-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/juicy-code/</loc>
+    <loc>http://localhost:1313/post/2012/01/23/juicy-code/</loc>
     <lastmod>2012-01-23T00:00:00+00:00</lastmod>
   </url>
 </urlset>
